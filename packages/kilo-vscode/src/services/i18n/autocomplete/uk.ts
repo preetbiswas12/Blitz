@@ -1,0 +1,47 @@
+﻿export const dict = {
+  "kilocode:autocomplete.statusBar.enabled": "$(kilo-logo) Автодоповнення",
+  "kilocode:autocomplete.statusBar.snoozed": "відкладено",
+  "kilocode:autocomplete.statusBar.warning": "$(warning) Автодоповнення",
+  "kilocode:autocomplete.statusBar.tooltip.basic": "Автодоповнення Blitx",
+  "kilocode:autocomplete.statusBar.tooltip.disabled": "Автодоповнення Blitx (вимкнено)",
+  "kilocode:autocomplete.statusBar.tooltip.noUsableProvider":
+    "**Модель автодоповнення не налаштована**\n\nЩоб увімкнути автодоповнення, додайте профіль з одним із цих підтримуваних постачальників: {{providers}}.\n\n[Відкрити налаштування]({{command}})",
+  "kilocode:autocomplete.statusBar.tooltip.sessionTotal": "Загальна вартість сеансу:",
+  "kilocode:autocomplete.statusBar.tooltip.provider": "Постачальник:",
+  "kilocode:autocomplete.statusBar.tooltip.model": "Модель:",
+  "kilocode:autocomplete.statusBar.tooltip.profile": "Профіль: ",
+  "kilocode:autocomplete.statusBar.tooltip.defaultProfile": "За замовчуванням",
+  "kilocode:autocomplete.statusBar.tooltip.completionSummary":
+    "Виконано {{count}} доповнень між {{startTime}} і {{endTime}}, із загальною вартістю {{cost}}.",
+  "kilocode:autocomplete.statusBar.tooltip.providerInfo": "Автодоповнення надає {{model}} через {{provider}}.",
+  "kilocode:autocomplete.statusBar.cost.zero": "$0.00",
+  "kilocode:autocomplete.statusBar.cost.lessThanCent": "<$0.01",
+  "kilocode:autocomplete.toggleMessage": "Автодоповнення Blitx {{status}}",
+  "kilocode:autocomplete.progress.title": "Blitx",
+  "kilocode:autocomplete.progress.analyzing": "Аналіз вашого коду...",
+  "kilocode:autocomplete.progress.generating": "Створення запропонованих змін...",
+  "kilocode:autocomplete.progress.processing": "Обробка запропонованих змін...",
+  "kilocode:autocomplete.progress.showing": "Показ запропонованих змін...",
+  "kilocode:autocomplete.input.title": "Blitx: Швидке завдання",
+  "kilocode:autocomplete.input.placeholder": "наприклад, 'рефакторинг цієї функції, щоб вона була ефективнішою'",
+  "kilocode:autocomplete.commands.generateSuggestions": "Blitx: Створити запропоновані зміни",
+  "kilocode:autocomplete.commands.displaySuggestions": "Показати запропоновані зміни",
+  "kilocode:autocomplete.commands.cancelSuggestions": "Скасувати запропоновані зміни",
+  "kilocode:autocomplete.commands.applyCurrentSuggestion": "Застосувати поточну запропоновану зміну",
+  "kilocode:autocomplete.commands.applyAllSuggestions": "Застосувати всі запропоновані зміни",
+  "kilocode:autocomplete.commands.category": "Blitx",
+  "kilocode:autocomplete.codeAction.title": "Blitx: Запропоновані зміни",
+  "kilocode:autocomplete.chatParticipant.fullName": "Агент Blitx",
+  "kilocode:autocomplete.chatParticipant.name": "Агент",
+  "kilocode:autocomplete.chatParticipant.description":
+    "Я можу допомогти зі швидкими завданнями та запропонованими змінами.",
+  "kilocode:autocomplete.incompatibilityExtensionPopup.message":
+    "Автодоповнення Blitx блокується через конфлікт із GitHub Copilot. Щоб виправити це, потрібно вимкнути вбудовані пропозиції Copilot.",
+  "kilocode:autocomplete.incompatibilityExtensionPopup.disableCopilot": "Вимкнути Copilot",
+  "kilocode:autocomplete.incompatibilityExtensionPopup.disableInlineAssist": "Вимкнути автодоповнення",
+  "kilocode:autocomplete.creditsExhausted.message":
+    "Автодоповнення Blitx призупинено. Можливі причини: у вашому обліковому записі Kilo не залишилося кредитів або налаштований API-ключ (BYOK) досяг ліміту квоти. Додайте кредити Kilo або перевірте конфігурацію API-ключа, щоб відновити автодоповнення.",
+  "kilocode:autocomplete.creditsExhausted.addCredits": "Додати кредити",
+  "kilocode:autocomplete.authError.message":
+    "Автодоповнення Blitx призупинено через проблему автентифікації. Можливі причини: ви не ввійшли в Kilo або ваш API-ключ (BYOK) недійсний чи відсутній. Увійдіть знову або перевірте налаштування API-ключа постачальника.",
+}

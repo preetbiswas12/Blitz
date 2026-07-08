@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Blitx TUI Configuration",
+  "description": "Configuration schema for Blitx CLI TUI settings",
+  "type": "object",
+  "properties": {
+    "$schema": { "type": "string", "description": "JSON schema reference" },
+    "theme": { "type": "string", "description": "TUI theme name" },
+    "keybinds": { "type": "object", "description": "Keybind overrides" },
+    "plugin": { "type": "array", "items": { "type": "object" }, "description": "TUI plugins" },
+    "plugin_enabled": { "type": "object", "additionalProperties": { "type": "boolean" }, "description": "Plugin enable/disable map" },
+    "leader_timeout": { "type": "integer", "minimum": 1, "description": "Leader key timeout in milliseconds" },
+    "attention": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "notifications": { "type": "boolean" },
+        "sound": { "type": "boolean" },
+        "volume": { "type": "number", "minimum": 0, "maximum": 1 },
+        "sound_pack": { "type": "string" },
+        "sounds": { "type": "object" }
+      }
+    },
+    "prompt": {
+      "type": "object",
+      "properties": {
+        "max_height": { "type": "integer", "minimum": 1 },
+        "max_width": { "oneOf": [{ "type": "integer", "minimum": 1 }, { "type": "string", "enum": ["auto"] }] }
+      }
+    },
+    "scroll_speed": { "type": "number", "minimum": 0.001, "description": "TUI scroll speed" },
+    "scroll_acceleration": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" }
+      }
+    },
+    "diff_style": { "type": "string", "enum": ["auto", "stacked"], "description": "Diff rendering style" },
+    "mouse": { "type": "boolean", "description": "Enable mouse capture" }
+  },
+  "additionalProperties": true
+}

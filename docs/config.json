@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Blitx CLI Configuration",
+  "description": "Configuration schema for Blitx CLI",
+  "type": "object",
+  "properties": {
+    "$schema": { "type": "string", "description": "JSON schema reference" },
+    "shell": { "type": "string", "description": "Default shell for terminal and bash tool" },
+    "logLevel": { "type": "string", "enum": ["debug", "info", "warn", "error"], "description": "Log level" },
+    "server": {
+      "type": "object",
+      "properties": {
+        "hostname": { "type": "string" },
+        "port": { "type": "integer" }
+      }
+    },
+    "model": { "type": "string", "description": "Default model in provider/model format" },
+    "small_model": { "type": "string", "description": "Model for titles/summaries" },
+    "default_agent": { "type": "string", "description": "Default primary agent" },
+    "instructions": { "type": "array", "items": { "type": "string" }, "description": "Glob patterns for additional instruction files" },
+    "plugin": { "type": "array", "items": { "type": "string" }, "description": "Plugin specifiers" },
+    "snapshot": { "type": "boolean", "description": "Enable git snapshots" },
+    "share": { "type": "string", "enum": ["manual", "auto", "disabled"], "description": "Session sharing mode" },
+    "autoupdate": { "oneOf": [{ "type": "boolean" }, { "type": "string", "enum": ["notify"] }], "description": "Auto-update behavior" },
+    "username": { "type": "string", "description": "Display name override" },
+    "disabled_providers": { "type": "array", "items": { "type": "string" }, "description": "Disable specific providers" },
+    "enabled_providers": { "type": "array", "items": { "type": "string" }, "description": "Only enable these providers" },
+    "permission": { "type": "object", "description": "Tool permissions" },
+    "mcp": { "type": "object", "description": "MCP server configuration" },
+    "provider": { "type": "object", "description": "Provider configuration" },
+    "agent": { "type": "object", "description": "Agent configuration" },
+    "command": { "type": "object", "description": "Command configuration" },
+    "skills": { "type": "object", "description": "Additional skill folder paths" },
+    "formatter": { "description": "Formatter configuration" },
+    "lsp": { "description": "LSP configuration" },
+    "indexing": { "type": "object", "description": "Codebase indexing configuration" },
+    "compaction": {
+      "type": "object",
+      "properties": {
+        "auto": { "type": "boolean", "description": "Auto-compact when context full" },
+        "prune": { "type": "boolean", "description": "Prune old tool outputs" }
+      }
+    },
+    "watcher": {
+      "type": "object",
+      "properties": {
+        "ignore": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  },
+  "additionalProperties": true
+}

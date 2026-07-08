@@ -9,7 +9,7 @@ This guide walks you through creating your first town, connecting a repository, 
 
 ## Prerequisites
 
-- A [Kilo account](https://app.kilo.ai) (free tier works)
+- A [Kilo account](https://app.kilo.ai) <!-- TODO: Replace with Blitx dashboard URL --> (free tier works)
 - A GitHub repository you want agents to work on
 - A GitHub Personal Access Token (recommended)
 

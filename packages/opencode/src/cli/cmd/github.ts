@@ -141,7 +141,7 @@ type IssueQueryResponse = {
 
 const AGENT_USERNAME = "kiloconnect[bot]" // kilocode_change
 const AGENT_REACTION = "eyes"
-const WORKFLOW_FILE = ".github/workflows/kilo.yml" // kilocode_change
+const WORKFLOW_FILE = ".github/workflows/blitx.yml" // kilocode_change
 
 // Event categories for routing
 // USER_EVENTS: triggered by user actions, have actor/issueId, support reactions/comments
@@ -238,7 +238,7 @@ export const GithubInstallCommand = effectCmd({
               `    1. Commit the \`${WORKFLOW_FILE}\` file and push`,
               step2,
               "",
-              "    3. Go to a GitHub issue and comment `/kilo summarize` to see the agent in action", // kilocode_change
+              "    3. Go to a GitHub issue and comment `/blitx summarize` to see the agent in action", // kilocode_change
             ].join("\n"),
           )
         }
@@ -382,7 +382,7 @@ export const GithubInstallCommand = effectCmd({
 
           await Filesystem.write(
             path.join(app.root, WORKFLOW_FILE),
-            `name: kilo
+            `name: blitx
 
 on:
   issue_comment:
@@ -391,12 +391,12 @@ on:
     types: [created]
 
 jobs:
-  kilo:
+  blitx:
     if: |
-      contains(github.event.comment.body, ' /kc') ||
-      startsWith(github.event.comment.body, '/kc') ||
-      contains(github.event.comment.body, ' /kilo') ||
-      startsWith(github.event.comment.body, '/kilo')
+      contains(github.event.comment.body, ' /bx') ||
+      startsWith(github.event.comment.body, '/bx') ||
+      contains(github.event.comment.body, ' /blitx') ||
+      startsWith(github.event.comment.body, '/blitx')
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -409,7 +409,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Run Kilo
+      - name: Run Blitx
         uses: Kilo-Org/kilocode/github@latest${envStr}
         with:
           model: ${provider}/${model}`,
@@ -799,7 +799,7 @@ export const GithubRunCommand = effectCmd({
         }
 
         const reviewContext = getReviewCommentContext()
-        const mentions = (process.env["MENTIONS"] || "/kilo,/kc") // kilocode_change
+        const mentions = (process.env["MENTIONS"] || "/blitx,/bx") // kilocode_change
           .split(",")
           .map((m) => m.trim().toLowerCase())
           .filter(Boolean)

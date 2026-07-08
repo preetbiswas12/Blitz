@@ -183,7 +183,7 @@ function askEditGuard() {
 function planEditRules(worktree: string) {
   return {
     "*": "deny" as const,
-    [path.join(".kilo", "plans", "*.md")]: "allow" as const,
+    [path.join(".blitx", "plans", "*.md")]: "allow" as const,
     [path.join("plans", "*.md")]: "allow" as const,
     [path.join(".plans", "*.md")]: "allow" as const,
     [path.join(".opencode", "plans", "*.md")]: "allow" as const,
@@ -335,7 +335,7 @@ export function telemetryOptions(_cfg: Config.Info) {
 
 // Patch the base agents map in-place with all kilo-specific changes:
 // - Rename build → code
-// - Patch plan with readOnlyBash, mcpRules, .kilo paths
+// - Patch plan with readOnlyBash, mcpRules, .blitx paths
 // - Patch explore with codebase_search and conditional prompt
 // - Patch appropriate agents with semantic_search
 // - Add debug, orchestrator, ask agents

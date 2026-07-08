@@ -52,7 +52,7 @@ Individual accounts stop spending when their balance reaches zero — further re
 
 Organization accounts can additionally configure **per-user daily spending limits**. When a member reaches their daily cap, subsequent requests are blocked until midnight UTC, when the limit resets.
 
-**Where to configure:** Organization spending limits are managed in the organization dashboard at [app.kilo.ai](https://app.kilo.ai). Individual credit top-up is at Settings → Adding Credits.
+**Where to configure:** Organization spending limits are managed in the organization dashboard at [app.kilo.ai](https://app.kilo.ai). <!-- TODO: Replace with Blitx dashboard URL --> Individual credit top-up is at Settings → Adding Credits.
 
 ### Free model rate limits
 
@@ -234,7 +234,7 @@ The **Usage** tab of the organization dashboard provides:
 
 This gives administrators visibility into which team members, models, and projects are driving the majority of spend.
 
-**Where to access:** [app.kilo.ai](https://app.kilo.ai) → Usage tab. 
+**Where to access:** [app.kilo.ai](https://app.kilo.ai) <!-- TODO: Replace with Blitx dashboard URL --> → Usage tab. 
 
 ### Administrative permissions
 
@@ -292,7 +292,7 @@ This configuration uses only `kilo-auto/efficient`.
 
 ```jsonc
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://preetbiswas12.github.io/Blitz/config.json",
 
   // ── Model selection ──────────────────────────────────────────────────────
   // Route all requests through the two lowest-cost Kilo Auto tiers.
@@ -382,7 +382,7 @@ Every field in this block is documented in the sections above. Use it as a start
 
 If your spend is higher than expected:
 
-- **Check your usage dashboard** at [app.kilo.ai/usage](https://app.kilo.ai/usage) for a breakdown by day, model, and project
+- **Check your usage dashboard** at [app.kilo.ai/usage](https://app.kilo.ai/usage) <!-- TODO: Replace with Blitx dashboard URL --> for a breakdown by day, model, and project
 - **Review the model in use** — an accidental switch to a frontier model for routine tasks can significantly raise costs
 - **Look for long sessions** — sessions that were never compacted carry their full history as input tokens on every request; use `/compact` to reset them
 - **Check MCP server configuration** — unused MCP servers add tool definitions to every system prompt

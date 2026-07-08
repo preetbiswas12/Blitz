@@ -231,7 +231,7 @@ You can set permissions globally (with `*`), and override specific tools.
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://preetbiswas12.github.io/Blitz/config.json",
   "permission": {
     "*": "ask",
     "bash": "allow",
@@ -244,7 +244,7 @@ You can also set all permissions at once:
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://preetbiswas12.github.io/Blitz/config.json",
   "permission": "allow"
 }
 ```
@@ -255,7 +255,7 @@ For most permissions, you can use an object to apply different actions based on 
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://preetbiswas12.github.io/Blitz/config.json",
   "permission": {
     "bash": {
       "*": "ask",
@@ -296,7 +296,7 @@ Use `external_directory` to allow tool calls that touch paths outside the workin
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://preetbiswas12.github.io/Blitz/config.json",
   "permission": {
     "external_directory": {
       "~/projects/personal/**": "allow"
@@ -309,7 +309,7 @@ Any directory allowed here inherits the same defaults as the current workspace. 
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://preetbiswas12.github.io/Blitz/config.json",
   "permission": {
     "external_directory": {
       "~/projects/personal/**": "allow"
@@ -342,7 +342,7 @@ Project-level configuration takes precedence over global settings.
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://preetbiswas12.github.io/Blitz/config.json",
   "model": "anthropic/claude-sonnet-4-20250514",
   "provider": {
     "anthropic": {
@@ -602,7 +602,7 @@ Add to `~/.config/kilo/config.json`:
 
 ### Using Remote Mode
 
-Once enabled, start a CLI session and open [Cloud Agents](https://app.kilo.ai/cloud). Your local session appears in the dashboard. See [Cloud Agent Remote Connections](/docs/code-with-ai/platforms/cloud-agent#remote-connections) for details.
+Once enabled, start a CLI session and open [Cloud Agents](https://app.kilo.ai/cloud). <!-- TODO: Replace with Blitx dashboard URL --> Your local session appears in the dashboard. See [Cloud Agent Remote Connections](/docs/code-with-ai/platforms/cloud-agent#remote-connections) for details.
 
 ### Requirements
 

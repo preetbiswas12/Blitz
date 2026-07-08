@@ -104,13 +104,13 @@ Good for:
 Before using Kilo for Slack:
 
 - You need a Kilo Code account with available credits
-- Your Git provider integration (GitHub or GitLab) must be configured via the Integrations tab at [app.kilo.ai](https://app.kilo.ai) so Kilo can access your repositories
+- Your Git provider integration (GitHub or GitLab) must be configured via the Integrations tab at [app.kilo.ai](https://app.kilo.ai) <!-- TODO: Replace with Blitx dashboard URL --> so Kilo can access your repositories
 
 ---
 
 ## Setup
 
-To install Kilo for Slack, go to the Integrations menu in the sidebar at [app.kilo.ai](https://app.kilo.ai) and set up the Slack integration.
+To install Kilo for Slack, go to the Integrations menu in the sidebar at [app.kilo.ai](https://app.kilo.ai) <!-- TODO: Replace with Blitx dashboard URL --> and set up the Slack integration.
 
 | Platform | Integration Type | Details |
 |---|---|---|
@@ -132,7 +132,7 @@ To install Kilo for Slack, go to the Integrations menu in the sidebar at [app.ki
 
 You can customize which AI model Kilo uses for generating responses.
 
-1. Go to your Kilo Workspace at [app.kilo.ai](https://app.kilo.ai)
+1. Go to your Kilo Workspace at [app.kilo.ai](https://app.kilo.ai) <!-- TODO: Replace with Blitx dashboard URL -->
 2. Navigate to **Integrations > Slack**
 3. Select your preferred model
 

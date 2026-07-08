@@ -36,22 +36,22 @@ export namespace KilocodeConfig {
 
   // ── Config file constants ────────────────────────────────────────────
 
-  /** Kilo-specific config file names (highest-to-lowest precedence within kilo). */
-  export const KILO_CONFIG_FILES = ["kilo.jsonc", "kilo.json"] as const
+  /** Blitx-specific config file names (highest-to-lowest precedence within blitx). */
+  export const KILO_CONFIG_FILES = ["blitx.jsonc", "blitx.json"] as const
 
-  /** All config file names in precedence order (kilo + opencode). */
-  export const ALL_CONFIG_FILES = ["kilo.jsonc", "kilo.json", "opencode.jsonc", "opencode.json"] as const
+  /** All config file names in precedence order (blitx + opencode). */
+  export const ALL_CONFIG_FILES = ["blitx.jsonc", "blitx.json", "opencode.jsonc", "opencode.json"] as const
 
   /** Config directory suffixes in update-target preference order. */
-  export const KILO_DIR_SUFFIXES = [".kilo", ".kilocode"] as const
+  export const KILO_DIR_SUFFIXES = [".blitx", ".kilocode"] as const
 
-  /** Path patterns for resolving kilo agent names from file paths. */
-  export const AGENT_PATTERNS = ["/.kilo/agent/", "/.kilo/agents/", "/.kilocode/agent/", "/.kilocode/agents/"] as const
+  /** Path patterns for resolving blitx agent names from file paths. */
+  export const AGENT_PATTERNS = ["/.blitx/agent/", "/.blitx/agents/", "/.kilocode/agent/", "/.kilocode/agents/"] as const
 
-  /** Path patterns for resolving kilo command names from file paths. */
+  /** Path patterns for resolving blitx command names from file paths. */
   export const COMMAND_PATTERNS = [
-    "/.kilo/command/",
-    "/.kilo/commands/",
+    "/.blitx/command/",
+    "/.blitx/commands/",
     "/.kilocode/command/",
     "/.kilocode/commands/",
   ] as const
@@ -61,7 +61,7 @@ export namespace KilocodeConfig {
    *
    * This mirrors the Kilo project-config load chain: prefer existing config files
    * in ancestor config directories, then existing root config files, and create
-   * `.kilo/kilo.jsonc` when no project config exists yet.
+   * `.blitx/blitx.jsonc` when no project config exists yet.
    */
   export const projectConfigUpdateTarget = Effect.fn("BlitxConfig.projectConfigUpdateTarget")(function* (input: {
     fs: AppFileSystem.Interface
@@ -75,7 +75,7 @@ export namespace KilocodeConfig {
       .up({ targets: [...ALL_CONFIG_FILES], start: input.directory, stop: input.worktree })
       .pipe(Effect.orDie)
     const files = [...dirs.flatMap((dir) => ALL_CONFIG_FILES.map((file) => path.join(dir, file))), ...roots]
-    return files.find((file) => existsSync(file)) ?? path.join(input.directory, ".kilo", "kilo.jsonc")
+    return files.find((file) => existsSync(file)) ?? path.join(input.directory, ".blitx", "blitx.jsonc")
   })
 
   export const updateProjectConfig = Effect.fn("BlitxConfig.updateProjectConfig")(function* (input: {
@@ -306,7 +306,7 @@ export namespace KilocodeConfig {
 
   // ── Bash permission migration ────────────────────────────────────────
 
-  const GLOBAL_CONFIG_FILES = ["config.json", "kilo.json", "kilo.jsonc", "opencode.json", "opencode.jsonc"]
+  const GLOBAL_CONFIG_FILES = ["config.json", "blitx.json", "blitx.jsonc", "opencode.json", "opencode.jsonc"]
 
   /**
    * Migrate bash permission for existing users before config is consumed.
@@ -417,6 +417,6 @@ export namespace KilocodeConfig {
 
   /** Check whether a directory path should be treated as a config directory (for loading config files). */
   export function isConfigDir(dir: string, flagDir?: string): boolean {
-    return dir.endsWith(".kilo") || dir.endsWith(".kilocode") || dir === flagDir
+    return dir.endsWith(".blitx") || dir.endsWith(".kilocode") || dir === flagDir
   }
 }

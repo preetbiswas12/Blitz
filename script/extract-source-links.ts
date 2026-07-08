@@ -18,8 +18,6 @@ const OUTPUT = path.join(ROOT, "packages/kilo-docs/source-links.md")
 const check = process.argv.includes("--check")
 
 const DIRS = [
-  path.join(ROOT, "packages/kilo-vscode/src"),
-  path.join(ROOT, "packages/kilo-vscode/webview-ui"),
   path.join(ROOT, "packages/opencode/src"),
 ]
 

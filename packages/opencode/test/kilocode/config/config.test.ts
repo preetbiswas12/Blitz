@@ -140,7 +140,7 @@ describe("kilocode indexing config", () => {
 
     try {
       await writeConfig(globalTmp.path, {
-        $schema: "https://app.kilo.ai/config.json",
+        $schema: "https://preetbiswas12.github.io/Blitz/config.json",
         indexing: {
           enabled: true,
           provider: "ollama",
@@ -177,7 +177,7 @@ describe("kilocode indexing config", () => {
 
     try {
       await writeConfig(globalTmp.path, {
-        $schema: "https://app.kilo.ai/config.json",
+        $schema: "https://preetbiswas12.github.io/Blitz/config.json",
         indexing: {
           enabled: true,
         },
@@ -449,7 +449,7 @@ describe("project config directory precedence", () => {
     for (const item of entries) {
       const dir = path.join(tmp.path, item.root)
       await writeConfig(dir, {
-        $schema: "https://app.kilo.ai/config.json",
+        $schema: "https://preetbiswas12.github.io/Blitz/config.json",
         ...item.config,
       })
       for (const name of item.names) {
@@ -585,7 +585,7 @@ describe("bash permission migration", () => {
   for (const action of ["allow", "ask", "deny"] as const) {
     test(`preserves string-form ${action} permission in jsonc`, async () => {
       const input = `{
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://preetbiswas12.github.io/Blitz/config.json",
   "permission": "${action}"
 }`
       await using tmp = await tmpdir({
@@ -617,7 +617,7 @@ describe("bash permission migration", () => {
 
     test(`preserves string-form ${action} permission in json`, async () => {
       const input = JSON.stringify({
-        $schema: "https://app.kilo.ai/config.json",
+        $schema: "https://preetbiswas12.github.io/Blitz/config.json",
         permission: action,
       })
       await using tmp = await tmpdir({
@@ -654,7 +654,7 @@ describe("bash permission migration", () => {
         await Filesystem.write(
           path.join(dir, "kilo.jsonc"),
           `{
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://preetbiswas12.github.io/Blitz/config.json",
   "permission": {
     "read": "allow"
   }

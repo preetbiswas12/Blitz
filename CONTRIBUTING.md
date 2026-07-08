@@ -17,31 +17,10 @@ The Blitx Community is [on Discord](https://blitx.ai/discord).
 ## Prerequisites
 
 - **Bun 1.3.14+** — required for all packages.
-- **Java 21** — required by the JetBrains plugin. The root `bun turbo typecheck` and `bun turbo test:ci` commands include `@blitxcode/kilo-jetbrains` and will fail without Java 21.
-
-  The preferred way to install Java is via [SDKMAN](https://sdkman.io/install):
-
-  ```bash
-  # Install SDKMAN (if not already installed)
-  curl -s "https://get.sdkman.io" | bash
-
-  # Install and activate Java 21 (Eclipse Temurin)
-  sdk install java 21-tem
-  sdk use java 21-tem
-
-  # Verify
-  java -version
-  ```
-
-  If you don't plan to work on the JetBrains plugin, you can still run non-JetBrains checks directly:
-
-  ```bash
-  bun turbo typecheck --filter=!@blitxcode/kilo-jetbrains
-  ```
 
 ## Developing Blitx CLI
 
-- **Requirements:** Bun 1.3.14+, Java 21 (see [Prerequisites](#prerequisites) above)
+- **Requirements:** Bun 1.3.14+ (see [Prerequisites](#prerequisites) above)
 - Install dependencies and start the CLI from the repo root:
 
   ```bash
@@ -49,7 +28,7 @@ The Blitx Community is [on Discord](https://blitx.ai/discord).
   bun dev
   ```
 
-  `bun dev` and `bun run dev` both run the local CLI. For the VS Code extension, use `bun run extension`.
+  `bun dev` and `bun run dev` both run the local CLI.
 
 ## Common Checks
 
@@ -106,37 +85,7 @@ For manual docs validation, run the docs site locally, preview the affected page
 
 - User-facing changes usually need a changeset (`bunx changeset add` or a file under `.changeset/`).
 - After changing server endpoints, regenerate the SDK with `./script/generate.ts`.
-- After adding or changing guarded URLs in `packages/kilo-vscode/`, `packages/kilo-vscode/webview-ui/`, or `packages/opencode/src/`, run `bun run script/extract-source-links.ts` from the repo root.
 - When editing shared `packages/opencode/` files, keep Blitx changes small and mark Blitx-only edits with `// kilocode_change` for a single line or `// kilocode_change start` / `// kilocode_change end` for a block. Do not add these markers inside `kilocode`-named paths.
-
-### Developing the VS Code Extension
-
-Build and launch the extension in an isolated VS Code instance:
-
-```bash
-bun run extension        # Build + launch in dev mode
-```
-
-This auto-detects VS Code on macOS, Linux, and Windows. Override with `--app-path PATH` or `VSCODE_EXEC_PATH`. Use `--insiders` to prefer Insiders, `--workspace PATH` to open a specific folder, or `--clean` to reset cached state.
-
-### Developing the JetBrains Plugin
-
-Requires Java 21 (see [Prerequisites](#prerequisites)). From `packages/kilo-jetbrains/`:
-
-```bash
-./gradlew typecheck    # Compile-check all Kotlin sources
-./gradlew test         # Run all tests (backend + frontend)
-./gradlew --no-configuration-cache runIdeSplitMode  # Launch local split-mode sandbox and prepare the CLI
-```
-
-Use `./gradlew runIde` only for a monolithic sandbox; prepare the CLI first with `bun run build --prepare-cli`.
-
-Or via the root turbo filter to run only JetBrains checks from the repo root:
-
-```bash
-bun turbo typecheck --filter=@blitxcode/kilo-jetbrains
-bun turbo test:ci --filter=@blitxcode/kilo-jetbrains
-```
 
 ### Running against a different directory
 

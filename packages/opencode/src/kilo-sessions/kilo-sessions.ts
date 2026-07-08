@@ -587,7 +587,7 @@ export namespace BlitxSessions {
       throw new Error(`Unable to share session ${sessionId}: server did not return a public id`)
     }
 
-    const url = `https://app.kilo.ai/s/${result.public_id}`
+    const url = `https://app.kilo.ai/s/${result.public_id}` // TODO: Replace with Blitx share URL
 
     await save(sessionId, {
       ...current,

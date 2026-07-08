@@ -52,7 +52,7 @@ Add agents to the `agent` section of your `kilo.jsonc` config file. Any key that
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://preetbiswas12.github.io/Blitz/config.json",
   "agent": {
     "code-reviewer": {
       "description": "Reviews code for best practices and potential issues",

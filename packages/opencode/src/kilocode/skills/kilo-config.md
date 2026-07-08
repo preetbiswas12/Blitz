@@ -222,7 +222,7 @@ For example, this configuration will hide all models from the built-in Kilo Gate
 
 ```jsonc
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://preetbiswas12.github.io/Blitz/config.json",
   "disabled_providers": ["kilo", "openai"],
 }
 ```

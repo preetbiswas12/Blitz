@@ -315,7 +315,7 @@ export function TopNav({ onMobileMenuToggle, isMobileMenuOpen = false, showMobil
           <Link href="https://blitx.ai/github" className="github-link desktop-nav">
             GitHub
           </Link>
-          <Link href="https://app.kilo.ai" className="signin-btn desktop-nav">
+          <Link href="https://app.kilo.ai" className="signin-btn desktop-nav"> {/* TODO: Replace with Blitx dashboard URL */}
             Sign in
           </Link>
         </div>

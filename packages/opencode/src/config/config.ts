@@ -218,7 +218,7 @@ export const Info = Schema.Struct({
   // kilocode_change start
   // NOTE: Any new kilocode_change key added to Config.Info must also be mirrored in
   // apps/web/src/app/config.json/extras.ts in the cloud repo, otherwise
-  // $schema: https://app.kilo.ai/config.json will not recognize it.
+  // $schema: https://preetbiswas12.github.io/Blitz/config.json will not recognize it.
   remote_control: Schema.optional(Schema.Boolean).annotate({
     description: "Enable remote control of sessions via Kilo Cloud. Equivalent to running /remote on startup.",
   }),
@@ -469,7 +469,7 @@ export const use = serviceUse(Service)
 
 function globalConfigFile() {
   // kilocode_change start
-  const candidates = ["kilo.jsonc", "kilo.json", "opencode.jsonc", "opencode.json", "config.json"].map((file) =>
+  const candidates = ["blitx.jsonc", "blitx.json", "opencode.jsonc", "opencode.json", "config.json"].map((file) =>
     // kilocode_change end
     path.join(Global.Path.config, file),
   )
@@ -582,8 +582,8 @@ export const layer = Layer.effect(
       yield* Effect.promise(() => resolveLoadedPlugins(data, options.path))
       if (!data.$schema) {
         // kilocode_change start
-        data.$schema = "https://app.kilo.ai/config.json"
-        const updated = text.replace(/^\s*\{/, '{\n  "$schema": "https://app.kilo.ai/config.json",')
+        data.$schema = "https://preetbiswas12.github.io/Blitz/config.json"
+        const updated = text.replace(/^\s*\{/, '{\n  "$schema": "https://preetbiswas12.github.io/Blitz/config.json",')
         // kilocode_change end
         yield* fs.writeFileString(options.path, updated).pipe(Effect.catch(() => Effect.void))
       }
@@ -611,14 +611,14 @@ export const layer = Layer.effect(
         const file = globalConfigFile()
         if (!existsSync(file)) {
           yield* fs
-            .writeWithDirs(file, JSON.stringify({ $schema: "https://app.kilo.ai/config.json" }, null, 2))
+            .writeWithDirs(file, JSON.stringify({ $schema: "https://preetbiswas12.github.io/Blitz/config.json" }, null, 2))
             .pipe(Effect.catch(() => Effect.void))
         }
       }
       result = mergeConfig(result, yield* loadFile(path.join(Global.Path.config, "config.json"), env))
       // kilocode_change start
-      result = mergeConfig(result, yield* loadFile(path.join(Global.Path.config, "kilo.json"), env))
-      result = mergeConfig(result, yield* loadFile(path.join(Global.Path.config, "kilo.jsonc"), env))
+      result = mergeConfig(result, yield* loadFile(path.join(Global.Path.config, "blitx.json"), env))
+      result = mergeConfig(result, yield* loadFile(path.join(Global.Path.config, "blitx.jsonc"), env))
       // kilocode_change end
       result = mergeConfig(result, yield* loadFile(path.join(Global.Path.config, "opencode.json"), env))
       result = mergeConfig(result, yield* loadFile(path.join(Global.Path.config, "opencode.jsonc"), env))
@@ -630,7 +630,7 @@ export const layer = Layer.effect(
             .then(async (mod) => {
               const { provider, model, ...rest } = mod.default
               if (provider && model) result.model = `${provider}/${model}`
-              result["$schema"] = "https://app.kilo.ai/config.json" // kilocode_change
+              result["$schema"] = "https://preetbiswas12.github.io/Blitz/config.json" // kilocode_change
               result = mergeConfig(result, rest)
               await fsNode.writeFile(path.join(Global.Path.config, "config.json"), JSON.stringify(result, null, 2))
               await fsNode.unlink(legacy)
@@ -791,7 +791,7 @@ export const layer = Layer.effect(
                   })
                 : {}
               const remoteConfig = mergeConfig(isRecord(wellknown.config) ? wellknown.config : {}, fetchedConfig)
-              if (!remoteConfig.$schema) remoteConfig.$schema = "https://app.kilo.ai/config.json"
+              if (!remoteConfig.$schema) remoteConfig.$schema = "https://preetbiswas12.github.io/Blitz/config.json"
               const next = yield* loadConfig(
                 JSON.stringify(remoteConfig),
                 {
@@ -845,8 +845,8 @@ export const layer = Layer.effect(
         }
 
         if (!Flag.KILO_DISABLE_PROJECT_CONFIG) {
-          // kilocode_change start - also discover kilo.json project files
-          for (const name of ["kilo", "opencode"] as const) {
+          // kilocode_change start - also discover blitx.json project files
+          for (const name of ["blitx", "opencode"] as const) {
             for (const file of yield* ConfigPaths.files(name, ctx.directory, ctx.worktree).pipe(Effect.orDie)) {
               yield* merge(
                 file,
@@ -1006,7 +1006,7 @@ export const layer = Layer.effect(
         }
 
         const managedDir = ConfigManaged.managedConfigDir()
-        // kilocode_change start - include kilo.json/kilo.jsonc in managed dir loading
+        // kilocode_change start - include blitx.json/blitx.jsonc in managed dir loading
         if (existsSync(managedDir)) {
           for (const file of KilocodeConfig.ALL_CONFIG_FILES) {
             const source = path.join(managedDir, file)

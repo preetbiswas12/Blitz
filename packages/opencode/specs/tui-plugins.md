@@ -18,7 +18,7 @@ Example:
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/tui.json",
+  "$schema": "https://preetbiswas12.github.io/Blitz/tui.json",
   "theme": "smoke-theme",
   "leader_timeout": 2000,
   "keybinds": {

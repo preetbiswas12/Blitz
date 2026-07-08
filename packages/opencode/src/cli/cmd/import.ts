@@ -26,7 +26,7 @@ export type ShareData =
   | { type: "model"; data: unknown }
 
 // kilocode_change start
-/** Extract share ID from a Kilo share URL like https://app.kilo.ai/s/abc123 */
+/** Extract share ID from a Kilo share URL like https://app.kilo.ai/s/abc123 */ // TODO: Replace with Blitx share URL
 export function parseShareUrl(url: string): string | null {
   const match = url.match(/^https?:\/\/app\.kilo\.ai\/s\/([a-zA-Z0-9_-]+)$/)
   return match ? match[1] : null
@@ -148,7 +148,7 @@ const runImport = Effect.fn("Cli.import.body")(function* (file: string, ctx: Ins
     // kilocode_change start - Migrate to upstream ShareNext architecture #10281
     const slug = parseShareUrl(file)
     if (!slug) {
-      process.stdout.write(`Invalid URL format. Expected: https://app.kilo.ai/s/<id>`)
+      process.stdout.write(`Invalid URL format. Expected: https://app.kilo.ai/s/<id>`) // TODO: Replace with Blitx share URL
       process.stdout.write(EOL)
       return
     }

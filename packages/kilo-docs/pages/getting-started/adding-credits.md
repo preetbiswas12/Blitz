@@ -11,9 +11,9 @@ Once you've used any initial free Kilo Credits, you can easily add more:
 
 - Enable [automatic top-up](https://blitx.ai/features/auto-top-ups), which purchases additional credits when your balance runs low. Auto top-up is available for both individual and organization accounts.
 
-These options are available to purchase from your [personal profile page](https://app.kilo.ai/profile). Organization owners can manage credits and auto top-up from the [Organization dashboard](https://app.kilo.ai).
+These options are available to purchase from your [personal profile page](https://app.kilo.ai/profile). <!-- TODO: Replace with Blitx dashboard URL --> Organization owners can manage credits and auto top-up from the [Organization dashboard](https://app.kilo.ai). <!-- TODO: Replace with Blitx dashboard URL -->
 
-You can also use subscriptions or credits you may have purchased directly with an AI provider by adding your keys on the [Bring your own Key (BYOK)](https://app.kilo.ai/byok) settings screen. For setup details and supported providers, see [AI Providers documentation](/docs/ai-providers). If your provider is not yet supported, you can also [directly connect your provider](/docs/getting-started/setup-authentication) in the extension and CLI.
+You can also use subscriptions or credits you may have purchased directly with an AI provider by adding your keys on the [Bring your own Key (BYOK)](https://app.kilo.ai/byok) <!-- TODO: Replace with Blitx dashboard URL --> settings screen. For setup details and supported providers, see [AI Providers documentation](/docs/ai-providers). If your provider is not yet supported, you can also [directly connect your provider](/docs/getting-started/setup-authentication) in the extension and CLI.
 
 ## Transparent Pricing
 

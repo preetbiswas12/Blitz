@@ -11,15 +11,11 @@ Blitx CLI is an open source AI coding agent that generates code from natural lan
 
 - **Dev**: `bun run dev` (runs from root) or `bun run --cwd packages/opencode --conditions=browser src/index.ts`
 - **Dev with params**: `bun dev -- help`
-- **Extension**: `bun run extension` (build + launch VS Code with the extension in dev mode). Pass `--no-build` to skip the build.
-- **Typecheck**: `bun turbo typecheck` (uses `tsgo`, not `tsc`). Includes the JetBrains plugin and requires Java 21; do not run `java -version` as a routine preflight. Only check Java when a Gradle/Java command fails with a Java-version or missing-Java error. If missing, install via SDKMAN: `sdk install java 21-tem && sdk use java 21-tem`. If SDKMAN is not installed, see https://sdkman.io/install.
+- **Typecheck**: `bun turbo typecheck` (uses `tsgo`, not `tsc`).
 - **Test**: `bun test` from `packages/opencode/` (NOT from root -- root blocks tests)
 - **Single test**: `bun test ./test/tool/tool-define.test.ts` from `packages/opencode/`
-- **CLI build artifact size check**: after `bun run script/build.ts --single --skip-install` in `packages/opencode/`, use `du -h dist/*/*/bin/kilo` (scoped package output lives under `dist/@blitxcode/`)
+- **CLI build artifact size check**: after `bun run script/build.ts --single --skip-install` in `packages/opencode/`, use `du -h dist/*/*/bin/blitx` (scoped package output lives under `dist/@blitxcode/`)
 - **SDK regen**: After changing server endpoints in `packages/opencode/src/server/`, run `./script/generate.ts` from root to regenerate `packages/sdk/js/`
-- **Knip** (unused exports): `bun run knip` from `packages/kilo-vscode/`. CI runs this — all exported types/functions must be imported somewhere. Remove or unexport unused exports before pushing.
-- **Source links**: After adding or changing URLs in `packages/kilo-vscode/`, `packages/kilo-vscode/webview-ui/`, or `packages/opencode/src/`, run `bun run script/extract-source-links.ts` from the repo root and commit the updated `packages/kilo-docs/source-links.md`. CI runs this check — the build fails if the file is stale.
-- **kilocode_change check**: `bun run check-kilocode-change` from `packages/kilo-vscode/`. CI runs this — `kilocode_change` is a marker for upstream merge conflicts and must not appear in `packages/kilo-vscode/` or `packages/kilo-ui/` (these are entirely Blitx additions). Remove the markers before pushing.
 - **opencode annotation check**: `bun run script/check-opencode-annotations.ts` from repo root. CI runs this on PRs touching `packages/opencode/` — every Blitx-specific change in shared opencode files must be annotated with `kilocode_change` markers. Exempt paths (no markers needed): `packages/opencode/src/kilocode/`, `packages/opencode/test/kilocode/`, and any path containing `kilocode` in the name.
 - **Effect facade ratchet**: Do not add runtime-backed Promise facades to shared `packages/opencode/src` Effect services; use service dependencies, `AppRuntime`, or Blitx-owned boundaries. Run `bun run script/check-opencode-promise-facades.ts` when touching service adapters.
 - **workflow allowlist**: `bun run script/check-workflows.ts` from repo root. CI runs this as part of the annotations workflow — any `.yml` / `.yaml` file added to or removed from `.github/workflows/` must be reflected in the hardcoded list in `script/check-workflows.ts`. Prevents upstream-merged workflows from silently starting to run in our CI.
@@ -33,31 +29,14 @@ Before saying an implementation is ready, run the smallest relevant checks that 
 |---|---|
 | Root / cross-package | `bun run lint`, `bun run typecheck` |
 | CLI | From `packages/opencode/`: `bun run typecheck`, `bun test` or targeted `bun test ./path/to/file.test.ts` |
-| VS Code extension | From `packages/kilo-vscode/`: `bun run typecheck`, `bun run lint`, `bun run test:unit` or `bun run test` |
-| Extension build/package | From `packages/kilo-vscode/`: `bun run compile` or `bun run package` when touching build, packaging, SDK, or webview integration paths |
-| JetBrains plugin | From `packages/kilo-jetbrains/`: `./gradlew typecheck`, `./gradlew test`. Requires Java 21; do not run `java -version` as a routine preflight. Check Java only after a Java-version or missing-Java failure. |
-| CI-only guards | Run affected guards documented above, such as `bun run knip`, `bun run check-kilocode-change`, `bun run script/check-opencode-annotations.ts`, or source link extraction |
 
 Never run root `bun test`; the root script prints `do not run tests from root` and exits with code 1. Use package-level tests instead.
 
 ## Products
 
-All products are clients of the **CLI** (`packages/opencode/`), which contains the AI agent runtime, HTTP server, and session management. Each client spawns or connects to a `blitx serve` process and communicates via HTTP + SSE using `@blitxcode/sdk`.
-
 | Product | Package | Description |
 |---|---|---|
 | Blitx CLI | `packages/opencode/` | Core engine. TUI, `blitx run`, `blitx serve`. Fork of upstream OpenCode. |
-| Blitx VS Code Extension | `packages/kilo-vscode/` | VS Code extension. Bundles the CLI binary, spawns `blitx serve` as a child process. Includes the **Agent Manager** — a multi-session orchestration panel with git worktree isolation. |
-
-**Agent Manager** refers to a feature inside `packages/kilo-vscode/` (extension code in `src/agent-manager/`, webview in `webview-ui/agent-manager/`). It is not a standalone product. See the extension's `AGENTS.md` for details.
-
-In each VS Code extension host, one `KiloConnectionService` is created for the sidebar, every Blitx editor tab, and Agent Manager; it lazily starts and reuses one current `blitx serve` backend at a time. Agent Manager worktree sessions pass a directory context to this shared backend rather than starting one per worktree. State captured by the active service layer, such as Snapshot `trackState`, is shared across those requests; only directory-keyed `InstanceState` data is isolated.
-
-Extension-specific settings should live in the Blitx extension settings, not default VS Code settings, unless they are intentionally VS Code-wide. Experimental flags should follow existing flag patterns, not VS Code settings; they usually belong in the Blitx Experimental settings section.
-
-## Package Instructions
-
-- When a task primarily touches `packages/kilo-jetbrains/`, read `packages/kilo-jetbrains/AGENTS.md` before planning or editing. It covers split-mode architecture, IntelliJ source lookup, threading fundamentals, UI guidelines, and session component architecture.
 
 ## Monorepo Structure
 
@@ -151,7 +130,7 @@ Padding makes every content change rewrite the entire table, which blows up diff
 
 ## Commit Conventions
 
-[Conventional Commits](https://www.conventionalcommits.org/) with scopes matching packages: `vscode`, `cli`, `agent-manager`, `sdk`, `ui`, `i18n`, `kilo-docs`, `gateway`, `telemetry`, `desktop`. Omit scope when spanning multiple packages.
+[Conventional Commits](https://www.conventionalcommits.org/) with scopes matching packages: `cli`, `sdk`, `ui`, `i18n`, `kilo-docs`, `gateway`, `telemetry`. Omit scope when spanning multiple packages.
 
 ## Changesets
 
@@ -165,7 +144,7 @@ PR descriptions should explain **what** changed, **why** the change is needed, a
 
 ## GitHub Issues
 
-When creating or managing GitHub issues for the VS Code extension or JetBrains plugin via `gh`, load `.kilo/skills/gh-issues/SKILL.md`. It covers templates, project boards (`VS Code Extension`, `Jetbrains Plugin`), title conventions, and the `gh auth refresh -s project` recovery path.
+When creating or managing GitHub issues via `gh`, load `.kilo/skills/gh-issues/SKILL.md`.
 
 ## Fork Merge Process
 

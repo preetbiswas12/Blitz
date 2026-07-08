@@ -69,7 +69,7 @@ You can prevent specific providers from loading using `disabled_providers` in yo
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://preetbiswas12.github.io/Blitz/config.json",
   "disabled_providers": ["kilo", "openai"]
 }
 ```
@@ -78,7 +78,7 @@ To allow only specific providers and disable everything else, use `enabled_provi
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://preetbiswas12.github.io/Blitz/config.json",
   "enabled_providers": ["anthropic"]
 }
 ```

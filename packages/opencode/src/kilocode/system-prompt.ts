@@ -15,7 +15,7 @@ export namespace KilocodeSystemPrompt {
         `  Is directory a git repo: ${input.ctx.project.vcs === "git" ? "yes" : "no"}`,
         `  Platform: ${process.platform}`,
         `  Today's date: ${new Date().toDateString()}`,
-        `  Project config: .kilo/command/*.md, .kilo/agent/*.md, kilo.json, AGENTS.md. Put new commands and agents in .kilo/. Do not use .kilocode/ or .opencode/.`,
+        `  Project config: .blitx/command/*.md, .blitx/agent/*.md, blitx.json, AGENTS.md. Put new commands and agents in .blitx/. Do not use .kilocode/ or .opencode/.`,
         `  Global config: ${Global.Path.config}/ (same structure)`,
         ...staticEnvLines(input.editor),
         `</env>`,

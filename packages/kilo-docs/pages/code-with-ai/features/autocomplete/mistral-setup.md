@@ -4,7 +4,7 @@ This guide walks you through setting up Mistral's Codestral model for free autoc
 
 ## Prerequisites
 
-- A [Kilo Code account](https://app.kilo.ai) (free to create)
+- A [Kilo Code account](https://app.kilo.ai) <!-- TODO: Replace with Blitx dashboard URL --> (free to create)
 - A Mistral AI account with a Codestral API key
 
 ## Step 1: Navigate to Codestral in Mistral AI Studio
@@ -31,8 +31,8 @@ The Codestral API key is separate from the standard Mistral La Plateforme API ke
 
 ## Step 4: Add Your Key via BYOK in Kilo
 
-1. Log into the [Kilo platform](https://app.kilo.ai).
-2. Navigate to the [Bring Your Own Key (BYOK) page](https://app.kilo.ai/byok), available in the sidebar under **Account**.
+1. Log into the [Kilo platform](https://app.kilo.ai). <!-- TODO: Replace with Blitx dashboard URL -->
+2. Navigate to the [Bring Your Own Key (BYOK) page](https://app.kilo.ai/byok), <!-- TODO: Replace with Blitx dashboard URL --> available in the sidebar under **Account**.
 3. Click **Add Your First Key** (or **Add Key** if you already have keys configured).
 4. Select **Codestral** as the provider.
 5. Paste your Codestral API key.

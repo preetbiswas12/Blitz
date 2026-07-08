@@ -209,7 +209,7 @@ async function executeUninstall(method: Installation.Method, targets: RemovalTar
     prompts.log.info(`  rm "${targets.binary}"`)
 
     const binDir = path.dirname(targets.binary)
-    if (binDir.includes(".opencode") || binDir.includes(".kilo")) {
+    if (binDir.includes(".opencode") || binDir.includes(".blitx")) {
       // kilocode_change
       prompts.log.info(`  rmdir "${binDir}" 2>/dev/null`)
     }
@@ -261,12 +261,12 @@ async function getShellConfigFile(): Promise<string | null> {
     if (!exists) continue
 
     const content = await Filesystem.readText(file).catch(() => "")
-    // kilocode_change start - detect both opencode and kilo markers
+    // kilocode_change start - detect both opencode and blitx markers
     if (
       content.includes("# opencode") ||
       content.includes(".opencode/bin") ||
-      content.includes("# kilo") ||
-      content.includes(".kilo/bin")
+      content.includes("# blitx") ||
+      content.includes(".blitx/bin")
     ) {
       return file
     }
@@ -286,22 +286,22 @@ async function cleanShellConfig(file: string) {
   for (const line of lines) {
     const trimmed = line.trim()
 
-    // kilocode_change start - clean both opencode and kilo markers
-    if (trimmed === "# opencode" || trimmed === "# kilo") {
+    // kilocode_change start - clean both opencode and blitx markers
+    if (trimmed === "# opencode" || trimmed === "# blitx") {
       skip = true
       continue
     }
 
     if (skip) {
       skip = false
-      if (trimmed.includes(".opencode/bin") || trimmed.includes(".kilo/bin") || trimmed.includes("fish_add_path")) {
+      if (trimmed.includes(".opencode/bin") || trimmed.includes(".blitx/bin") || trimmed.includes("fish_add_path")) {
         continue
       }
     }
 
     if (
-      (trimmed.startsWith("export PATH=") && (trimmed.includes(".opencode/bin") || trimmed.includes(".kilo/bin"))) ||
-      (trimmed.startsWith("fish_add_path") && (trimmed.includes(".opencode") || trimmed.includes(".kilo")))
+      (trimmed.startsWith("export PATH=") && (trimmed.includes(".opencode/bin") || trimmed.includes(".blitx/bin"))) ||
+      (trimmed.startsWith("fish_add_path") && (trimmed.includes(".opencode") || trimmed.includes(".blitx")))
     ) {
       continue
     }

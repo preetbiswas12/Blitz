@@ -15,7 +15,7 @@
   <!-- packages/opencode/src/plugin/xai.ts -->
 - <https://app.kilo.ai>
   <!-- packages/opencode/src/kilocode/kilo-commands.tsx -->
-- <https://app.kilo.ai/config.json>
+- <https://preetbiswas12.github.io/Blitz/config.json>
   <!-- packages/kilo-vscode/src/kilo-provider/config-file.ts -->
   <!-- packages/opencode/src/config/config.ts -->
 - <https://app.kilo.ai/credits>
@@ -23,7 +23,7 @@
   <!-- packages/kilo-vscode/webview-ui/src/components/profile/ProfileView.tsx -->
 - <https://app.kilo.ai/profile>
   <!-- packages/kilo-vscode/webview-ui/src/components/profile/ProfileView.tsx -->
-- <https://app.kilo.ai/tui.json>
+- <https://preetbiswas12.github.io/Blitz/tui.json>
   <!-- packages/opencode/src/cli/cmd/tui/config/tui-migrate.ts -->
 - <https://app.kilo.ai/usage>
   <!-- packages/opencode/src/kilocode/components/dialog-kilo-profile.tsx -->

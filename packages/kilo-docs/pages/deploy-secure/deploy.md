@@ -39,7 +39,7 @@ Enable the **GitHub Integration** before deploying:
 
 ### 1. Open the Deploy Tab
 
-- Navigate to your [Organization dashboard](https://app.kilo.ai/organizations) or [Profile](https://app.kilo.ai/profile)
+- Navigate to your [Organization dashboard](https://app.kilo.ai/organizations) <!-- TODO: Replace with Blitx dashboard URL --> or [Profile](https://app.kilo.ai/profile) <!-- TODO: Replace with Blitx dashboard URL -->
 - Select the **Deploy** tab
 
 ### 2. Select Your Project

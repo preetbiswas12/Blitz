@@ -187,7 +187,7 @@ export const McpAuthCommand = effectCmd({
 
     if (servers.length === 0) {
       prompts.log.warn("No OAuth-capable MCP servers configured")
-      prompts.log.info("Remote MCP servers support OAuth by default. Add a remote server in kilo.json:") // kilocode_change
+      prompts.log.info("Remote MCP servers support OAuth by default. Add a remote server in blitx.json:") // kilocode_change
       prompts.log.info(`
   "mcp": {
     "my-server": {
@@ -397,22 +397,22 @@ export const McpLogoutCommand = effectCmd({
 })
 
 async function resolveConfigPath(baseDir: string, global = false) {
-  // kilocode_change start - prefer supported Kilo config directories over root files
+  // kilocode_change start - prefer supported Blitx config directories over root files
   const roots = [
-    path.join(baseDir, "kilo.jsonc"),
-    path.join(baseDir, "kilo.json"),
+    path.join(baseDir, "blitx.jsonc"),
+    path.join(baseDir, "blitx.json"),
     path.join(baseDir, "opencode.jsonc"),
     path.join(baseDir, "opencode.json"),
   ]
   const candidates = global
     ? roots
     : [
-        path.join(baseDir, ".kilo", "kilo.jsonc"),
-        path.join(baseDir, ".kilo", "kilo.json"),
-        path.join(baseDir, ".kilo", "opencode.jsonc"),
-        path.join(baseDir, ".kilo", "opencode.json"),
-        path.join(baseDir, ".kilocode", "kilo.jsonc"),
-        path.join(baseDir, ".kilocode", "kilo.json"),
+        path.join(baseDir, ".blitx", "blitx.jsonc"),
+        path.join(baseDir, ".blitx", "blitx.json"),
+        path.join(baseDir, ".blitx", "opencode.jsonc"),
+        path.join(baseDir, ".blitx", "opencode.json"),
+        path.join(baseDir, ".kilocode", "blitx.jsonc"),
+        path.join(baseDir, ".kilocode", "blitx.json"),
         path.join(baseDir, ".kilocode", "opencode.jsonc"),
         path.join(baseDir, ".kilocode", "opencode.json"),
         ...roots,
@@ -424,8 +424,8 @@ async function resolveConfigPath(baseDir: string, global = false) {
     }
   }
 
-  // Default to kilo.json if none exist
-  return path.join(baseDir, "kilo.json")
+  // Default to blitx.json if none exist
+  return path.join(baseDir, "blitx.json")
   // kilocode_change end
 }
 

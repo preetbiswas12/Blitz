@@ -155,7 +155,7 @@ export namespace MemoryService {
     readonly setIdleSettle: (ms: number) => Timing
   }
 
-  export class Service extends Context.Service<Service, Interface>()("@blitxcode/MemoryService") {}
+  export class Service extends Context.Service<Service, Interface>()("@legion/MemoryService") {}
 
   export function make() {
     const locks = new Map<SessionID, { sema: Semaphore.Semaphore; holders: number }>()

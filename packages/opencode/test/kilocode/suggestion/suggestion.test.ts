@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, mock, spyOn, test } from "bun:test"
 import { Effect } from "effect"
-import { Telemetry } from "@blitxcode/kilo-telemetry"
+import { Telemetry } from "@legion/kilo-telemetry"
 import { Command } from "../../../src/command"
 import { reviewCommand } from "../../../src/kilocode/review/command"
 import { provideTestInstance } from "../../fixture/fixture"

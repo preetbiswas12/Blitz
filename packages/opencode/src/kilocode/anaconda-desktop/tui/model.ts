@@ -1,4 +1,4 @@
-import type { AnacondaDesktopStatus } from "@blitxcode/sdk/v2"
+import type { AnacondaDesktopStatus } from "@legion/sdk/v2"
 import { DOWNLOAD_URL } from "../domain"
 
 export type ReadyStatus = Extract<AnacondaDesktopStatus, { type: "ready" }>

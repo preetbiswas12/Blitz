@@ -116,7 +116,7 @@ function instant() {
 }
 
 async function run(sdk: Record<string, unknown>, overrides: Record<string, unknown> = {}, terminal = true) {
-  mock.module("@blitxcode/sdk/v2", () => ({
+  mock.module("@legion/sdk/v2", () => ({
     createKiloClient: () => sdk,
   }))
 

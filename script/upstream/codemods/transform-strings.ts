@@ -3,8 +3,8 @@
  * jscodeshift codemod: Transform string literals
  *
  * Transforms string literals containing opencode references to kilo:
- * - "opencode-ai" -> "@blitxcode/cli"
- * - "npx opencode" -> "npx @blitxcode/cli"
+ * - "opencode-ai" -> "@legion/cli"
+ * - "npx opencode" -> "npx @legion/cli"
  * - etc.
  *
  * Usage:
@@ -23,16 +23,16 @@ interface StringReplacement {
 
 const STRING_REPLACEMENTS: StringReplacement[] = [
   // Package names in strings (no trailing \b to allow subpath matching like @opencode-ai/sdk/v2)
-  { pattern: /\bopencode-ai\b/g, replacement: "@blitxcode/cli" },
-  { pattern: /@opencode-ai\/cli(?=\/|"|'|`|$)/g, replacement: "@blitxcode/cli" },
-  { pattern: /@opencode-ai\/sdk(?=\/|"|'|`|$)/g, replacement: "@blitxcode/sdk" },
-  { pattern: /@opencode-ai\/plugin(?=\/|"|'|`|$)/g, replacement: "@blitxcode/plugin" },
+  { pattern: /\bopencode-ai\b/g, replacement: "@legion/cli" },
+  { pattern: /@opencode-ai\/cli(?=\/|"|'|`|$)/g, replacement: "@legion/cli" },
+  { pattern: /@opencode-ai\/sdk(?=\/|"|'|`|$)/g, replacement: "@legion/sdk" },
+  { pattern: /@opencode-ai\/plugin(?=\/|"|'|`|$)/g, replacement: "@legion/plugin" },
 
   // CLI commands
-  { pattern: /\bnpx opencode\b/g, replacement: "npx @blitxcode/cli" },
-  { pattern: /\bbun add opencode\b/g, replacement: "bun add @blitxcode/cli" },
-  { pattern: /\bnpm install opencode\b/g, replacement: "npm install @blitxcode/cli" },
-  { pattern: /\bnpm i opencode\b/g, replacement: "npm i @blitxcode/cli" },
+  { pattern: /\bnpx opencode\b/g, replacement: "npx @legion/cli" },
+  { pattern: /\bbun add opencode\b/g, replacement: "bun add @legion/cli" },
+  { pattern: /\bnpm install opencode\b/g, replacement: "npm install @legion/cli" },
+  { pattern: /\bnpm i opencode\b/g, replacement: "npm i @legion/cli" },
 
   // Database filename
   { pattern: /\bopencode\.db\b/g, replacement: "kilo.db" },

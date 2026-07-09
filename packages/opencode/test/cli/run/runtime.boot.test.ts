@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, mock, spyOn, test } from "bun:test"
-import { KiloClient, type Provider } from "@blitxcode/sdk/v2"
+import { KiloClient, type Provider } from "@legion/sdk/v2"
 import { TuiConfig, type Resolved } from "@/cli/cmd/tui/config/tui"
 import { formatBindings } from "@/cli/cmd/run/keymap.shared"
 import { resolveDiffStyle, resolveFooterKeybinds, resolveModelInfo } from "@/cli/cmd/run/runtime.boot"

@@ -1,5 +1,5 @@
 import { createMemo, createResource, createSignal } from "solid-js"
-import type { McpLocalConfig, McpRemoteConfig, McpStatus } from "@blitxcode/sdk/v2/client"
+import type { McpLocalConfig, McpRemoteConfig, McpStatus } from "@legion/sdk/v2/client"
 import { parse as parseYaml } from "yaml"
 import type { Snapshot } from "../../../client"
 import { authenticateMcp, connectMcp, disconnectMcp } from "../../../client"

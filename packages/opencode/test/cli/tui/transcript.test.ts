@@ -5,7 +5,7 @@ import {
   formatPart,
   formatTranscript,
 } from "../../../src/cli/cmd/tui/util/transcript"
-import type { AssistantMessage, Part, Provider, UserMessage } from "@blitxcode/sdk/v2"
+import type { AssistantMessage, Part, Provider, UserMessage } from "@legion/sdk/v2"
 
 const providers: Provider[] = [
   {

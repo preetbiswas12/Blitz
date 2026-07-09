@@ -3,10 +3,10 @@
  * Transform package names and branding from opencode to kilo
  *
  * This script transforms:
- * - opencode-ai -> @blitxcode/cli
- * - @opencode-ai/cli -> @blitxcode/cli
- * - @opencode-ai/sdk -> @blitxcode/sdk
- * - @opencode-ai/plugin -> @blitxcode/plugin
+ * - opencode-ai -> @legion/cli
+ * - @opencode-ai/cli -> @legion/cli
+ * - @opencode-ai/sdk -> @legion/sdk
+ * - @opencode-ai/plugin -> @legion/plugin
  * - OPENCODE_* -> KILO_* (env variables, excluding OPENCODE_API_KEY)
  * - x-opencode-* -> x-kilo-* (HTTP headers)
  * - opencode.db -> kilo.db (database filename)
@@ -30,41 +30,41 @@ export interface TransformOptions {
 
 const PACKAGE_PATTERNS = [
   // In package.json name field
-  { pattern: /"name":\s*"opencode-ai"/, replacement: '"name": "@blitxcode/cli"' },
-  { pattern: /"name":\s*"@opencode-ai\/cli"/, replacement: '"name": "@blitxcode/cli"' },
+  { pattern: /"name":\s*"opencode-ai"/, replacement: '"name": "@legion/cli"' },
+  { pattern: /"name":\s*"@opencode-ai\/cli"/, replacement: '"name": "@legion/cli"' },
 
   // In dependencies/devDependencies
-  { pattern: /"opencode-ai":\s*"/g, replacement: '"@blitxcode/cli": "' },
-  { pattern: /"@opencode-ai\/cli":\s*"/g, replacement: '"@blitxcode/cli": "' },
-  { pattern: /"@opencode-ai\/sdk":\s*"/g, replacement: '"@blitxcode/sdk": "' },
-  { pattern: /"@opencode-ai\/plugin":\s*"/g, replacement: '"@blitxcode/plugin": "' },
+  { pattern: /"opencode-ai":\s*"/g, replacement: '"@legion/cli": "' },
+  { pattern: /"@opencode-ai\/cli":\s*"/g, replacement: '"@legion/cli": "' },
+  { pattern: /"@opencode-ai\/sdk":\s*"/g, replacement: '"@legion/sdk": "' },
+  { pattern: /"@opencode-ai\/plugin":\s*"/g, replacement: '"@legion/plugin": "' },
 
   // In any string context (mock.module, dynamic references, etc.)
   // Only cli, sdk, and plugin are renamed — other @opencode-ai/* packages
   // (e.g. @opencode-ai/ui, @opencode-ai/util) keep their upstream names.
-  { pattern: /@opencode-ai\/cli(?=\/|"|'|`|$)/g, replacement: "@blitxcode/cli" },
-  { pattern: /@opencode-ai\/sdk(?=\/|"|'|`|$)/g, replacement: "@blitxcode/sdk" },
-  { pattern: /@opencode-ai\/plugin(?=\/|"|'|`|$)/g, replacement: "@blitxcode/plugin" },
+  { pattern: /@opencode-ai\/cli(?=\/|"|'|`|$)/g, replacement: "@legion/cli" },
+  { pattern: /@opencode-ai\/sdk(?=\/|"|'|`|$)/g, replacement: "@legion/sdk" },
+  { pattern: /@opencode-ai\/plugin(?=\/|"|'|`|$)/g, replacement: "@legion/plugin" },
 
   // In import statements (supports subpaths like @opencode-ai/sdk/v2)
-  { pattern: /from\s+["']opencode-ai["']/g, replacement: 'from "@blitxcode/cli"' },
-  { pattern: /from\s+["']@opencode-ai\/cli(\/[^"']*)?["']/g, replacement: 'from "@blitxcode/cli$1"' },
-  { pattern: /from\s+["']@opencode-ai\/sdk(\/[^"']*)?["']/g, replacement: 'from "@blitxcode/sdk$1"' },
-  { pattern: /from\s+["']@opencode-ai\/plugin(\/[^"']*)?["']/g, replacement: 'from "@blitxcode/plugin$1"' },
+  { pattern: /from\s+["']opencode-ai["']/g, replacement: 'from "@legion/cli"' },
+  { pattern: /from\s+["']@opencode-ai\/cli(\/[^"']*)?["']/g, replacement: 'from "@legion/cli$1"' },
+  { pattern: /from\s+["']@opencode-ai\/sdk(\/[^"']*)?["']/g, replacement: 'from "@legion/sdk$1"' },
+  { pattern: /from\s+["']@opencode-ai\/plugin(\/[^"']*)?["']/g, replacement: 'from "@legion/plugin$1"' },
 
   // In require statements (supports subpaths like @opencode-ai/sdk/v2)
-  { pattern: /require\(["']opencode-ai["']\)/g, replacement: 'require("@blitxcode/cli")' },
-  { pattern: /require\(["']@opencode-ai\/cli(\/[^"']*)?["']\)/g, replacement: 'require("@blitxcode/cli$1")' },
-  { pattern: /require\(["']@opencode-ai\/sdk(\/[^"']*)?["']\)/g, replacement: 'require("@blitxcode/sdk$1")' },
-  { pattern: /require\(["']@opencode-ai\/plugin(\/[^"']*)?["']\)/g, replacement: 'require("@blitxcode/plugin$1")' },
+  { pattern: /require\(["']opencode-ai["']\)/g, replacement: 'require("@legion/cli")' },
+  { pattern: /require\(["']@opencode-ai\/cli(\/[^"']*)?["']\)/g, replacement: 'require("@legion/cli$1")' },
+  { pattern: /require\(["']@opencode-ai\/sdk(\/[^"']*)?["']\)/g, replacement: 'require("@legion/sdk$1")' },
+  { pattern: /require\(["']@opencode-ai\/plugin(\/[^"']*)?["']\)/g, replacement: 'require("@legion/plugin$1")' },
 
   // Internal placeholder hostname used for in-process RPC (never resolved by DNS)
   { pattern: /opencode\.internal/g, replacement: "kilo.internal" },
 
   // In npx/npm commands
-  { pattern: /npx opencode-ai/g, replacement: "npx @blitxcode/cli" },
-  { pattern: /npm install opencode-ai/g, replacement: "npm install @blitxcode/cli" },
-  { pattern: /bun add opencode-ai/g, replacement: "bun add @blitxcode/cli" },
+  { pattern: /npx opencode-ai/g, replacement: "npx @legion/cli" },
+  { pattern: /npm install opencode-ai/g, replacement: "npm install @legion/cli" },
+  { pattern: /bun add opencode-ai/g, replacement: "bun add @legion/cli" },
 
   // SDK public API renames (Opencode → Kilo)
   // Order matters: longer names first to avoid partial matches

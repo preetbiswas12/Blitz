@@ -1,7 +1,7 @@
 import { describe, expect } from "bun:test"
 import { Cause, Effect, Exit, Layer } from "effect"
 import { HttpClient } from "effect/unstable/http"
-import { run, type Profile } from "@blitxcode/sandbox"
+import { run, type Profile } from "@legion/sandbox"
 import { Agent } from "@/agent/agent"
 import * as ToolNetwork from "@/kilocode/sandbox/network"
 import { MessageID, SessionID } from "@/session/schema"

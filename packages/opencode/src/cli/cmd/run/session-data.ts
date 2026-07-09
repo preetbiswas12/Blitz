@@ -24,7 +24,7 @@
 //   `data.questions`. The footer shows whichever is first. When a reply
 //   event arrives, the queue entry is removed and the footer falls back
 //   to the next pending request or to the prompt view.
-import type { Part, PermissionRequest, QuestionRequest, ToolPart } from "@blitxcode/sdk/v2"
+import type { Part, PermissionRequest, QuestionRequest, ToolPart } from "@legion/sdk/v2"
 import type { RunInteractiveTerminalSnapshot } from "@/kilocode/cli/cmd/run/types" // kilocode_change
 import type { Event } from "./event"
 import * as Locale from "@/util/locale"

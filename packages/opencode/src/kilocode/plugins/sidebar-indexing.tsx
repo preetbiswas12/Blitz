@@ -1,6 +1,6 @@
-import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@blitxcode/plugin/tui"
+import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@legion/plugin/tui"
 import { createEffect, createMemo, createSignal, onCleanup, onMount, Show } from "solid-js"
-import type { IndexingStatus, IndexingStatusState } from "@blitxcode/kilo-indexing/status"
+import type { IndexingStatus, IndexingStatusState } from "@legion/kilo-indexing/status"
 import * as Log from "@opencode-ai/core/util/log"
 import { useSync } from "@/cli/cmd/tui/context/sync"
 import { formatIndexingLabel } from "../indexing-label"

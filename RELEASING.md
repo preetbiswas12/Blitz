@@ -51,16 +51,16 @@ Downloads all build artifacts and publishes to every distribution channel:
 - Commits the version bump, tags the commit, and pushes to the repo.
 - Promotes the draft GitHub Release to a published release.
 
-#### CLI (`@blitxcode/cli`)
+#### CLI (`@legion/cli`)
 
-- Publishes platform-specific binary packages to **npm** (e.g. `@blitxcode/cli-linux-x64`, `@blitxcode/cli-darwin-arm64`, etc.).
-- Publishes the main `@blitxcode/cli` package to **npm** with optional dependencies on the binary packages.
+- Publishes platform-specific binary packages to **npm** (e.g. `@legion/cli-linux-x64`, `@legion/cli-darwin-arm64`, etc.).
+- Publishes the main `@legion/cli` package to **npm** with optional dependencies on the binary packages.
 - Builds and pushes a multi-arch **Docker image** (`ghcr.io/preetbiswas12/blitz`) to GitHub Container Registry (linux/amd64 + linux/arm64).
 
-#### SDK (`@blitxcode/sdk`)
+#### SDK (`@legion/sdk`)
 
 - Builds and publishes the TypeScript SDK to **npm**.
 
-#### Plugin (`@blitxcode/plugin`)
+#### Plugin (`@legion/plugin`)
 
 - Builds and publishes the plugin interface package to **npm**.

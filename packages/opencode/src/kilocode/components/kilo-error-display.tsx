@@ -2,7 +2,7 @@ import { createMemo, Match, Switch, type JSX } from "solid-js"
 import { SplitBorder } from "@tui/component/border"
 import { useTheme } from "@tui/context/theme"
 import { parseKiloErrorCode, kiloErrorTitle, kiloErrorDescription } from "@/kilocode/kilo-errors"
-import type { AssistantMessage } from "@blitxcode/sdk/v2"
+import type { AssistantMessage } from "@legion/sdk/v2"
 
 interface KiloErrorBlockProps {
   error: NonNullable<AssistantMessage["error"]>

@@ -8,7 +8,7 @@ import type {
   TuiAttentionSoundName,
   TuiAttentionSoundPack,
   TuiAttentionSoundPackInfo,
-} from "@blitxcode/plugin/tui"
+} from "@legion/plugin/tui"
 import stripAnsi from "strip-ansi"
 import type { TuiConfig } from "./config/tui"
 import { isAttentionSoundName } from "./config/tui-schema"

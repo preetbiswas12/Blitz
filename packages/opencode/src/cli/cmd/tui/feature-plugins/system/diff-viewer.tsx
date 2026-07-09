@@ -1,6 +1,6 @@
 /** @jsxImportSource @opentui/solid */
-import type { TuiPlugin, TuiPluginApi, TuiRouteCurrent } from "@blitxcode/plugin/tui"
-import type { SnapshotFileDiff, VcsFileDiff } from "@blitxcode/sdk/v2"
+import type { TuiPlugin, TuiPluginApi, TuiRouteCurrent } from "@legion/plugin/tui"
+import type { SnapshotFileDiff, VcsFileDiff } from "@legion/sdk/v2"
 import { TextAttributes, type BorderSides, type BoxRenderable, type ScrollBoxRenderable } from "@opentui/core"
 import { LANGUAGE_EXTENSIONS } from "@/lsp/language"
 import { useBindings, useCommandShortcut } from "@tui/keymap"

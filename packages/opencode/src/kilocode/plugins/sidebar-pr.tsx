@@ -1,5 +1,5 @@
 // kilocode_change - new file
-import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@blitxcode/plugin/tui"
+import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@legion/plugin/tui"
 import { createMemo, createResource, Show } from "solid-js"
 import { Process } from "@/util/process"
 

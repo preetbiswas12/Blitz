@@ -1,4 +1,4 @@
-import type { TuiPlugin, TuiPluginApi, TuiPluginModule, TuiSidebarBackgroundProcessItem } from "@blitxcode/plugin/tui"
+import type { TuiPlugin, TuiPluginApi, TuiPluginModule, TuiSidebarBackgroundProcessItem } from "@legion/plugin/tui"
 import { createMemo, createSignal, For, Show } from "solid-js"
 
 const id = "internal:kilo-sidebar-background-processes"

@@ -8,18 +8,18 @@ Kilo is the all-in-one agentic engineering platform. Build, ship, and iterate fa
 
 [Website](https://blitx.ai) · [Install](https://blitx.ai/install) · [IDE](https://blitx.ai/landing/vs-code) · [CLI](https://blitx.ai/cli) · [Docs](https://blitx.ai/docs) · [Models](https://blitx.ai/leaderboard) · [Gateway](https://blitx.ai/gateway) · [Pricing](https://blitx.ai/pricing) · [Blitx Pass](https://blitx.ai/pricing/kilo-pass)
 
-[500+ models](https://blitx.ai/leaderboard). One open source agent in [VS Code](https://blitx.ai/vscode-marketplace), [JetBrains](https://plugins.jetbrains.com/plugin/27133-kilo-code), [CLI](https://www.npmjs.com/package/@blitxcode/cli), [Slack](https://blitx.ai/slack), and [Cloud](https://blitx.ai/cloud).
+[500+ models](https://blitx.ai/leaderboard). One open source agent in [VS Code](https://blitx.ai/vscode-marketplace), [JetBrains](https://plugins.jetbrains.com/plugin/27133-kilo-code), [CLI](https://www.npmjs.com/package/@legion/cli), [Slack](https://blitx.ai/slack), and [Cloud](https://blitx.ai/cloud).
 
 ## Install
 
 ```bash
-npm install -g @blitxcode/cli
+npm install -g @legion/cli
 ```
 
 Or run directly with npx:
 
 ```bash
-npx --package @blitxcode/cli kilo
+npx --package @legion/cli kilo
 ```
 
 ## Getting Started

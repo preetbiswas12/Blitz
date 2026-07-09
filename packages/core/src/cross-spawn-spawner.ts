@@ -1,7 +1,7 @@
 import type * as Arr from "effect/Array"
 import { NodeFileSystem, NodeSink, NodeStream } from "@effect/platform-node"
 import * as NodePath from "@effect/platform-node/NodePath"
-import { prepareCommand as prepareSandbox } from "@blitxcode/sandbox" // kilocode_change
+import { prepareCommand as prepareSandbox } from "@legion/sandbox" // kilocode_change
 import * as Deferred from "effect/Deferred"
 import * as Effect from "effect/Effect"
 import * as Exit from "effect/Exit"

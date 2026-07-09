@@ -1,6 +1,6 @@
 import { describe, expect, spyOn, test } from "bun:test"
 import { Effect } from "effect"
-import { Telemetry } from "@blitxcode/kilo-telemetry"
+import { Telemetry } from "@legion/kilo-telemetry"
 import { Global } from "@opencode-ai/core/global"
 import * as Log from "@opencode-ai/core/util/log"
 import { Agent } from "../../src/agent/agent"

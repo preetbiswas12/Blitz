@@ -1,5 +1,5 @@
 /**
- * Re-export Lucide icons for consumers of @blitxcode/kilo-ui.
+ * Re-export Lucide icons for consumers of @legion/kilo-ui.
  * Only add icons here that are actually used — esbuild/Vite will
  * tree-shake unused exports but explicit re-exports keep the API small.
  */

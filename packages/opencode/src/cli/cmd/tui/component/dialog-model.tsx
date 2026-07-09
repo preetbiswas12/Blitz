@@ -7,7 +7,7 @@ import { DialogSelect } from "@tui/ui/dialog-select"
 import { useDialog } from "@tui/ui/dialog"
 import { createDialogProviderOptions, DialogProvider } from "./dialog-provider"
 import { DialogVariant } from "./dialog-variant"
-import type { Model } from "@blitxcode/sdk/v2" // kilocode_change
+import type { Model } from "@legion/sdk/v2" // kilocode_change
 import * as fuzzysort from "fuzzysort"
 import { useConnected } from "./use-connected"
 import { ModelInfoPanel } from "@/kilocode/components/model-info-panel" // kilocode_change

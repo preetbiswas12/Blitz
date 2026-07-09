@@ -1,6 +1,6 @@
 import { describe, expect } from "bun:test"
 import { Cause, Effect, Exit } from "effect"
-import { run, type Profile } from "@blitxcode/sandbox"
+import { run, type Profile } from "@legion/sandbox"
 import * as Network from "@/kilocode/sandbox/network"
 import { it } from "../../lib/effect"
 

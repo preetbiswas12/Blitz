@@ -3,7 +3,7 @@ import { Cause, Effect, Exit } from "effect"
 import type { MCP as MCPNS } from "../../src/mcp/index"
 import { testEffect } from "../lib/effect"
 import * as SandboxNetwork from "../../src/kilocode/sandbox/network" // kilocode_change
-import { run as runSandbox, type Profile } from "@blitxcode/sandbox" // kilocode_change
+import { run as runSandbox, type Profile } from "@legion/sandbox" // kilocode_change
 
 // --- Mock infrastructure ---
 

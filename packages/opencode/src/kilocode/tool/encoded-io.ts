@@ -1,6 +1,6 @@
 import { dirname } from "node:path"
 import { Effect } from "effect"
-import { batchMutations, enabled, ensureDirectory } from "@blitxcode/sandbox"
+import { batchMutations, enabled, ensureDirectory } from "@legion/sandbox"
 import type { AppFileSystem } from "@opencode-ai/core/filesystem"
 import * as Encoding from "../encoding"
 import * as Bom from "@/util/bom"

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import type { QuestionRequest } from "@blitxcode/sdk/v2"
+import type { QuestionRequest } from "@legion/sdk/v2"
 import {
   createQuestionBodyState,
   questionConfirm,

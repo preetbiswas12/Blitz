@@ -1,4 +1,4 @@
-import type { Model } from "@blitxcode/sdk/v2"
+import type { Model } from "@legion/sdk/v2"
 import { Schema } from "effect"
 
 export const schema = Schema.Struct({

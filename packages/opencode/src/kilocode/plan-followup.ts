@@ -1,4 +1,4 @@
-import { Telemetry } from "@blitxcode/kilo-telemetry"
+import { Telemetry } from "@legion/kilo-telemetry"
 import { Agent } from "@/agent/agent"
 import { Bus } from "@/bus"
 import { TuiEvent } from "@/cli/cmd/tui/event"

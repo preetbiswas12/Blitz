@@ -1,5 +1,5 @@
 //
-// @blitxcode/kilo-ui
+// @legion/kilo-ui
 //
 // Theme and style override layer for @opencode-ai/ui that matches the
 // visual style of the legacy Blitx Code VS Code extension.

@@ -190,7 +190,7 @@ export namespace BackgroundProcess {
   type Probe = "owned" | "gone" | "foreign" | "unknown"
 
   class StateService extends Context.Service<StateService, { readonly get: () => Effect.Effect<State> }>()(
-    "@blitxcode/BackgroundProcess.State",
+    "@legion/BackgroundProcess.State",
   ) {}
 
   function scoped(ctx: InstanceContext) {

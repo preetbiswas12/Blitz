@@ -1,5 +1,5 @@
-import type { Event } from "@blitxcode/sdk/v2"
-import type { TuiAttentionSoundName, TuiPlugin, TuiPluginApi } from "@blitxcode/plugin/tui"
+import type { Event } from "@legion/sdk/v2"
+import type { TuiAttentionSoundName, TuiPlugin, TuiPluginApi } from "@legion/plugin/tui"
 import type { InternalTuiPlugin } from "../../plugin/internal"
 
 const id = "internal:notifications"

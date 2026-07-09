@@ -3,7 +3,7 @@ import { Effect, Layer, Record, Result, Schema, Context } from "effect"
 import { NonNegativeInt } from "@opencode-ai/core/schema"
 import { Global } from "@opencode-ai/core/global"
 import { AppFileSystem } from "@opencode-ai/core/filesystem"
-import { Telemetry } from "@blitxcode/kilo-telemetry" // kilocode_change
+import { Telemetry } from "@legion/kilo-telemetry" // kilocode_change
 
 export const OAUTH_DUMMY_KEY = "kilo-oauth-dummy-key" // kilocode_change
 

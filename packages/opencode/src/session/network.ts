@@ -119,7 +119,7 @@ export namespace SessionNetwork {
   }
 
   class StateService extends Context.Service<StateService, { readonly get: () => Effect.Effect<StateShape> }>()(
-    "@blitxcode/SessionNetwork.State",
+    "@legion/SessionNetwork.State",
   ) {}
 
   const stateLayer = Layer.effect(

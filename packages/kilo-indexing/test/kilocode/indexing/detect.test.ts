@@ -19,25 +19,25 @@ describe("indexing plugin detection", () => {
   test("normalizes supported plugin forms", () => {
     expect(normalizePluginName("kilo-indexing")).toBe("kilo-indexing")
     expect(normalizePluginName("kilo-indexing@1.2.3")).toBe("kilo-indexing")
-    expect(normalizePluginName("@blitxcode/kilo-indexing")).toBe("@blitxcode/kilo-indexing")
-    expect(normalizePluginName("@blitxcode/kilo-indexing@1.2.3")).toBe("@blitxcode/kilo-indexing")
-    expect(normalizePluginName("../../packages/kilo-indexing")).toBe("@blitxcode/kilo-indexing")
+    expect(normalizePluginName("@legion/kilo-indexing")).toBe("@legion/kilo-indexing")
+    expect(normalizePluginName("@legion/kilo-indexing@1.2.3")).toBe("@legion/kilo-indexing")
+    expect(normalizePluginName("../../packages/kilo-indexing")).toBe("@legion/kilo-indexing")
     expect(normalizePluginName("file:///tmp/.opencode/plugin/kilo-indexing.js")).toBe("kilo-indexing")
-    expect(normalizePluginName("file:///tmp/node_modules/@blitxcode/kilo-indexing/index.js")).toBe(
-      "@blitxcode/kilo-indexing",
+    expect(normalizePluginName("file:///tmp/node_modules/@legion/kilo-indexing/index.js")).toBe(
+      "@legion/kilo-indexing",
     )
-    expect(normalizePluginName("file:///tmp/repo/packages/kilo-indexing/src/index.ts")).toBe("@blitxcode/kilo-indexing")
+    expect(normalizePluginName("file:///tmp/repo/packages/kilo-indexing/src/index.ts")).toBe("@legion/kilo-indexing")
   })
 
   test("detects supported indexing plugin specifiers", () => {
     const values = [
       "kilo-indexing",
       "kilo-indexing@1.2.3",
-      "@blitxcode/kilo-indexing",
-      "@blitxcode/kilo-indexing@1.2.3",
+      "@legion/kilo-indexing",
+      "@legion/kilo-indexing@1.2.3",
       "../../packages/kilo-indexing",
       "file:///tmp/.opencode/plugin/kilo-indexing.js",
-      "file:///tmp/node_modules/@blitxcode/kilo-indexing/index.js",
+      "file:///tmp/node_modules/@legion/kilo-indexing/index.js",
       "file:///tmp/repo/packages/kilo-indexing/src/index.ts",
     ]
 

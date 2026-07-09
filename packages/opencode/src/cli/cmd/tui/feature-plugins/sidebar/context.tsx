@@ -1,5 +1,5 @@
-import type { AssistantMessage } from "@blitxcode/sdk/v2"
-import type { TuiPlugin, TuiPluginApi } from "@blitxcode/plugin/tui"
+import type { AssistantMessage } from "@legion/sdk/v2"
+import type { TuiPlugin, TuiPluginApi } from "@legion/plugin/tui"
 import type { InternalTuiPlugin } from "../../plugin/internal"
 import { createMemo } from "solid-js"
 

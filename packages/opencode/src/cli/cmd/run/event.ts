@@ -5,7 +5,7 @@ import type {
   SyncEventMessagePartUpdated,
   SyncEventMessageRemoved,
   SyncEventMessageUpdated,
-} from "@blitxcode/sdk/v2"
+} from "@legion/sdk/v2"
 
 type MessageUpdated = {
   id: string

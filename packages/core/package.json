@@ -26,7 +26,7 @@
     "@types/semver": "catalog:"
   },
   "dependencies": {
-    "@blitzcode/sandbox": "workspace:*",
+    "@legion/sandbox": "workspace:*",
     "@effect/opentelemetry": "catalog:",
     "@effect/platform-node": "catalog:",
     "@npmcli/arborist": "9.4.0",

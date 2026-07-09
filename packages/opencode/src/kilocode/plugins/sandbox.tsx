@@ -1,4 +1,4 @@
-import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@blitxcode/plugin/tui"
+import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@legion/plugin/tui"
 import { createEffect, createSignal, on, type Accessor } from "solid-js"
 
 const id = "internal:sandbox"

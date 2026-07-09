@@ -1,4 +1,4 @@
-import type { Session as SDKSession, Message, Part } from "@blitxcode/sdk/v2"
+import type { Session as SDKSession, Message, Part } from "@legion/sdk/v2"
 import { Session } from "@/session/session"
 import { MessageV2 } from "../../session/message-v2"
 import { CliError, effectCmd } from "../effect-cmd"

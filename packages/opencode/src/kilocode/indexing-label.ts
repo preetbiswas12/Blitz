@@ -1,4 +1,4 @@
-import type { IndexingStatus } from "@blitxcode/kilo-indexing/status"
+import type { IndexingStatus } from "@legion/kilo-indexing/status"
 
 export function formatIndexingLabel(status: IndexingStatus): string {
   if (status.state === "In Progress") {

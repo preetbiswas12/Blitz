@@ -5,7 +5,7 @@ import { AgentSideConnection, ndJsonStream } from "@agentclientprotocol/sdk"
 import { ACP } from "@/acp/agent"
 import { Server } from "@/server/server"
 import { ServerAuth } from "@/server/auth"
-import { createKiloClient } from "@blitxcode/sdk/v2"
+import { createKiloClient } from "@legion/sdk/v2"
 import { withNetworkOptions, resolveNetworkOptions } from "../network"
 import { ACPProfile } from "@/acp/profile"
 

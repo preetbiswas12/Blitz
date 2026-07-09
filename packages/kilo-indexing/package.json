@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@blitzcode/kilo-indexing",
+  "name": "@legion/kilo-indexing",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",
@@ -34,7 +34,7 @@
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "3.1005.0",
     "@aws-sdk/credential-provider-ini": "3.972.31",
-    "@blitzcode/plugin": "workspace:*",
+    "@legion/plugin": "workspace:*",
     "@lancedb/lancedb": "0.26.2",
     "@qdrant/js-client-rest": "1.17.0",
     "async-mutex": "0.5.0",

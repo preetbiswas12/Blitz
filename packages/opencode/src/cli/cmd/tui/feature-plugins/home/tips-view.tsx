@@ -1,4 +1,4 @@
-import type { TuiPluginApi } from "@blitxcode/plugin/tui"
+import type { TuiPluginApi } from "@legion/plugin/tui"
 import { createMemo, For, type Accessor } from "solid-js"
 import { DEFAULT_THEMES, useTheme } from "@tui/context/theme"
 import { KILO_TIPS } from "@/kilocode/cli/cmd/tui/feature-plugins/home/tips" // kilocode_change

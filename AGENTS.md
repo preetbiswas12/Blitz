@@ -14,7 +14,7 @@ Blitx CLI is an open source AI coding agent that generates code from natural lan
 - **Typecheck**: `bun turbo typecheck` (uses `tsgo`, not `tsc`).
 - **Test**: `bun test` from `packages/opencode/` (NOT from root -- root blocks tests)
 - **Single test**: `bun test ./test/tool/tool-define.test.ts` from `packages/opencode/`
-- **CLI build artifact size check**: after `bun run script/build.ts --single --skip-install` in `packages/opencode/`, use `du -h dist/*/*/bin/blitx` (scoped package output lives under `dist/@blitxcode/`)
+- **CLI build artifact size check**: after `bun run script/build.ts --single --skip-install` in `packages/opencode/`, use `du -h dist/*/*/bin/blitx` (scoped package output lives under `dist/@legion/`)
 - **SDK regen**: After changing server endpoints in `packages/opencode/src/server/`, run `./script/generate.ts` from root to regenerate `packages/sdk/js/`
 - **opencode annotation check**: `bun run script/check-opencode-annotations.ts` from repo root. CI runs this on PRs touching `packages/opencode/` — every Blitx-specific change in shared opencode files must be annotated with `kilocode_change` markers. Exempt paths (no markers needed): `packages/opencode/src/kilocode/`, `packages/opencode/test/kilocode/`, and any path containing `kilocode` in the name.
 - **Effect facade ratchet**: Do not add runtime-backed Promise facades to shared `packages/opencode/src` Effect services; use service dependencies, `AppRuntime`, or Blitx-owned boundaries. Run `bun run script/check-opencode-promise-facades.ts` when touching service adapters.
@@ -44,15 +44,15 @@ Turborepo + Bun workspaces. The packages you'll work with most:
 
 | Package | Name | Purpose |
 |---|---|---|
-| `packages/opencode/` | `@blitxcode/cli` | Core CLI -- agents, tools, sessions, server, TUI. This is where most work happens. |
-| `packages/sdk/js/` | `@blitxcode/sdk` | Auto-generated TypeScript SDK (client for the server API). Do not edit `src/gen/` by hand. |
+| `packages/opencode/` | `@legion/cli` | Core CLI -- agents, tools, sessions, server, TUI. This is where most work happens. |
+| `packages/sdk/js/` | `@legion/sdk` | Auto-generated TypeScript SDK (client for the server API). Do not edit `src/gen/` by hand. |
 | `packages/kilo-vscode/` | `blitx-code` | VS Code extension with sidebar chat + Agent Manager. See its own `AGENTS.md` for details. |
-| `packages/kilo-gateway/` | `@blitxcode/kilo-gateway` | Blitx auth, provider routing, API integration |
-| `packages/kilo-telemetry/` | `@blitxcode/kilo-telemetry` | PostHog analytics + OpenTelemetry |
-| `packages/kilo-i18n/` | `@blitxcode/kilo-i18n` | Internationalization / translations |
-| `packages/kilo-ui/` | `@blitxcode/kilo-ui` | SolidJS component library shared by the extension webview and docs screenshot stories |
+| `packages/kilo-gateway/` | `@legion/kilo-gateway` | Blitx auth, provider routing, API integration |
+| `packages/kilo-telemetry/` | `@legion/kilo-telemetry` | PostHog analytics + OpenTelemetry |
+| `packages/kilo-i18n/` | `@legion/kilo-i18n` | Internationalization / translations |
+| `packages/kilo-ui/` | `@legion/kilo-ui` | SolidJS component library shared by the extension webview and docs screenshot stories |
 | `packages/util/` | `@opencode-ai/util` | Shared utilities (error, path, retry, slug, etc.) |
-| `packages/plugin/` | `@blitxcode/plugin` | Plugin/tool interface definitions |
+| `packages/plugin/` | `@legion/plugin` | Plugin/tool interface definitions |
 
 ## Commits and PR Titles
 

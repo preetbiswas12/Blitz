@@ -10,7 +10,7 @@ import {
 } from "./shared"
 import { ConfigPlugin } from "@/config/plugin"
 import { InstallationVersion } from "@opencode-ai/core/installation/version"
-import { isIndexingPlugin } from "@blitxcode/kilo-indexing/detect" // kilocode_change
+import { isIndexingPlugin } from "@legion/kilo-indexing/detect" // kilocode_change
 import { isAtomicChatPlugin } from "@/kilocode/atomic-chat-feature" // kilocode_change
 
 export namespace PluginLoader {

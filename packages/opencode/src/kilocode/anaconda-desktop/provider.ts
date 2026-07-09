@@ -1,5 +1,5 @@
-import type { Hooks, Plugin } from "@blitxcode/plugin"
-import type { Model } from "@blitxcode/sdk/v2"
+import type { Hooks, Plugin } from "@legion/plugin"
+import type { Model } from "@legion/sdk/v2"
 import type { Provider } from "@opencode-ai/core/models-dev"
 import { decodeMetadata, PROVIDER_ID, type Metadata, type Modality, type ModelDescriptor } from "./domain"
 

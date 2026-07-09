@@ -21,7 +21,7 @@ import type {
   VcsInfo,
   BackgroundProcessInfo, // kilocode_change
   InteractiveTerminalSnapshot, // kilocode_change
-} from "@blitxcode/sdk/v2"
+} from "@legion/sdk/v2"
 import { createStore, produce, reconcile } from "solid-js/store"
 import { useProject } from "@tui/context/project"
 import { useEvent } from "@tui/context/event"
@@ -37,7 +37,7 @@ import { appendTerminalOutput } from "@/kilocode/interactive-terminal/output" //
 import { useToast } from "@tui/ui/toast" // kilocode_change
 import * as Log from "@opencode-ai/core/util/log"
 import { emptyConsoleState, type ConsoleState } from "@/config/console-state"
-import type { IndexingStatus } from "@blitxcode/kilo-indexing/status" // kilocode_change
+import type { IndexingStatus } from "@legion/kilo-indexing/status" // kilocode_change
 import path from "path"
 import { useKV } from "./kv"
 import { aggregateFailures } from "./aggregate-failures"

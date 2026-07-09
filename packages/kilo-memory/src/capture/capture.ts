@@ -1,4 +1,4 @@
-// Public entry point (`@blitxcode/kilo-memory/capture`). Implementation lives in focused siblings;
+// Public entry point (`@legion/kilo-memory/capture`). Implementation lives in focused siblings;
 // this barrel keeps the import surface stable.
 export * from "./parse"
 export * from "./diff"

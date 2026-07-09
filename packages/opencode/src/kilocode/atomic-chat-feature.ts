@@ -1,4 +1,4 @@
-import { ATOMIC_CHAT_PLUGIN } from "@blitxcode/plugin-atomic-chat"
+import { ATOMIC_CHAT_PLUGIN } from "@legion/plugin-atomic-chat"
 import { parsePluginSpecifier } from "@/plugin/shared"
 
 type PluginSpec = string | [string, Record<string, unknown>]

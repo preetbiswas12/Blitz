@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@blitzcode/kilo-telemetry",
+  "name": "@legion/kilo-telemetry",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",

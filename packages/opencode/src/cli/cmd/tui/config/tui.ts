@@ -23,7 +23,7 @@ import { ConfigVariable } from "@/config/variable"
 import { Npm } from "@opencode-ai/core/npm"
 import { KilocodeDefaultPlugins } from "@/kilocode/config/default-plugins" // kilocode_change
 import type { DeepMutable } from "@opencode-ai/core/schema"
-import type { TuiAttentionSoundName } from "@blitxcode/plugin/tui"
+import type { TuiAttentionSoundName } from "@legion/plugin/tui"
 import { FormatError, FormatUnknownError } from "@/cli/error"
 
 const log = Log.create({ service: "tui.config" })
@@ -289,7 +289,7 @@ export const layer = Layer.effect(
           .install(dir, {
             add: [
               {
-                name: "@blitxcode/plugin",
+                name: "@legion/plugin",
                 version: InstallationLocal ? undefined : InstallationVersion,
               },
             ],

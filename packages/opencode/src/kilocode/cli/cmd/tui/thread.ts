@@ -5,7 +5,7 @@ import { TuiConfig } from "@/cli/cmd/tui/config/tui"
 import { validateSession } from "@/cli/cmd/tui/validate-session"
 import { importCloudSession, localSessionID } from "@/kilocode/cloud-session"
 import { DaemonClient } from "@/kilocode/daemon/client"
-import { createKiloClient } from "@blitxcode/sdk/v2"
+import { createKiloClient } from "@legion/sdk/v2"
 
 type TuiInput = Parameters<typeof import("@/cli/cmd/tui/app").tui>[0]
 export type StartInput = Omit<TuiInput, "renderer">

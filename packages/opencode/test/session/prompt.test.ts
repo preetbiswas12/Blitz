@@ -2,7 +2,7 @@ import { NodeFileSystem } from "@effect/platform-node"
 import { FetchHttpClient } from "effect/unstable/http"
 // kilocode_change start
 import { expect, spyOn } from "bun:test"
-import { Telemetry } from "@blitxcode/kilo-telemetry"
+import { Telemetry } from "@legion/kilo-telemetry"
 import { legacyReviewMessage } from "../../src/kilocode/review/command"
 // kilocode_change end
 import { Cause, Deferred, Duration, Effect, Exit, Fiber, Layer } from "effect"

@@ -1,4 +1,4 @@
-import type { Workspace } from "@blitxcode/sdk/v2"
+import type { Workspace } from "@legion/sdk/v2"
 import { useDialog } from "@tui/ui/dialog"
 import { DialogSelect, type DialogSelectOption } from "@tui/ui/dialog-select"
 import { useProject } from "@tui/context/project"

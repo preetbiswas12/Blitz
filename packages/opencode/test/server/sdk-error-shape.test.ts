@@ -8,7 +8,7 @@
  * extracted from the response body, plus `.status` and `.body` attached.
  */
 import { afterEach, describe, expect, test } from "bun:test"
-import { createKiloClient } from "@blitxcode/sdk/v2"
+import { createKiloClient } from "@legion/sdk/v2"
 import { Server } from "../../src/server/server"
 import * as Log from "@opencode-ai/core/util/log"
 import { disposeAllInstances, tmpdir } from "../fixture/fixture"

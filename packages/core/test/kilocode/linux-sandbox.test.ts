@@ -6,7 +6,7 @@ import os from "node:os"
 import path from "node:path"
 import { Effect } from "effect"
 import { ChildProcess, ChildProcessSpawner } from "effect/unstable/process"
-import { backendSupport, run, type Profile } from "@blitxcode/sandbox"
+import { backendSupport, run, type Profile } from "@legion/sandbox"
 import { CrossSpawnSpawner } from "@opencode-ai/core/cross-spawn-spawner"
 
 const linux = process.platform === "linux" ? test : test.skip
@@ -681,7 +681,7 @@ linux("rejects a Bubblewrap helper inside a writable root", async () => {
   const script = [
     'import { Effect } from "effect"',
     'import { ChildProcess, ChildProcessSpawner } from "effect/unstable/process"',
-    'import { backendSupport, run } from "@blitxcode/sandbox"',
+    'import { backendSupport, run } from "@legion/sandbox"',
     'import { CrossSpawnSpawner } from "@opencode-ai/core/cross-spawn-spawner"',
     "if (!backendSupport().available) process.exit(2)",
     `const profile = { filesystem: { allowWrite: [{ path: ${JSON.stringify(root.project)}, kind: "subtree" }], denyWrite: [], denyNames: [] }, network: { mode: "allow", allowedHosts: [] }, environment: { deny: [], set: {} } }`,
@@ -720,7 +720,7 @@ linux("reports network namespace support separately and fails deny mode closed",
   const script = [
     'import { Effect } from "effect"',
     'import { ChildProcess, ChildProcessSpawner } from "effect/unstable/process"',
-    'import { backendSupport, run } from "@blitxcode/sandbox"',
+    'import { backendSupport, run } from "@legion/sandbox"',
     'import { CrossSpawnSpawner } from "@opencode-ai/core/cross-spawn-spawner"',
     'const allow = backendSupport({ mode: "allow", allowedHosts: [] })',
     'const deny = backendSupport({ mode: "deny", allowedHosts: [] })',
@@ -747,7 +747,7 @@ linux("fails closed when Bubblewrap is unavailable", () => {
   const script = [
     'import { Effect } from "effect"',
     'import { ChildProcess, ChildProcessSpawner } from "effect/unstable/process"',
-    'import { backendSupport, run } from "@blitxcode/sandbox"',
+    'import { backendSupport, run } from "@legion/sandbox"',
     'import { CrossSpawnSpawner } from "@opencode-ai/core/cross-spawn-spawner"',
     "if (backendSupport().available) process.exit(2)",
     'const profile = { filesystem: { allowWrite: [], denyWrite: [], denyNames: [] }, network: { mode: "allow", allowedHosts: [] }, environment: { deny: [], set: {} } }',

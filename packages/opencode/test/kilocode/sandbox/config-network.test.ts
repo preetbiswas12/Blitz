@@ -1,7 +1,7 @@
 import { Cause, Effect, Exit, Layer } from "effect"
 import { expect } from "bun:test"
 import { HttpClient } from "effect/unstable/http"
-import { backendSupport } from "@blitxcode/sandbox"
+import { backendSupport } from "@legion/sandbox"
 import { ProjectID } from "@/project/schema"
 import { InstanceRef } from "@/effect/instance-ref"
 import * as SandboxPolicy from "@/kilocode/sandbox/policy"

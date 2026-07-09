@@ -1,4 +1,4 @@
-import type { Message, Part, PermissionRequest, QuestionRequest, ToolPart } from "@blitxcode/sdk/v2"
+import type { Message, Part, PermissionRequest, QuestionRequest, ToolPart } from "@legion/sdk/v2"
 import type { Event } from "./event"
 import * as Locale from "@/util/locale"
 import {

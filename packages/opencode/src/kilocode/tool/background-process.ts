@@ -6,7 +6,7 @@ import { InstanceState } from "@/effect/instance-state"
 import { BlitxSession } from "@/kilocode/session"
 import { SessionID } from "@/session/schema"
 import { Effect, Schema } from "effect"
-import { enabled as sandboxed } from "@blitxcode/sandbox"
+import { enabled as sandboxed } from "@legion/sandbox"
 import DESCRIPTION from "./background-process.txt"
 import path from "path"
 

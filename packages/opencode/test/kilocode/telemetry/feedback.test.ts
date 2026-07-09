@@ -1,6 +1,6 @@
 // kilocode_change - new file
 import { describe, expect, test } from "bun:test"
-import { TelemetryEvent } from "@blitxcode/kilo-telemetry"
+import { TelemetryEvent } from "@legion/kilo-telemetry"
 
 describe("TelemetryEvent.FEEDBACK_SUBMITTED", () => {
   test("enum value is human-readable title case", () => {

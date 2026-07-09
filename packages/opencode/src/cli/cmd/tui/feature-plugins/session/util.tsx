@@ -1,4 +1,4 @@
-import type { Part } from "@blitxcode/sdk/v2"
+import type { Part } from "@legion/sdk/v2"
 import { Locale } from "@/util/locale"
 
 export function relativeTime(timestamp: number): string {

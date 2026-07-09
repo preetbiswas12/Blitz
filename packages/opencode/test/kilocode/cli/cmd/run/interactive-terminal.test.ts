@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test"
-import type { Event, ToolPart } from "@blitxcode/sdk/v2"
+import type { Event, ToolPart } from "@legion/sdk/v2"
 import { createSessionData, reduceSessionData } from "@/cli/cmd/run/session-data"
 import { toolInlineInfo } from "@/cli/cmd/run/tool"
 

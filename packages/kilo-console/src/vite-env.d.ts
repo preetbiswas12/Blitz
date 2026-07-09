@@ -1,3 +1,3 @@
 /// <reference types="vite/client" />
 
-declare module "@blitxcode/kilo-web-ui/styles"
+declare module "@legion/kilo-web-ui/styles"

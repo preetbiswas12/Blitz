@@ -1,4 +1,4 @@
-import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@blitxcode/plugin/tui"
+import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@legion/plugin/tui"
 import { createMemo, createResource, For, onCleanup, onMount, Show } from "solid-js"
 import { useLocal } from "@tui/context/local"
 import * as Model from "@tui/util/model"

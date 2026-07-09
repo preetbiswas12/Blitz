@@ -6,6 +6,6 @@ export const DEFAULT_ATOMIC_CHAT_ORIGIN = "http://127.0.0.1:1337"
 /** Ports tried when auto-detecting a running Atomic Chat API (default is 1337). */
 export const ATOMIC_CHAT_PROBE_PORTS = [1337, 1338] as const
 
-export const LOG_PREFIX = "[@blitxcode/plugin-atomic-chat]" as const
+export const LOG_PREFIX = "[@legion/plugin-atomic-chat]" as const
 
-export const ATOMIC_CHAT_PLUGIN = "@blitxcode/plugin-atomic-chat" as const
+export const ATOMIC_CHAT_PLUGIN = "@legion/plugin-atomic-chat" as const

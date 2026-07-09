@@ -1,4 +1,4 @@
-import type { IndexingConfig } from "@blitxcode/kilo-indexing/config"
+import type { IndexingConfig } from "@legion/kilo-indexing/config"
 
 type Auth = unknown
 

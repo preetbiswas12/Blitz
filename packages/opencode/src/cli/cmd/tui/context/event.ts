@@ -1,4 +1,4 @@
-import type { Event, GlobalEvent } from "@blitxcode/sdk/v2"
+import type { Event, GlobalEvent } from "@legion/sdk/v2"
 
 type SyncEvent = Extract<GlobalEvent["payload"], { type: "sync" }>
 type WireSyncEvent = {

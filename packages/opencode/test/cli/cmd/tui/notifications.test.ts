@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test"
 import Notifications from "@/cli/cmd/tui/feature-plugins/system/notifications"
-import type { Event, PermissionRequest, QuestionRequest, Session } from "@blitxcode/sdk/v2"
-import type { TuiAttentionNotifyInput } from "@blitxcode/plugin/tui"
+import type { Event, PermissionRequest, QuestionRequest, Session } from "@legion/sdk/v2"
+import type { TuiAttentionNotifyInput } from "@legion/plugin/tui"
 import { createTuiPluginApi } from "../../../fixture/tui-plugin"
 
 async function setup() {

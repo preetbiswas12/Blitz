@@ -1,4 +1,4 @@
-import type { Provider, ToolListItem } from "@blitxcode/sdk/v2/client"
+import type { Provider, ToolListItem } from "@legion/sdk/v2/client"
 import type { Snapshot } from "../client"
 
 export type McpMap = NonNullable<Snapshot["effective"]["mcp"]>

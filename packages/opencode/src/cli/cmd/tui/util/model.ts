@@ -1,4 +1,4 @@
-import type { Provider } from "@blitxcode/sdk/v2"
+import type { Provider } from "@legion/sdk/v2"
 
 export function index(list: Provider[] | undefined) {
   return new Map((list ?? []).map((item) => [item.id, item] as const))

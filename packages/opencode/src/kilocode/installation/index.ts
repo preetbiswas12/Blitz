@@ -1,5 +1,5 @@
 export const Npm = {
-  name: "@blitxcode/cli",
+  name: "@legion/cli",
   path: "@kilocode%2fcli",
 }
 

@@ -1,1 +1,1 @@
-export type { InteractiveTerminalSnapshot as RunInteractiveTerminalSnapshot } from "@blitxcode/sdk/v2"
+export type { InteractiveTerminalSnapshot as RunInteractiveTerminalSnapshot } from "@legion/sdk/v2"

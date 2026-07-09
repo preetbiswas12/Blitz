@@ -36,7 +36,7 @@ import { MessageID, SessionID } from "@/session/schema"
 import { RuntimeFlags } from "@/effect/runtime-flags"
 import { Command } from "@/command" // kilocode_change
 import * as SandboxNetwork from "@/kilocode/sandbox/network" // kilocode_change
-import { run as runSandbox, type Profile } from "@blitxcode/sandbox" // kilocode_change
+import { run as runSandbox, type Profile } from "@legion/sandbox" // kilocode_change
 
 const node = CrossSpawnSpawner.defaultLayer
 const configLayer = TestConfig.layer({
@@ -408,7 +408,7 @@ describe("tool.registry", () => {
         yield* Effect.promise(() =>
           Bun.write(
             path.join(plugin, "package.json"),
-            JSON.stringify({ name: "@blitxcode/plugin", type: "module", exports: { ".": "./dist/index.js" } }), // kilocode_change
+            JSON.stringify({ name: "@legion/plugin", type: "module", exports: { ".": "./dist/index.js" } }), // kilocode_change
           ),
         )
         yield* Effect.promise(() =>
@@ -428,7 +428,7 @@ describe("tool.registry", () => {
           Bun.write(
             path.join(customTools, "addition.ts"),
             [
-              'import { tool } from "@blitxcode/plugin"', // kilocode_change
+              'import { tool } from "@legion/plugin"', // kilocode_change
               "export default tool({",
               "  description: 'Use this tool to add two numbers and return their sum.',",
               "  args: {",
@@ -545,7 +545,7 @@ describe("tool.registry", () => {
           JSON.stringify({
             name: "custom-tools",
             dependencies: {
-              "@blitxcode/plugin": "^0.0.0",
+              "@legion/plugin": "^0.0.0",
               cowsay: "^1.6.0",
             },
           }),
@@ -560,7 +560,7 @@ describe("tool.registry", () => {
             packages: {
               "": {
                 dependencies: {
-                  "@blitxcode/plugin": "^0.0.0",
+                  "@legion/plugin": "^0.0.0",
                   cowsay: "^1.6.0",
                 },
               },

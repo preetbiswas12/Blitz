@@ -14,7 +14,7 @@ mock.module("@opencode-ai/core/installation/version", () => ({
   InstallationVersion: "test",
 }))
 
-mock.module("@blitxcode/kilo-telemetry", () => ({
+mock.module("@legion/kilo-telemetry", () => ({
   Telemetry: {
     async init() {},
     async updateIdentity() {},

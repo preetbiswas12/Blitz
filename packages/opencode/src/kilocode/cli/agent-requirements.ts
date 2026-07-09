@@ -1,4 +1,4 @@
-import type { AgentRequirementResult } from "@blitxcode/sdk/v2"
+import type { AgentRequirementResult } from "@legion/sdk/v2"
 import { isRecord } from "@/util/record"
 
 type Item = AgentRequirementResult["skills"][number] | AgentRequirementResult["mcps"][number]

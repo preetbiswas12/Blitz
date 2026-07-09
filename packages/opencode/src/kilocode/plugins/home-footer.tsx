@@ -6,7 +6,7 @@
  * to inject the RemoteIndicator alongside the standard directory, MCP,
  * and version information.
  */
-import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@blitxcode/plugin/tui"
+import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@legion/plugin/tui"
 import { createMemo, createSignal, Match, onCleanup, onMount, Show, Switch } from "solid-js"
 import { Global } from "@opencode-ai/core/global"
 

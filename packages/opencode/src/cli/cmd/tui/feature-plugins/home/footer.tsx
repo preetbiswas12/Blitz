@@ -1,4 +1,4 @@
-import type { TuiPlugin, TuiPluginApi } from "@blitxcode/plugin/tui"
+import type { TuiPlugin, TuiPluginApi } from "@legion/plugin/tui"
 import type { InternalTuiPlugin } from "../../plugin/internal"
 import { createMemo, Match, Show, Switch } from "solid-js"
 import { Global } from "@opencode-ai/core/global"

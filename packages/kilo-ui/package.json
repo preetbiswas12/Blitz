@@ -1,5 +1,5 @@
 {
-  "name": "@blitzcode/kilo-ui",
+  "name": "@legion/kilo-ui",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",
@@ -114,7 +114,7 @@
     "test:visual:update": "playwright test --update-snapshots"
   },
   "dependencies": {
-    "@blitzcode/sdk": "workspace:*",
+    "@legion/sdk": "workspace:*",
     "@kobalte/core": "0.13.11",
     "@opencode-ai/core": "workspace:*",
     "@pierre/diffs": "catalog:",

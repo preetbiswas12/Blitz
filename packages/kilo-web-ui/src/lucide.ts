@@ -1,1 +1,1 @@
-export * from "@blitxcode/kilo-ui/lucide"
+export * from "@legion/kilo-ui/lucide"

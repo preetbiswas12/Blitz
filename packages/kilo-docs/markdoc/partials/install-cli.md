@@ -3,7 +3,7 @@ Use Kilo Code directly from your terminal for maximum flexibility.
 ### Install via npm
 
 ```bash
-npm install -g @blitxcode/cli
+npm install -g @legion/cli
 ```
 
 ### Older CPUs (No AVX Support)

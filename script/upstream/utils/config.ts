@@ -57,10 +57,10 @@ export interface MergeConfig {
 
 export const defaultConfig: MergeConfig = {
   packageMappings: [
-    { from: "opencode-ai", to: "@blitxcode/cli" },
-    { from: "@opencode-ai/cli", to: "@blitxcode/cli" },
-    { from: "@opencode-ai/sdk", to: "@blitxcode/sdk" },
-    { from: "@opencode-ai/plugin", to: "@blitxcode/plugin" },
+    { from: "opencode-ai", to: "@legion/cli" },
+    { from: "@opencode-ai/cli", to: "@legion/cli" },
+    { from: "@opencode-ai/sdk", to: "@legion/sdk" },
+    { from: "@opencode-ai/plugin", to: "@legion/plugin" },
   ],
 
   keepOurs: [

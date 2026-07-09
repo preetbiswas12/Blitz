@@ -1,4 +1,4 @@
-import type { BackgroundProcessInfo } from "@blitxcode/sdk/v2"
+import type { BackgroundProcessInfo } from "@legion/sdk/v2"
 import { TextAttributes, type ScrollBoxRenderable } from "@opentui/core"
 import { useTerminalDimensions } from "@opentui/solid"
 import { useDialog } from "@tui/ui/dialog"

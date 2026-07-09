@@ -1,4 +1,4 @@
-import type { IndexingConfig } from "@blitxcode/sdk/v2/client"
+import type { IndexingConfig } from "@legion/sdk/v2/client"
 
 function record(input: unknown): input is Record<string, unknown> {
   return typeof input === "object" && input !== null && !Array.isArray(input)

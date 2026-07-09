@@ -1,4 +1,4 @@
-import type { Plugin } from "@blitxcode/plugin"
+import type { Plugin } from "@legion/plugin"
 import { mkdir, rm } from "node:fs/promises"
 
 export const FolderWorkspacePlugin: Plugin = async ({ experimental_workspace }) => {

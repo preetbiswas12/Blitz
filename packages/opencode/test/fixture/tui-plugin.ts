@@ -1,4 +1,4 @@
-import { createKiloClient } from "@blitxcode/sdk/v2"
+import { createKiloClient } from "@legion/sdk/v2"
 import { RGBA, type CliRenderer } from "@opentui/core"
 import type { HostPluginApi } from "../../src/cli/cmd/tui/plugin/slots"
 import { createTuiResolvedConfig } from "./tui-runtime"

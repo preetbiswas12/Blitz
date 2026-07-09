@@ -24,7 +24,7 @@ export const GenerateCommand = {
           {
             lang: "js",
             source: [
-              `import { createKiloClient } from "@blitxcode/sdk"`,
+              `import { createKiloClient } from "@legion/sdk"`,
               ``,
               `const client = createKiloClient()`,
               `await client.${operation.operationId}({`,

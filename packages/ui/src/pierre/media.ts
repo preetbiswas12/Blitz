@@ -1,4 +1,4 @@
-import type { FileContent } from "@blitxcode/sdk/v2"
+import type { FileContent } from "@legion/sdk/v2"
 
 export type MediaKind = "image" | "audio" | "svg"
 

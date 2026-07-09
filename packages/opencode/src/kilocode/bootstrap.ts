@@ -9,7 +9,7 @@ import { Bus } from "@/bus"
 import { SessionExport } from "@/kilocode/session-export"
 import { createWorkspaceProvider } from "@/kilocode/session-export/workspace-provider"
 import { Instance } from "@/kilocode/instance"
-import { Identity } from "@blitxcode/kilo-telemetry"
+import { Identity } from "@legion/kilo-telemetry"
 
 const log = Log.create({ service: "kilocode-bootstrap" })
 
@@ -18,7 +18,7 @@ export namespace KilocodeBootstrap {
     readonly init: () => Effect.Effect<void, unknown>
   }
 
-  export class Service extends Context.Service<Service, Interface>()("@blitxcode/Bootstrap") {}
+  export class Service extends Context.Service<Service, Interface>()("@legion/Bootstrap") {}
 
   export const layer = Layer.effect(
     Service,

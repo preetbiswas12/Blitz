@@ -1,5 +1,5 @@
 import { createMemo, createSignal } from "solid-js"
-import type { Provider, ProviderAuthAuthorization, ProviderAuthMethod, ProviderConfig } from "@blitxcode/sdk/v2/client"
+import type { Provider, ProviderAuthAuthorization, ProviderAuthMethod, ProviderConfig } from "@legion/sdk/v2/client"
 import { useConfig } from "../../../context/config"
 import { clean, csv, errMsg } from "../../../shared/utils"
 import { authorizeProvider, completeProvider, connectProvider } from "../../../client"

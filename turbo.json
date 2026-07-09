@@ -10,11 +10,11 @@
       "dependsOn": [],
       "outputs": ["dist/**"]
     },
-    "@blitxcode/cli#build": {
-      "dependsOn": ["@blitxcode/sdk#build"],
+    "@legion/cli#build": {
+      "dependsOn": ["@legion/sdk#build"],
       "outputs": ["dist/**"]
     },
-    "@blitxcode/cli#test": {
+    "@legion/cli#test": {
       "dependsOn": ["^build"],
       "outputs": [],
       "passThroughEnv": ["*"]
@@ -23,16 +23,16 @@
       "outputs": [".artifacts/unit/junit.xml"],
       "passThroughEnv": ["*"]
     },
-    "@blitxcode/cli#test:ci": {
+    "@legion/cli#test:ci": {
       "dependsOn": ["^build"],
       "env": ["BLITX_TEST_PROFILE"],
       "outputs": [".artifacts/unit/junit.xml"],
       "passThroughEnv": ["*"]
     },
-    "@blitxcode/kilo-gateway#test:ci": {
+    "@legion/kilo-gateway#test:ci": {
       "outputs": [".artifacts/unit/junit.xml"]
     },
-    "@blitxcode/kilo-docs#build": {
+    "@legion/kilo-docs#build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**"],
       "env": ["POSTHOG_API_KEY", "FREE_TIER_AMOUNT", "NEXT_PUBLIC_POSTHOG_KEY", "NEXT_PUBLIC_POSTHOG_HOST"]

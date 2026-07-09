@@ -74,9 +74,9 @@ bun run package
 From the repo root:
 
 ```bash
-bun run --filter @blitxcode/kilo-docs test
-bun run --filter @blitxcode/kilo-docs build
-bun run --filter @blitxcode/kilo-docs dev
+bun run --filter @legion/kilo-docs test
+bun run --filter @legion/kilo-docs build
+bun run --filter @legion/kilo-docs dev
 ```
 
 For manual docs validation, run the docs site locally, preview the affected page, and check changed links and rendered content.
@@ -146,7 +146,7 @@ To compile a standalone executable:
 Then run it with:
 
 ```bash
-./packages/opencode/dist/@blitxcode/cli-<platform>/bin/kilo
+./packages/opencode/dist/@legion/cli-<platform>/bin/kilo
 ```
 
 Replace `<platform>` with your platform (e.g., `darwin-arm64`, `linux-x64`).

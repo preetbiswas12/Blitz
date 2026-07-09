@@ -1,4 +1,4 @@
-import type { KilocodeSessionModelUsageResponse, Session } from "@blitxcode/sdk/v2"
+import type { KilocodeSessionModelUsageResponse, Session } from "@legion/sdk/v2"
 
 export type SessionModelUsage = KilocodeSessionModelUsageResponse
 export type UsageResult = { sessionID: string; data?: SessionModelUsage }

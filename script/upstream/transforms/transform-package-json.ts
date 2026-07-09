@@ -232,19 +232,19 @@ export interface ReconcileOptions extends PackageJsonOptions {
 
 // Package name mappings
 const PACKAGE_NAME_MAP: Record<string, string> = {
-  "opencode-ai": "@blitxcode/cli",
-  "@opencode-ai/cli": "@blitxcode/cli",
-  "@opencode-ai/sdk": "@blitxcode/sdk",
-  "@opencode-ai/plugin": "@blitxcode/plugin",
+  "opencode-ai": "@legion/cli",
+  "@opencode-ai/cli": "@legion/cli",
+  "@opencode-ai/sdk": "@legion/sdk",
+  "@opencode-ai/plugin": "@legion/plugin",
 }
 
 // Blitx-specific dependencies to inject into specific packages
-// NOTE: When adding new Blitx-specific workspace dependencies (packages starting with @blitxcode/kilo-*),
+// NOTE: When adding new Blitx-specific workspace dependencies (packages starting with @legion/kilo-*),
 // add them here to prevent them from being removed during upstream merges
 const KILO_DEPENDENCIES: Record<string, Record<string, string>> = {
   // packages/opencode/package.json needs these
   "packages/opencode/package.json": {
-    "@blitxcode/kilo-telemetry": "workspace:*",
+    "@legion/kilo-telemetry": "workspace:*",
   },
 }
 
@@ -258,10 +258,10 @@ const KILO_BIN: Record<string, Record<string, string>> = {
 
 // Packages that should have their name transformed
 const TRANSFORM_PACKAGE_NAMES: Record<string, string> = {
-  "package.json": "@blitxcode/kilo",
-  "packages/opencode/package.json": "@blitxcode/cli",
-  "packages/plugin/package.json": "@blitxcode/plugin",
-  "packages/sdk/js/package.json": "@blitxcode/sdk",
+  "package.json": "@legion/kilo",
+  "packages/opencode/package.json": "@legion/cli",
+  "packages/plugin/package.json": "@legion/plugin",
+  "packages/sdk/js/package.json": "@legion/sdk",
 }
 
 // Blitx-specific scripts to preserve from the base branch per package.json.

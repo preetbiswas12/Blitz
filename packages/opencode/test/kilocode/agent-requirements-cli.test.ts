@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import type { AgentRequirementResult } from "@blitxcode/sdk/v2"
+import type { AgentRequirementResult } from "@legion/sdk/v2"
 import { formatError as formatStreamError } from "@/cli/cmd/run/session-data"
 import * as Requirements from "@/kilocode/cli/agent-requirements"
 

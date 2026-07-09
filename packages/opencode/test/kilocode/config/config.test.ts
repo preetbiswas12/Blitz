@@ -76,7 +76,7 @@ function decode(input: unknown): Config.Info {
 }
 
 const cfg: Partial<Config.Info> = {
-  plugin: ["@blitxcode/kilo-indexing"],
+  plugin: ["@legion/kilo-indexing"],
   indexing: {
     provider: "ollama",
     vectorStore: "qdrant",

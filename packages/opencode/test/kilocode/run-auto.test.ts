@@ -122,7 +122,7 @@ afterEach(() => {
 })
 
 async function run(sdk: Record<string, unknown>) {
-  mock.module("@blitxcode/sdk/v2", () => ({
+  mock.module("@legion/sdk/v2", () => ({
     createKiloClient: () => sdk,
   }))
 

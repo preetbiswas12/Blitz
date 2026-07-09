@@ -1,4 +1,4 @@
-import type { Hooks, PluginInput } from "@blitxcode/plugin"
+import type { Hooks, PluginInput } from "@legion/plugin"
 
 export async function AzureAuthPlugin(_input: PluginInput): Promise<Hooks> {
   const prompts = []

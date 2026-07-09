@@ -1,4 +1,4 @@
-import { createKiloClient } from "@blitxcode/sdk/v2"
+import { createKiloClient } from "@legion/sdk/v2"
 import { SessionID } from "@/session/schema"
 import { Schema } from "effect"
 

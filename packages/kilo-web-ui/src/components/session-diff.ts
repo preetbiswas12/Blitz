@@ -1,1 +1,1 @@
-export * from "@blitxcode/kilo-ui/session-diff"
+export * from "@legion/kilo-ui/session-diff"

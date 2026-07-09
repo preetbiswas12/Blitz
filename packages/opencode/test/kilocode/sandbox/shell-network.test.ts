@@ -11,7 +11,7 @@ import { Truncate } from "@/tool/truncate"
 import { MessageID, SessionID } from "@/session/schema"
 import { AppFileSystem } from "@opencode-ai/core/filesystem"
 import { CrossSpawnSpawner } from "@opencode-ai/core/cross-spawn-spawner"
-import { run as runSandbox, type Profile } from "@blitxcode/sandbox"
+import { run as runSandbox, type Profile } from "@legion/sandbox"
 import { TestConfig } from "../../fixture/config"
 import { provideInstance, tmpdirScoped } from "../../fixture/fixture"
 

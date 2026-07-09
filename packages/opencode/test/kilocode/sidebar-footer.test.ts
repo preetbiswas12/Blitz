@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import type { Message } from "@blitxcode/sdk/v2"
+import type { Message } from "@legion/sdk/v2"
 
 interface KiloPassState {
   currentPeriodBaseCreditsUsd: number

@@ -23,7 +23,7 @@ import { ServerAuth } from "@/server/auth"
 import { buildRunMessage } from "@/kilocode/cli/cmd/run-message" // kilocode_change
 import { EOL } from "os"
 import { Filesystem } from "@/util/filesystem"
-import { createKiloClient, type KiloClient, type Session, type ToolPart } from "@blitxcode/sdk/v2"
+import { createKiloClient, type KiloClient, type Session, type ToolPart } from "@legion/sdk/v2"
 import { Agent } from "@/agent/agent"
 import { Permission } from "@/permission"
 import { RuntimeFlags } from "@/effect/runtime-flags"

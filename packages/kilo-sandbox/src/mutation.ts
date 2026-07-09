@@ -181,7 +181,7 @@ export const mutate: Runner = (profile, request) =>
     }),
   )
 
-const CurrentRunner = Context.Reference<Runner>("@blitxcode/sandbox/CurrentMutationRunner", {
+const CurrentRunner = Context.Reference<Runner>("@legion/sandbox/CurrentMutationRunner", {
   defaultValue: () => mutate,
 })
 

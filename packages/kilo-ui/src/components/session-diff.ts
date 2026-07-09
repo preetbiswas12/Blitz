@@ -5,7 +5,7 @@
 // diffs render at their real file positions.
 import { parseDiffFromFile, processFile, type FileDiffMetadata } from "@pierre/diffs"
 import { formatPatch, parsePatch, structuredPatch } from "diff"
-import type { SnapshotFileDiff, VcsFileDiff } from "@blitxcode/sdk/v2"
+import type { SnapshotFileDiff, VcsFileDiff } from "@legion/sdk/v2"
 
 type LegacyDiff = {
   file: string

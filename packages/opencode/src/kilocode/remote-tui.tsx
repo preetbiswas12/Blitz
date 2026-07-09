@@ -4,7 +4,7 @@
  * RemoteIndicator component for the footer status bar.
  */
 
-import type { Event } from "@blitxcode/sdk/v2"
+import type { Event } from "@legion/sdk/v2"
 import { createSignal, onCleanup, onMount, Show } from "solid-js"
 
 type Status = {

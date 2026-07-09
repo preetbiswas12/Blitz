@@ -1,5 +1,5 @@
 import { ulid } from "ulid"
-import type * as SDK from "@blitxcode/sdk/v2"
+import type * as SDK from "@legion/sdk/v2"
 import type { BlitxSession } from "@/kilocode/session"
 
 export namespace IngestQueue {

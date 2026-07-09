@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@blitzcode/plugin-atomic-chat",
+  "name": "@legion/plugin-atomic-chat",
   "version": "1.0.0",
   "description": "Blitx plugin for Atomic Chat: auto-detection and dynamic model discovery (OpenAI-compatible local API)",
   "type": "module",
@@ -17,7 +17,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@blitzcode/plugin": "workspace:*"
+    "@legion/plugin": "workspace:*"
   },
   "devDependencies": {
     "@tsconfig/node22": "catalog:",

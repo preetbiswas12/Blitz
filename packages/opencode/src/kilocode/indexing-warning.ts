@@ -1,4 +1,4 @@
-import type { IndexingStatus } from "@blitxcode/kilo-indexing/status"
+import type { IndexingStatus } from "@legion/kilo-indexing/status"
 
 export const INDEXING_WARNING_CODES = ["qdrant.version-incompatible", "qdrant.version-unavailable"] as const
 

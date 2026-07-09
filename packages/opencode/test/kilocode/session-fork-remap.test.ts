@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, test } from "bun:test"
 import { Effect } from "effect"
-import { createKiloClient } from "@blitxcode/sdk/v2/client"
+import { createKiloClient } from "@legion/sdk/v2/client"
 import { provideTestInstance } from "../fixture/fixture"
 import { Server } from "../../src/server/server"
 import { Session } from "../../src/session/session"

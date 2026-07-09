@@ -130,10 +130,10 @@ async function showRemovalSummary(targets: RemovalTargets, method: Installation.
 
   if (method !== "curl" && method !== "unknown") {
     const cmds: Record<string, string> = {
-      npm: "npm uninstall -g @blitxcode/cli", // kilocode_change
-      pnpm: "pnpm uninstall -g @blitxcode/cli", // kilocode_change
-      bun: "bun remove -g @blitxcode/cli", // kilocode_change
-      yarn: "yarn global remove @blitxcode/cli", // kilocode_change
+      npm: "npm uninstall -g @legion/cli", // kilocode_change
+      pnpm: "pnpm uninstall -g @legion/cli", // kilocode_change
+      bun: "bun remove -g @legion/cli", // kilocode_change
+      yarn: "yarn global remove @legion/cli", // kilocode_change
       brew: `brew uninstall ${KiloBrew.name}`, // kilocode_change
       choco: "choco uninstall kilo", // kilocode_change
       scoop: "scoop uninstall kilo", // kilocode_change
@@ -181,10 +181,10 @@ async function executeUninstall(method: Installation.Method, targets: RemovalTar
 
   if (method !== "curl" && method !== "unknown") {
     const cmds: Record<string, string[]> = {
-      npm: ["npm", "uninstall", "-g", "@blitxcode/cli"], // kilocode_change
-      pnpm: ["pnpm", "uninstall", "-g", "@blitxcode/cli"], // kilocode_change
-      bun: ["bun", "remove", "-g", "@blitxcode/cli"], // kilocode_change
-      yarn: ["yarn", "global", "remove", "@blitxcode/cli"], // kilocode_change
+      npm: ["npm", "uninstall", "-g", "@legion/cli"], // kilocode_change
+      pnpm: ["pnpm", "uninstall", "-g", "@legion/cli"], // kilocode_change
+      bun: ["bun", "remove", "-g", "@legion/cli"], // kilocode_change
+      yarn: ["yarn", "global", "remove", "@legion/cli"], // kilocode_change
       brew: ["brew", "uninstall", KiloBrew.name], // kilocode_change
       choco: ["choco", "uninstall", "kilo"], // kilocode_change
       scoop: ["scoop", "uninstall", "kilo"], // kilocode_change

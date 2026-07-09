@@ -7,7 +7,7 @@
 
 import type { JSX } from "solid-js"
 import type { RGBA } from "@opentui/core"
-import type { ProviderAuthAuthorization } from "@blitxcode/sdk/v2"
+import type { ProviderAuthAuthorization } from "@legion/sdk/v2"
 export { selectProvider } from "@/kilocode/anaconda-desktop/tui/setup"
 
 // ---------------------------------------------------------------------------

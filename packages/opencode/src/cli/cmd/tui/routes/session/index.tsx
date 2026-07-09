@@ -39,7 +39,7 @@ import type {
   TextPart,
   ReasoningPart,
   StepFinishPart,
-} from "@blitxcode/sdk/v2"
+} from "@legion/sdk/v2"
 import * as Log from "@opencode-ai/core/util/log"
 // kilocode_change end
 import { useLocal } from "@tui/context/local"

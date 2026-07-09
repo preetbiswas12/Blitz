@@ -1,5 +1,5 @@
 // kilocode_change - new file
-import { Telemetry, type ReviewCommand } from "@blitxcode/kilo-telemetry"
+import { Telemetry, type ReviewCommand } from "@legion/kilo-telemetry"
 import { SessionNetwork } from "@/session/network"
 import type { SessionID } from "@/session/schema"
 import type { SessionStatus } from "@/session/status"

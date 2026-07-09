@@ -1,4 +1,4 @@
-import type { Hooks } from "@blitxcode/plugin"
+import type { Hooks } from "@legion/plugin"
 import { ATOMIC_CHAT_PROVIDER_KEY } from "../constants"
 
 export function createAuthHook(): NonNullable<Hooks["auth"]> {

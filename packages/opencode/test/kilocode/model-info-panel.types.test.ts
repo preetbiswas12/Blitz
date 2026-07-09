@@ -1,4 +1,4 @@
-import type { Model as SDKModel } from "@blitxcode/sdk/v2"
+import type { Model as SDKModel } from "@legion/sdk/v2"
 import { ModelInfoPanel } from "@/kilocode/components/model-info-panel"
 
 type Assert<T extends true> = T

@@ -1,4 +1,4 @@
-import type { Hooks, PluginInput } from "@blitxcode/plugin"
+import type { Hooks, PluginInput } from "@legion/plugin"
 import * as Log from "@opencode-ai/core/util/log"
 import { OAUTH_DUMMY_KEY } from "../auth"
 import { createServer } from "http"

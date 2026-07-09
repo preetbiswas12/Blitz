@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@blitzcode/sandbox",
+  "name": "@legion/sandbox",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",

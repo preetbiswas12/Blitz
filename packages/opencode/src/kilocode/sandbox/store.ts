@@ -3,7 +3,7 @@ import fs from "node:fs/promises"
 import { realpathSync } from "node:fs"
 import path from "node:path"
 import { Global } from "@opencode-ai/core/global"
-import type { Profile } from "@blitxcode/sandbox"
+import type { Profile } from "@legion/sandbox"
 import type { SessionID } from "@/session/schema"
 
 export namespace SandboxStore {

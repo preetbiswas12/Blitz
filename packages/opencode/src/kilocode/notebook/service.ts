@@ -54,7 +54,7 @@ export interface Interface {
   readonly reject: (input: { requestID: RequestID; error: Failure }) => Effect.Effect<void, NotFoundError>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@blitxcode/Notebook") {}
+export class Service extends Context.Service<Service, Interface>()("@legion/Notebook") {}
 
 export function layer(timeout: Duration.Input = "10 minutes") {
   return Layer.effect(

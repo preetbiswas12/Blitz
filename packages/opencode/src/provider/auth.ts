@@ -1,4 +1,4 @@
-import type { AuthOAuthResult, Hooks } from "@blitxcode/plugin"
+import type { AuthOAuthResult, Hooks } from "@legion/plugin"
 import { serviceUse } from "@opencode-ai/core/effect/service-use"
 import { Auth } from "@/auth"
 import { InstanceState } from "@/effect/instance-state"
@@ -8,7 +8,7 @@ import { ProviderID } from "./schema"
 import { Array as Arr, Effect, Layer, Record, Result, Context, Schema } from "effect"
 
 // kilocode_change start
-import { Telemetry } from "@blitxcode/kilo-telemetry"
+import { Telemetry } from "@legion/kilo-telemetry"
 import { ModelCache } from "./model-cache"
 // kilocode_change end
 

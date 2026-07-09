@@ -1,1 +1,1 @@
-export * from "@blitxcode/kilo-ui/theme"
+export * from "@legion/kilo-ui/theme"

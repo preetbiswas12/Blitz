@@ -2,8 +2,8 @@ import type {
   IndexingConfigInput,
   IndexingTelemetryEvent,
   VectorStoreSearchResult,
-} from "@blitxcode/kilo-indexing/engine"
-import type { IndexingStatus } from "@blitxcode/kilo-indexing/status"
+} from "@legion/kilo-indexing/engine"
+import type { IndexingStatus } from "@legion/kilo-indexing/status"
 import { withTimeout } from "@/util/timeout"
 import type { Event, Log, Message, Request, Result } from "./indexing-worker-protocol"
 import type { IndexingWarning } from "./indexing-warning"

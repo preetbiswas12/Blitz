@@ -5,7 +5,7 @@
  * Guards generated Blitx config dependency artifacts.
  *
  * Blitx loads project config from .kilo/ and .kilocode/ and installs
- * @blitxcode/plugin there at runtime. npm writes package.json, lockfiles,
+ * @legion/plugin there at runtime. npm writes package.json, lockfiles,
  * .gitignore, and node_modules as generated local state. These paths must stay
  * untracked so background installs do not create recurring branch diffs.
  */

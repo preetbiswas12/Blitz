@@ -1,7 +1,7 @@
 import { pathToFileURL } from "url"
-import { hasIndexingPlugin } from "@blitxcode/kilo-indexing/detect"
+import { hasIndexingPlugin } from "@legion/kilo-indexing/detect"
 
-export const INDEXING_PLUGIN = "@blitxcode/kilo-indexing"
+export const INDEXING_PLUGIN = "@legion/kilo-indexing"
 
 // RATIONALE: Upstream PluginSpec changed from string to string | [string, Record].
 // Use a broad input type to accept both forms but return the concrete PluginSpec shape.

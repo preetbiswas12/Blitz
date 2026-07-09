@@ -1,6 +1,6 @@
 import { createEffect, createMemo, createSignal } from "solid-js"
 import type { Accessor } from "solid-js"
-import type { AgentBuilderPreviewResponse, Model, Provider } from "@blitxcode/sdk/v2/client"
+import type { AgentBuilderPreviewResponse, Model, Provider } from "@legion/sdk/v2/client"
 import { previewAgent, saveAgent, type AgentPayload, type Scope, type Snapshot } from "../../../client"
 import { useConfig } from "../../../context/config"
 import { clean, friendly, sorted, toMode, toolCapabilities, toolName } from "../../../shared/utils"

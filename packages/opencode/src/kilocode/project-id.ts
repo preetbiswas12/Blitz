@@ -99,7 +99,7 @@ export namespace BlitxProjectID {
     readonly get: () => Effect.Effect<string | undefined>
   }
 
-  export class Service extends Context.Service<Service, Interface>()("@blitxcode/BlitxProjectID") {}
+  export class Service extends Context.Service<Service, Interface>()("@legion/BlitxProjectID") {}
 
   export const layer = Layer.effect(
     Service,

@@ -1,5 +1,5 @@
 {
-  "name": "@blitzcode/kilo-console",
+  "name": "@legion/kilo-console",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -11,8 +11,8 @@
     "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
-    "@blitzcode/kilo-web-ui": "workspace:*",
-    "@blitzcode/sdk": "workspace:*",
+    "@legion/kilo-web-ui": "workspace:*",
+    "@legion/sdk": "workspace:*",
     "@lottiefiles/dotlottie-web": "0.74.0",
     "@pierre/diffs": "catalog:",
     "@solidjs/router": "catalog:",

@@ -5,7 +5,7 @@ import { useTheme } from "@tui/context/theme"
 import { SplitBorder } from "@tui/component/border"
 import { Spinner } from "@tui/component/spinner" // kilocode_change
 import { useLocal } from "@tui/context/local" // kilocode_change
-import type { AssistantMessage } from "@blitxcode/sdk/v2"
+import type { AssistantMessage } from "@legion/sdk/v2"
 import { Locale } from "@/util/locale"
 import { useTerminalDimensions } from "@opentui/solid"
 import { useCommandShortcut, useOpencodeKeymap } from "../../keymap"

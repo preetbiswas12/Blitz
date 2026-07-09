@@ -1,5 +1,5 @@
-import { createKiloClient } from "@blitxcode/sdk/v2"
-import type { GlobalEvent } from "@blitxcode/sdk/v2"
+import { createKiloClient } from "@legion/sdk/v2"
+import type { GlobalEvent } from "@legion/sdk/v2"
 import { createSimpleContext } from "./helper"
 import { createGlobalEmitter } from "@solid-primitives/event-bus"
 import { Flag } from "@opencode-ai/core/flag/flag"

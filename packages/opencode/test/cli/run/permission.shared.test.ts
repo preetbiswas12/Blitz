@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import type { PermissionRequest } from "@blitxcode/sdk/v2"
+import type { PermissionRequest } from "@legion/sdk/v2"
 import {
   createPermissionBodyState,
   permissionAlwaysLines,

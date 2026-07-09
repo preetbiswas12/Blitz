@@ -22,7 +22,7 @@ export interface KiloModels {
 }
 
 export class BlitxModelsService extends Context.Service<BlitxModelsService, KiloModels>()(
-  "@blitxcode/ModelCache/KiloModels",
+  "@legion/ModelCache/KiloModels",
 ) {}
 
 export const blitxModelsLayer = Layer.succeed(
@@ -45,7 +45,7 @@ export interface Interface {
   readonly clear: (providerID: string) => Effect.Effect<void>
 }
 
-export class Service extends Context.Service<Service, Interface>()("@blitxcode/ModelCache") {}
+export class Service extends Context.Service<Service, Interface>()("@legion/ModelCache") {}
 
 const log = Log.create({ service: "model-cache" })
 const ttl = Duration.minutes(5)

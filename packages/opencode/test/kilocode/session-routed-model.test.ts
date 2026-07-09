@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test"
 import { Effect } from "effect"
-import type { Part, StepFinishPart } from "@blitxcode/sdk/v2"
+import type { Part, StepFinishPart } from "@legion/sdk/v2"
 import { RoutedModelMeta } from "../../src/kilocode/cli/cmd/tui/routes/session/routed-model-meta"
 import { KiloRoutedModel } from "../../src/kilocode/session/routed-model"
 import { ModelID, ProviderID } from "../../src/provider/schema"

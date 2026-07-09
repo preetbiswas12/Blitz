@@ -3,10 +3,10 @@
  * jscodeshift codemod: Transform import statements
  *
  * Transforms imports from opencode packages to kilo packages:
- * - opencode-ai -> @blitxcode/cli
- * - @opencode-ai/cli -> @blitxcode/cli
- * - @opencode-ai/sdk -> @blitxcode/sdk
- * - @opencode-ai/plugin -> @blitxcode/plugin
+ * - opencode-ai -> @legion/cli
+ * - @opencode-ai/cli -> @legion/cli
+ * - @opencode-ai/sdk -> @legion/sdk
+ * - @opencode-ai/plugin -> @legion/plugin
  *
  * Usage with jscodeshift:
  *   npx jscodeshift -t script/upstream/codemods/transform-imports.ts src/
@@ -21,18 +21,18 @@ import { info, success, warn } from "../utils/logger"
 import { defaultConfig } from "../utils/config"
 
 const IMPORT_MAPPINGS: Record<string, string> = {
-  "opencode-ai": "@blitxcode/cli",
-  "@opencode-ai/cli": "@blitxcode/cli",
-  "@opencode-ai/sdk": "@blitxcode/sdk",
-  "@opencode-ai/plugin": "@blitxcode/plugin",
+  "opencode-ai": "@legion/cli",
+  "@opencode-ai/cli": "@legion/cli",
+  "@opencode-ai/sdk": "@legion/sdk",
+  "@opencode-ai/plugin": "@legion/plugin",
 }
 
 /**
  * Get the transformed module specifier, handling subpaths.
  * Examples:
- *   "@opencode-ai/sdk" -> "@blitxcode/sdk"
- *   "@opencode-ai/sdk/v2" -> "@blitxcode/sdk/v2"
- *   "@opencode-ai/sdk/v2/client" -> "@blitxcode/sdk/v2/client"
+ *   "@opencode-ai/sdk" -> "@legion/sdk"
+ *   "@opencode-ai/sdk/v2" -> "@legion/sdk/v2"
+ *   "@opencode-ai/sdk/v2/client" -> "@legion/sdk/v2/client"
  */
 function getTransformedModule(specifier: string): string | undefined {
   // Check exact match first

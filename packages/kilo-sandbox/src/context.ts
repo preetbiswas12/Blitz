@@ -2,7 +2,7 @@ import { Context, Effect, PlatformError } from "effect"
 import { canonicalize, canonicalizeEntry, matches, normalize } from "./path"
 import type { Profile } from "./profile"
 
-export const CurrentProfile = Context.Reference<Profile | undefined>("@blitxcode/sandbox/CurrentProfile", {
+export const CurrentProfile = Context.Reference<Profile | undefined>("@legion/sandbox/CurrentProfile", {
   defaultValue: () => undefined,
 })
 

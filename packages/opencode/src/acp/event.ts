@@ -8,7 +8,7 @@ import type {
   Part,
   SessionMessageResponse,
   ToolPart,
-} from "@blitxcode/sdk/v2"
+} from "@legion/sdk/v2"
 import { Effect } from "effect"
 import { ACPSession } from "./session"
 import { ACPPermission } from "./permission"

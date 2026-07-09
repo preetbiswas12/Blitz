@@ -1,5 +1,5 @@
 {
-  "name": "@blitzcode/kilo-web-ui",
+  "name": "@legion/kilo-web-ui",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",
@@ -136,7 +136,7 @@
   },
   "dependencies": {
     "@kobalte/core": "catalog:",
-    "@blitzcode/kilo-ui": "workspace:*",
+    "@legion/kilo-ui": "workspace:*",
     "@opencode-ai/ui": "workspace:*",
     "@pierre/diffs": "catalog:",
     "solid-js": "catalog:"

@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test"
-import type { PluginInput } from "@blitxcode/plugin"
+import type { PluginInput } from "@legion/plugin"
 import { CodexAuthPlugin } from "../../src/plugin/openai/codex"
 
 test("identifies Codex refresh requests as Kilo", async () => {

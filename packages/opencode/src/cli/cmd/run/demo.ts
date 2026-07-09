@@ -15,7 +15,7 @@
 // Demo mode also handles permission and question replies locally, completing
 // or failing the synthetic tool parts as appropriate.
 import path from "path"
-import type { ToolPart } from "@blitxcode/sdk/v2"
+import type { ToolPart } from "@legion/sdk/v2"
 import type { Event } from "./event"
 import { createSessionData, reduceSessionData, type SessionData } from "./session-data"
 import { writeSessionOutput } from "./stream"

@@ -9,7 +9,7 @@ import {
   type MutationRequest,
   type MutationRunner,
   type Profile,
-} from "@blitxcode/sandbox"
+} from "@legion/sandbox"
 import { Effect, Exit, Layer } from "effect"
 import { ChildProcess } from "effect/unstable/process"
 import fs from "node:fs/promises"

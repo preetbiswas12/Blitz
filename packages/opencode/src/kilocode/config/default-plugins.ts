@@ -1,6 +1,6 @@
 import { createRequire } from "module"
 import { ConfigPlugin } from "@/config/plugin"
-import { isIndexingPlugin } from "@blitxcode/kilo-indexing/detect"
+import { isIndexingPlugin } from "@legion/kilo-indexing/detect"
 import { ensureAtomicChatPlugin, isAtomicChatPlugin } from "@/kilocode/atomic-chat-feature"
 import { ensureIndexingPlugin, resolveIndexingPlugin } from "@/kilocode/indexing-feature"
 

@@ -10,11 +10,11 @@ import { errorMessage } from "@/util/error"
 import { withTimeout } from "@/util/timeout"
 import { withNetworkOptions, resolveNetworkOptionsNoConfig } from "@/cli/network"
 import { Filesystem } from "@/util/filesystem"
-import type { GlobalEvent } from "@blitxcode/sdk/v2"
+import type { GlobalEvent } from "@legion/sdk/v2"
 import type { EventSource } from "./context/sdk"
 import { win32DisableProcessedInput, win32InstallCtrlCGuard } from "./win32"
 import { importCloudSession, localSessionID, validateCloudFork } from "@/kilocode/cloud-session" // kilocode_change
-import { createKiloClient } from "@blitxcode/sdk/v2" // kilocode_change
+import { createKiloClient } from "@legion/sdk/v2" // kilocode_change
 import { writeHeapSnapshot } from "v8"
 import { TuiConfig } from "./config/tui"
 import { KiloTuiThreadDaemon, type StartInput } from "@/kilocode/cli/cmd/tui/thread" // kilocode_change

@@ -135,7 +135,7 @@ export namespace InteractiveTerminal {
   }
 
   class StateService extends Context.Service<StateService, { readonly get: () => Effect.Effect<State> }>()(
-    "@blitxcode/InteractiveTerminal.State",
+    "@legion/InteractiveTerminal.State",
   ) {}
 
   function clone(info: Info): Info {

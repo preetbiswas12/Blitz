@@ -1,5 +1,5 @@
 import { createMemo, createSignal } from "solid-js"
-import type { Model, Provider } from "@blitxcode/sdk/v2/client"
+import type { Model, Provider } from "@legion/sdk/v2/client"
 import { saveModelState, type ModelRef } from "../../../client"
 import { useConfig } from "../../../context/config"
 import { hasGateway, visible } from "./privacy"

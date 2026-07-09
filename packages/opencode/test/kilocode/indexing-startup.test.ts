@@ -2,8 +2,8 @@ import { afterEach, beforeEach, describe, expect, spyOn, test } from "bun:test"
 import { Effect } from "effect"
 import fs from "node:fs/promises"
 import path from "node:path"
-import { CodeIndexManager } from "@blitxcode/kilo-indexing/engine"
-import { normalizeIndexingStatus } from "@blitxcode/kilo-indexing/status"
+import { CodeIndexManager } from "@legion/kilo-indexing/engine"
+import { normalizeIndexingStatus } from "@legion/kilo-indexing/status"
 import type { Config } from "../../src/config/config"
 import { GlobalBus } from "../../src/bus/global"
 import { WorkspaceID } from "../../src/control-plane/schema"
@@ -21,7 +21,7 @@ Log.init({ print: false })
 const fetch = global.fetch
 
 const cfg: Partial<Config.Info> = {
-  plugin: ["@blitxcode/kilo-indexing"],
+  plugin: ["@legion/kilo-indexing"],
   indexing: {
     enabled: true,
     provider: "ollama",
@@ -33,7 +33,7 @@ const cfg: Partial<Config.Info> = {
 }
 
 const unset: Partial<Config.Info> = {
-  plugin: ["@blitxcode/kilo-indexing"],
+  plugin: ["@legion/kilo-indexing"],
   indexing: {
     provider: "ollama",
     vectorStore: "qdrant",
@@ -43,7 +43,7 @@ const unset: Partial<Config.Info> = {
   },
 }
 const inactive: Partial<Config.Info> = {
-  plugin: ["@blitxcode/kilo-indexing"],
+  plugin: ["@legion/kilo-indexing"],
   indexing: {
     enabled: false,
     provider: "ollama",
@@ -51,14 +51,14 @@ const inactive: Partial<Config.Info> = {
   },
 }
 const kilo: Partial<Config.Info> = {
-  plugin: ["@blitxcode/kilo-indexing"],
+  plugin: ["@legion/kilo-indexing"],
   indexing: {
     enabled: true,
     vectorStore: "qdrant",
   },
 }
 const implicitOpenAi: Partial<Config.Info> = {
-  plugin: ["@blitxcode/kilo-indexing"],
+  plugin: ["@legion/kilo-indexing"],
   indexing: {
     enabled: true,
     vectorStore: "qdrant",
@@ -68,7 +68,7 @@ const implicitOpenAi: Partial<Config.Info> = {
   },
 }
 const staleKilo: Partial<Config.Info> = {
-  plugin: ["@blitxcode/kilo-indexing"],
+  plugin: ["@legion/kilo-indexing"],
   indexing: {
     enabled: true,
     provider: "blitx",

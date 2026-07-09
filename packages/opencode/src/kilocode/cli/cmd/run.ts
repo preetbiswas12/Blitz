@@ -1,4 +1,4 @@
-import { createKiloClient, type KiloClient } from "@blitxcode/sdk/v2"
+import { createKiloClient, type KiloClient } from "@legion/sdk/v2"
 import { UI } from "@/cli/ui"
 import { DaemonClient } from "@/kilocode/daemon/client"
 import { isBuiltinCommand, type BuiltinCommand } from "@/kilocode/session/builtin-commands"

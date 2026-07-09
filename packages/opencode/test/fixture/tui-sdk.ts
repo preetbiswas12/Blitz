@@ -1,4 +1,4 @@
-import type { GlobalEvent } from "@blitxcode/sdk/v2"
+import type { GlobalEvent } from "@legion/sdk/v2"
 import type { EventSource } from "../../src/cli/cmd/tui/context/sdk"
 
 export const worktree = "/tmp/opencode"

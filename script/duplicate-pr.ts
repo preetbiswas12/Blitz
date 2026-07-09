@@ -2,7 +2,7 @@
 
 import path from "path"
 import { pathToFileURL } from "bun"
-import { createKilo } from "@blitxcode/sdk"
+import { createKilo } from "@legion/sdk"
 import { parseArgs } from "util"
 
 async function main() {

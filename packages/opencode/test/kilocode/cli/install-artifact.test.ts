@@ -13,7 +13,7 @@ describe("npm install artifact behavior", () => {
     const text = await fs.readFile(wrapper, "utf8")
     expect(text.startsWith("#!/usr/bin/env node")).toBe(true)
     expect(text).toContain("const envPath = process.env.KILO_BIN_PATH")
-    expect(text).toContain('const base = "@blitxcode/cli-" + platform + "-" + arch')
+    expect(text).toContain('const base = "@legion/cli-" + platform + "-" + arch')
     expect(text).toContain("function findBinary(startDir)")
   })
 
@@ -38,13 +38,13 @@ describe("npm install artifact behavior", () => {
         path.join(pkg, "package.json"),
         JSON.stringify({
           optionalDependencies: {
-            [`@blitxcode/cli-${process.platform}-${process.arch}`]: "1.0.0",
+            [`@legion/cli-${process.platform}-${process.arch}`]: "1.0.0",
           },
         }),
       )
       await Bun.write(
         path.join(native, "package.json"),
-        JSON.stringify({ name: `@blitxcode/cli-${process.platform}-${process.arch}` }),
+        JSON.stringify({ name: `@legion/cli-${process.platform}-${process.arch}` }),
       )
       const binary = "#!/bin/sh\n# binary\nexit 0\n"
       await Bun.write(path.join(bin, "kilo"), binary)

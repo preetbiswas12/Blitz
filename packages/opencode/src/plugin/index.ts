@@ -4,11 +4,11 @@ import type {
   Plugin as PluginInstance,
   PluginModule,
   WorkspaceAdapter as PluginWorkspaceAdapter,
-} from "@blitxcode/plugin"
+} from "@legion/plugin"
 import { Config } from "@/config/config"
 import { Bus } from "../bus"
 import * as Log from "@opencode-ai/core/util/log"
-import { createKiloClient } from "@blitxcode/sdk"
+import { createKiloClient } from "@legion/sdk"
 import { ServerAuth } from "@/server/auth"
 import { CodexAuthPlugin } from "./openai/codex"
 import { Session } from "@/session/session"
@@ -26,7 +26,7 @@ import { InstanceState } from "@/effect/instance-state"
 import { errorMessage } from "@/util/error"
 import { PluginLoader } from "./loader"
 import { parsePluginSpecifier, readPluginId, readV1Plugin, resolvePluginId } from "./shared"
-import { AtomicChatPlugin } from "@blitxcode/plugin-atomic-chat" // kilocode_change
+import { AtomicChatPlugin } from "@legion/plugin-atomic-chat" // kilocode_change
 import { AnacondaDesktopPlugin } from "@/kilocode/anaconda-desktop/provider" // kilocode_change
 import { registerAdapter } from "@/control-plane/adapters"
 import type { WorkspaceAdapter } from "@/control-plane/types"
@@ -76,7 +76,7 @@ function internalPlugins(flags: RuntimeFlags.Info): PluginInstance[] {
       }),
     CopilotAuthPlugin,
     // kilocode_change start
-    // kilocode_change - external auth plugins ship against @opencode-ai/plugin; bridge to our @blitxcode/plugin types
+    // kilocode_change - external auth plugins ship against @opencode-ai/plugin; bridge to our @legion/plugin types
     GitlabAuthPlugin as unknown as PluginInstance,
     PoeAuthPlugin as unknown as PluginInstance,
     // kilocode_change end
@@ -107,7 +107,7 @@ function getLegacyPlugins(mod: Record<string, unknown>) {
     if (seen.has(entry)) continue
     seen.add(entry)
     const plugin = getServerPlugin(entry)
-    // kilocode_change: skip named exports (e.g. constants from @blitxcode/plugin-atomic-chat)
+    // kilocode_change: skip named exports (e.g. constants from @legion/plugin-atomic-chat)
     if (!plugin) continue // kilocode_change
     result.push(plugin)
   }

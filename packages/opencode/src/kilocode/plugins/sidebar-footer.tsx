@@ -1,8 +1,8 @@
-import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@blitxcode/plugin/tui"
+import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@legion/plugin/tui"
 import { createMemo, createSignal, onCleanup, onMount, Show } from "solid-js"
 import { Global } from "@opencode-ai/core/global"
 import * as Log from "@opencode-ai/core/util/log"
-import type { Message } from "@blitxcode/sdk/v2"
+import type { Message } from "@legion/sdk/v2"
 import { onBalanceRefresh } from "../balance-refresh"
 
 const id = "internal:kilo-sidebar-footer"

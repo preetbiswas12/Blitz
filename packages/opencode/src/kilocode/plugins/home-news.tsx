@@ -1,4 +1,4 @@
-import type { TuiPlugin, TuiPluginModule } from "@blitxcode/plugin/tui"
+import type { TuiPlugin, TuiPluginModule } from "@legion/plugin/tui"
 import { createMemo, Show } from "solid-js"
 
 const id = "internal:home-news"

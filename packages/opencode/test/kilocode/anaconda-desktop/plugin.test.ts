@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import type { Provider } from "@blitxcode/sdk/v2"
+import type { Provider } from "@legion/sdk/v2"
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible"
 import { generateText } from "ai"
 import { encodeMetadata, PROVIDER_ID, type Metadata } from "../../../src/kilocode/anaconda-desktop/domain"

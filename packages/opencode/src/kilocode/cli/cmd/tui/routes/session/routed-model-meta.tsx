@@ -1,5 +1,5 @@
 import { createContext, createMemo, Show, useContext } from "solid-js"
-import type { AssistantMessage, Part, Provider, StepFinishPart } from "@blitxcode/sdk/v2"
+import type { AssistantMessage, Part, Provider, StepFinishPart } from "@legion/sdk/v2"
 import { useTheme } from "@tui/context/theme"
 import * as Model from "@tui/util/model"
 import { KiloRoutedModel } from "@/kilocode/session/routed-model"

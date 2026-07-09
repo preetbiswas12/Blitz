@@ -1,4 +1,4 @@
-import type { AssistantMessage, Part, Provider, UserMessage } from "@blitxcode/sdk/v2"
+import type { AssistantMessage, Part, Provider, UserMessage } from "@legion/sdk/v2"
 import { Locale } from "@/util/locale"
 import * as Model from "./model"
 

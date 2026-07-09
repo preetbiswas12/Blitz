@@ -1,5 +1,5 @@
 import { NodeFileSystem } from "@effect/platform-node"
-import { decorateFileSystem, ensureDirectory } from "@blitxcode/sandbox" // kilocode_change
+import { decorateFileSystem, ensureDirectory } from "@legion/sandbox" // kilocode_change
 import { dirname, isAbsolute, join, relative, resolve as pathResolve, sep } from "path" // kilocode_change - harden containment checks
 import { realpathSync } from "fs"
 import * as NFS from "fs/promises"

@@ -6,8 +6,8 @@
  * in the Session route. Kept out of `routes/session/index.tsx` so the
  * upstream-shared session route stays free of Kilo telemetry plumbing.
  */
-import { Telemetry } from "@blitxcode/kilo-telemetry"
-import type { AssistantMessage, Message } from "@blitxcode/sdk/v2"
+import { Telemetry } from "@legion/kilo-telemetry"
+import type { AssistantMessage, Message } from "@legion/sdk/v2"
 import type { DialogContext } from "@tui/ui/dialog"
 import type { ToastContext } from "@tui/ui/toast"
 

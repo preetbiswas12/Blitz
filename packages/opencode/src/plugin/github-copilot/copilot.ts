@@ -1,5 +1,5 @@
-import type { Hooks, PluginInput } from "@blitxcode/plugin"
-import type { Model } from "@blitxcode/sdk/v2"
+import type { Hooks, PluginInput } from "@legion/plugin"
+import type { Model } from "@legion/sdk/v2"
 import { InstallationVersion } from "@opencode-ai/core/installation/version"
 import { iife } from "@/util/iife"
 import * as Log from "@opencode-ai/core/util/log"

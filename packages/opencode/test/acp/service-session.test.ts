@@ -10,7 +10,7 @@ import type {
   SessionConfigSelectOption,
   SetSessionConfigOptionResponse,
 } from "@agentclientprotocol/sdk"
-import type { KiloClient } from "@blitxcode/sdk/v2"
+import type { KiloClient } from "@legion/sdk/v2"
 import { Effect, ManagedRuntime } from "effect"
 import * as ACPService from "@/acp/service"
 import * as ACPError from "@/acp/error"

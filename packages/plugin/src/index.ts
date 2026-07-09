@@ -9,8 +9,8 @@ import type {
   Message,
   Part,
   Config as SDKConfig,
-} from "@blitxcode/sdk"
-import type { Provider as ProviderV2, Model as ModelV2, Auth } from "@blitxcode/sdk/v2"
+} from "@legion/sdk"
+import type { Provider as ProviderV2, Model as ModelV2, Auth } from "@legion/sdk/v2"
 
 import type { BunShell } from "./shell.js"
 import { type ToolDefinition } from "./tool.js"

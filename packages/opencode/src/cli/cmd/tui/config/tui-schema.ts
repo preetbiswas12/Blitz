@@ -3,7 +3,7 @@ import { TuiKeybind } from "./keybind"
 import { Schema } from "effect"
 import { isRecord } from "@/util/record"
 import { Filesystem } from "@/util/filesystem"
-import { TuiAttentionSoundNames, type TuiAttentionSoundName } from "@blitxcode/plugin/tui"
+import { TuiAttentionSoundNames, type TuiAttentionSoundName } from "@legion/plugin/tui"
 import { KiloTitleIcon } from "@/kilocode/cli/cmd/tui/title-icon" // kilocode_change
 
 export type TuiAttentionSoundPaths = Partial<Record<TuiAttentionSoundName, string>>

@@ -13,7 +13,7 @@ import { Auth } from "@/auth"
 import { makeRuntime } from "@/effect/run-service"
 import { IngestQueue } from "@/kilo-sessions/ingest-queue"
 import { clearInFlightCache, withInFlightCache } from "@/kilo-sessions/inflight-cache"
-import type * as SDK from "@blitxcode/sdk/v2"
+import type * as SDK from "@legion/sdk/v2"
 import z from "zod"
 import { Context, Effect, Layer, Schema, Stream } from "effect"
 import { Config } from "@/config/config"
@@ -25,7 +25,7 @@ import simpleGit from "simple-git"
 import { RemoteWS } from "@/kilo-sessions/remote-ws"
 import { RemoteSender } from "@/kilo-sessions/remote-sender"
 import { SessionStatus } from "@/session/status"
-import { Telemetry } from "@blitxcode/kilo-telemetry"
+import { Telemetry } from "@legion/kilo-telemetry"
 import { Question } from "@/question"
 import { Permission } from "@/permission"
 import { withTimeout } from "@/util/timeout"
@@ -52,7 +52,7 @@ export namespace BlitxSessions {
     readonly init: () => Effect.Effect<void, unknown>
   }
 
-  export class Service extends Context.Service<Service, Interface>()("@blitxcode/BlitxSessions") {}
+  export class Service extends Context.Service<Service, Interface>()("@legion/BlitxSessions") {}
 
   const log = Log.create({ service: "kilo-sessions" })
   const runtime = makeRuntime(Auth.Service, Auth.defaultLayer)

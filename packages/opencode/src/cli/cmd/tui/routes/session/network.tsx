@@ -5,7 +5,7 @@ import { useTheme } from "../../context/theme"
 import { SplitBorder } from "../../component/border"
 import { useSDK } from "../../context/sdk"
 import { useDialog } from "../../ui/dialog"
-import type { SessionNetworkWait } from "@blitxcode/sdk/v2"
+import type { SessionNetworkWait } from "@legion/sdk/v2"
 import { useTuiConfig } from "../../context/tui-config"
 import { useBindings } from "../../keymap"
 

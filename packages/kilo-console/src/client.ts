@@ -1,4 +1,4 @@
-import { createKiloClient, type Config as EffectiveConfig } from "@blitxcode/sdk/v2/client"
+import { createKiloClient, type Config as EffectiveConfig } from "@legion/sdk/v2/client"
 import type {
   AgentBuilderPreviewResponse,
   AgentBuilderSaveResponse,
@@ -31,7 +31,7 @@ import type {
   Worktree,
   WorktreeDiffItem,
   WorktreeListResponse,
-} from "@blitxcode/sdk/v2/client"
+} from "@legion/sdk/v2/client"
 
 export type Scope = "global" | "project"
 

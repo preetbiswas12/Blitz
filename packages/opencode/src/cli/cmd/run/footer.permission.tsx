@@ -14,7 +14,7 @@
 import type { TextareaRenderable } from "@opentui/core"
 import { useKeyboard, useTerminalDimensions } from "@opentui/solid"
 import { For, Match, Show, Switch, createEffect, createMemo, createSignal } from "solid-js"
-import type { PermissionRequest } from "@blitxcode/sdk/v2"
+import type { PermissionRequest } from "@legion/sdk/v2"
 import {
   createPermissionBodyState,
   permissionAlwaysLines,

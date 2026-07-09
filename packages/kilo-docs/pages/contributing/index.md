@@ -194,9 +194,9 @@ Documentation improvements are highly valued contributions:
 2. Test your documentation changes and run the docs site locally from the repo root:
 
    ```bash
-   bun run --filter @blitxcode/kilo-docs test
-   bun run --filter @blitxcode/kilo-docs build
-   bun run --filter @blitxcode/kilo-docs dev
+   bun run --filter @legion/kilo-docs test
+   bun run --filter @legion/kilo-docs build
+   bun run --filter @legion/kilo-docs dev
    ```
 
    For manual validation, preview the affected page and check changed links and rendered content.

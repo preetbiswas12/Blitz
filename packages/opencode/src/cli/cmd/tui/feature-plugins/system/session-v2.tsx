@@ -1,4 +1,4 @@
-import type { TuiPlugin, TuiPluginApi } from "@blitxcode/plugin/tui"
+import type { TuiPlugin, TuiPluginApi } from "@legion/plugin/tui"
 import type { InternalTuiPlugin } from "../../plugin/internal"
 import { useSyncV2 } from "@tui/context/sync-v2"
 import { SplitBorder } from "@tui/component/border"
@@ -27,7 +27,7 @@ import type {
   SessionMessageUser,
   ToolFileContent,
   ToolTextContent,
-} from "@blitxcode/sdk/v2"
+} from "@legion/sdk/v2"
 import { createEffect, createMemo, createSignal, For, Match, Show, Switch } from "solid-js"
 import { collapseToolOutput } from "../../util/collapse-tool-output"
 

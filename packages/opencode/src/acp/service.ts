@@ -31,7 +31,7 @@ import {
 } from "@agentclientprotocol/sdk"
 import { InstallationVersion } from "@opencode-ai/core/installation/version"
 import * as Log from "@opencode-ai/core/util/log"
-import type { Message, KiloClient, SessionMessageResponse } from "@blitxcode/sdk/v2"
+import type { Message, KiloClient, SessionMessageResponse } from "@legion/sdk/v2"
 import { Context, Effect, Layer, ManagedRuntime } from "effect"
 import * as ACPError from "./error"
 import { buildConfigOptions, parseModelSelection } from "./config-option"

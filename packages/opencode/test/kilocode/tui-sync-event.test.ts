@@ -1,6 +1,6 @@
 /** @jsxImportSource @opentui/solid */
 import { describe, expect, test } from "bun:test"
-import type { BackgroundProcessInfo, GlobalEvent } from "@blitxcode/sdk/v2"
+import type { BackgroundProcessInfo, GlobalEvent } from "@legion/sdk/v2"
 import { normalizeSyncEvent } from "../../src/cli/cmd/tui/context/event"
 import { mount, wait } from "../cli/cmd/tui/sync-fixture"
 

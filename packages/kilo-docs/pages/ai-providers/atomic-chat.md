@@ -24,7 +24,7 @@ curl http://127.0.0.1:1337/v1/models
 
 ## Configuration in Kilo Code
 
-Kilo Code ships the `@blitxcode/plugin-atomic-chat` plugin by default. It **does not** call localhost unless you opt in (see below). When enabled, it discovers models from `GET /v1/models` and can warn if the selected model is not loaded.
+Kilo Code ships the `@legion/plugin-atomic-chat` plugin by default. It **does not** call localhost unless you opt in (see below). When enabled, it discovers models from `GET /v1/models` and can warn if the selected model is not loaded.
 
 **Localhost HTTP runs only when one of these is true:**
 
@@ -72,7 +72,7 @@ Optional auto-detect without a provider block:
 }
 ```
 
-To disable the provider entirely, use `disabled_providers: ["atomic-chat"]` or remove `@blitxcode/plugin-atomic-chat` from the `plugin` array in your config.
+To disable the provider entirely, use `disabled_providers: ["atomic-chat"]` or remove `@legion/plugin-atomic-chat` from the `plugin` array in your config.
 
 {% /tab %}
 {% /tabs %}

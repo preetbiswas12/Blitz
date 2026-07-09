@@ -1,5 +1,5 @@
 import type { Command } from "@/command"
-import type { ReviewCommand } from "@blitxcode/kilo-telemetry"
+import type { ReviewCommand } from "@legion/kilo-telemetry"
 import REVIEW from "./review.txt"
 
 const legacy = {

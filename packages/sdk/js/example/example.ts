@@ -1,4 +1,4 @@
-import { createKiloClient, createKiloServer } from "@blitxcode/sdk"
+import { createKiloClient, createKiloServer } from "@legion/sdk"
 import { pathToFileURL } from "bun"
 
 const server = await createKiloServer()

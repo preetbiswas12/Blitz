@@ -1,7 +1,7 @@
 // kilocode_change - new file
 import { TextAttributes, decodePasteBytes, type MouseEvent, type PasteEvent } from "@opentui/core"
 import { useKeyboard, usePaste, useRenderer, useTerminalDimensions } from "@opentui/solid"
-import type { InteractiveTerminalSnapshot } from "@blitxcode/sdk/v2"
+import type { InteractiveTerminalSnapshot } from "@legion/sdk/v2"
 import { VtScreen } from "@/kilocode/cli/cmd/tui/vt/vt-screen"
 import { SplitBorder } from "@tui/component/border"
 import { useSDK } from "@tui/context/sdk"

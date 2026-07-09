@@ -13,7 +13,7 @@
 //         → OpenTUI split-footer renderer writes to terminal
 import type { KeyEvent, Renderable } from "@opentui/core"
 import type { Binding } from "@opentui/keymap"
-import type { KiloClient, PermissionRequest, QuestionRequest, ToolPart } from "@blitxcode/sdk/v2"
+import type { KiloClient, PermissionRequest, QuestionRequest, ToolPart } from "@legion/sdk/v2"
 import type { RunInteractiveTerminalSnapshot } from "@/kilocode/cli/cmd/run/types" // kilocode_change
 
 export type RunFilePart = {

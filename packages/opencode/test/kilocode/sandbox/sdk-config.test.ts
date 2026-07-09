@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
-import type { Config as ConfigV1 } from "@blitxcode/sdk"
-import type { Config as ConfigV2 } from "@blitxcode/sdk/v2"
+import type { Config as ConfigV1 } from "@legion/sdk"
+import type { Config as ConfigV2 } from "@legion/sdk/v2"
 
 const value = {
   experimental: {

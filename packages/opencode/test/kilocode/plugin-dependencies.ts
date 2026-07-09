@@ -6,7 +6,7 @@ async function mark(dir: string) {
   await mkdir(path.join(dir, "node_modules"), { recursive: true })
   await Bun.write(
     path.join(dir, "package-lock.json"),
-    JSON.stringify({ packages: { "": { dependencies: { "@blitxcode/plugin": "0.0.0" } } } }),
+    JSON.stringify({ packages: { "": { dependencies: { "@legion/plugin": "0.0.0" } } } }),
   )
 }
 

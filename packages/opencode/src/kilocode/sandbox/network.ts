@@ -1,6 +1,6 @@
 import { Effect, Layer } from "effect"
 import { FetchHttpClient } from "effect/unstable/http"
-import { assertNetwork, networkHttpLayer } from "@blitxcode/sandbox"
+import { assertNetwork, networkHttpLayer } from "@legion/sandbox"
 import { opaque } from "./network-tools"
 
 const Builtin = Symbol("kilo.sandbox.builtinTool")

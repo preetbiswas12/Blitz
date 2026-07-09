@@ -57,7 +57,7 @@ import { KilocodeGlobalConfigStamp } from "@/kilocode/config/global-stamp"
 import {
   IndexingConfig as KiloIndexingConfig,
   IndexingSchema as KiloIndexingSchema,
-} from "@blitxcode/kilo-indexing/config"
+} from "@legion/kilo-indexing/config"
 import { unique } from "remeda"
 // kilocode_change end
 import { withTransientReadRetry } from "@/util/effect-http-client"
@@ -913,7 +913,7 @@ export const layer = Layer.effect(
             .install(dir, {
               add: [
                 {
-                  name: "@blitxcode/plugin",
+                  name: "@legion/plugin",
                   version: InstallationLocal ? undefined : InstallationVersion,
                 },
               ],

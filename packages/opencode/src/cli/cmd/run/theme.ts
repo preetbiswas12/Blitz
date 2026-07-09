@@ -429,8 +429,8 @@ export function generateSystem(colors: TerminalColors, pick: "dark" | "light"): 
 }
 
 function splashTheme(theme: TuiThemeCurrent, indexed: RGBA[]): RunSplashTheme {
-  const left = nearestIndexed(indexed, theme.textMuted)
-  const right = nearestIndexed(indexed, theme.text)
+  const left = nearestIndexed(indexed, RGBA.fromHex("#3b82f6"))
+  const right = nearestIndexed(indexed, RGBA.fromHex("#60a5fa"))
   return {
     left,
     right,
@@ -525,8 +525,8 @@ function tone(body: ColorInput, start?: ColorInput): Tone {
 }
 
 const fallbackSplashIndexed = Array.from({ length: 256 }, (_, index) => RGBA.fromIndex(index))
-const fallbackSplashLeft = RGBA.fromIndex(67)
-const fallbackSplashRight = RGBA.fromIndex(110)
+const fallbackSplashLeft = RGBA.fromHex("#3b82f6")
+const fallbackSplashRight = RGBA.fromHex("#60a5fa")
 
 export const RUN_THEME_FALLBACK: RunTheme = {
   background: RGBA.fromValues(0, 0, 0, 0),

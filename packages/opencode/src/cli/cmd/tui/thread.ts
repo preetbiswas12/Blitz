@@ -100,12 +100,12 @@ export function resolveThreadDirectory(project?: string, envPWD = process.env.PW
 
 export const TuiThreadCommand = cmd({
   command: "$0 [project]",
-  describe: "start kilo tui", // kilocode_change
+  describe: "start blitx tui", // kilocode_change
   builder: (yargs) =>
     withNetworkOptions(yargs)
       .positional("project", {
         type: "string",
-        describe: "path to start kilo in", // kilocode_change
+        describe: "path to start blitx in", // kilocode_change
       })
       .option("model", {
         type: "string",

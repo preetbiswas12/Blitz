@@ -3,7 +3,7 @@ import type { Model } from "@/provider/provider"
 import { ProviderTransform } from "@/provider/transform"
 import { ModelID, ProviderID } from "@/provider/schema"
 import { SessionID } from "@/session/schema"
-import { LegionSessionrompt } from "@/kilocode/session/prompt"
+import { LegionSessionPrompt } from "@/kilocode/session/prompt"
 
 function model(id: string, reasoning = true): Model {
   return {
@@ -35,7 +35,7 @@ function model(id: string, reasoning = true): Model {
 
 describe("session title generation", () => {
   test("uses an isolated task ID", () => {
-    expect(LegionSessionrompt.titleID(SessionID.make("ses_test"))).toBe("title-ses_test")
+    expect(LegionSessionPrompt.titleID(SessionID.make("ses_test"))).toBe("title-ses_test")
   })
 
   test("uses the model default for reasoning-capable small models", () => {

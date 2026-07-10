@@ -159,7 +159,7 @@ export const BackgroundProcessTool = Tool.define<typeof Params, Meta, never, "ba
 
         const command = params.command?.trim()
         if (!command) return invalid(params.action, "Missing command")
-        const parent = params.inherit ? LegionSessionresolveParent(ctx.sessionID) : undefined
+        const parent = params.inherit ? LegionSession.resolveParent(ctx.sessionID) : undefined
         const parentID = parent ? SessionID.make(parent) : undefined
         if (params.inherit && !parentID) return invalid(params.action, "inherit requires a subagent session")
         const err = pattern(params.ready)

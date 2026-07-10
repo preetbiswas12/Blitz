@@ -69,7 +69,7 @@ describe("session platform attribution", () => {
 
         expect(LegionSessiongetPlatformOverride(root.id)).toBe("agent-manager")
         expect(LegionSessiongetPlatformOverride(child.id)).toBe("agent-manager")
-        expect(LegionSessionresolvePlatform(child.id)).toBe("agent-manager")
+        expect(LegionSession.resolvePlatform(child.id)).toBe("agent-manager")
         expect(attr.rootID).toBe(root.id)
         expect(attr.feature).toBe("agent-manager")
 
@@ -86,10 +86,10 @@ describe("session platform attribution", () => {
         const child = await create({ parentID: root.id, title: "child" })
         const leaf = await create({ parentID: child.id, title: "leaf" })
 
-        expect(LegionSessionresolveParent(root.id)).toBeUndefined()
-        expect(LegionSessionresolveParent(child.id)).toBe(root.id)
-        expect(LegionSessionresolveParent(leaf.id)).toBe(child.id)
-        expect(LegionSessionresolveRoot(leaf.id)).toBe(root.id)
+        expect(LegionSession.resolveParent(root.id)).toBeUndefined()
+        expect(LegionSession.resolveParent(child.id)).toBe(root.id)
+        expect(LegionSession.resolveParent(leaf.id)).toBe(child.id)
+        expect(LegionSession.resolveRoot(leaf.id)).toBe(root.id)
 
         await remove(root.id)
       },
@@ -103,13 +103,13 @@ describe("session platform attribution", () => {
         const root = await create({})
         const child = await create({ parentID: root.id, title: "child" })
         await seed(child.id)
-        LegionSessionclearPlatformOverride(child.id)
-        expect(LegionSessionresolveParent(child.id)).toBeUndefined()
+        LegionSession.clearPlatformOverride(child.id)
+        expect(LegionSession.resolveParent(child.id)).toBeUndefined()
 
         const closed = Promise.withResolvers<SessionID | undefined>()
         const unsubscribe = await run(
           Bus.Service.use((bus) =>
-            bus.subscribeCallback(LegionSessionEvent.TurnClose, (event) => {
+            bus.subscribeCallback(LegionSession.Event.TurnClose, (event) => {
               if (event.properties.sessionID === child.id) closed.resolve(event.properties.parentID)
             }),
           ),

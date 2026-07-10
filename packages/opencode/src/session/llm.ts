@@ -24,7 +24,7 @@ import { Auth } from "@/auth"
 import { InstanceState } from "@/effect/instance-state"
 import { LegionSession} from "@/kilocode/session"
 
-import { LegionSessionverflow } from "@/kilocode/session/overflow"
+import { LegionSessionOverflow } from "@/kilocode/session/overflow"
 import { LegionLLM } from "@/kilocode/session/llm"
 import { normalizeUsageForExport, observeFullStreamForExport } from "@/kilocode/session-export/llm"
 // kilocode_change end
@@ -131,10 +131,10 @@ const live: Layer.Layer<
               ...base.messages,
             ]
           : base.messages
-      const preflight = input.preflight === true && LegionSessionverflow.enabled({ cfg, model: input.model })
+      const preflight = input.preflight === true && LegionSessionOverflow.enabled({ cfg, model: input.model })
       const cap = LegionLLM.needsEstimate({ model: input.model, configured: base.params.maxOutputTokens })
       const usage =
-        cap || preflight ? LegionSessionverflow.measure({ messages: estimated, tools: base.tools }) : undefined
+        cap || preflight ? LegionSessionOverflow.measure({ messages: estimated, tools: base.tools }) : undefined
       const maxOutputTokens = LegionLLM.capOutputTokens({
         model: input.model,
         messages: estimated,
@@ -145,7 +145,7 @@ const live: Layer.Layer<
       if (
         preflight &&
         usage &&
-        LegionSessionverflow.shouldCompact({
+        LegionSessionOverflow.shouldCompact({
           cfg,
           model: input.model,
           usable: usable({ cfg, model: input.model, outputTokenMax: flags.outputTokenMax }), // kilocode_change
@@ -153,7 +153,7 @@ const live: Layer.Layer<
           continuation: usage.continuation,
         })
       ) {
-        return yield* Effect.fail(new LegionSessionverflow.PreflightError())
+        return yield* Effect.fail(new LegionSessionOverflow.PreflightError())
       }
       const prepared = { ...base, params: { ...base.params, maxOutputTokens } }
       // kilocode_change end
@@ -247,8 +247,8 @@ const live: Layer.Layer<
 
       const instance = yield* InstanceState.context
       // kilocode_change start - capture eligible session export request start
-      const parent = input.parentSessionID ?? LegionSessionresolveParent(input.sessionID)
-      const found = LegionSessionresolveRoot(input.sessionID)
+      const parent = input.parentSessionID ?? LegionSession.resolveParent(input.sessionID)
+      const found = LegionSession.resolveRoot(input.sessionID)
       const root = parent ? (found === input.sessionID ? parent : found) : input.sessionID
       // kilocode_change end
 

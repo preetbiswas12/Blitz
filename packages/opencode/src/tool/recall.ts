@@ -10,7 +10,7 @@ import { WorktreeFamily } from "../kilocode/worktree-family" // kilocode_change
 import { Session } from "../session/session" // kilocode_change
 import { SessionID } from "../session/schema" // kilocode_change
 import { RecallSearch } from "../kilocode/session/recall-search" // kilocode_change
-import { LegionSessionromptQueue } from "../kilocode/session/prompt-queue" // kilocode_change
+import { LegionSessionPromptQueue } from "../kilocode/session/prompt-queue" // kilocode_change
 import DESCRIPTION from "./recall.txt"
 
 const Parameters = Schema.Struct({
@@ -69,7 +69,7 @@ async function search(
   })
 
   const dirs = await bridge.promise(WorktreeFamily.list().pipe(Effect.provideService(Git.Service, git))) // kilocode_change
-  const boundary = LegionSessionromptQueue.active(ctx.sessionID) ?? RecallSearch.active(ctx.messages, ctx.messageID)
+  const boundary = LegionSessionPromptQueue.active(ctx.sessionID) ?? RecallSearch.active(ctx.messages, ctx.messageID)
   const found = await RecallSearch.search({
     query: params.query,
     projectID: Instance.project.id,
@@ -150,7 +150,7 @@ async function read(
   }
 
   const msgs = await bridge.promise(sessions.messages({ sessionID: session.id }))
-  const boundary = LegionSessionromptQueue.active(ctx.sessionID) ?? RecallSearch.active(ctx.messages, ctx.messageID)
+  const boundary = LegionSessionPromptQueue.active(ctx.sessionID) ?? RecallSearch.active(ctx.messages, ctx.messageID)
   const visible = session.id === ctx.sessionID ? RecallSearch.visible(msgs, boundary) : msgs
   const lines: string[] = [
     `# Session: ${session.title}`,

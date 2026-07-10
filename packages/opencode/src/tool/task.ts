@@ -13,7 +13,7 @@ import { Provider } from "@/provider/provider" // kilocode_change
 import { KiloTask } from "../kilocode/tool/task" // kilocode_change
 import { KiloTaskBackgroundProcess } from "../kilocode/tool/task-background-process" // kilocode_change
 import { KiloCostPropagation } from "../kilocode/session/cost-propagation" // kilocode_change
-import { LegionSessionrocessor } from "../kilocode/session/processor" // kilocode_change
+import { LegionSessionProcessor } from "../kilocode/session/processor" // kilocode_change
 import { LegionSession} from "../kilocode/session" // kilocode_change
 import { errorMessage } from "@/util/error" // kilocode_change
 import { Cause, Effect, Exit, Schema, Scope } from "effect"
@@ -195,7 +195,7 @@ export const TaskTool = Tool.define(
         yield* sessions.setPermission({ sessionID: session.id, permission })
       }
       // kilocode_change end
-      const platform = LegionSessionresolvePlatform(ctx.sessionID) // kilocode_change - preserve parent attribution across task creation/resume
+      const platform = LegionSession.resolvePlatform(ctx.sessionID) // kilocode_change - preserve parent attribution across task creation/resume
       // kilocode_change start - create a child session with inherited Kilo restrictions
       const nextSession =
         session ??
@@ -221,7 +221,7 @@ export const TaskTool = Tool.define(
         }))
       // kilocode_change end
       // kilocode_change start - rebuild in-memory ancestry and inherit confinement after creation/resume
-      LegionSessionregister({ id: nextSession.id, parentID: ctx.sessionID, platform })
+      LegionSession.register({ id: nextSession.id, parentID: ctx.sessionID, platform })
       yield* SandboxPolicy.inherit(ctx.sessionID, nextSession.id, fallback)
       // kilocode_change end
 
@@ -261,7 +261,7 @@ export const TaskTool = Tool.define(
 
       const runTask = Effect.fn("TaskTool.runTask")(function* () {
         const parts = yield* ops.resolvePromptParts(params.prompt)
-        LegionSessionrocessor.markReviewTelemetry(parts, params.command) // kilocode_change - carry review command into child session telemetry
+        LegionSessionProcessor.markReviewTelemetry(parts, params.command) // kilocode_change - carry review command into child session telemetry
         const result = yield* ops.prompt({
           messageID: MessageID.ascending(),
           sessionID: nextSession.id,

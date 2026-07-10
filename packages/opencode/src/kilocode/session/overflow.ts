@@ -19,7 +19,7 @@ function continued(messages: ModelMessage[]) {
   return messages.slice(idx + 1).some((message) => message.role === "tool")
 }
 
-export namespace LegionSessionverflow {
+export namespace LegionSessionOverflow {
   export class PreflightError extends Error {
     constructor() {
       super("Outgoing context reached the automatic compaction threshold")

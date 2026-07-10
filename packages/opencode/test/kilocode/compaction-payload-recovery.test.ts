@@ -10,7 +10,7 @@ import { RuntimeFlags } from "../../src/effect/runtime-flags"
 import { EventV2Bridge } from "../../src/event-v2-bridge"
 import { Image } from "../../src/image/image"
 import { KiloCompactionPayloadRecovery } from "../../src/kilocode/session/compaction-payload-recovery"
-import { LegionSessionompaction } from "../../src/kilocode/session/compaction"
+import { LegionSessionCompaction } from "../../src/kilocode/session/compaction"
 import { Permission } from "../../src/permission"
 import { Plugin } from "../../src/plugin"
 import { provideTestInstance } from "../fixture/fixture"
@@ -345,7 +345,7 @@ describe("KiloCompactionPayloadRecovery", () => {
           },
         })
         await Effect.runPromise(
-          LegionSessionompaction.create({
+          LegionSessionCompaction.create({
             session: {
               updateMessage: (msg) => Effect.promise(() => svc.updateMessage(msg)),
               updatePart: (part) => Effect.promise(() => svc.updatePart(part)),

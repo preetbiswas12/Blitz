@@ -159,7 +159,7 @@ export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: Pre
   )
 
   // kilocode_change start - resolve project ID and machine ID for kilo provider
-  const parent = input.parentSessionID ?? LegionSessionresolveParent(input.sessionID)
+  const parent = input.parentSessionID ?? LegionSession.resolveParent(input.sessionID)
   // kilocode_change end
 
   const tools = resolveTools(input)

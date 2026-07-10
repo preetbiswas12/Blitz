@@ -9,7 +9,7 @@ import { ModelID, ProviderID } from "../../src/provider/schema"
 import { Instance } from "../../src/kilocode/instance"
 import { provideTestInstance } from "../fixture/fixture"
 import { PlanFollowup } from "../../src/kilocode/plan-followup"
-import { LegionSessionrompt } from "../../src/kilocode/session/prompt"
+import { LegionSessionPrompt } from "../../src/kilocode/session/prompt"
 import { makeRuntime } from "../../src/effect/run-service"
 import { Question } from "../../src/question"
 import { Session } from "../../src/session/session"
@@ -209,7 +209,7 @@ describe("plan_exit detection", () => {
       await expect(pending).resolves.toBe("break")
     }))
 
-  test("LegionSessionrompt resolves plan follow-up through the supplied question service", () =>
+  test("LegionSessionPrompt resolves plan follow-up through the supplied question service", () =>
     withInstance(async () => {
       const seeded = await seed({
         text: "Here is the plan",
@@ -225,7 +225,7 @@ describe("plan_exit detection", () => {
       const result = await Effect.runPromise(
         Effect.gen(function* () {
           const question = yield* Question.Service
-          const pending = LegionSessionrompt.askPlanFollowup({
+          const pending = LegionSessionPrompt.askPlanFollowup({
             sessionID: seeded.sessionID,
             messages: seeded.messages,
             abort: AbortSignal.any([]),
@@ -247,7 +247,7 @@ describe("plan_exit detection", () => {
       expect(result).toBe("continue")
     }))
 
-  test("LegionSessionrompt cleans listener-local plan follow-up when aborted outside instance context", () => {
+  test("LegionSessionPrompt cleans listener-local plan follow-up when aborted outside instance context", () => {
     const outside = new AsyncResource("plan-followup-abort-test")
     return withInstance(async () => {
       const seeded = await seed({
@@ -265,7 +265,7 @@ describe("plan_exit detection", () => {
         Effect.gen(function* () {
           const question = yield* Question.Service
           const abort = new AbortController()
-          const pending = LegionSessionrompt.askPlanFollowup({
+          const pending = LegionSessionPrompt.askPlanFollowup({
             sessionID: seeded.sessionID,
             messages: seeded.messages,
             abort: abort.signal,
@@ -660,7 +660,7 @@ describe("plan_exit detection", () => {
           },
         ],
       }
-      await LegionSessionrompt.insertPlanReminders({
+      await LegionSessionPrompt.insertPlanReminders({
         agent: { name: "Architect", options: {} },
         session,
         userMessage: user,
@@ -702,7 +702,7 @@ describe("plan_exit detection", () => {
         ],
       }
 
-      await LegionSessionrompt.insertPlanReminders({
+      await LegionSessionPrompt.insertPlanReminders({
         agent: { name: "plan", options: {} },
         session,
         userMessage: user,
@@ -720,7 +720,7 @@ describe("plan_exit detection", () => {
 
         process.env.LEGION_CLIENT = "vscode"
         const supported = userMessage({ sessionID: session.id, agent: "plan", text: "Create a plan." })
-        await LegionSessionrompt.insertPlanReminders({
+        await LegionSessionPrompt.insertPlanReminders({
           agent: { name: "plan", options: {} },
           session,
           userMessage: supported,
@@ -732,7 +732,7 @@ describe("plan_exit detection", () => {
 
         process.env.LEGION_CLIENT = "acp"
         const acp = userMessage({ sessionID: session.id, agent: "plan", text: "Create a plan." })
-        await LegionSessionrompt.insertPlanReminders({
+        await LegionSessionPrompt.insertPlanReminders({
           agent: { name: "plan", options: {} },
           session,
           userMessage: acp,
@@ -772,7 +772,7 @@ describe("plan_exit detection", () => {
         ],
       }
 
-      await LegionSessionrompt.insertPlanReminders({
+      await LegionSessionPrompt.insertPlanReminders({
         agent: { name: "plan", options: {} },
         session,
         userMessage: user,
@@ -823,7 +823,7 @@ describe("plan_exit detection", () => {
           },
         ],
       }
-      await LegionSessionrompt.insertPlanReminders({
+      await LegionSessionPrompt.insertPlanReminders({
         agent: { name: "plan", options: {} },
         session,
         userMessage: user,
@@ -861,7 +861,7 @@ describe("plan_exit detection", () => {
         ],
       }
 
-      await LegionSessionrompt.insertPlanReminders({
+      await LegionSessionPrompt.insertPlanReminders({
         agent: { name: "Architect", options: {} },
         session,
         userMessage: user,

@@ -260,9 +260,9 @@ describe("tool.task", () => {
     Effect.gen(function* () {
       const sessions = yield* Session.Service
       const { chat, assistant } = yield* seed()
-      LegionSessionsetPlatformOverride(chat.id, "agent-manager")
+      LegionSession.setPlatformOverride(chat.id, "agent-manager")
       const child = yield* sessions.create({ parentID: chat.id, title: "Existing child" })
-      LegionSessionclearPlatformOverride(child.id)
+      LegionSession.clearPlatformOverride(child.id)
       const tool = yield* TaskTool
       const def = yield* tool.init()
 
@@ -285,8 +285,8 @@ describe("tool.task", () => {
         },
       )
 
-      expect(LegionSessionresolvePlatform(child.id)).toBe("agent-manager")
-      expect(LegionSessionresolveRoot(child.id)).toBe(chat.id)
+      expect(LegionSession.resolvePlatform(child.id)).toBe("agent-manager")
+      expect(LegionSession.resolveRoot(child.id)).toBe(chat.id)
     }),
   )
   // kilocode_change end

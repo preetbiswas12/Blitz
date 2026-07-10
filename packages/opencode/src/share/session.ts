@@ -26,13 +26,13 @@ export const layer = Layer.effect(
     const share = Effect.fn("SessionShare.share")(function* (sessionID: SessionID) {
       const conf = yield* cfg.get()
       if (conf.share === "disabled") throw new Error("Sharing is disabled in configuration")
-      const result = yield* LegionSessionshareSession(sessionID) // kilocode_change - use Kilo public share URLs
+      const result = yield* LegionSession.shareSession(sessionID) // kilocode_change - use Kilo public share URLs
       yield* sync.run(Session.Event.Updated, { sessionID, info: { share: { url: result.url } } })
       return result
     })
 
     const unshare = Effect.fn("SessionShare.unshare")(function* (sessionID: SessionID) {
-      yield* LegionSessionunshareSession(sessionID) // kilocode_change - use Kilo public share URLs
+      yield* LegionSession.unshareSession(sessionID) // kilocode_change - use Kilo public share URLs
       yield* sync.run(Session.Event.Updated, { sessionID, info: { share: { url: null } } })
     })
 

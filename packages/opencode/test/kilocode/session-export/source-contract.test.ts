@@ -8,7 +8,7 @@ test("compaction export derives root session from LegionSession, async () => {
     text.indexOf("// kilocode_change start - export self-contained compaction capture"),
     text.indexOf("yield* prune({ sessionID"),
   )
-  expect(block).toContain("LegionSessionresolveRoot(input.sessionID)")
+  expect(block).toContain("LegionSession.resolveRoot(input.sessionID)")
 })
 
 test("llm export does not retain raw stream parts", async () => {

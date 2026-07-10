@@ -1,5 +1,5 @@
 import { Image } from "@/image/image" // kilocode_change - classify user image validation defects
-import { LegionSessionttpApi } from "@/kilocode/server/httpapi/session-fork" // kilocode_change
+import { LegionSessionHttpApi } from "@/kilocode/server/httpapi/session-fork" // kilocode_change
 import { BlockedError as AgentRequirementError } from "@/kilocode/agent-requirements" // kilocode_change
 import { Agent } from "@/agent/agent"
 import { Bus } from "@/bus"
@@ -216,7 +216,7 @@ export const sessionHandlers = HttpApiBuilder.group(InstanceHttpApi, "session", 
       )
     })
 
-    const forkRaw = LegionSessionttpApi.forkRaw(fork) // kilocode_change - carry upstream bodyless full-session fork support
+    const forkRaw = LegionSessionHttpApi.forkRaw(fork) // kilocode_change - carry upstream bodyless full-session fork support
 
     const abort = Effect.fn("SessionHttpApi.abort")(function* (ctx: { params: { sessionID: SessionID } }) {
       yield* promptSvc.cancel(ctx.params.sessionID)

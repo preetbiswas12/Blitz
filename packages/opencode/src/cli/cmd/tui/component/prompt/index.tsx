@@ -60,7 +60,7 @@ import {
 import { DialogWorkspaceUnavailable } from "../dialog-workspace-unavailable"
 import { useArgs } from "@tui/context/args"
 // kilocode_change start
-import { LegionSessionuiSync } from "@/kilocode/session/tui-sync"
+import { LegionSessionTuiSync } from "@/kilocode/session/tui-sync"
 import { slashMatches } from "@/kilocode/cli/cmd/command-display"
 import * as AgentRequirements from "@/kilocode/cli/agent-requirements"
 import { createCostAlertController } from "@/kilocode/cli/cmd/tui/cost-alert"
@@ -408,7 +408,7 @@ export function Prompt(props: PromptProps) {
     if (!sessionID || !msg) return
     const parts = sync.data.part[msg.id]
     if (!parts) return
-    if (!LegionSessionuiSync.model({ role: msg.role, parts })) return
+    if (!LegionSessionTuiSync.model({ role: msg.role, parts })) return
 
     const key = [sessionID, msg.id].join(":")
     if (key === syncedKey) return

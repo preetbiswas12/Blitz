@@ -2,7 +2,7 @@ import type { MessageV2 } from "@/session/message-v2"
 
 const chronology = new WeakMap<MessageV2.WithParts, number>()
 
-export namespace LegionSessionessageOrder {
+export namespace LegionSessionMessageOrder {
   /** Preserve chronological order before model-facing projections rearrange messages. */
   export function annotate(msgs: MessageV2.WithParts[]) {
     for (const [index, msg] of msgs.entries()) chronology.set(msg, index)

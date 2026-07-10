@@ -8,7 +8,7 @@ export namespace IngestQueue {
     fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>
   }
 
-  export type CloseReason = LegionSessionCloseReason
+  export type CloseReason = LegionSession.CloseReason
 
   export type Data =
     | {

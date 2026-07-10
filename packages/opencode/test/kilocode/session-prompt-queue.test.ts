@@ -4,8 +4,8 @@ import { Effect } from "effect"
 import { Bus } from "../../src/bus"
 import { AppRuntime } from "../../src/effect/app-runtime"
 import { InstanceRef } from "../../src/effect/instance-ref"
-import { LegionSessionompaction } from "@/kilocode/session/compaction"
-import { LegionSessionromptQueue } from "@/kilocode/session/prompt-queue"
+import { LegionSessionCompaction } from "@/kilocode/session/compaction"
+import { LegionSessionPromptQueue } from "@/kilocode/session/prompt-queue"
 import { Suggestion } from "../../src/kilocode/suggestion"
 import { ModelID, ProviderID } from "../../src/provider/schema"
 import { InstanceStore } from "../../src/project/instance-store"
@@ -158,10 +158,10 @@ describe("session prompt queue", () => {
     ]
 
     const ids = await Effect.runPromise(
-      LegionSessionromptQueue.enqueue(
+      LegionSessionPromptQueue.enqueue(
         sessionID,
         two,
-        Effect.sync(() => LegionSessionromptQueue.scope(sessionID, messages).map((item) => item.info.id)),
+        Effect.sync(() => LegionSessionPromptQueue.scope(sessionID, messages).map((item) => item.info.id)),
         Effect.succeed([]),
       ),
     )
@@ -194,10 +194,10 @@ describe("session prompt queue", () => {
     ]
 
     const ids = await Effect.runPromise(
-      LegionSessionromptQueue.enqueue(
+      LegionSessionPromptQueue.enqueue(
         sessionID,
         m3,
-        Effect.sync(() => LegionSessionromptQueue.scope(sessionID, messages).map((item) => item.info.id)),
+        Effect.sync(() => LegionSessionPromptQueue.scope(sessionID, messages).map((item) => item.info.id)),
         Effect.succeed([]),
       ),
     )
@@ -225,10 +225,10 @@ describe("session prompt queue", () => {
     ]
 
     const ids = await Effect.runPromise(
-      LegionSessionromptQueue.enqueue(
+      LegionSessionPromptQueue.enqueue(
         sessionID,
         m2,
-        Effect.sync(() => LegionSessionromptQueue.scope(sessionID, messages).map((item) => item.info.id)),
+        Effect.sync(() => LegionSessionPromptQueue.scope(sessionID, messages).map((item) => item.info.id)),
         Effect.succeed([]),
       ),
     )
@@ -253,14 +253,14 @@ describe("session prompt queue", () => {
     ]
 
     const result = await Effect.runPromise(
-      LegionSessionromptQueue.enqueue(
+      LegionSessionPromptQueue.enqueue(
         sessionID,
         base,
         Effect.sync(() => {
-          LegionSessionromptQueue.retarget(sessionID, injected)
+          LegionSessionPromptQueue.retarget(sessionID, injected)
           return {
-            active: LegionSessionromptQueue.active(sessionID),
-            ids: LegionSessionromptQueue.scope(sessionID, messages).map((item) => item.info.id),
+            active: LegionSessionPromptQueue.active(sessionID),
+            ids: LegionSessionPromptQueue.scope(sessionID, messages).map((item) => item.info.id),
           }
         }),
         Effect.succeed({ active: undefined, ids: [] }),
@@ -292,12 +292,12 @@ describe("session prompt queue", () => {
         await sessions.updateMessage(user(session.id, queued).info)
 
         const result = await Effect.runPromise(
-          LegionSessionromptQueue.enqueue(
+          LegionSessionPromptQueue.enqueue(
             session.id,
             queued,
             Effect.promise(async () => {
               await Effect.runPromise(
-                LegionSessionompaction.create({
+                LegionSessionCompaction.create({
                   session: store,
                   sessionID: session.id,
                   agent: "code",
@@ -308,7 +308,7 @@ describe("session prompt queue", () => {
               )
               const messages = await sessions.messages({ sessionID: session.id })
               const compact = messages.find((msg) => msg.parts.some((part) => part.type === "compaction"))?.info.id
-              return { compact, ids: LegionSessionromptQueue.scope(session.id, messages).map((item) => item.info.id) }
+              return { compact, ids: LegionSessionPromptQueue.scope(session.id, messages).map((item) => item.info.id) }
             }),
             Effect.succeed({ compact: undefined, ids: [] }),
           ),
@@ -330,14 +330,14 @@ describe("session prompt queue", () => {
     const secondReleased = Promise.withResolvers<void>()
 
     const first = Effect.runPromise(
-      LegionSessionromptQueue.enqueue(
+      LegionSessionPromptQueue.enqueue(
         sessionID,
         MessageID.make("msg_followup_1"),
         Effect.gen(function* () {
-          observed.push({ where: "first:start", value: LegionSessionromptQueue.hasFollowup(sessionID) })
+          observed.push({ where: "first:start", value: LegionSessionPromptQueue.hasFollowup(sessionID) })
           firstStarted.resolve()
           yield* Effect.promise(() => firstReleased.promise)
-          observed.push({ where: "first:end", value: LegionSessionromptQueue.hasFollowup(sessionID) })
+          observed.push({ where: "first:end", value: LegionSessionPromptQueue.hasFollowup(sessionID) })
           return "first"
         }),
         Effect.succeed("first-cancelled"),
@@ -349,11 +349,11 @@ describe("session prompt queue", () => {
     expect(observed[0]?.value).toBe(false)
 
     const second = Effect.runPromise(
-      LegionSessionromptQueue.enqueue(
+      LegionSessionPromptQueue.enqueue(
         sessionID,
         MessageID.make("msg_followup_2"),
         Effect.gen(function* () {
-          observed.push({ where: "second:start", value: LegionSessionromptQueue.hasFollowup(sessionID) })
+          observed.push({ where: "second:start", value: LegionSessionPromptQueue.hasFollowup(sessionID) })
           secondStarted.resolve()
           yield* Effect.promise(() => secondReleased.promise)
           return "second"
@@ -365,14 +365,14 @@ describe("session prompt queue", () => {
     // Enqueueing msg2 while msg1 is still running must flip hasFollowup to true
     // for msg1's running slot.
     await new Promise((resolve) => setTimeout(resolve, 10))
-    expect(LegionSessionromptQueue.hasFollowup(sessionID)).toBe(true)
+    expect(LegionSessionPromptQueue.hasFollowup(sessionID)).toBe(true)
 
     const third = Effect.runPromise(
-      LegionSessionromptQueue.enqueue(
+      LegionSessionPromptQueue.enqueue(
         sessionID,
         MessageID.make("msg_followup_3"),
         Effect.sync(() => {
-          observed.push({ where: "third:start", value: LegionSessionromptQueue.hasFollowup(sessionID) })
+          observed.push({ where: "third:start", value: LegionSessionPromptQueue.hasFollowup(sessionID) })
           return "third"
         }),
         Effect.succeed("third-cancelled"),
@@ -386,7 +386,7 @@ describe("session prompt queue", () => {
 
     // msg2 started after msg3 was enqueued, so hasFollowup should be false for
     // msg2 — everything waiting is older than msg2's activeSince snapshot.
-    expect(LegionSessionromptQueue.hasFollowup(sessionID)).toBe(false)
+    expect(LegionSessionPromptQueue.hasFollowup(sessionID)).toBe(false)
     secondReleased.resolve()
 
     expect(await second).toBe("second")
@@ -606,12 +606,12 @@ describe("session prompt queue", () => {
   test("cancel on a session with no active tail is a no-op and does not leak state", async () => {
     const sessionID = SessionID.make("session_cancel_noop")
 
-    await Effect.runPromise(LegionSessionromptQueue.cancel(sessionID))
+    await Effect.runPromise(LegionSessionPromptQueue.cancel(sessionID))
 
-    expect(LegionSessionromptQueue._hasInternalState(sessionID)).toBe(false)
+    expect(LegionSessionPromptQueue._hasInternalState(sessionID)).toBe(false)
 
     const result = await Effect.runPromise(
-      LegionSessionromptQueue.enqueue(
+      LegionSessionPromptQueue.enqueue(
         sessionID,
         MessageID.make("msg_probe"),
         Effect.succeed("work executed"),
@@ -705,15 +705,15 @@ describe("session prompt queue", () => {
 
             // Internal state should have no lingering tail/version/target entries after the last release.
             const ids = await Effect.runPromise(
-              LegionSessionromptQueue.enqueue(
+              LegionSessionPromptQueue.enqueue(
                 session.id,
                 MessageID.make("msg_probe"),
-                Effect.succeed(LegionSessionromptQueue.scope(session.id, []).map((item) => item.info.id)),
+                Effect.succeed(LegionSessionPromptQueue.scope(session.id, []).map((item) => item.info.id)),
                 Effect.succeed([]),
               ),
             )
             expect(ids).toEqual([])
-            expect(LegionSessionromptQueue.hasFollowup(session.id)).toBe(false)
+            expect(LegionSessionPromptQueue.hasFollowup(session.id)).toBe(false)
           }),
       })
     } finally {
@@ -784,7 +784,7 @@ describe("session prompt queue", () => {
 
         // Slot 1: active, activeSince snapshots latest=1.
         const first = Effect.runPromise(
-          LegionSessionromptQueue.enqueue(
+          LegionSessionPromptQueue.enqueue(
             sessionID,
             MessageID.make("msg_auto_sug_1"),
             Effect.gen(function* () {
@@ -799,7 +799,7 @@ describe("session prompt queue", () => {
 
         // Slot 2: enqueued while slot 1 is active → latest=2 > activeSince=1.
         const second = Effect.runPromise(
-          LegionSessionromptQueue.enqueue(
+          LegionSessionPromptQueue.enqueue(
             sessionID,
             MessageID.make("msg_auto_sug_2"),
             Effect.succeed("second" as const),
@@ -807,7 +807,7 @@ describe("session prompt queue", () => {
           ),
         )
         await Bun.sleep(10)
-        expect(LegionSessionromptQueue.hasFollowup(sessionID)).toBe(true)
+        expect(LegionSessionPromptQueue.hasFollowup(sessionID)).toBe(true)
 
         let shown = 0
         const offShown = Bus.subscribe(Suggestion.Event.Shown, (event) => {

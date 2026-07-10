@@ -777,7 +777,7 @@ export namespace LegionSessions {
   }
 
   async function meta(sessionId?: string) {
-    const override = sessionId ? LegionSessionresolvePlatform(sessionId) : undefined
+    const override = sessionId ? LegionSession.resolvePlatform(sessionId) : undefined
     const platform = override || process.env["LEGION_PLATFORM"] || "cli"
     const orgId = await getOrgId()
     const gitBranch = await branch().catch(() => undefined)

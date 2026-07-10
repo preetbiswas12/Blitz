@@ -24,7 +24,7 @@ import { SessionStatus } from "../../src/session/status"
 import { SessionSummary } from "../../src/session/summary"
 import { Snapshot } from "../../src/snapshot"
 import { SyncEvent } from "../../src/sync"
-import { LegionSessionrocessor } from "../../src/kilocode/session/processor"
+import { LegionSessionProcessor } from "../../src/kilocode/session/processor"
 import * as Log from "@opencode-ai/core/util/log"
 import * as CrossSpawnSpawner from "@opencode-ai/core/cross-spawn-spawner"
 import { provideTmpdirInstance } from "../fixture/fixture"
@@ -256,13 +256,13 @@ describe("session processor empty tool-calls", () => {
           const parts = MessageV2.parts(msg.id)
           const warning = parts.find(
             (part): part is MessageV2.TextPart =>
-              part.type === "text" && part.text === LegionSessionrocessor.REASONING_LENGTH_WARNING,
+              part.type === "text" && part.text === LegionSessionProcessor.REASONING_LENGTH_WARNING,
           )
 
           expect(warning?.ignored).toBe(true)
 
           const modelMsgs = yield* MessageV2.toModelMessagesEffect([{ info: handle.message, parts }], mdl)
-          expect(JSON.stringify(modelMsgs)).not.toContain(LegionSessionrocessor.REASONING_LENGTH_WARNING)
+          expect(JSON.stringify(modelMsgs)).not.toContain(LegionSessionProcessor.REASONING_LENGTH_WARNING)
         }),
       { git: true },
     ),
@@ -399,7 +399,7 @@ describe("session processor empty tool-calls", () => {
           const parts = MessageV2.parts(msg.id)
           const warning = parts.find(
             (part): part is MessageV2.TextPart =>
-              part.type === "text" && part.text === LegionSessionrocessor.OUTPUT_LENGTH_WARNING,
+              part.type === "text" && part.text === LegionSessionProcessor.OUTPUT_LENGTH_WARNING,
           )
 
           expect(warning?.ignored).toBe(true)
@@ -407,7 +407,7 @@ describe("session processor empty tool-calls", () => {
           const modelMsgs = yield* MessageV2.toModelMessagesEffect([{ info: handle.message, parts }], mdl)
           const json = JSON.stringify(modelMsgs)
           expect(json).toContain("partial answer")
-          expect(json).not.toContain(LegionSessionrocessor.OUTPUT_LENGTH_WARNING)
+          expect(json).not.toContain(LegionSessionProcessor.OUTPUT_LENGTH_WARNING)
         }),
       { git: true },
     ),

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import { LegionSessionuiSync } from "../../src/kilocode/session/tui-sync"
+import { LegionSessionTuiSync } from "../../src/kilocode/session/tui-sync"
 
 type Message = {
   role: string
@@ -8,32 +8,32 @@ type Message = {
 }
 
 function syncVariant(input: { current: string | undefined; message: Message; parts?: readonly { type: string }[] }) {
-  if (!LegionSessionuiSync.model({ role: input.message.role, parts: input.parts })) return input.current
+  if (!LegionSessionTuiSync.model({ role: input.message.role, parts: input.parts })) return input.current
   return input.message.model?.variant ?? "default"
 }
 
-describe("LegionSessionuiSync.model", () => {
+describe("LegionSessionTuiSync.model", () => {
   test("syncs normal user messages", () => {
-    expect(LegionSessionuiSync.model({ role: "user", parts: [{ type: "text" }] })).toBe(true)
+    expect(LegionSessionTuiSync.model({ role: "user", parts: [{ type: "text" }] })).toBe(true)
   })
 
   test("skips compaction marker user messages", () => {
-    expect(LegionSessionuiSync.model({ role: "user", parts: [{ type: "compaction" }] })).toBe(false)
+    expect(LegionSessionTuiSync.model({ role: "user", parts: [{ type: "compaction" }] })).toBe(false)
   })
 
   test("skips messages before parts load", () => {
-    expect(LegionSessionuiSync.model({ role: "user" })).toBe(false)
+    expect(LegionSessionTuiSync.model({ role: "user" })).toBe(false)
   })
 
   test("skips messages checked with stored parts", () => {
     const msg = { role: "user" }
     const parts = [{ type: "compaction" }]
 
-    expect(LegionSessionuiSync.model({ role: msg.role, parts })).toBe(false)
+    expect(LegionSessionTuiSync.model({ role: msg.role, parts })).toBe(false)
   })
 
   test("skips non-user messages", () => {
-    expect(LegionSessionuiSync.model({ role: "assistant", parts: [{ type: "text" }] })).toBe(false)
+    expect(LegionSessionTuiSync.model({ role: "assistant", parts: [{ type: "text" }] })).toBe(false)
   })
 
   test("preserves thinking level after /compact", () => {

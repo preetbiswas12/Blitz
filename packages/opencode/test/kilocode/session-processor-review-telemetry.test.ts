@@ -1,6 +1,6 @@
 // kilocode_change - new file
 import { describe, expect, test } from "bun:test"
-import { LegionSessionrocessor } from "../../src/kilocode/session/processor"
+import { LegionSessionProcessor } from "../../src/kilocode/session/processor"
 import type { MessageV2 } from "../../src/session/message-v2"
 
 const REVIEW_COMMANDS = ["review"] as const
@@ -11,23 +11,23 @@ const expected = (command: (typeof REVIEW_COMMANDS)[number]) => ({
   command,
 })
 
-describe("LegionSessionrocessor.reviewTelemetry", () => {
+describe("LegionSessionProcessor.reviewTelemetry", () => {
   for (const command of REVIEW_COMMANDS) {
     test(`returns telemetry for ${command}`, () => {
-      expect(LegionSessionrocessor.reviewTelemetry(command)).toEqual(expected(command))
+      expect(LegionSessionProcessor.reviewTelemetry(command)).toEqual(expected(command))
     })
   }
 
   test("returns undefined for an unrelated command", () => {
-    expect(LegionSessionrocessor.reviewTelemetry("init")).toBeUndefined()
+    expect(LegionSessionProcessor.reviewTelemetry("init")).toBeUndefined()
   })
 
   test("returns undefined for an undefined command", () => {
-    expect(LegionSessionrocessor.reviewTelemetry(undefined)).toBeUndefined()
+    expect(LegionSessionProcessor.reviewTelemetry(undefined)).toBeUndefined()
   })
 })
 
-describe("LegionSessionrocessor.markReviewTelemetry", () => {
+describe("LegionSessionProcessor.markReviewTelemetry", () => {
   for (const command of REVIEW_COMMANDS) {
     test(`stamps text parts with telemetry for ${command}`, () => {
       const parts: Array<{ type: string; metadata?: Record<string, unknown> }> = [
@@ -35,7 +35,7 @@ describe("LegionSessionrocessor.markReviewTelemetry", () => {
         { type: "file" },
         { type: "text" },
       ]
-      const tel = LegionSessionrocessor.markReviewTelemetry(parts, command)
+      const tel = LegionSessionProcessor.markReviewTelemetry(parts, command)
       expect(tel).toEqual(expected(command))
       expect(parts[0].metadata).toEqual({ existing: "keep", ...expected(command) })
       expect(parts[1].metadata).toBeUndefined()
@@ -45,23 +45,23 @@ describe("LegionSessionrocessor.markReviewTelemetry", () => {
 
   test("does nothing for an unrelated command", () => {
     const parts: Array<{ type: string; metadata?: Record<string, unknown> }> = [{ type: "text" }]
-    expect(LegionSessionrocessor.markReviewTelemetry(parts, "init")).toBeUndefined()
+    expect(LegionSessionProcessor.markReviewTelemetry(parts, "init")).toBeUndefined()
     expect(parts[0].metadata).toBeUndefined()
   })
 
   test("does nothing for an undefined command", () => {
     const parts: Array<{ type: string; metadata?: Record<string, unknown> }> = [{ type: "text" }]
-    expect(LegionSessionrocessor.markReviewTelemetry(parts, undefined)).toBeUndefined()
+    expect(LegionSessionProcessor.markReviewTelemetry(parts, undefined)).toBeUndefined()
     expect(parts[0].metadata).toBeUndefined()
   })
 })
 
-describe("LegionSessionrocessor.extractReviewTelemetry", () => {
+describe("LegionSessionProcessor.extractReviewTelemetry", () => {
   for (const command of REVIEW_COMMANDS) {
     test(`recovers ${command} telemetry from marked text parts`, () => {
       const parts: Array<{ type: string; metadata?: Record<string, unknown> }> = [{ type: "text" }]
-      LegionSessionrocessor.markReviewTelemetry(parts, command)
-      const round = LegionSessionrocessor.extractReviewTelemetry(parts as unknown as MessageV2.Part[])
+      LegionSessionProcessor.markReviewTelemetry(parts, command)
+      const round = LegionSessionProcessor.extractReviewTelemetry(parts as unknown as MessageV2.Part[])
       expect(round).toEqual(expected(command))
     })
   }
@@ -71,40 +71,40 @@ describe("LegionSessionrocessor.extractReviewTelemetry", () => {
       { type: "text" },
       { type: "text", metadata: { foo: "bar" } },
     ]
-    expect(LegionSessionrocessor.extractReviewTelemetry(parts as unknown as MessageV2.Part[])).toBeUndefined()
+    expect(LegionSessionProcessor.extractReviewTelemetry(parts as unknown as MessageV2.Part[])).toBeUndefined()
   })
 
   test("returns undefined when command in metadata is unknown", () => {
     const parts: Array<{ type: string; metadata?: Record<string, unknown> }> = [
       { type: "text", metadata: { mode: "review", feature: "code_reviews", command: "unknown" } },
     ]
-    expect(LegionSessionrocessor.extractReviewTelemetry(parts as unknown as MessageV2.Part[])).toBeUndefined()
+    expect(LegionSessionProcessor.extractReviewTelemetry(parts as unknown as MessageV2.Part[])).toBeUndefined()
   })
 })
 
-describe("LegionSessionrocessor.suggestionReviewTelemetry", () => {
+describe("LegionSessionProcessor.suggestionReviewTelemetry", () => {
   test("returns suggest-sourced telemetry for accepted review commands", () => {
     expect(
-      LegionSessionrocessor.suggestionReviewTelemetry({
+      LegionSessionProcessor.suggestionReviewTelemetry({
         accepted: { prompt: "/review uncommitted --focus telemetry" },
       }),
     ).toEqual({ ...expected("review"), tool: "suggest" })
   })
 
   test("returns undefined for accepted non-review commands", () => {
-    expect(LegionSessionrocessor.suggestionReviewTelemetry({ accepted: { prompt: "/test" } })).toBeUndefined()
+    expect(LegionSessionProcessor.suggestionReviewTelemetry({ accepted: { prompt: "/test" } })).toBeUndefined()
   })
 
   test("returns undefined when accepted prompt is not a slash command", () => {
-    expect(LegionSessionrocessor.suggestionReviewTelemetry({ accepted: { prompt: "Run tests" } })).toBeUndefined()
+    expect(LegionSessionProcessor.suggestionReviewTelemetry({ accepted: { prompt: "Run tests" } })).toBeUndefined()
   })
 
   test("returns undefined when accepted metadata is missing", () => {
-    expect(LegionSessionrocessor.suggestionReviewTelemetry({ dismissed: true })).toBeUndefined()
+    expect(LegionSessionProcessor.suggestionReviewTelemetry({ dismissed: true })).toBeUndefined()
   })
 })
 
-describe("LegionSessionrocessor.extractSuggestionReviewTelemetry", () => {
+describe("LegionSessionProcessor.extractSuggestionReviewTelemetry", () => {
   test("recovers review telemetry from completed suggest tool metadata", () => {
     const parts = [
       {
@@ -117,7 +117,7 @@ describe("LegionSessionrocessor.extractSuggestionReviewTelemetry", () => {
       },
     ]
 
-    expect(LegionSessionrocessor.extractSuggestionReviewTelemetry(parts as unknown as MessageV2.Part[])).toEqual({
+    expect(LegionSessionProcessor.extractSuggestionReviewTelemetry(parts as unknown as MessageV2.Part[])).toEqual({
       ...expected("review"),
       tool: "suggest",
     })

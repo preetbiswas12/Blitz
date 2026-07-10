@@ -1,11 +1,11 @@
 import path from "path"
 import os from "os"
-import { LegionSessionrompt } from "@/kilocode/session/prompt" // kilocode_change
-import { LegionSessionessageOrder } from "@/kilocode/session/message-order" // kilocode_change
-import { LegionSessionromptQueue } from "@/kilocode/session/prompt-queue" // kilocode_change
+import { LegionSessionPrompt } from "@/kilocode/session/prompt" // kilocode_change
+import { LegionSessionMessageOrder } from "@/kilocode/session/message-order" // kilocode_change
+import { LegionSessionPromptQueue } from "@/kilocode/session/prompt-queue" // kilocode_change
 import { LegionSession} from "@/kilocode/session" // kilocode_change
 import { KiloCostPropagation } from "@/kilocode/session/cost-propagation" // kilocode_change
-import { LegionSessionrocessor } from "@/kilocode/session/processor" // kilocode_change
+import { LegionSessionProcessor } from "@/kilocode/session/processor" // kilocode_change
 import { CommandTimeout } from "@/kilocode/command-timeout" // kilocode_change
 import { Suggestion } from "@/kilocode/suggestion" // kilocode_change
 import { Question } from "@/question" // kilocode_change
@@ -93,7 +93,7 @@ IMPORTANT:
 const STRUCTURED_OUTPUT_SYSTEM_PROMPT = `IMPORTANT: The user has requested structured output. You MUST use the StructuredOutput tool to provide your final response. Do NOT respond with plain text - you MUST call the StructuredOutput tool with your answer formatted according to the schema.`
 
 // kilocode_change
-export const shouldAskPlanFollowup = LegionSessionrompt.shouldAskPlanFollowup
+export const shouldAskPlanFollowup = LegionSessionPrompt.shouldAskPlanFollowup
 
 // kilocode_change start - persistent tool-output pruning when payload is already large
 const REQUEST_PRUNE_BYTES = 1_250_000
@@ -169,8 +169,8 @@ export const layer = Layer.effect(
 
     const cancel = Effect.fn("SessionPrompt.cancel")(function* (sessionID: SessionID) {
       yield* elog.info("cancel", { sessionID })
-      yield* LegionSessionromptQueue.cancel(sessionID) // kilocode_change - drop queued follow-up loops on abort
-      LegionSessionrompt.abortPlanFollowup(sessionID) // kilocode_change - abort pending plan-followup handover work
+      yield* LegionSessionPromptQueue.cancel(sessionID) // kilocode_change - drop queued follow-up loops on abort
+      LegionSessionPrompt.abortPlanFollowup(sessionID) // kilocode_change - abort pending plan-followup handover work
       yield* state.cancel(sessionID)
     })
 
@@ -310,7 +310,7 @@ export const layer = Layer.effect(
           small: true,
           tools: {},
           model: mdl,
-          sessionID: LegionSessionrompt.titleID(input.session.id), // kilocode_change - isolate title requests from the agent task
+          sessionID: LegionSessionPrompt.titleID(input.session.id), // kilocode_change - isolate title requests from the agent task
           retries: 2,
           messages: [{ role: "user", content: "Generate a title for this conversation:\n" }, ...msgs],
         })
@@ -426,7 +426,7 @@ export const layer = Layer.effect(
             }),
           // kilocode_change start - resolve permissions at ask time so active tools see config edits
           ask: (req: any) =>
-            LegionSessionrompt.askPermission({
+            LegionSessionPrompt.askPermission({
               permission,
               agents,
               sessions,
@@ -1311,8 +1311,8 @@ export const layer = Layer.effect(
         const session = yield* sessions.get(input.sessionID).pipe(Effect.orDie)
         yield* revert.cleanup(session)
         // kilocode_change start - recover interrupted Kilo turns before accepting a follow-up
-        yield* LegionSessionrompt.recoverDanglingAssistant({ sessionID: input.sessionID, status, sessions })
-        yield* LegionSessionrompt.recoverProviderFinishError({ sessionID: input.sessionID, status, sessions })
+        yield* LegionSessionPrompt.recoverDanglingAssistant({ sessionID: input.sessionID, status, sessions })
+        yield* LegionSessionPrompt.recoverProviderFinishError({ sessionID: input.sessionID, status, sessions })
         // kilocode_change end
         const message = yield* createUserMessage(input)
         yield* sessions.touch(input.sessionID)
@@ -1323,7 +1323,7 @@ export const layer = Layer.effect(
         }
         if (permissions.length > 0) {
           // kilocode_change start - preserve inherited task restrictions while refreshing prompt tool toggles
-          const merged = LegionSessionrompt.mergeToolPermissions({
+          const merged = LegionSessionPrompt.mergeToolPermissions({
             existing: session.permission ?? [],
             toggles: permissions,
           })
@@ -1346,7 +1346,7 @@ export const layer = Layer.effect(
         // Queue tails and runner fibers can resume outside the HTTP request's
         // ambient instance context; bridge both Effect refs and legacy ALS.
         const bridge = yield* EffectBridge.make()
-        return yield* LegionSessionromptQueue.enqueue(
+        return yield* LegionSessionPromptQueue.enqueue(
           input.sessionID,
           message.info.id,
           bridge.run(
@@ -1375,7 +1375,7 @@ export const layer = Layer.effect(
     })
 
     // kilocode_change — mutable close-reason per session, set by runLoop and read by loop
-    const closeReasons = new Map<string, LegionSessionCloseReason>()
+    const closeReasons = new Map<string, LegionSession.CloseReason>()
 
     // kilocode_change start - retain request-scoped snapshot initialization policy
     const runLoop: (input: LoopInput) => Effect.Effect<MessageV2.WithParts, NotFoundError> = Effect.fn(
@@ -1384,7 +1384,7 @@ export const layer = Layer.effect(
       const sessionID = input.sessionID
       // kilocode_change end
       // kilocode_change — cache environment details per turn (prompt caching)
-      const envCache: LegionSessionrompt.EnvCache = {}
+      const envCache: LegionSessionPrompt.EnvCache = {}
       closeReasons.delete(sessionID) // kilocode_change
       let compactionAttempts = 0 // kilocode_change - cap compaction attempts per turn to avoid infinite loops
       const ctx = yield* InstanceState.context
@@ -1398,11 +1398,11 @@ export const layer = Layer.effect(
         yield* slog.info("loop", { step })
 
         let msgs = yield* MessageV2.filterCompactedEffect(sessionID)
-        msgs = LegionSessionromptQueue.scope(sessionID, msgs) // kilocode_change - hide later queued prompts
-        msgs = LegionSessionrompt.trimBeforeLastSummary(msgs) // kilocode_change - trim on any completed summary (e.g. manual /compact against a text user)
+        msgs = LegionSessionPromptQueue.scope(sessionID, msgs) // kilocode_change - hide later queued prompts
+        msgs = LegionSessionPrompt.trimBeforeLastSummary(msgs) // kilocode_change - trim on any completed summary (e.g. manual /compact against a text user)
 
         // kilocode_change start - select loop state by chronology after retained-tail projection
-        const latest = LegionSessionessageOrder.latest(msgs)
+        const latest = LegionSessionMessageOrder.latest(msgs)
         const { user: lastUser, assistant: lastAssistant, finished: lastFinished, tasks } = latest
         // kilocode_change end
 
@@ -1415,13 +1415,13 @@ export const layer = Layer.effect(
         const userBeforeAssistant =
           latest.userMessage &&
           latest.assistantMessage &&
-          LegionSessionessageOrder.compare(latest.userMessage, latest.assistantMessage) < 0
+          LegionSessionMessageOrder.compare(latest.userMessage, latest.assistantMessage) < 0
         // kilocode_change end
         // kilocode_change start - carry local review command marker into LLM telemetry
         const telemetry =
-          LegionSessionrocessor.extractReviewTelemetry(
+          LegionSessionProcessor.extractReviewTelemetry(
             msgs.findLast((m) => m.info.role === "user" && m.info.id === lastUser.id)?.parts ?? [],
-          ) ?? LegionSessionrocessor.extractSuggestionReviewTelemetry(lastAssistantMsg?.parts ?? [])
+          ) ?? LegionSessionProcessor.extractSuggestionReviewTelemetry(lastAssistantMsg?.parts ?? [])
         // kilocode_change end
 
         // Some providers return "stop" even when the assistant message contains
@@ -1438,10 +1438,10 @@ export const layer = Layer.effect(
           hasToolCalls &&
           lastAssistant.parentID === lastUser.id &&
           userBeforeAssistant &&
-          LegionSessionrompt.shouldAskPlanFollowup({ messages: msgs, abort: AbortSignal.any([]) })
+          LegionSessionPrompt.shouldAskPlanFollowup({ messages: msgs, abort: AbortSignal.any([]) })
         ) {
           const action = yield* Effect.promise((signal) =>
-            LegionSessionrompt.askPlanFollowup({ sessionID, messages: msgs, abort: signal, question }),
+            LegionSessionPrompt.askPlanFollowup({ sessionID, messages: msgs, abort: signal, question }),
           )
           if (action === "continue") continue
           yield* slog.info("exiting loop")
@@ -1511,7 +1511,7 @@ export const layer = Layer.effect(
           (yield* compaction.isOverflow({ tokens: lastFinished.tokens, model }))
         ) {
           // kilocode_change start
-          const guard = LegionSessionrompt.guardCompactionAttempt({
+          const guard = LegionSessionPrompt.guardCompactionAttempt({
             sessionID,
             attempts: compactionAttempts,
             closeReasons,
@@ -1620,7 +1620,7 @@ export const layer = Layer.effect(
             for (const m of msgs) {
               // kilocode_change start - compare chronology, not generated IDs
               const finishedBeforeMessage =
-                latest.finishedMessage && LegionSessionessageOrder.compare(latest.finishedMessage, m) < 0
+                latest.finishedMessage && LegionSessionMessageOrder.compare(latest.finishedMessage, m) < 0
               if (m.info.role !== "user" || !finishedBeforeMessage) continue
               // kilocode_change end
               for (const p of m.parts) {
@@ -1643,8 +1643,8 @@ export const layer = Layer.effect(
           // kilocode_change start — ephemeral context injection + post-summary
           // media strip (keeps outgoing body under the gateway body-size limit
           // even when filterCompacted couldn't trim the pre-summary history).
-          LegionSessionrompt.injectEditorContext({ msgs, lastUser, sessionID, cache: envCache })
-          msgs = LegionSessionrompt.maybeStripHistoricalMedia(msgs)
+          LegionSessionPrompt.injectEditorContext({ msgs, lastUser, sessionID, cache: envCache })
+          msgs = LegionSessionPrompt.maybeStripHistoricalMedia(msgs)
           // kilocode_change end
 
           // kilocode_change start - persistently prune stale tool outputs when payload is already large
@@ -1658,11 +1658,11 @@ export const layer = Layer.effect(
           if (size > REQUEST_PRUNE_BYTES) {
             yield* compaction.prune({ sessionID, reason: "payload-limit" })
             msgs = yield* MessageV2.filterCompactedEffect(sessionID)
-            msgs = LegionSessionromptQueue.scope(sessionID, msgs)
-            msgs = LegionSessionrompt.trimBeforeLastSummary(msgs)
+            msgs = LegionSessionPromptQueue.scope(sessionID, msgs)
+            msgs = LegionSessionPrompt.trimBeforeLastSummary(msgs)
             yield* plugin.trigger("experimental.chat.messages.transform", {}, { messages: msgs })
-            LegionSessionrompt.injectEditorContext({ msgs, lastUser, sessionID, cache: envCache })
-            msgs = LegionSessionrompt.maybeStripHistoricalMedia(msgs)
+            LegionSessionPrompt.injectEditorContext({ msgs, lastUser, sessionID, cache: envCache })
+            msgs = LegionSessionPrompt.maybeStripHistoricalMedia(msgs)
             modelMsgs = yield* MessageV2.toModelMessagesEffect(msgs, model)
             const nextSize = Buffer.byteLength(JSON.stringify(modelMsgs))
             if (nextSize > REQUEST_PRUNE_BYTES) log.warn("payload still large after pruning", { size: nextSize })
@@ -1675,7 +1675,7 @@ export const layer = Layer.effect(
             // kilocode_change start - keep Ask/Plan tool filtering hardened against session allows
             user: lastUser,
             agent,
-            permission: LegionSessionrompt.guardPermissions({ agent, session }),
+            permission: LegionSessionPrompt.guardPermissions({ agent, session }),
             // kilocode_change end
             sessionID,
             parentSessionID: session.parentID,
@@ -1705,7 +1705,7 @@ export const layer = Layer.effect(
             }
             // kilocode_change start
             if (handle.message.finish === "error") {
-              LegionSessionrocessor.providerFinishError(handle.message)
+              LegionSessionProcessor.providerFinishError(handle.message)
               yield* sessions.updateMessage(handle.message)
               closeReasons.set(sessionID, "error")
               return "break" as const
@@ -1721,7 +1721,7 @@ export const layer = Layer.effect(
           // kilocode_change end
           if (result === "compact") {
             // kilocode_change start
-            const guard = LegionSessionrompt.guardCompactionAttempt({
+            const guard = LegionSessionPrompt.guardCompactionAttempt({
               sessionID,
               attempts: compactionAttempts,
               closeReasons,
@@ -1747,7 +1747,7 @@ export const layer = Layer.effect(
           // instead of starting another LLM step for the now-superseded turn. The
           // current handle.process has fully drained (tokens + inline tool calls) by
           // the time we get here, so nothing is cut off.
-          if (LegionSessionromptQueue.hasFollowup(sessionID)) {
+          if (LegionSessionPromptQueue.hasFollowup(sessionID)) {
             closeReasons.set(sessionID, "interrupted")
             return "break" as const
           }
@@ -1785,9 +1785,9 @@ export const layer = Layer.effect(
     )(function* (input: LoopInput) {
       // kilocode_change start
       const session = yield* sessions.get(input.sessionID)
-      yield* LegionSessionrompt.recoverDanglingAssistant({ sessionID: input.sessionID, status, sessions })
-      yield* LegionSessionrompt.recoverProviderFinishError({ sessionID: input.sessionID, status, sessions })
-      yield* bus.publish(LegionSessionEvent.TurnOpen, { sessionID: input.sessionID })
+      yield* LegionSessionPrompt.recoverDanglingAssistant({ sessionID: input.sessionID, status, sessions })
+      yield* LegionSessionPrompt.recoverProviderFinishError({ sessionID: input.sessionID, status, sessions })
+      yield* bus.publish(LegionSession.Event.TurnOpen, { sessionID: input.sessionID })
       return yield* Effect.onExit(
         state.ensureRunning(
           input.sessionID,
@@ -1795,10 +1795,10 @@ export const layer = Layer.effect(
           runLoop(input).pipe(Effect.orDie),
         ), // kilocode_change
         Effect.fnUntraced(function* (exit) {
-          yield* bus.publish(LegionSessionEvent.TurnClose, {
+          yield* bus.publish(LegionSession.Event.TurnClose, {
             sessionID: input.sessionID,
             parentID: session.parentID,
-            reason: LegionSessionrompt.resolveCloseReason({
+            reason: LegionSessionPrompt.resolveCloseReason({
               sessionID: input.sessionID,
               closeReasons,
               exit,
@@ -1961,7 +1961,7 @@ export const layer = Layer.effect(
       yield* agents.guardRequirements(agent) // kilocode_change - command agent overrides must satisfy requirements
 
       const templateParts = yield* resolvePromptParts(template)
-      LegionSessionrocessor.markReviewTelemetry(templateParts, input.command) // kilocode_change - mark review commands for completion telemetry
+      LegionSessionProcessor.markReviewTelemetry(templateParts, input.command) // kilocode_change - mark review commands for completion telemetry
       const isSubtask = (agent.mode === "subagent" && cmd.subtask !== false) || cmd.subtask === true
       const parts = isSubtask
         ? [

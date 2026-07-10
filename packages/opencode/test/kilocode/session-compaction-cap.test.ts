@@ -22,7 +22,7 @@ import { Format } from "../../src/format"
 import { Git } from "../../src/git"
 import { Image } from "../../src/image/image"
 import { LegionSession} from "../../src/kilocode/session"
-import { LegionSessionrompt } from "../../src/kilocode/session/prompt"
+import { LegionSessionPrompt } from "../../src/kilocode/session/prompt"
 import { LSP } from "../../src/lsp/lsp"
 import { MCP } from "../../src/mcp"
 import { Permission } from "../../src/permission"
@@ -283,8 +283,8 @@ describe("session compaction cap", () => {
           yield* llm.text("summary 3") // 6
           yield* llm.error(400, overflowBody) // 7 — exhausts, breaks
 
-          const turnClose = yield* Deferred.make<LegionSessionCloseReason>()
-          const unsub = yield* bus.subscribeCallback(LegionSessionEvent.TurnClose, (evt) => {
+          const turnClose = yield* Deferred.make<LegionSession.CloseReason>()
+          const unsub = yield* bus.subscribeCallback(LegionSession.Event.TurnClose, (evt) => {
             if (evt.properties.sessionID === chat.id)
               Deferred.doneUnsafe(turnClose, Effect.succeed(evt.properties.reason))
           })
@@ -301,7 +301,7 @@ describe("session compaction cap", () => {
 
           // Each compaction round costs 2 LLM calls in this replay-mode path (one
           // top-level overflow + one summary) plus 1 final overflow that trips the cap.
-          expect(yield* llm.calls).toBe(LegionSessionrompt.MAX_COMPACTION_ATTEMPTS * 2 + 1)
+          expect(yield* llm.calls).toBe(LegionSessionPrompt.MAX_COMPACTION_ATTEMPTS * 2 + 1)
           expect(reason).toBe("error")
           expect(result.info.role).toBe("assistant")
           if (result.info.role !== "assistant") return
@@ -332,8 +332,8 @@ describe("session compaction cap", () => {
           yield* llm.text("summary ok") // 2 — summary succeeds
           yield* llm.text("final answer") // 3 — replayed turn completes
 
-          const turnClose = yield* Deferred.make<LegionSessionCloseReason>()
-          const unsub = yield* bus.subscribeCallback(LegionSessionEvent.TurnClose, (evt) => {
+          const turnClose = yield* Deferred.make<LegionSession.CloseReason>()
+          const unsub = yield* bus.subscribeCallback(LegionSession.Event.TurnClose, (evt) => {
             if (evt.properties.sessionID === chat.id)
               Deferred.doneUnsafe(turnClose, Effect.succeed(evt.properties.reason))
           })
@@ -379,14 +379,14 @@ function makeAssistantStub(sessionID: string): MessageV2.Assistant {
   }
 }
 
-describe("LegionSessionrompt.guardCompactionAttempt", () => {
+describe("LegionSessionPrompt.guardCompactionAttempt", () => {
   it.effect("returns { exhausted: false } and does not mutate state below the cap", () =>
     Effect.sync(() => {
-      const closeReasons = new Map<string, LegionSessionCloseReason>()
+      const closeReasons = new Map<string, LegionSession.CloseReason>()
       const msg = makeAssistantStub("ses_under")
-      const result = LegionSessionrompt.guardCompactionAttempt({
+      const result = LegionSessionPrompt.guardCompactionAttempt({
         sessionID: "ses_under",
-        attempts: LegionSessionrompt.MAX_COMPACTION_ATTEMPTS - 1,
+        attempts: LegionSessionPrompt.MAX_COMPACTION_ATTEMPTS - 1,
         closeReasons,
         message: msg,
       })
@@ -399,11 +399,11 @@ describe("LegionSessionrompt.guardCompactionAttempt", () => {
 
   it.effect("sets close reason and attaches error once attempts reach the cap", () =>
     Effect.sync(() => {
-      const closeReasons = new Map<string, LegionSessionCloseReason>()
+      const closeReasons = new Map<string, LegionSession.CloseReason>()
       const msg = makeAssistantStub("ses_cap")
-      const result = LegionSessionrompt.guardCompactionAttempt({
+      const result = LegionSessionPrompt.guardCompactionAttempt({
         sessionID: "ses_cap",
-        attempts: LegionSessionrompt.MAX_COMPACTION_ATTEMPTS,
+        attempts: LegionSessionPrompt.MAX_COMPACTION_ATTEMPTS,
         closeReasons,
         message: msg,
       })
@@ -420,10 +420,10 @@ describe("LegionSessionrompt.guardCompactionAttempt", () => {
 
   it.effect("works without a message and still sets the close reason", () =>
     Effect.sync(() => {
-      const closeReasons = new Map<string, LegionSessionCloseReason>()
-      const result = LegionSessionrompt.guardCompactionAttempt({
+      const closeReasons = new Map<string, LegionSession.CloseReason>()
+      const result = LegionSessionPrompt.guardCompactionAttempt({
         sessionID: "ses_no_msg",
-        attempts: LegionSessionrompt.MAX_COMPACTION_ATTEMPTS,
+        attempts: LegionSessionPrompt.MAX_COMPACTION_ATTEMPTS,
         closeReasons,
       })
       expect(result.exhausted).toBe(true)

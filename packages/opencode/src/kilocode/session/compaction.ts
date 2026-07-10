@@ -2,9 +2,9 @@ import { Effect } from "effect"
 import type { ModelID, ProviderID } from "@/provider/schema"
 import type { MessageV2 } from "@/session/message-v2"
 import { MessageID, PartID, type SessionID } from "@/session/schema"
-import { LegionSessionromptQueue } from "./prompt-queue"
+import { LegionSessionPromptQueue } from "./prompt-queue"
 
-export namespace LegionSessionompaction {
+export namespace LegionSessionCompaction {
   type Store = {
     updateMessage: <T extends MessageV2.Info>(msg: T) => Effect.Effect<T>
     updatePart: <T extends MessageV2.Part>(part: T) => Effect.Effect<T>
@@ -35,7 +35,7 @@ export namespace LegionSessionompaction {
         auto: input.auto,
         overflow: input.overflow,
       })
-      LegionSessionromptQueue.retarget(input.sessionID, msg.id)
+      LegionSessionPromptQueue.retarget(input.sessionID, msg.id)
       return msg
     })
   }

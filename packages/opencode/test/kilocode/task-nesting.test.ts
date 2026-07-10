@@ -19,7 +19,7 @@ import { ModelID, ProviderID } from "../../src/provider/schema"
 import { Provider } from "../../src/provider/provider"
 import { Permission } from "../../src/permission"
 import { TaskTool, type TaskPromptOps } from "../../src/tool/task"
-import { LegionSessionrompt } from "../../src/kilocode/session/prompt"
+import { LegionSessionPrompt } from "../../src/kilocode/session/prompt"
 import * as SandboxPolicy from "../../src/kilocode/sandbox/policy"
 import { Truncate } from "../../src/tool/truncate"
 import { ToolRegistry } from "../../src/tool/registry"
@@ -292,7 +292,7 @@ describe("Kilo task nesting", () => {
   )
 
   test("preserves inherited restrictions while refreshing prompt tool toggles", () => {
-    const permission = LegionSessionrompt.mergeToolPermissions({
+    const permission = LegionSessionPrompt.mergeToolPermissions({
       existing: [
         { permission: "bash", pattern: "*", action: "deny" },
         { permission: "edit", pattern: "*", action: "deny" },
@@ -348,7 +348,7 @@ describe("Kilo task nesting", () => {
 
           const effective = Permission.merge(
             validator.permission,
-            LegionSessionrompt.guardPermissions({ agent: validator, session: child }),
+            LegionSessionPrompt.guardPermissions({ agent: validator, session: child }),
           )
           expect(child.permission).not.toContainEqual({ permission: "bash", pattern: "*", action: "ask" })
           expect(child.permission).toContainEqual({ permission: "bash", pattern: "rm -rf *", action: "deny" })

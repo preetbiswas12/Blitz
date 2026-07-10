@@ -550,12 +550,12 @@ describe("plan follow-up", () => {
 
   test("ask - retargets prompt queue so injected message is visible in scope", () =>
     withInstance(async () => {
-      const { LegionSessionromptQueue } = await import("../../src/kilocode/session/prompt-queue")
+      const { LegionSessionPromptQueue } = await import("../../src/kilocode/session/prompt-queue")
       const seeded = await seed({ text: "1. Refactor\n2. Ship" })
 
       // Simulate the prompt queue having a target set (like during a running loop)
       const original = seeded.messages.find((m) => m.info.role === "user")!.info.id
-      LegionSessionromptQueue.retarget(seeded.sessionID, original)
+      LegionSessionPromptQueue.retarget(seeded.sessionID, original)
 
       const pending = PlanFollowup.ask({
         question,
@@ -576,7 +576,7 @@ describe("plan follow-up", () => {
 
       // The injected user message must be visible when scoped
       const all = await store.messages({ sessionID: seeded.sessionID })
-      const scoped = LegionSessionromptQueue.scope(seeded.sessionID, all)
+      const scoped = LegionSessionPromptQueue.scope(seeded.sessionID, all)
       const injected = scoped.findLast((m) => m.info.role === "user")
       expect(injected).toBeDefined()
       const part = injected!.parts.find((p) => p.type === "text")

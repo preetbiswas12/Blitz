@@ -3,7 +3,7 @@ import * as Stream from "effect/Stream"
 import type { LLMEvent } from "@opencode-ai/llm"
 import type { Logger } from "@opencode-ai/core/util/log"
 import type { Provider } from "@/provider/provider"
-import { LegionSessionverflow } from "./overflow"
+import { LegionSessionOverflow } from "./overflow"
 
 const SAFETY = 2048
 const MIN_OUTPUT = 1024
@@ -58,7 +58,7 @@ export namespace LegionLLM {
     const { context } = input.model.limit
     if (!context) return input.configured
 
-    const tokens = input.tokens ?? LegionSessionverflow.measure({ messages: input.messages, tools: input.tools }).raw
+    const tokens = input.tokens ?? LegionSessionOverflow.measure({ messages: input.messages, tools: input.tools }).raw
     const available = context - tokens - SAFETY
     // If available is ≤0 the input alone exceeds context — return the original
     // value so the provider returns a natural overflow error which triggers

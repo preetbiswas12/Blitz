@@ -1,5 +1,5 @@
 import { Effect } from "effect"
-import { LegionSessionrompt } from "@/kilocode/session/prompt" // kilocode_change
+import { LegionSessionPrompt } from "@/kilocode/session/prompt" // kilocode_change
 import { Agent } from "@/agent/agent"
 import { AppFileSystem } from "@opencode-ai/core/filesystem"
 import { InstanceState } from "@/effect/instance-state"
@@ -23,7 +23,7 @@ export const apply = Effect.fn("SessionReminders.apply")(function* (input: {
   // kilocode_change start - shared planning reminder path
   // No-op unless the active agent is plan-like.
   yield* Effect.promise(() =>
-    LegionSessionrompt.insertPlanReminders({
+    LegionSessionPrompt.insertPlanReminders({
       agent: input.agent,
       session: input.session,
       userMessage,

@@ -32,7 +32,7 @@ import { Global } from "@opencode-ai/core/global"
 // kilocode_change start - Kilo session behavior extensions
 import { BackgroundProcess } from "@/kilocode/background-process"
 import { InteractiveTerminal } from "@/kilocode/interactive-terminal"
-import { LegionSession, LegionSessionork } from "@/kilocode/session"
+import { LegionSession, LegionSessionFork } from "@/kilocode/session"
 import { SessionExport } from "@/kilocode/session-export"
 import * as SandboxPolicy from "@/kilocode/sandbox/policy"
 import { baseKey, cumulativeSessionDiff } from "@/kilocode/session-portability/cumulative-diff" // kilocode_change
@@ -383,8 +383,8 @@ export const Event = {
     }),
   ),
   // kilocode_change start
-  TurnOpen: LegionSessionEvent.TurnOpen,
-  TurnClose: LegionSessionEvent.TurnClose,
+  TurnOpen: LegionSession.Event.TurnOpen,
+  TurnClose: LegionSession.Event.TurnClose,
   // kilocode_change end
 }
 
@@ -444,7 +444,7 @@ export const getUsage = (input: {
   }
 
   // kilocode_change start - Use provider-reported cost when available for OpenRouter/Kilo
-  const reported = LegionSessionproviderCost({
+  const reported = LegionSession.providerCost({
     metadata: input.metadata,
     usage: input.usage,
     provider: input.provider,
@@ -598,7 +598,7 @@ export const layer: Layer.Layer<
       log.info("created", result)
 
       // kilocode_change start - initialize inherited state before session.created subscribers run
-      LegionSessionregister({ id: result.id, parentID: result.parentID, platform: input.platform })
+      LegionSession.register({ id: result.id, parentID: result.parentID, platform: input.platform })
       const source = input.sourceID ?? result.parentID
       if (source) yield* SandboxPolicy.inherit(source, result.id, input.sandboxFallback)
       // kilocode_change end
@@ -670,8 +670,8 @@ export const layer: Layer.Layer<
         yield* SandboxPolicy.dispose(
           sessionID,
           Effect.gen(function* () {
-            yield* Effect.promise(() => LegionSessionremoveSession(sessionID)).pipe(Effect.ignore)
-            LegionSessionclearPlatformOverride(sessionID)
+            yield* Effect.promise(() => LegionSession.removeSession(sessionID)).pipe(Effect.ignore)
+            LegionSession.clearPlatformOverride(sessionID)
             if (hasInstance) {
               yield* Effect.promise(() => BackgroundProcess.stopSession(sessionID)).pipe(Effect.ignore)
               yield* Effect.promise(() => InteractiveTerminal.stopSession(sessionID)).pipe(Effect.ignore)
@@ -697,7 +697,7 @@ export const layer: Layer.Layer<
     const updateMessage = <T extends MessageV2.Info>(msg: T): Effect.Effect<T> =>
       Effect.gen(function* () {
         // kilocode_change start - ignore FK errors when session was deleted while processor was still running
-        yield* LegionSessionrunSyncSafe(sync.run(MessageV2.Event.Updated, { sessionID: msg.sessionID, info: msg }), {
+        yield* LegionSession.runSyncSafe(sync.run(MessageV2.Event.Updated, { sessionID: msg.sessionID, info: msg }), {
           type: "message update",
           id: msg.id,
           sessionID: msg.sessionID,
@@ -709,7 +709,7 @@ export const layer: Layer.Layer<
     const updatePart = <T extends MessageV2.Part>(part: T): Effect.Effect<T> =>
       Effect.gen(function* () {
         // kilocode_change start - ignore FK errors when session was deleted while processor was still running
-        yield* LegionSessionrunSyncSafe(
+        yield* LegionSession.runSyncSafe(
           sync.run(MessageV2.Event.PartUpdated, {
             sessionID: part.sessionID,
             part: structuredClone(part),
@@ -789,7 +789,7 @@ export const layer: Layer.Layer<
       })
       const msgs = yield* messages({ sessionID: input.sessionID })
       const idMap = new Map<string, MessageID>()
-      const writer = LegionSessionwriter(session.id, sync) // kilocode_change - commit copied transcript in one transaction
+      const writer = LegionSession.writer(session.id, sync) // kilocode_change - commit copied transcript in one transaction
 
       for (const msg of msgs) {
         if (input.messageID && msg.info.id >= input.messageID) break
@@ -1016,13 +1016,13 @@ function* listByProject(
     experimentalWorkspaces: boolean
   },
 ) {
-  // kilocode_change start - LegionSessionfilters keeps sessions visible across project_id changes
+  // kilocode_change start - LegionSession.filters keeps sessions visible across project_id changes
   // (see PR #8875). That directory-anchored filter conflicts with upstream's path-prefix filter,
   // so bypass it when input.path is provided and fall back to the plain project_id base.
   const conditions =
     input.path !== undefined
       ? [eq(SessionTable.project_id, input.projectID)]
-      : LegionSessionfilters({ projectID: input.projectID, directory: input.directory })
+      : LegionSession.filters({ projectID: input.projectID, directory: input.directory })
   // kilocode_change end
 
   if (input.workspaceID) {
@@ -1039,7 +1039,7 @@ function* listByProject(
       )
     }
   } else if (input.scope !== "project" && !input.experimentalWorkspaces) {
-    // kilocode_change start - directory filtering handled by LegionSessionfilters above
+    // kilocode_change start - directory filtering handled by LegionSession.filters above
     // if (input.directory) {
     //   conditions.push(eq(SessionTable.directory, input.directory))
     // }
@@ -1071,7 +1071,7 @@ function* listByProject(
   }
 }
 
-// kilocode_change start - delegate to LegionSessionlistGlobal (adds projectID worktree family + directories[])
+// kilocode_change start - delegate to LegionSession.listGlobal (adds projectID worktree family + directories[])
 export function* listGlobal(input?: {
   projectID?: string
   directory?: string
@@ -1084,11 +1084,11 @@ export function* listGlobal(input?: {
   limit?: number
   archived?: boolean
 }) {
-  yield* LegionSessionlistGlobal<GlobalInfo>({ ...input, fromRow })
+  yield* LegionSession.listGlobal<GlobalInfo>({ ...input, fromRow })
 }
 // kilocode_change end
 
 // kilocode_change - delegate the exported Promise facade to the Kilo session runtime
-export const fork = LegionSessionork
+export const fork = LegionSessionFork
 
 export * as Session from "./session"

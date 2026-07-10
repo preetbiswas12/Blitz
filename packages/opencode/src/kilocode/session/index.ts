@@ -436,7 +436,7 @@ export namespace LegionSession{
   export const writer = _writer
 }
 
-export const LegionSessionork = fn(
+export const LegionSessionFork = fn(
   z.object({ sessionID: toZod(SessionID), messageID: toZod(MessageID).optional() }),
   async (input) => {
     const { AppRuntime } = await import("@/effect/app-runtime")

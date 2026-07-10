@@ -14,7 +14,7 @@ import { provideTestInstance } from "../fixture/fixture"
 import { ModelID, ProviderID } from "../../src/provider/schema"
 import { Snapshot } from "../../src/snapshot"
 import { KiloCompactionChunks } from "../../src/kilocode/session/compaction-chunks"
-import { LegionSessionompaction } from "../../src/kilocode/session/compaction"
+import { LegionSessionCompaction } from "../../src/kilocode/session/compaction"
 import { LLM } from "../../src/session/llm"
 import { MessageV2 } from "../../src/session/message-v2"
 import { Reference } from "../../src/reference/reference"
@@ -304,7 +304,7 @@ describe("KiloCompactionChunks", () => {
         const second = await user(session.id, "second " + "c".repeat(10_000))
         await assistant(session.id, second.id, tmp.path, "reply " + "d".repeat(10_000))
         await Effect.runPromise(
-          LegionSessionompaction.create({
+          LegionSessionCompaction.create({
             session: store,
             sessionID: session.id,
             agent: "build",
@@ -358,7 +358,7 @@ describe("KiloCompactionChunks", () => {
         const second = await user(session.id, "second " + "c".repeat(10_000))
         await assistant(session.id, second.id, tmp.path, "reply " + "d".repeat(10_000))
         await Effect.runPromise(
-          LegionSessionompaction.create({
+          LegionSessionCompaction.create({
             session: store,
             sessionID: session.id,
             agent: "build",
@@ -402,7 +402,7 @@ describe("KiloCompactionChunks", () => {
         const first = await user(session.id, "first " + "a".repeat(20_000))
         await assistant(session.id, first.id, tmp.path, "reply " + "b".repeat(20_000))
         await Effect.runPromise(
-          LegionSessionompaction.create({
+          LegionSessionCompaction.create({
             session: store,
             sessionID: session.id,
             agent: "build",
@@ -453,7 +453,7 @@ describe("KiloCompactionChunks", () => {
         const session = await svc.create({})
         const first = await user(session.id, "single huge request " + "a".repeat(80_000))
         await Effect.runPromise(
-          LegionSessionompaction.create({
+          LegionSessionCompaction.create({
             session: store,
             sessionID: session.id,
             agent: "build",
@@ -499,7 +499,7 @@ describe("KiloCompactionChunks", () => {
         const first = await user(session.id, "first " + "a".repeat(80_000))
         await assistant(session.id, first.id, tmp.path, "reply " + "b".repeat(80_000))
         await Effect.runPromise(
-          LegionSessionompaction.create({
+          LegionSessionCompaction.create({
             session: store,
             sessionID: session.id,
             agent: "build",
@@ -548,7 +548,7 @@ describe("KiloCompactionChunks", () => {
         await assistant(session.id, old.id, tmp.path, "old reply")
         const large = await user(session.id, "large replay " + "x".repeat(40_000))
         await Effect.runPromise(
-          LegionSessionompaction.create({
+          LegionSessionCompaction.create({
             session: store,
             sessionID: session.id,
             agent: "build",

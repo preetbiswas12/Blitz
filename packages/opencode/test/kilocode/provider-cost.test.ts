@@ -51,7 +51,7 @@ const kilo = { id: "legion" } as Provider.Info
 // Calculated cost for the `model()` + `baseUsage` pair: 1M input * $3 + 100k output * $15 = 3 + 1.5
 const fallback = 3 + 1.5
 
-describe("LegionSessionproviderCost — Anthropic Messages / OpenAI Responses", () => {
+describe("LegionSession.providerCost — Anthropic Messages / OpenAI Responses", () => {
   test("uses provider usage cost_details for Anthropic Messages via OpenRouter", () => {
     const result = SessionNs.getUsage({
       model: model(),
@@ -145,7 +145,7 @@ describe("LegionSessionproviderCost — Anthropic Messages / OpenAI Responses", 
   })
 })
 
-describe("LegionSessionproviderCost — Vercel AI Gateway", () => {
+describe("LegionSession.providerCost — Vercel AI Gateway", () => {
   test("uses metadata.gateway.marketCost", () => {
     const result = SessionNs.getUsage({
       model: model(),
@@ -180,7 +180,7 @@ describe("LegionSessionproviderCost — Vercel AI Gateway", () => {
   })
 })
 
-describe("LegionSessionproviderCost — fallback", () => {
+describe("LegionSession.providerCost — fallback", () => {
   test("falls back to calculated cost when no provider cost is reported", () => {
     const result = SessionNs.getUsage({
       model: model(),

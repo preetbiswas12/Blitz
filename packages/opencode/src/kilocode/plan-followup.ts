@@ -19,7 +19,7 @@ import { Todo } from "@/session/todo"
 import { makeRuntime } from "@/effect/run-service"
 import { Effect, Schema } from "effect"
 import * as Log from "@opencode-ai/core/util/log"
-import { LegionSessionromptQueue } from "@/kilocode/session/prompt-queue"
+import { LegionSessionPromptQueue } from "@/kilocode/session/prompt-queue"
 import { lazy } from "@/util/lazy"
 import path from "path"
 import z from "zod"
@@ -544,7 +544,7 @@ export namespace PlanFollowup {
         model: code.model,
         text: "Implement the plan above.",
       })
-      LegionSessionromptQueue.retarget(input.sessionID, msg.id)
+      LegionSessionPromptQueue.retarget(input.sessionID, msg.id)
       return "continue"
     }
 
@@ -556,7 +556,7 @@ export namespace PlanFollowup {
         model: user.model,
         text: "Continue refining the plan. Do not implement yet.",
       })
-      LegionSessionromptQueue.retarget(input.sessionID, msg.id)
+      LegionSessionPromptQueue.retarget(input.sessionID, msg.id)
       return "continue"
     }
 
@@ -567,7 +567,7 @@ export namespace PlanFollowup {
       model: user.model,
       text: answer,
     })
-    LegionSessionromptQueue.retarget(input.sessionID, msg.id)
+    LegionSessionPromptQueue.retarget(input.sessionID, msg.id)
     return "continue"
   }
 }

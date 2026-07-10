@@ -32,7 +32,7 @@ import { Global } from "@opencode-ai/core/global"
 // kilocode_change start - Kilo session behavior extensions
 import { BackgroundProcess } from "@/kilocode/background-process"
 import { InteractiveTerminal } from "@/kilocode/interactive-terminal"
-import { LegionSession LegionSessionork } from "@/kilocode/session"
+import { LegionSession, LegionSessionork } from "@/kilocode/session"
 import { SessionExport } from "@/kilocode/session-export"
 import * as SandboxPolicy from "@/kilocode/sandbox/policy"
 import { baseKey, cumulativeSessionDiff } from "@/kilocode/session-portability/cumulative-diff" // kilocode_change

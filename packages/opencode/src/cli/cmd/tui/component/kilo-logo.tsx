@@ -12,11 +12,11 @@ const SHADOW_MARKER = /[_^~]/
 
 export function KiloLogo() {
   const { theme } = useTheme()
-  const yellow = RGBA.fromHex("#F8F675")
+  const blue = RGBA.fromHex("#3b82f6")
   const logo = tui()
 
   const renderLine = (line: string): JSX.Element[] => {
-    const shadow = tint(theme.background, yellow, 0.25)
+    const shadow = tint(theme.background, blue, 0.25)
     const elements: JSX.Element[] = []
     let i = 0
 
@@ -26,7 +26,7 @@ export function KiloLogo() {
 
       if (markerIndex === -1) {
         elements.push(
-          <text fg={yellow} selectable={false}>
+          <text fg={blue} selectable={false}>
             {rest}
           </text>,
         )
@@ -35,7 +35,7 @@ export function KiloLogo() {
 
       if (markerIndex > 0) {
         elements.push(
-          <text fg={yellow} selectable={false}>
+          <text fg={blue} selectable={false}>
             {rest.slice(0, markerIndex)}
           </text>,
         )
@@ -45,16 +45,16 @@ export function KiloLogo() {
       switch (marker) {
         case "_":
           elements.push(
-            <text fg={yellow} bg={shadow} selectable={false}>
-              {" "}
-            </text>,
+          <text fg={blue} bg={shadow} selectable={false}>
+            {" "}
+          </text>,
           )
           break
         case "^":
           elements.push(
-            <text fg={yellow} bg={shadow} selectable={false}>
-              ▀
-            </text>,
+          <text fg={blue} bg={shadow} selectable={false}>
+            ▀
+          </text>,
           )
           break
         case "~":

@@ -429,8 +429,8 @@ export function generateSystem(colors: TerminalColors, pick: "dark" | "light"): 
 }
 
 function splashTheme(theme: TuiThemeCurrent, indexed: RGBA[]): RunSplashTheme {
-  const left = nearestIndexed(indexed, RGBA.fromHex("#3b82f6"))
-  const right = nearestIndexed(indexed, RGBA.fromHex("#60a5fa"))
+  const left = RGBA.fromHex("#3b82f6")
+  const right = RGBA.fromHex("#60a5fa")
   return {
     left,
     right,

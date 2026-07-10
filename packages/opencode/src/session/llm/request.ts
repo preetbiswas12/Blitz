@@ -14,7 +14,7 @@ import type { Plugin } from "@/plugin"
 import { mergeDeep } from "remeda"
 import { DEFAULT_HEADERS } from "@/kilocode/const" // kilocode_change
 // kilocode_change start
-import { BlitxSession } from "@/kilocode/session"
+import { LegionSession} from "@/kilocode/session"
 import { stripInternalOptions } from "@/kilocode/agent/options"
 // kilocode_change end
 
@@ -60,7 +60,8 @@ export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: Pre
     [
       // kilocode_change start - soul defines core identity and personality
       ...(isOpenaiOauth ? [] : [SystemPrompt.soul()]),
-      // kilocode_change end
+      // kilocode_change end - brain provides behavioral rules and safety guidelines
+      ...(isOpenaiOauth ? [] : [SystemPrompt.brain()]),
       ...(input.agent.prompt ? [input.agent.prompt] : SystemPrompt.provider(input.model)),
       ...input.system,
       ...(input.user.system ? [input.user.system] : []),
@@ -98,8 +99,8 @@ export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: Pre
   const options = mergeOptions(mergeOptions(mergeOptions(base, input.model.options), agentOptions), variant)
   // kilocode_change end
   if (isOpenaiOauth) {
-    // kilocode_change start - prepend soul to instructions
-    options.instructions = SystemPrompt.soul() + "\n" + system.join("\n")
+    // kilocode_change start - prepend soul + brain to instructions
+    options.instructions = SystemPrompt.soul() + "\n" + SystemPrompt.brain() + "\n" + system.join("\n")
     // kilocode_change end
   }
 
@@ -158,7 +159,7 @@ export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: Pre
   )
 
   // kilocode_change start - resolve project ID and machine ID for kilo provider
-  const parent = input.parentSessionID ?? BlitxSession.resolveParent(input.sessionID)
+  const parent = input.parentSessionID ?? LegionSessionresolveParent(input.sessionID)
   // kilocode_change end
 
   const tools = resolveTools(input)
@@ -180,7 +181,7 @@ export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: Pre
     })
   }
 
-  const kiloProjectID = input.model.providerID.startsWith("blitx") // kilocode_change
+  const kiloProjectID = input.model.providerID.startsWith("legion") // kilocode_change
     ? (yield* InstanceState.context).project.id
     : undefined
 
@@ -191,12 +192,12 @@ export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: Pre
     params,
     messageTransformOptions: options,
     headers: {
-      ...(input.model.providerID.startsWith("blitx") // kilocode_change
+      ...(input.model.providerID.startsWith("legion") // kilocode_change
         ? {
-            ...(kiloProjectID ? { "x-blitx-project": kiloProjectID } : {}),
-            "x-blitx-session": input.sessionID,
-            "x-blitx-request": input.user.id,
-            "x-blitx-client": input.flags.client,
+            ...(kiloProjectID ? { "x-Legion-project": kiloProjectID } : {}),
+            "x-Legion-session": input.sessionID,
+            "x-Legion-request": input.user.id,
+            "x-Legion-client": input.flags.client,
             "User-Agent": USER_AGENT,
           }
         : {

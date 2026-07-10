@@ -20,6 +20,7 @@ import { Skill } from "@/skill"
 
 // kilocode_change start
 import SOUL from "../kilocode/soul.txt"
+import BRAIN from "../kilocode/brain.txt"
 import type { EditorContext } from "../kilocode/editor-context"
 import { KilocodeSystemPrompt } from "../kilocode/system-prompt"
 import { isLing } from "../kilocode/model-match"
@@ -32,6 +33,10 @@ export function instructions() {
 
 export function soul() {
   return SOUL.trim()
+}
+
+export function brain() {
+  return BRAIN.trim()
 }
 // kilocode_change end
 

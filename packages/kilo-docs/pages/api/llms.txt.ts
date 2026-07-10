@@ -99,10 +99,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const sections: string[] = []
 
     // Add header
-    sections.push("# Blitx Code Documentation")
+    sections.push("# Legion Code Documentation")
     sections.push("")
     sections.push(
-      "This file contains the complete documentation for Blitx Code, the leading open source agentic engineering platform.",
+      "This file contains the complete documentation for Legion Code, the leading open source agentic engineering platform.",
     )
     sections.push("")
     const protocol = req.headers["x-forwarded-proto"] || "https"

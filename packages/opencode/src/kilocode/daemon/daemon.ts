@@ -355,7 +355,7 @@ export namespace Daemon {
           ...process.env,
           ...input.env,
           KILO_SERVER_USERNAME: username,
-          BLITX_SERVER_PASSWORD: password,
+          LEGION_SERVER_PASSWORD: password,
           KILOCODE_FEATURE: "daemon",
         },
         stdio: ["ignore", stdout.fd, stderr.fd],

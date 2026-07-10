@@ -39,7 +39,7 @@ function request(server: Server, input: string) {
   return Effect.promise(() => server.handler(new Request(new URL(input, "http://localhost")), HttpApiApp.context))
 }
 
-describe("Blitx Console worktree listing", () => {
+describe("Legion Console worktree listing", () => {
   run(
     "lists worktrees created by Agent Manager",
     () =>

@@ -1,19 +1,19 @@
 export const dict = {
-  // Blitx Gateway provider translations
-  "provider.connect.blitxGateway.line1":
-    "Blitx Gateway giver dig adgang til et udvalgt sæt pålidelige, optimerede modeller til kodningsagenter.",
-  "provider.connect.blitxGateway.line2":
+  // Legion Gateway provider translations
+  "provider.connect.LegionGateway.line1":
+    "Legion Gateway giver dig adgang til et udvalgt sæt pålidelige, optimerede modeller til kodningsagenter.",
+  "provider.connect.LegionGateway.line2":
     "Med en enkelt API-nøgle får du adgang til modeller som Claude, GPT, Gemini, GLM og flere.",
-  "provider.connect.blitxGateway.visit.prefix": "Besøg ",
-  "provider.connect.blitxGateway.visit.link": "blitx.ai",
-  "provider.connect.blitxGateway.visit.suffix": " for at hente din API-nøgle.",
-  "provider.connect.blitxGateway.byok.prefix": "For flere brugsstatistikker, brug ",
-  "provider.connect.blitxGateway.byok.link": "BYOK via Blitx's Gateway",
-  "provider.connect.blitxGateway.byok.suffix": ".",
+  "provider.connect.LegionGateway.visit.prefix": "Besøg ",
+  "provider.connect.LegionGateway.visit.link": "legion.ai",
+  "provider.connect.LegionGateway.visit.suffix": " for at hente din API-nøgle.",
+  "provider.connect.LegionGateway.byok.prefix": "For flere brugsstatistikker, brug ",
+  "provider.connect.LegionGateway.byok.link": "BYOK via Legion's Gateway",
+  "provider.connect.LegionGateway.byok.suffix": ".",
 
   // Provider settings translations
   "settings.providers.group.recommended": "Anbefalede",
-  "settings.providers.note.blitx": "Adgang til 500+ AI-modeller",
+  "settings.providers.note.Legion": "Adgang til 500+ AI-modeller",
   "settings.providers.note.opencode": "Udvalgte modeller inklusive Claude, GPT, Gemini og mere",
   "settings.providers.note.anthropic": "Direkte adgang til Claude-modeller, inklusive Pro og Max",
   "settings.providers.note.deepseek": "DeepSeek-modeller til ræsonnement og kodningsopgaver",
@@ -48,12 +48,12 @@ export const dict = {
     "Alle projekter på denne maskine. Gemmes i din brugerkonfiguration.",
   "marketplace.install.destination": "Installationsplacering",
   "marketplace.install.about.mcp":
-    "En MCP-server giver Blitx yderligere værktøjer til at arbejde med eksterne tjenester eller lokale programmer.",
+    "En MCP-server giver Legion yderligere værktøjer til at arbejde med eksterne tjenester eller lokale programmer.",
   "marketplace.install.about.agent": "En agent tilføjer en genanvendelig rolle med egne instruktioner og tilladelser.",
   "marketplace.install.about.skill":
-    "En færdighed tilføjer opgavespecifikke instruktioner og ressourcer, som Blitx kan indlæse efter behov.",
+    "En færdighed tilføjer opgavespecifikke instruktioner og ressourcer, som Legion kan indlæse efter behov.",
   "marketplace.install.mcp.warning":
-    "MCP-servere kan køre lokale kommandoer eller oprette forbindelse til eksterne tjenester. Blitx beder om tilladelse, før deres værktøjer bruges, medmindre dine tilladelser automatisk tillader det.",
+    "MCP-servere kan køre lokale kommandoer eller oprette forbindelse til eksterne tjenester. Legion beder om tilladelse, før deres værktøjer bruges, medmindre dine tilladelser automatisk tillader det.",
   "marketplace.install.project.warning":
     "Projektfiler kan føjes til versionsstyring. Gem ikke hemmeligheder her, medmindre konfigurationen henviser til en miljøvariabel.",
   "marketplace.install.learnMore": "Se, hvordan installationer fra Marketplace fungerer",
@@ -125,7 +125,7 @@ export const dict = {
     "Vent, indtil snapshot'et er færdigt. Efterfølgende ture er hurtige, når det indledende snapshot er bygget.",
   "snapshot.slowRepo.answer.disable": "Deaktivér for dette projekt",
   "snapshot.slowRepo.answer.disable.description":
-    "Slå Blitx' snapshots fra for dette projekt. Du mister fortryd/gentag for Blitx-ændringer, men git sporer stadig alt.",
+    "Slå Legion' snapshots fra for dette projekt. Du mister fortryd/gentag for Legion-ændringer, men git sporer stadig alt.",
 
   // Edit-tool header and shell-tool section labels
   "ui.messagePart.openInDiffViewer": "Åbn i Diff-visning",

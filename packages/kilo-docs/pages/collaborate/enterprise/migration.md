@@ -57,8 +57,8 @@ Switch to **Kilo Teams** or **Kilo Enterprise** from other AI coding tools and e
 
 **Step 2: Kilo Setup**
 
-1. **Create organization** at [app.kilo.ai](https://app.kilo.ai) <!-- TODO: Replace with Blitx dashboard URL -->
-2. **Subscribe to Teams ($15/user/month)** or **Enterprise ([Contact Sales](https://blitx.ai/contact-sales))**
+1. **Create organization** at [app.kilo.ai](https://app.kilo.ai) <!-- TODO: Replace with Legion dashboard URL -->
+2. **Subscribe to Teams ($15/user/month)** or **Enterprise ([Contact Sales](https://legion.ai/contact-sales))**
 3. **Configure team settings** and usage policies
 4. **Purchase initial AI credits** based on usage estimates
 

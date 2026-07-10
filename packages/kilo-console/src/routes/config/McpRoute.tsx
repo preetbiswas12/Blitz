@@ -1,8 +1,8 @@
 import { For, Show } from "solid-js"
-import { Button } from "@blitxcode/kilo-web-ui/button"
-import { Card } from "@blitxcode/kilo-web-ui/card"
-import { IconButton } from "@blitxcode/kilo-web-ui/icon-button"
-import { StatusTag } from "@blitxcode/kilo-web-ui/status-tag"
+import { Button } from "@Legioncode/kilo-web-ui/button"
+import { Card } from "@Legioncode/kilo-web-ui/card"
+import { IconButton } from "@Legioncode/kilo-web-ui/icon-button"
+import { StatusTag } from "@Legioncode/kilo-web-ui/status-tag"
 import { ConfirmDialog } from "../../components/ConfirmDialog"
 import { CustomSelect, type SelectOption } from "../../components/CustomSelect"
 import { SearchField } from "../../components/SearchField"
@@ -40,7 +40,7 @@ export function McpRoute() {
               <CountTag>{state.rows().length}</CountTag>
             </span>
           }
-          description="Install, configure, and manage Model Context Protocol servers available to Blitx agents."
+          description="Install, configure, and manage Model Context Protocol servers available to Legion agents."
           actions={
             <>
               <Button icon="plus" variant="primary" disabled={Boolean(state.ctx.saving())} onClick={state.openMarket}>
@@ -154,7 +154,7 @@ export function McpRoute() {
               <header class="drawer-header">
                 <div>
                   <h2>Install MCP server</h2>
-                  <span>Browse the Blitx Marketplace MCP catalog and install into the current settings scope.</span>
+                  <span>Browse the Legion Marketplace MCP catalog and install into the current settings scope.</span>
                 </div>
                 <Button variant="ghost" aria-label="Close MCP marketplace overlay" onClick={state.close}>
                   X

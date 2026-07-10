@@ -2,9 +2,9 @@
 // kilocode_change - new file
 
 /**
- * Guards generated Blitx config dependency artifacts.
+ * Guards generated Legion config dependency artifacts.
  *
- * Blitx loads project config from .kilo/ and .kilocode/ and installs
+ * Legion loads project config from .kilo/ and .kilocode/ and installs
  * @legion/plugin there at runtime. npm writes package.json, lockfiles,
  * .gitignore, and node_modules as generated local state. These paths must stay
  * untracked so background installs do not create recurring branch diffs.
@@ -43,7 +43,7 @@ if (bad.length === 0) {
   process.exit(0)
 }
 
-console.error("Generated Blitx config dependency artifacts are tracked:")
+console.error("Generated Legion config dependency artifacts are tracked:")
 for (const file of bad) console.error(`  ${file}`)
 console.error("")
 console.error("These files are created by runtime dependency installs in .kilo/ and .kilocode/.")

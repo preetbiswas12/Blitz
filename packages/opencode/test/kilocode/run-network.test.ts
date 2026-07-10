@@ -67,7 +67,7 @@ function idle(): Event {
 function args() {
   return {
     _: [],
-    $0: "blitx",
+    $0: "legion",
     message: ["hi"],
     command: undefined,
     continue: false,

@@ -119,7 +119,7 @@ export const SessionApi = HttpApi.make("session")
           OpenApi.annotations({
             identifier: "session.list",
             summary: "List sessions",
-            description: "Get a list of all Blitx sessions, sorted by most recently updated.", // kilocode_change
+            description: "Get a list of all Legion sessions, sorted by most recently updated.", // kilocode_change
           }),
         ),
         HttpApiEndpoint.get("status", SessionPaths.status, {
@@ -142,7 +142,7 @@ export const SessionApi = HttpApi.make("session")
           OpenApi.annotations({
             identifier: "session.get",
             summary: "Get session",
-            description: "Retrieve detailed information about a specific Blitx session.", // kilocode_change
+            description: "Retrieve detailed information about a specific Legion session.", // kilocode_change
           }),
         ),
         HttpApiEndpoint.get("children", SessionPaths.children, {
@@ -213,7 +213,7 @@ export const SessionApi = HttpApi.make("session")
           OpenApi.annotations({
             identifier: "session.create",
             summary: "Create session",
-            description: "Create a new Blitx session for interacting with AI assistants and managing conversations.", // kilocode_change
+            description: "Create a new Legion session for interacting with AI assistants and managing conversations.", // kilocode_change
           }),
         ),
         HttpApiEndpoint.delete("remove", SessionPaths.remove, {

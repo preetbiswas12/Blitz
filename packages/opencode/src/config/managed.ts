@@ -23,11 +23,11 @@ const PLIST_META = new Set([
 function systemManagedConfigDir(): string {
   switch (process.platform) {
     case "darwin":
-      return "/Library/Application Support/blitx" // kilocode_change
+      return "/Library/Application Support/legion" // kilocode_change
     case "win32":
-      return path.join(process.env.ProgramData || "C:\\ProgramData", "blitx") // kilocode_change
+      return path.join(process.env.ProgramData || "C:\\ProgramData", "legion") // kilocode_change
     default:
-      return "/etc/blitx" // kilocode_change
+      return "/etc/legion" // kilocode_change
   }
 }
 

@@ -3,7 +3,7 @@ import { tmpdir } from "../fixture/fixture"
 import path from "path"
 import fs from "fs/promises"
 import { provideTestInstance } from "../fixture/fixture"
-import { getBlitxProjectId } from "../../src/kilocode/project-id"
+import { getLegionProjectID } from "../../src/kilocode/project-id"
 
 describe("project-id", () => {
   describe("normalization", () => {
@@ -18,7 +18,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBe("handbook")
@@ -35,7 +35,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBe("handbook")
@@ -51,7 +51,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBe("handbook")
@@ -67,7 +67,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBe("handbook")
@@ -84,7 +84,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBe(longName.slice(-100))
@@ -114,7 +114,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBe("my-custom-project")
@@ -138,7 +138,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBe("legacy-project")
@@ -160,7 +160,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBe("new-project")
@@ -184,7 +184,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBe("another-repo")
@@ -210,7 +210,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBe("handbook")
@@ -236,7 +236,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBe("handbook")
@@ -260,7 +260,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBe("my-project")
@@ -286,7 +286,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBe("handbook")
@@ -299,7 +299,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBeUndefined()
@@ -310,7 +310,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBeUndefined()
@@ -329,7 +329,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       // Should fall back to git origin
@@ -356,7 +356,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       // Should fall back to git origin
@@ -375,12 +375,12 @@ describe("project-id", () => {
 
       const id1 = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       const id2 = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id1).toBe(id2)
@@ -399,7 +399,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBe("handbook")
@@ -422,7 +422,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBe("simple-name")
@@ -446,7 +446,7 @@ describe("project-id", () => {
 
       const id = await provideTestInstance({
         directory: tmp.path,
-        fn: () => getBlitxProjectId(),
+        fn: () => getLegionProjectID(),
       })
 
       expect(id).toBe(longId.slice(-100))

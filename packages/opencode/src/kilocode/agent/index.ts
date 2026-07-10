@@ -183,7 +183,7 @@ function askEditGuard() {
 function planEditRules(worktree: string) {
   return {
     "*": "deny" as const,
-    [path.join(".blitx", "plans", "*.md")]: "allow" as const,
+    [path.join(".legion", "plans", "*.md")]: "allow" as const,
     [path.join("plans", "*.md")]: "allow" as const,
     [path.join(".plans", "*.md")]: "allow" as const,
     [path.join(".opencode", "plans", "*.md")]: "allow" as const,
@@ -246,7 +246,7 @@ export function prepare(cfg: Config.Info): KiloData {
   const defaultsPatch = Permission.fromConfig({
     bash,
     recall: "ask",
-    ...(Flag.BLITX_CLIENT === "vscode" && cfg.experimental?.native_notebook_tools === true
+    ...(Flag.LEGION_CLIENT === "vscode" && cfg.experimental?.native_notebook_tools === true
       ? { notebook_read: "ask" as const, notebook_edit: "ask" as const, notebook_execute: "ask" as const }
       : {}),
   })
@@ -335,7 +335,7 @@ export function telemetryOptions(_cfg: Config.Info) {
 
 // Patch the base agents map in-place with all kilo-specific changes:
 // - Rename build → code
-// - Patch plan with readOnlyBash, mcpRules, .blitx paths
+// - Patch plan with readOnlyBash, mcpRules, .legion paths
 // - Patch explore with codebase_search and conditional prompt
 // - Patch appropriate agents with semantic_search
 // - Add debug, orchestrator, ask agents

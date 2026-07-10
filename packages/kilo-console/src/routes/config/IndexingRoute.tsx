@@ -1,6 +1,6 @@
-import { Button } from "@blitxcode/kilo-web-ui/button"
-import { Card } from "@blitxcode/kilo-web-ui/card"
-import type { IndexingConfig } from "@blitxcode/sdk/v2/client"
+import { Button } from "@Legioncode/kilo-web-ui/button"
+import { Card } from "@Legioncode/kilo-web-ui/card"
+import type { IndexingConfig } from "@Legioncode/sdk/v2/client"
 import { For, Show, createEffect, createMemo, createResource, createSignal, type JSX } from "solid-js"
 import { CustomSelect, type SelectOption } from "../../components/CustomSelect"
 import { loadEmbeddingModels } from "../../client"
@@ -15,7 +15,7 @@ type Field = { key: string; label: string; placeholder: string; secret?: boolean
 
 const providers = [
   { value: "", label: "Automatic" },
-  { value: "blitx", label: "Kilo" },
+  { value: "legion", label: "Kilo" },
   { value: "openai", label: "OpenAI" },
   { value: "ollama", label: "Ollama (local)" },
   { value: "openai-compatible", label: "OpenAI-compatible" },
@@ -33,7 +33,7 @@ const stores = [
 ] satisfies SelectOption<Store>[]
 
 const fields: Record<Provider, Field[]> = {
-  blitx: [],
+  Legion: [],
   openai: [{ key: "apiKey", label: "API key", placeholder: "sk-...", secret: true }],
   ollama: [{ key: "baseUrl", label: "Base URL", placeholder: "http://localhost:11434" }],
   "openai-compatible": [
@@ -274,7 +274,7 @@ export function IndexingRoute() {
               <FieldCard
                 label="Model"
                 description={
-                  provider() === "blitx"
+                  provider() === "legion"
                     ? "Select a Kilo-hosted embedding model."
                     : "Leave empty to use the provider's default embedding model."
                 }
@@ -287,7 +287,7 @@ export function IndexingRoute() {
                 }
               >
                 <Show
-                  when={provider() === "blitx"}
+                  when={provider() === "legion"}
                   fallback={
                     <input
                       value={view().model ?? ""}
@@ -325,12 +325,12 @@ export function IndexingRoute() {
                   step="1"
                   value={view().dimension ?? ""}
                   placeholder="Auto-detect"
-                  disabled={Boolean(ctx.saving()) || provider() === "blitx"}
+                  disabled={Boolean(ctx.saving()) || provider() === "legion"}
                   onInput={(event) => number("dimension", event.currentTarget.value)}
                 />
               </FieldCard>
 
-              <Show when={provider() === "blitx"}>
+              <Show when={provider() === "legion"}>
                 <div class="indexing-note">
                   Kilo embeddings use the account currently signed in to this Kilo server. Model dimensions are supplied
                   by the catalog.

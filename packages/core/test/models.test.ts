@@ -208,7 +208,7 @@ describe("ModelsDev Service", () => {
       expect(final.calls.length).toBe(1)
       expect(final.calls[0].url).toContain("/api.json")
       expect(final.calls[0].userAgent).toStartWith("opencode/")
-      expect(final.calls[0].userAgent).toEndWith(`/${Flag.BLITX_CLIENT}`)
+      expect(final.calls[0].userAgent).toEndWith(`/${Flag.LEGION_CLIENT}`)
     }),
   )
 

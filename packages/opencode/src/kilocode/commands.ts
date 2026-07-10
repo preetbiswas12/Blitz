@@ -28,7 +28,7 @@ import { PluginCommand } from "../cli/cmd/plug"
 import { DevSetupCommand, DevAliasCommand } from "./cli/dev-setup"
 import { RollCallCommand } from "./cli/cmd/roll-call"
 import { DaemonCommand } from "./cli/cmd/daemon"
-import { BlitxConsoleCommand } from "./cli/cmd/console"
+import { LegionConsoleCommand } from "./cli/cmd/console"
 import { HelpCommand } from "./help-command"
 import { InstallationBuildKind } from "@opencode-ai/core/installation/version"
 
@@ -70,7 +70,7 @@ export const commands = [
   SessionCommand,
   RemoteCommand,
   DaemonCommand,
-  BlitxConsoleCommand,
+  LegionConsoleCommand,
   DbCommand,
   ConfigCLICommand,
   ...dev,

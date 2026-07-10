@@ -1,21 +1,21 @@
 // Kilo-specific translations and overrides
 // Keys here will override any matching keys from upstream translations
 export const dict = {
-  // Blitx Gateway provider translations
-  "provider.connect.blitxGateway.line1":
-    "Blitx Gateway gives you access to a curated set of reliable optimized models for coding agents.",
-  "provider.connect.blitxGateway.line2":
+  // Legion Gateway provider translations
+  "provider.connect.LegionGateway.line1":
+    "Legion Gateway gives you access to a curated set of reliable optimized models for coding agents.",
+  "provider.connect.LegionGateway.line2":
     "With a single API key you'll get access to models such as Claude, GPT, Gemini, GLM and more.",
-  "provider.connect.blitxGateway.visit.prefix": "Visit ",
-  "provider.connect.blitxGateway.visit.link": "blitx.ai",
-  "provider.connect.blitxGateway.visit.suffix": " to collect your API key.",
-  "provider.connect.blitxGateway.byok.prefix": "For more usage stats, ",
-  "provider.connect.blitxGateway.byok.link": "BYOK via Blitx's Gateway",
-  "provider.connect.blitxGateway.byok.suffix": ".",
+  "provider.connect.LegionGateway.visit.prefix": "Visit ",
+  "provider.connect.LegionGateway.visit.link": "legion.ai",
+  "provider.connect.LegionGateway.visit.suffix": " to collect your API key.",
+  "provider.connect.LegionGateway.byok.prefix": "For more usage stats, ",
+  "provider.connect.LegionGateway.byok.link": "BYOK via Legion's Gateway",
+  "provider.connect.LegionGateway.byok.suffix": ".",
 
   // Provider settings translations
   "settings.providers.group.recommended": "Recommended",
-  "settings.providers.note.blitx": "Access 500+ AI models",
+  "settings.providers.note.Legion": "Access 500+ AI models",
   "settings.providers.note.opencode": "Curated models including Claude, GPT, Gemini and more",
   "settings.providers.note.anthropic": "Direct access to Claude models, including Pro and Max",
   "settings.providers.note.deepseek": "DeepSeek models for reasoning and coding tasks",
@@ -49,11 +49,11 @@ export const dict = {
   "marketplace.install.scope.global.description": "All projects on this machine. Stored in your user configuration.",
   "marketplace.install.destination": "Installation destination",
   "marketplace.install.about.mcp":
-    "An MCP server gives Blitx additional tools for working with external services or local programs.",
+    "An MCP server gives Legion additional tools for working with external services or local programs.",
   "marketplace.install.about.agent": "An agent adds a reusable role with its own instructions and permissions.",
-  "marketplace.install.about.skill": "A skill adds task-specific instructions and resources that Blitx can load when needed.",
+  "marketplace.install.about.skill": "A skill adds task-specific instructions and resources that Legion can load when needed.",
   "marketplace.install.mcp.warning":
-    "MCP servers can run local commands or connect to external services. Blitx will ask for permission before using their tools unless your permissions allow them automatically.",
+    "MCP servers can run local commands or connect to external services. Legion will ask for permission before using their tools unless your permissions allow them automatically.",
   "marketplace.install.project.warning":
     "Project files may be committed to version control. Do not store secrets here unless the configuration references an environment variable.",
   "marketplace.install.learnMore": "Learn how Marketplace installs work",
@@ -129,7 +129,7 @@ export const dict = {
     "Keep waiting for the snapshot to complete. Subsequent turns are fast once the initial snapshot is built.",
   "snapshot.slowRepo.answer.disable": "Disable for this project",
   "snapshot.slowRepo.answer.disable.description":
-    "Turn off Blitx's snapshots for this project. You will lose undo/redo of Blitx file changes, but git still tracks everything.",
+    "Turn off Legion's snapshots for this project. You will lose undo/redo of Legion file changes, but git still tracks everything.",
 
   // Edit-tool header: hover-revealed action opening the diff in a full tab.
   "ui.messagePart.openInDiffViewer": "Open in Diff Viewer",

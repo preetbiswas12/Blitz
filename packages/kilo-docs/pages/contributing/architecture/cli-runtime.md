@@ -111,7 +111,7 @@ Three credential boundaries coexist. Keep them separate when tracing request pat
 
 ### Local `kilo serve` access
 
-Server Basic Auth is optional. It becomes required when `BLITX_SERVER_PASSWORD` is non-empty. Default username is `kilo`; `KILO_SERVER_USERNAME` can override it.
+Server Basic Auth is optional. It becomes required when `LEGION_SERVER_PASSWORD` is non-empty. Default username is `kilo`; `KILO_SERVER_USERNAME` can override it.
 
 | Path or mode | Authentication behavior |
 |---|---|
@@ -120,7 +120,7 @@ Server Basic Auth is optional. It becomes required when `BLITX_SERVER_PASSWORD` 
 | Public UI assets | Selected manifest and icon GET paths bypass Basic Auth so browser metadata can load |
 | PTY ticket issue | Authenticated `POST /pty/{ptyID}/connect-token` requires expected ticket header and allowed origin |
 | PTY ticket connect | `GET /pty/{ptyID}/connect?ticket=...` bypasses Basic middleware, then consumes single-use, scope-bound ticket in PTY handler |
-| PTY shell child | Removes `BLITX_SERVER_PASSWORD` and `KILO_SERVER_USERNAME` from spawned user-shell environment |
+| PTY shell child | Removes `LEGION_SERVER_PASSWORD` and `KILO_SERVER_USERNAME` from spawned user-shell environment |
 
 PTY connect supports two browser-oriented modes: loopback query credential mode (`auth_token`) used by current Console and VS Code Agent Manager paths, and short-lived ticket mode exposed by server API.
 
@@ -136,7 +136,7 @@ Provider auth records use `api`, `oauth`, or `wellknown` variants in `${Global.P
 | Organization catalog | Kilo model fetch includes organization ID when resolved from config, auth, or environment |
 | Model cache | Caches provider model results for five minutes; failed loads invalidate cache for retry |
 | Custom endpoints | Provider config can override endpoint and credential options |
-| Indexing auth | Resolves indexing-specific Kilo config first, then provider config, auth record, provider options, and `BLITX_API_KEY` / `BLITX_ORG_ID` environment values |
+| Indexing auth | Resolves indexing-specific Kilo config first, then provider config, auth record, provider options, and `LEGION_API_KEY` / `LEGION_ORG_ID` environment values |
 
 ### Remote MCP OAuth
 
@@ -255,7 +255,7 @@ Later sources override earlier values during instance config load:
 | 4 | Global config files |
 | 5 | Explicit `KILO_CONFIG` file |
 | 6 | Project `kilo.json[c]` and `opencode.json[c]` files plus discovered config directories |
-| 7 | `BLITX_CONFIG_DIR` directory |
+| 7 | `LEGION_CONFIG_DIR` directory |
 | 8 | `KILO_CONFIG_CONTENT` |
 | 9 | Active Kilo Cloud organization config |
 | 10 | Managed config directory |
@@ -303,7 +303,7 @@ Source development can serve built Console assets from package output or build t
 | Status | `GET /indexing/status` and `indexing.status` bus event expose progress |
 | Tool | `semantic_search` is registered only after indexing reports readiness |
 | Worktrees | Agent Manager `.kilo/worktrees/` and legacy `.kilocode/worktrees/` paths return disabled status |
-| Empty VS Code window | Extension sets `BLITX_DISABLE_CODEBASE_INDEXING=vscode-no-workspace`; bridge reports disabled status |
+| Empty VS Code window | Extension sets `LEGION_DISABLE_CODEBASE_INDEXING=vscode-no-workspace`; bridge reports disabled status |
 | Embeddings | Supports Kilo, OpenAI, Ollama, OpenAI-compatible, Gemini, Mistral, Vercel AI Gateway, Bedrock, OpenRouter, and Voyage configuration |
 | Vector stores | Supports Qdrant and LanceDB |
 

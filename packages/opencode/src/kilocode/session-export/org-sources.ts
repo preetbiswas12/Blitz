@@ -1,7 +1,7 @@
 import { Auth } from "@/auth"
 import { Config } from "@/config/config"
 import { makeRuntime } from "@/effect/run-service"
-import { resolveBlitxIndexingAuth } from "@/kilocode/indexing-auth"
+import { resolveLegionIndexingAuth } from "@/kilocode/indexing-auth"
 
 export type OrgState = { type: "personal" } | { type: "org"; id: string } | { type: "unknown" }
 export type OrgSource = () => Promise<OrgState>
@@ -13,9 +13,9 @@ export async function getAuthOrgId(): Promise<OrgState> {
   try {
     const [cfg, info] = await Promise.all([
       config.runPromise((svc) => svc.get()),
-      auth.runPromise((svc) => svc.get("blitx")),
+      auth.runPromise((svc) => svc.get("legion")),
     ])
-    const id = resolveBlitxIndexingAuth({ config: cfg, auth: info }).organizationId
+    const id = resolveLegionIndexingAuth({ config: cfg, auth: info }).organizationId
     if (id) return { type: "org", id }
     return { type: "personal" }
   } catch (err) {

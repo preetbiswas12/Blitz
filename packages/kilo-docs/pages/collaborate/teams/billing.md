@@ -17,7 +17,7 @@ No Kilo credits are included with a Teams or Enterprise purchase.
 
 ## Organization Credits
 
-Organization Owners can purchase Kilo credits on the [Organization dashboard](https://app.kilo.ai). <!-- TODO: Replace with Blitx dashboard URL -->
+Organization Owners can purchase Kilo credits on the [Organization dashboard](https://app.kilo.ai). <!-- TODO: Replace with Legion dashboard URL -->
 
 Organization credits are purchased on behalf of all users in the organization. Every member of the organization can use the credits in the organization's balance with the Kilo Code model provider.
 
@@ -68,7 +68,7 @@ To fill empty seats or remove members ahead of seat deletion, see the [team mana
 
 ## Automatic Top-Up
 
-Ensure your team has uninterrupted access to Kilo Code by enabling [Automatic Top-Up](https://blitx.ai/features/auto-top-ups). This feature keeps your organization's balance funded so you never have to worry about manual recharges. Auto top-up is also available for individual accounts — see [Adding Credits](/docs/getting-started/adding-credits) for details.
+Ensure your team has uninterrupted access to Kilo Code by enabling [Automatic Top-Up](https://legion.ai/features/auto-top-ups). This feature keeps your organization's balance funded so you never have to worry about manual recharges. Auto top-up is also available for individual accounts — see [Adding Credits](/docs/getting-started/adding-credits) for details.
 
 ### How It Works
 

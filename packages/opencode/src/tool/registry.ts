@@ -69,7 +69,7 @@ export function webSearchEnabled(
   providerID: ProviderID,
   flags = { exa: Flag.KILO_ENABLE_EXA, parallel: Flag.KILO_ENABLE_PARALLEL },
 ) {
-  return providerID === ProviderID.blitx || flags.exa || flags.parallel // kilocode_change
+  return providerID === ProviderID.legion || flags.exa || flags.parallel // kilocode_change
 }
 
 type TaskDef = Tool.InferDef<typeof TaskTool>

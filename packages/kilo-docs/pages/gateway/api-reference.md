@@ -131,7 +131,7 @@ type ChatCompletionChunk = {
 
 ```bash
 curl -X POST "https://api.kilo.ai/api/gateway/chat/completions" \
-  -H "Authorization: Bearer $BLITX_API_KEY" \
+  -H "Authorization: Bearer $LEGION_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "anthropic/claude-sonnet-4.5",
@@ -264,7 +264,7 @@ type FIMRequest = {
 
 ```bash
 curl -X POST "https://api.kilo.ai/api/fim/completions" \
-  -H "Authorization: Bearer $BLITX_API_KEY" \
+  -H "Authorization: Bearer $LEGION_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "mistralai/codestral-2508",

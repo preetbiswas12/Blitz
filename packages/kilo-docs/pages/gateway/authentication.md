@@ -27,7 +27,7 @@ import { createOpenAI } from "@ai-sdk/openai"
 
 const kilo = createOpenAI({
   baseURL: "https://api.kilo.ai/api/gateway",
-  apiKey: process.env.BLITX_API_KEY,
+  apiKey: process.env.LEGION_API_KEY,
 })
 ```
 
@@ -38,7 +38,7 @@ const kilo = createOpenAI({
 from openai import OpenAI
 
 client = OpenAI(
-    api_key=os.getenv("BLITX_API_KEY"),
+    api_key=os.getenv("LEGION_API_KEY"),
     base_url="https://api.kilo.ai/api/gateway",
 )
 ```
@@ -48,7 +48,7 @@ client = OpenAI(
 
 ```bash
 curl -X POST "https://api.kilo.ai/api/gateway/chat/completions" \
-  -H "Authorization: Bearer $BLITX_API_KEY" \
+  -H "Authorization: Bearer $LEGION_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"model": "anthropic/claude-sonnet-4.5", "messages": [{"role": "user", "content": "Hello"}]}'
 ```
@@ -107,7 +107,7 @@ BYOK lets you use your own provider API keys with the Kilo AI Gateway. When a BY
 
 ### How BYOK works
 
-1. Add your provider API key in the [Kilo dashboard](https://app.kilo.ai) <!-- TODO: Replace with Blitx dashboard URL --> or through your Kilo Code extension settings
+1. Add your provider API key in the [Kilo dashboard](https://app.kilo.ai) <!-- TODO: Replace with Legion dashboard URL --> or through your Kilo Code extension settings
 2. Keys are encrypted at rest using AES-256 encryption
 3. When you make a request for a model from that provider, the gateway automatically uses your key
 4. Usage is tracked but not billed to your Kilo balance (cost is set to $0)

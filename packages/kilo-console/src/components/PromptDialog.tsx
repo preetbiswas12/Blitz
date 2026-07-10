@@ -1,5 +1,5 @@
-import { Button } from "@blitxcode/kilo-web-ui/button"
-import { Input } from "@blitxcode/kilo-web-ui/input"
+import { Button } from "@Legioncode/kilo-web-ui/button"
+import { Input } from "@Legioncode/kilo-web-ui/input"
 import { createUniqueId, Show } from "solid-js"
 
 type Props = {

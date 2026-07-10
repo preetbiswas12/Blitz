@@ -6,7 +6,7 @@ import { Bus } from "@/bus"
 import { Session as SessionNs } from "@/session/session"
 import { SessionPrompt } from "@/session/prompt"
 import { AppRuntime, type AppServices } from "../../../src/effect/app-runtime"
-import { BlitxSession } from "../../../src/kilocode/session"
+import { LegionSession} from "../../../src/kilocode/session"
 import { provideTestInstance } from "../../fixture/fixture"
 import { MessageID, type SessionID } from "../../../src/session/schema"
 import { ModelID, ProviderID } from "../../../src/provider/schema"
@@ -65,11 +65,11 @@ describe("session platform attribution", () => {
       fn: async () => {
         const root = await create({ platform: "agent-manager" })
         const child = await create({ parentID: root.id, title: "child" })
-        const attr = BlitxSession.attribution(child.id)
+        const attr = LegionSessionattribution(child.id)
 
-        expect(BlitxSession.getPlatformOverride(root.id)).toBe("agent-manager")
-        expect(BlitxSession.getPlatformOverride(child.id)).toBe("agent-manager")
-        expect(BlitxSession.resolvePlatform(child.id)).toBe("agent-manager")
+        expect(LegionSessiongetPlatformOverride(root.id)).toBe("agent-manager")
+        expect(LegionSessiongetPlatformOverride(child.id)).toBe("agent-manager")
+        expect(LegionSessionresolvePlatform(child.id)).toBe("agent-manager")
         expect(attr.rootID).toBe(root.id)
         expect(attr.feature).toBe("agent-manager")
 
@@ -86,10 +86,10 @@ describe("session platform attribution", () => {
         const child = await create({ parentID: root.id, title: "child" })
         const leaf = await create({ parentID: child.id, title: "leaf" })
 
-        expect(BlitxSession.resolveParent(root.id)).toBeUndefined()
-        expect(BlitxSession.resolveParent(child.id)).toBe(root.id)
-        expect(BlitxSession.resolveParent(leaf.id)).toBe(child.id)
-        expect(BlitxSession.resolveRoot(leaf.id)).toBe(root.id)
+        expect(LegionSessionresolveParent(root.id)).toBeUndefined()
+        expect(LegionSessionresolveParent(child.id)).toBe(root.id)
+        expect(LegionSessionresolveParent(leaf.id)).toBe(child.id)
+        expect(LegionSessionresolveRoot(leaf.id)).toBe(root.id)
 
         await remove(root.id)
       },
@@ -103,13 +103,13 @@ describe("session platform attribution", () => {
         const root = await create({})
         const child = await create({ parentID: root.id, title: "child" })
         await seed(child.id)
-        BlitxSession.clearPlatformOverride(child.id)
-        expect(BlitxSession.resolveParent(child.id)).toBeUndefined()
+        LegionSessionclearPlatformOverride(child.id)
+        expect(LegionSessionresolveParent(child.id)).toBeUndefined()
 
         const closed = Promise.withResolvers<SessionID | undefined>()
         const unsubscribe = await run(
           Bus.Service.use((bus) =>
-            bus.subscribeCallback(BlitxSession.Event.TurnClose, (event) => {
+            bus.subscribeCallback(LegionSessionEvent.TurnClose, (event) => {
               if (event.properties.sessionID === child.id) closed.resolve(event.properties.parentID)
             }),
           ),

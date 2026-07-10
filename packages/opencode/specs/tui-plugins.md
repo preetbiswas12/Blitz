@@ -213,7 +213,7 @@ npm plugins can declare a version compatibility range in `package.json` using th
 - There is no uninstall, list, or update CLI command for external plugins.
 - Local file plugins are configured directly in `tui.json`.
 
-When `plugin` entries exist in a writable `.kilo` or legacy `.kilocode` directory, or `BLITX_CONFIG_DIR`, Kilo installs `@legion/plugin` into that directory and writes:
+When `plugin` entries exist in a writable `.kilo` or legacy `.kilocode` directory, or `LEGION_CONFIG_DIR`, Kilo installs `@legion/plugin` into that directory and writes:
 
 - `package.json`
 - `bun.lock`

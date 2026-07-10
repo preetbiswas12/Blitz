@@ -7,10 +7,10 @@ import { Bus } from "../bus"
 import { TuiEvent } from "../cli/cmd/tui/event"
 import DESCRIPTION from "./warpgrep.txt"
 
-// FREE_PERIOD_TODO: Remove BLITX_WARPGREP_PROXY_URL constant and the proxy
+// FREE_PERIOD_TODO: Remove LEGION_WARPGREP_PROXY_URL constant and the proxy
 // fallback below. After the free period ends, require MORPH_API_KEY and
 // return an error when it is missing.
-const BLITX_WARPGREP_PROXY_URL = "https://api.blitx.ai/api/gateway"
+const LEGION_WARPGREP_PROXY_URL = "https://api.legion.ai/api/gateway"
 
 const Parameters = Schema.Struct({
   query: Schema.String.annotate({
@@ -40,7 +40,7 @@ export const CodebaseSearchTool = Tool.define(
           //   if (!apiKey) return { title: ..., output: "Set MORPH_API_KEY to use codebase search.", metadata: {} }
           const client = new WarpGrepClient({
             morphApiKey: apiKey ?? "kilo-free",
-            ...(apiKey ? {} : { morphApiUrl: BLITX_WARPGREP_PROXY_URL }),
+            ...(apiKey ? {} : { morphApiUrl: LEGION_WARPGREP_PROXY_URL }),
             timeout: 60_000,
           })
 

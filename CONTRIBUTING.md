@@ -1,6 +1,6 @@
-# Contributing to Blitx CLI
+# Contributing to Legion CLI
 
-See [the Documentation for details on contributing](https://blitx.ai/docs/contributing).
+See [the Documentation for details on contributing](https://legion.ai/docs/contributing).
 
 ## TL;DR
 
@@ -12,13 +12,13 @@ There are lots of ways to contribute to the project:
 - **Feature Requests:** Suggest new features or improvements
 - **Community Support:** Help other users in the community
 
-The Blitx Community is [on Discord](https://blitx.ai/discord).
+The Legion Community is [on Discord](https://legion.ai/discord).
 
 ## Prerequisites
 
 - **Bun 1.3.14+** — required for all packages.
 
-## Developing Blitx CLI
+## Developing Legion CLI
 
 - **Requirements:** Bun 1.3.14+ (see [Prerequisites](#prerequisites) above)
 - Install dependencies and start the CLI from the repo root:
@@ -85,23 +85,23 @@ For manual docs validation, run the docs site locally, preview the affected page
 
 - User-facing changes usually need a changeset (`bunx changeset add` or a file under `.changeset/`).
 - After changing server endpoints, regenerate the SDK with `./script/generate.ts`.
-- When editing shared `packages/opencode/` files, keep Blitx changes small and mark Blitx-only edits with `// kilocode_change` for a single line or `// kilocode_change start` / `// kilocode_change end` for a block. Do not add these markers inside `kilocode`-named paths.
+- When editing shared `packages/opencode/` files, keep Legion changes small and mark Legion-only edits with `// kilocode_change` for a single line or `// kilocode_change start` / `// kilocode_change end` for a block. Do not add these markers inside `kilocode`-named paths.
 
 ### Running against a different directory
 
-By default, `bun dev` runs Blitx CLI in the `packages/opencode` directory. To run it against a different directory or repository:
+By default, `bun dev` runs Legion CLI in the `packages/opencode` directory. To run it against a different directory or repository:
 
 ```bash
 bun dev <directory>
 ```
 
-To run Blitx CLI in the root of the repo itself:
+To run Legion CLI in the root of the repo itself:
 
 ```bash
 bun dev .
 ```
 
-### Running Blitx CLI from any folder
+### Running Legion CLI from any folder
 
 `bin/kilodev` is a self-locating launcher that runs this checkout from wherever you invoke it. Running it with no arguments launches the TUI pointed at the caller's directory; any arguments are forwarded to the CLI unchanged.
 
@@ -151,9 +151,9 @@ Then run it with:
 
 Replace `<platform>` with your platform (e.g., `darwin-arm64`, `linux-x64`).
 
-### Understanding bun dev vs blitx
+### Understanding bun dev vs Legion
 
-During development, `bun dev` is the local equivalent of the built `blitx` command. Both run the same CLI interface:
+During development, `bun dev` is the local equivalent of the built `Legion` command. Both run the same CLI interface:
 
 ```bash
 # Development (from project root)
@@ -161,26 +161,26 @@ bun dev --help           # Show all available commands
 bun dev serve            # Start headless API server
 
 # Production
-blitx --help          # Show all available commands
-blitx serve           # Start headless API server
+Legion --help          # Show all available commands
+Legion serve           # Start headless API server
 ```
 
 ### Testing with a local backend
 
-To point the CLI at a local backend (e.g., a locally running Blitx API server on port 3000), set the `KILO_API_URL` environment variable:
+To point the CLI at a local backend (e.g., a locally running Legion API server on port 3000), set the `KILO_API_URL` environment variable:
 
 ```bash
 KILO_API_URL=http://localhost:3000 bun dev
 ```
 
-This redirects all gateway traffic (auth, model listing, provider routing, profile, etc.) to your local server. The default is `https://api.blitx.ai`.
+This redirects all gateway traffic (auth, model listing, provider routing, profile, etc.) to your local server. The default is `https://api.legion.ai`.
 
 There are also optional overrides for other services:
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `KILO_API_URL` | `https://api.blitx.ai` | Blitx API (gateway, auth, models, profile) |
-| `BLITX_SESSION_INGEST_URL` | `https://ingest.kilosessions.ai` | Session export / cloud sync |
+| `KILO_API_URL` | `https://api.legion.ai` | Legion API (gateway, auth, models, profile) |
+| `LEGION_SESSION_INGEST_URL` | `https://ingest.kilosessions.ai` | Session export / cloud sync |
 | `KILO_MODELS_URL` | `https://models.dev` | Model metadata |
 
 > **VS Code:** The repo includes a "VSCode - Run Extension (Local Backend)" launch config in `.vscode/launch.json` that sets `KILO_API_URL=http://localhost:3000` automatically.
@@ -193,7 +193,7 @@ If you open an issue through `gh issue create`, the API, or another tool that by
 
 Current required fields by issue type:
 
-- **Bug report:** include a `Description`. When you can, also add Plugins, Blitx version, Steps to reproduce, Screenshot and/or share link, Operating System, and Terminal so the report matches the full bug template.
+- **Bug report:** include a `Description`. When you can, also add Plugins, Legion version, Steps to reproduce, Screenshot and/or share link, Operating System, and Terminal so the report matches the full bug template.
 - **Feature request:** use a title prefixed with `[FEATURE]:`, complete the required checkbox confirming you have searched for duplicates, and fill in `Describe the enhancement you want to request`.
 - **Question:** include the `Question` field.
 
@@ -224,7 +224,7 @@ Repeated disregard of this contribution guide, or high-volume automated or agent
 
 ### Bug Bounties
 
-Blitx has bug bounties. To be eligible, make sure your GitHub account is connected in your Blitx account.
+Legion has bug bounties. To be eligible, make sure your GitHub account is connected in your Legion account.
 
 ### Testing Evidence
 

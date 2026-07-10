@@ -158,9 +158,9 @@ describe("native notebook tools", () => {
 })
 
 test("uses dedicated VS Code notebook permission defaults only when enabled", () => {
-  const prev = process.env.BLITX_CLIENT
+  const prev = process.env.LEGION_CLIENT
   try {
-    process.env.BLITX_CLIENT = "vscode"
+    process.env.LEGION_CLIENT = "vscode"
     const disabled = KiloAgent.prepare({}).defaultsPatch
     expect(disabled.some((rule) => rule.permission.startsWith("notebook_"))).toBe(false)
 
@@ -169,7 +169,7 @@ test("uses dedicated VS Code notebook permission defaults only when enabled", ()
     expect(rules.findLast((rule) => rule.permission === "notebook_edit")?.action).toBe("ask")
     expect(rules.findLast((rule) => rule.permission === "notebook_execute")?.action).toBe("ask")
   } finally {
-    if (prev === undefined) delete process.env.BLITX_CLIENT
-    if (prev !== undefined) process.env.BLITX_CLIENT = prev
+    if (prev === undefined) delete process.env.LEGION_CLIENT
+    if (prev !== undefined) process.env.LEGION_CLIENT = prev
   }
 })

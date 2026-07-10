@@ -35,7 +35,7 @@ const it = testEffect(
 )
 
 const original = {
-  BLITX_SERVER_PASSWORD: Flag.BLITX_SERVER_PASSWORD,
+  LEGION_SERVER_PASSWORD: Flag.LEGION_SERVER_PASSWORD,
   KILO_SERVER_USERNAME: Flag.KILO_SERVER_USERNAME,
 }
 
@@ -49,7 +49,7 @@ type TestServices = AppFileSystem.Service | ChildProcessSpawner.ChildProcessSpaw
 type TestScope = Scope.Scope | TestServices
 
 function app(serverPath: ServerPath, input?: { password?: string; username?: string }) {
-  Flag.BLITX_SERVER_PASSWORD = input?.password
+  Flag.LEGION_SERVER_PASSWORD = input?.password
   Flag.KILO_SERVER_USERNAME = input?.username
   if (serverPath === "default") return Server.Default().app
 
@@ -58,7 +58,7 @@ function app(serverPath: ServerPath, input?: { password?: string; username?: str
       Layer.provide(
         ConfigProvider.layer(
           ConfigProvider.fromUnknown({
-            BLITX_SERVER_PASSWORD: input?.password,
+            LEGION_SERVER_PASSWORD: input?.password,
             KILO_SERVER_USERNAME: input?.username,
           }),
         ),
@@ -337,7 +337,7 @@ function seedMessage(directory: string, sessionID: string) {
 }
 
 afterEach(async () => {
-  Flag.BLITX_SERVER_PASSWORD = original.BLITX_SERVER_PASSWORD
+  Flag.LEGION_SERVER_PASSWORD = original.LEGION_SERVER_PASSWORD
   Flag.KILO_SERVER_USERNAME = original.KILO_SERVER_USERNAME
   await disposeAllInstances()
   await resetDatabase()
@@ -472,17 +472,17 @@ describe("HttpApi SDK", () => {
         const missing = yield* capture(() =>
           client("raw", directory, { password: "secret" }).file.read({ path: "hello.txt" }),
         )
-        // kilocode_change start - match Hono AuthMiddleware username default ("blitx")
+        // kilocode_change start - match Hono AuthMiddleware username default ("legion")
         const bad = yield* capture(() =>
           client("raw", directory, {
             password: "secret",
-            headers: { authorization: authorization("blitx", "wrong") },
+            headers: { authorization: authorization("legion", "wrong") },
           }).file.read({ path: "hello.txt" }),
         )
         const good = yield* capture(() =>
           client("raw", directory, {
             password: "secret",
-            headers: { authorization: authorization("blitx", "secret") },
+            headers: { authorization: authorization("legion", "secret") },
           }).file.read({ path: "hello.txt" }),
         )
         // kilocode_change end

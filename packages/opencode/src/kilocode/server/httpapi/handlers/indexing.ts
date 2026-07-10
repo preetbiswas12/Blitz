@@ -7,13 +7,13 @@ export const indexingHandlers = HttpApiBuilder.group(InstanceHttpApi, "indexing"
   Effect.gen(function* () {
     const mod = yield* Effect.promise(() => import("@/kilocode/indexing"))
     const status = Effect.fn("IndexingHttpApi.status")(function* () {
-      return yield* EffectBridge.fromPromise(() => mod.BlitxIndexing.current())
+      return yield* EffectBridge.fromPromise(() => mod.LegionIndexing.current())
     })
     const models = Effect.fn("IndexingHttpApi.models")(function* () {
-      return yield* EffectBridge.fromPromise(() => mod.BlitxIndexing.models())
+      return yield* EffectBridge.fromPromise(() => mod.LegionIndexing.models())
     })
     const warnings = Effect.fn("IndexingHttpApi.warnings")(function* () {
-      return yield* EffectBridge.fromPromise(() => mod.BlitxIndexing.warnings())
+      return yield* EffectBridge.fromPromise(() => mod.LegionIndexing.warnings())
     })
 
     return handlers.handle("status", status).handle("models", models).handle("warnings", warnings)

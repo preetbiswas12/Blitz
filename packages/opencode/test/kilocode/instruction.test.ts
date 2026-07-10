@@ -64,20 +64,20 @@ const withConfigDir =
   (value: string | undefined) =>
   <A, E, R>(self: Effect.Effect<A, E, R>) =>
     Effect.gen(function* () {
-      const original = process.env["BLITX_CONFIG_DIR"]
-      if (value === undefined) delete process.env["BLITX_CONFIG_DIR"]
-      else process.env["BLITX_CONFIG_DIR"] = value
+      const original = process.env["LEGION_CONFIG_DIR"]
+      if (value === undefined) delete process.env["LEGION_CONFIG_DIR"]
+      else process.env["LEGION_CONFIG_DIR"] = value
       yield* Effect.addFinalizer(() =>
         Effect.sync(() => {
-          if (original === undefined) delete process.env["BLITX_CONFIG_DIR"]
-          else process.env["BLITX_CONFIG_DIR"] = original
+          if (original === undefined) delete process.env["LEGION_CONFIG_DIR"]
+          else process.env["LEGION_CONFIG_DIR"] = original
         }),
       )
       return yield* self
     })
 
-describe("Instruction.systemPaths BLITX_CONFIG_DIR profile fallback", () => {
-  it.live("prefers BLITX_CONFIG_DIR AGENTS.md over global when both exist", () =>
+describe("Instruction.systemPaths LEGION_CONFIG_DIR profile fallback", () => {
+  it.live("prefers LEGION_CONFIG_DIR AGENTS.md over global when both exist", () =>
     Effect.gen(function* () {
       const profileTmp = yield* tmpWithFiles({ "AGENTS.md": "# Profile Instructions" })
       const globalTmp = yield* tmpWithFiles({ "AGENTS.md": "# Global Instructions" })
@@ -96,7 +96,7 @@ describe("Instruction.systemPaths BLITX_CONFIG_DIR profile fallback", () => {
     }),
   )
 
-  it.live("falls back to global AGENTS.md when BLITX_CONFIG_DIR has no AGENTS.md", () =>
+  it.live("falls back to global AGENTS.md when LEGION_CONFIG_DIR has no AGENTS.md", () =>
     Effect.gen(function* () {
       const profileTmp = yield* tmpdirScoped()
       const globalTmp = yield* tmpWithFiles({ "AGENTS.md": "# Global Instructions" })
@@ -115,7 +115,7 @@ describe("Instruction.systemPaths BLITX_CONFIG_DIR profile fallback", () => {
     }),
   )
 
-  it.live("uses global AGENTS.md when BLITX_CONFIG_DIR is not set", () =>
+  it.live("uses global AGENTS.md when LEGION_CONFIG_DIR is not set", () =>
     Effect.gen(function* () {
       const globalTmp = yield* tmpWithFiles({ "AGENTS.md": "# Global Instructions" })
       const projectTmp = yield* tmpdirScoped()

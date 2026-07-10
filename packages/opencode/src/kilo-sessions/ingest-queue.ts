@@ -1,6 +1,6 @@
 import { ulid } from "ulid"
 import type * as SDK from "@legion/sdk/v2"
-import type { BlitxSession } from "@/kilocode/session"
+import type { LegionSession} from "@/kilocode/session"
 
 export namespace IngestQueue {
   export type Client = {
@@ -8,7 +8,7 @@ export namespace IngestQueue {
     fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>
   }
 
-  export type CloseReason = BlitxSession.CloseReason
+  export type CloseReason = LegionSessionCloseReason
 
   export type Data =
     | {

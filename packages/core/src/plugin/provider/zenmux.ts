@@ -13,8 +13,8 @@ export const ZenmuxPlugin = PluginV2.define({
           if (item.provider.endpoint.url !== "https://zenmux.ai/api/v1") continue
           if (item.provider.id !== ProviderV2.ID.make("zenmux")) continue // kilocode_change
           evt.provider.update(item.provider.id, (provider) => {
-            provider.options.headers["HTTP-Referer"] ??= "https://blitx.ai/" // kilocode_change
-            provider.options.headers["X-Title"] ??= "Blitx Code" // kilocode_change
+            provider.options.headers["HTTP-Referer"] ??= "https://legion.ai/" // kilocode_change
+            provider.options.headers["X-Title"] ??= "Legion Code" // kilocode_change
           })
         }
       }),

@@ -44,7 +44,7 @@ export function submitFeedback(rating: "up" | "down", dialog: DialogContext, ctx
   }
   const variant = (lastAssistant as AssistantMessage & { variant?: string }).variant
   if (variant) payload.variant = variant
-  if (providerID === "blitx") {
+  if (providerID === "legion") {
     payload.sessionID = lastAssistant.sessionID
     payload.messageID = lastAssistant.id
     payload.parentMessageID = lastAssistant.parentID

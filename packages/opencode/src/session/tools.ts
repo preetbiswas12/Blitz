@@ -1,5 +1,5 @@
 import { Agent } from "@/agent/agent"
-import { BlitxSessionPrompt } from "@/kilocode/session/prompt" // kilocode_change
+import { LegionSessionrompt } from "@/kilocode/session/prompt" // kilocode_change
 import { Provider } from "@/provider/provider"
 import { ProviderTransform } from "@/provider/transform"
 import { MCP } from "@/mcp"
@@ -56,7 +56,7 @@ export const resolve = Effect.fn("SessionTools.resolve")(function* (input: {
     // kilocode_change start
     metadata: (val) => input.processor.metadata(options.toolCallId, val),
     ask: (req) =>
-      BlitxSessionPrompt.askPermission({
+      LegionSessionrompt.askPermission({
         permission,
         agents,
         sessions,

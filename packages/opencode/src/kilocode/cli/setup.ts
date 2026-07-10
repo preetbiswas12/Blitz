@@ -8,9 +8,9 @@ import { Config } from "@/config/config"
 import { Auth } from "@/auth"
 import { InstanceRuntime } from "@/project/instance-runtime"
 import { SessionExport } from "@/kilocode/session-export"
-import { BlitxShutdown } from "@/kilocode/cli/shutdown"
+import { LegionShutdown } from "@/kilocode/cli/shutdown"
 import { createHelpCommand } from "@/kilocode/help-command"
-import { BlitxConsoleCommand } from "@/kilocode/cli/cmd/console"
+import { LegionConsoleCommand } from "@/kilocode/cli/cmd/console"
 import { RollCallCommand } from "@/kilocode/cli/cmd/roll-call"
 
 import { DaemonCommand } from "@/kilocode/cli/cmd/daemon"
@@ -23,12 +23,12 @@ const log = Log.create({ service: "kilocode.cli" })
 // All Kilo-specific CLI customization lives here so the shared upstream entrypoint
 // (src/index.ts) only needs a handful of thin call-sites behind kilocode_change markers.
 // This keeps index.ts close to upstream and reduces merge conflicts on every sync.
-export namespace BlitxCli {
+export namespace LegionCli {
   // Register only the Kilo-specific commands. Upstream commands stay in index.ts's chain so
   // upstream merges that add or remove commands keep working without touching this file.
   export function register<T>(cli: Argv<T>): Argv<T> {
     cli
-      .command(BlitxConsoleCommand)
+      .command(LegionConsoleCommand)
       .command(RollCallCommand)
       .command(RemoteCommand)
       .command(DaemonCommand)
@@ -60,7 +60,7 @@ export namespace BlitxCli {
       enabled: cfg.experimental?.openTelemetry !== false,
     })
 
-    const auth = await AppRuntime.runPromise(Auth.Service.use((s) => s.get("blitz")))
+    const auth = await AppRuntime.runPromise(Auth.Service.use((s) => s.get("legion")))
     if (auth) {
       const token = auth.type === "oauth" ? auth.access : auth.key
       const account = auth.type === "oauth" ? auth.accountId : undefined
@@ -85,7 +85,7 @@ export namespace BlitxCli {
         log.warn("telemetry shutdown failed", { err })
       }
     } finally {
-      await BlitxShutdown.run()
+      await LegionShutdown.run()
       await InstanceRuntime.disposeAllInstances() // safety net (no-op if already disposed)
     }
   }

@@ -8,14 +8,14 @@ sidebar_label: Kilo Code Provider
 
 Kilo Code provides its own built-in API provider that gives you access to the latest frontier coding models through a simple registration process. No need to manage API keys from multiple providers - just sign up and start coding.
 
-**Website:** [https://blitx.ai/](https://blitx.ai/)
+**Website:** [https://legion.ai/](https://legion.ai/)
 
 ## Getting Started
 
 When you sign up for Kilo Code, you can start immediately with free models, or add credits to your account to access premium models.
 
 1. **Sign up:** Complete the registration process
-2. **Add credits:** Top up your account at [app.kilo.ai](https://app.kilo.ai/profile) <!-- TODO: Replace with Blitx dashboard URL -->
+2. **Add credits:** Top up your account at [app.kilo.ai](https://app.kilo.ai/profile) <!-- TODO: Replace with Legion dashboard URL -->
 3. **Start Coding:** Use 500+ models including the latest frontier coding models
 
 ## Registration Process
@@ -56,7 +56,7 @@ Once you've completed the registration process, Kilo Code is automatically confi
 With the Kilo Code provider, if you sign up with Google you can also connect other sign in accounts - like GitHub - by:
 
 1. Go to your profile
-2. Select [**Connected Accounts**](https://app.kilo.ai/connected-accounts) <!-- TODO: Replace with Blitx dashboard URL -->
+2. Select [**Connected Accounts**](https://app.kilo.ai/connected-accounts) <!-- TODO: Replace with Legion dashboard URL -->
 3. Under "Link a New account" select the type of account to link
 4. Complete the OAuth authorization, and you'll see your connected accounts!
 

@@ -93,8 +93,8 @@ export function make(input: {
     const started = performance.now()
     // kilocode_change start
     const authMethod: AuthMethod = {
-      description: "Run `blitx auth login` in the terminal",
-      name: "Login with Blitx",
+      description: "Run `legion auth login` in the terminal",
+      name: "Login with Legion",
       id: AuthMethodID,
     }
     // kilocode_change end
@@ -104,7 +104,7 @@ export function make(input: {
         "terminal-auth": {
           command: "opencode",
           args: ["auth", "login"],
-          label: "Blitx Login",
+          label: "Legion Login",
         },
       }
     }
@@ -130,7 +130,7 @@ export function make(input: {
       },
       authMethods: [authMethod],
       agentInfo: {
-        name: "Blitx",
+        name: "legion",
         version: InstallationVersion,
       },
     }
@@ -794,9 +794,9 @@ function defaultModelFromConfig(
   // First-session ACP startup must not scan historical sessions just to infer
   // a default. Configured model, opencode provider, then sorted best model keep
   // the protocol response deterministic without extra session/message reads.
-  const blitxProvider = providers[ProviderID.blitx] // kilocode_change
-  const blitxModel = blitxProvider ? Provider.sort(Object.values(blitxProvider.models))[0] : undefined // kilocode_change
-  if (blitxProvider && blitxModel) return { providerID: blitxProvider.id, modelID: blitxModel.id } // kilocode_change
+  const LegionProvider = providers[ProviderID.legion] // kilocode_change
+  const LegionModel = LegionProvider ? Provider.sort(Object.values(LegionProvider.models))[0] : undefined // kilocode_change
+  if (LegionProvider && LegionModel) return { providerID: LegionProvider.id, modelID: LegionModel.id } // kilocode_change
 
   const best = Provider.sort(Object.values(providers).flatMap((provider) => Object.values(provider.models)))[0]
   if (best) return { providerID: best.providerID, modelID: best.id }

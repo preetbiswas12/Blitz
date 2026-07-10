@@ -68,7 +68,7 @@ for (const path of [
   "@/cli/cmd/config",
 ]) {
   mock.module(path, () => ({
-    BlitxConsoleCommand: { command: "console", handler() {} },
+    LegionConsoleCommand: { command: "console", handler() {} },
     RollCallCommand: { command: "roll-call", handler() {} },
     ProfileCommand: { command: "profile", handler() {} },
     DaemonCommand: { command: "daemon", handler() {} },
@@ -79,7 +79,7 @@ for (const path of [
   }))
 }
 
-describe("BlitxCli.shutdown", () => {
+describe("LegionCli.shutdown", () => {
   beforeEach(() => {
     calls.length = 0
     timeouts.length = 0
@@ -95,9 +95,9 @@ describe("BlitxCli.shutdown", () => {
   test("keeps telemetry shutdown timeout best-effort and still disposes instances", async () => {
     err = "Timeout while shutting down PostHog. Some events may not have been sent."
     process.exitCode = 0
-    const { BlitxCli } = await import("../../src/kilocode/cli/setup")
+    const { LegionCli } = await import("../../src/kilocode/cli/setup")
 
-    await expect(BlitxCli.shutdown()).resolves.toBeUndefined()
+    await expect(LegionCli.shutdown()).resolves.toBeUndefined()
 
     expect(timeouts).toEqual([2000])
     expect(calls).toEqual(["track:0", "session", "telemetry", "dispose"])
@@ -106,9 +106,9 @@ describe("BlitxCli.shutdown", () => {
 
   test("preserves failing command exit status", async () => {
     process.exitCode = 1
-    const { BlitxCli } = await import("../../src/kilocode/cli/setup")
+    const { LegionCli } = await import("../../src/kilocode/cli/setup")
 
-    await BlitxCli.shutdown()
+    await LegionCli.shutdown()
 
     expect(timeouts).toEqual([2000])
     expect(calls).toEqual(["track:1", "session", "telemetry", "dispose"])

@@ -6,9 +6,9 @@ The AI coding agent built for the terminal. Generate code from natural language,
 
 Kilo is the all-in-one agentic engineering platform. Build, ship, and iterate faster with the most popular open source coding agent.
 
-[Website](https://blitx.ai) · [Install](https://blitx.ai/install) · [IDE](https://blitx.ai/landing/vs-code) · [CLI](https://blitx.ai/cli) · [Docs](https://blitx.ai/docs) · [Models](https://blitx.ai/leaderboard) · [Gateway](https://blitx.ai/gateway) · [Pricing](https://blitx.ai/pricing) · [Blitx Pass](https://blitx.ai/pricing/kilo-pass)
+[Website](https://legion.ai) · [Install](https://legion.ai/install) · [IDE](https://legion.ai/landing/vs-code) · [CLI](https://legion.ai/cli) · [Docs](https://legion.ai/docs) · [Models](https://legion.ai/leaderboard) · [Gateway](https://legion.ai/gateway) · [Pricing](https://legion.ai/pricing) · [Legion Pass](https://legion.ai/pricing/kilo-pass)
 
-[500+ models](https://blitx.ai/leaderboard). One open source agent in [VS Code](https://blitx.ai/vscode-marketplace), [JetBrains](https://plugins.jetbrains.com/plugin/27133-kilo-code), [CLI](https://www.npmjs.com/package/@legion/cli), [Slack](https://blitx.ai/slack), and [Cloud](https://blitx.ai/cloud).
+[500+ models](https://legion.ai/leaderboard). One open source agent in [VS Code](https://legion.ai/vscode-marketplace), [JetBrains](https://plugins.jetbrains.com/plugin/27133-kilo-code), [CLI](https://www.npmjs.com/package/@legion/cli), [Slack](https://legion.ai/slack), and [Cloud](https://legion.ai/cloud).
 
 ## Install
 
@@ -44,7 +44,7 @@ kilo run "add input validation to the signup form"
 - **MCP servers** -- extend agent capabilities with the Model Context Protocol
 - **Multiple modes** -- Plan with Architect, code with Coder, debug with Debugger, or create your own
 - **Sessions** -- resume previous conversations and export transcripts
-- **API keys optional** -- bring your own keys or use Blitx credits
+- **API keys optional** -- bring your own keys or use Legion credits
 
 ## Commands
 
@@ -74,16 +74,16 @@ brew install Kilo-Org/tap/kilo
 Download pre-built binaries from the [Releases page](https://github.com/Kilo-Org/kilocode/releases).
 
 ## Documentation
-- [Docs](https://blitx.ai/docs)
+- [Docs](https://legion.ai/docs)
 
-- [Getting Started](https://blitx.ai/docs/getting-started)
+- [Getting Started](https://legion.ai/docs/getting-started)
 
 ## Links
 
 - [GitHub](https://github.com/Kilo-Org/kilocode)
-- [Discord](https://blitx.ai/discord)
-- [VS Code Extension](https://blitx.ai/vscode-marketplace)
-- [Website](https://blitx.ai)
+- [Discord](https://legion.ai/discord)
+- [VS Code Extension](https://legion.ai/vscode-marketplace)
+- [Website](https://legion.ai)
 
 ## License
 

@@ -10,13 +10,13 @@ import open from "open"
 export const WebCommand = effectCmd({
   command: "web",
   builder: (yargs) => withNetworkOptions(yargs),
-  describe: "start blitx server and open web interface",
+  describe: "start legion server and open web interface",
   // Server loads instances per-request via x-kilo-directory header — no
   // ambient project InstanceContext needed at startup.
   instance: false, // kilocode_change
   handler: Effect.fn("Cli.web")(function* (args) {
-    if (!Flag.BLITX_SERVER_PASSWORD) {
-      UI.println(UI.Style.TEXT_WARNING_BOLD + "!  BLITX_SERVER_PASSWORD is not set; server is unsecured.")
+    if (!Flag.LEGION_SERVER_PASSWORD) {
+      UI.println(UI.Style.TEXT_WARNING_BOLD + "!  LEGION_SERVER_PASSWORD is not set; server is unsecured.")
     }
     const opts = yield* resolveNetworkOptions(args)
     const server = yield* Effect.promise(() => Server.listen(opts))

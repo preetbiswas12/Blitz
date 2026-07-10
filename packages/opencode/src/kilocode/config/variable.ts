@@ -2,7 +2,7 @@ import fs from "node:fs/promises"
 import { realpathSync } from "node:fs"
 
 export namespace ConfigVariableGuard {
-  const secret = new Set(["BLITX_SERVER_PASSWORD", "KILO_SERVER_USERNAME"])
+  const secret = new Set(["LEGION_SERVER_PASSWORD", "KILO_SERVER_USERNAME"])
 
   export function env(name: string) {
     return !secret.has(name.toUpperCase())

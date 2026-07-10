@@ -4,7 +4,7 @@ import { InstanceState } from "@/effect/instance-state"
 import { makeRuntime } from "@/effect/run-service"
 import { Identifier } from "@/id/id"
 import { Instance, type InstanceContext } from "@/kilocode/instance"
-import { BlitxShutdown } from "@/kilocode/cli/shutdown"
+import { LegionShutdown } from "@/kilocode/cli/shutdown"
 import { SessionID } from "@/session/schema"
 import { Shell } from "@/shell/shell"
 import { ProjectID } from "@/project/schema"
@@ -355,7 +355,7 @@ export namespace BackgroundProcess {
   }
 
   function infer() {
-    return Flag.BLITX_CLIENT === "cli" && process.env.KILO_BACKGROUND_PROCESS_PORTS === "true"
+    return Flag.LEGION_CLIENT === "cli" && process.env.KILO_BACKGROUND_PROCESS_PORTS === "true"
   }
 
   function update(active: Active, ports?: number[]) {
@@ -580,7 +580,7 @@ export namespace BackgroundProcess {
       ...(id ? { KILO_BACKGROUND_PROCESS_ID: id } : {}),
       ...(token ? { KILO_BACKGROUND_PROCESS_TOKEN: token } : {}),
     }
-    delete result.BLITX_SERVER_PASSWORD
+    delete result.LEGION_SERVER_PASSWORD
     delete result.KILO_SERVER_USERNAME
     delete result.KILO_BACKGROUND_PROCESS_PORTS
     return result
@@ -1161,7 +1161,7 @@ export namespace BackgroundProcess {
   )
 
   const runtime = makeRuntime(StateService, stateLayer)
-  BlitxShutdown.register(() => runtime.dispose())
+  LegionShutdown.register(() => runtime.dispose())
 
   function state() {
     return runtime.runPromise((svc) => svc.get())

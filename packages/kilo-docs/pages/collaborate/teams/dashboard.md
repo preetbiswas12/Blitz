@@ -5,7 +5,7 @@ description: "Manage your team from the Kilo Code dashboard"
 
 # Dashboard
 
-The Kilo seats dashboard is the first screen that comes up when you visit [the Kilo Code web app](https://app.kilo.ai). <!-- TODO: Replace with Blitx dashboard URL --> It provides complete visibility into your team's AI usage, costs, and management.
+The Kilo seats dashboard is the first screen that comes up when you visit [the Kilo Code web app](https://app.kilo.ai). <!-- TODO: Replace with Legion dashboard URL --> It provides complete visibility into your team's AI usage, costs, and management.
 
 {% image src="/docs/img/teams/dashboard.png" alt="Invite your team members" width="700" /%}
 

@@ -1,4 +1,4 @@
-export namespace BlitxShutdown {
+export namespace LegionShutdown {
   const tasks = new Set<() => void | Promise<void>>()
 
   export function register(task: () => void | Promise<void>) {

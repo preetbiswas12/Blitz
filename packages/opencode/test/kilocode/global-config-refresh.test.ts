@@ -17,7 +17,7 @@ function app() {
   return Server.Default().app
 }
 
-async function update(target: ReturnType<typeof app>, provider: "blitx" | "openrouter") {
+async function update(target: ReturnType<typeof app>, provider: "legion" | "openrouter") {
   return target.request("/global/config", {
     method: "PATCH",
     headers: { "content-type": "application/json" },
@@ -69,13 +69,13 @@ describe("global config refresh", () => {
       await release.promise
     })
     try {
-      const pending = update(target, "blitx")
+      const pending = update(target, "legion")
       await started.promise
       const early = await Promise.race([pending.then(() => true), Bun.sleep(10).then(() => false)])
       expect(early).toBe(false)
       release.resolve()
       expect((await pending).status).toBe(200)
-      expect(await provider(target, workspace.path)).toBe("blitx")
+      expect(await provider(target, workspace.path)).toBe("legion")
     } finally {
       release.resolve()
       unregister()
@@ -92,7 +92,7 @@ describe("global config refresh", () => {
     }
     GlobalBus.on("event", listener)
     try {
-      expect((await update(target, "blitx")).status).toBe(200)
+      expect((await update(target, "legion")).status).toBe(200)
     } finally {
       GlobalBus.off("event", listener)
     }

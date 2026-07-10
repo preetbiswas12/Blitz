@@ -602,7 +602,7 @@ Add to `~/.config/kilo/config.json`:
 
 ### Using Remote Mode
 
-Once enabled, start a CLI session and open [Cloud Agents](https://app.kilo.ai/cloud). <!-- TODO: Replace with Blitx dashboard URL --> Your local session appears in the dashboard. See [Cloud Agent Remote Connections](/docs/code-with-ai/platforms/cloud-agent#remote-connections) for details.
+Once enabled, start a CLI session and open [Cloud Agents](https://app.kilo.ai/cloud). <!-- TODO: Replace with Legion dashboard URL --> Your local session appears in the dashboard. See [Cloud Agent Remote Connections](/docs/code-with-ai/platforms/cloud-agent#remote-connections) for details.
 
 ### Requirements
 
@@ -620,7 +620,7 @@ The CLI supports overriding config values with environment variables. The suppor
 
 - `KILO_PROVIDER`: Override the active provider ID
 - For `kilocode` provider: `KILOCODE_<FIELD_NAME>` (e.g., `KILOCODE_MODEL` → `kilocodeModel`)
-- For other providers: `KILO_<FIELD_NAME>` (e.g., `BLITX_API_KEY` → `apiKey`)
+- For other providers: `KILO_<FIELD_NAME>` (e.g., `LEGION_API_KEY` → `apiKey`)
 
 ## Using the CLI in an Organization
 
@@ -636,6 +636,6 @@ Your selection is persisted locally so it carries over to future sessions.
 
 There is no `--org` or `--team` flag on `kilo run`. Instead, the organization is determined from the following sources, in order of priority (highest first):
 
-1. **`BLITX_ORG_ID` environment variable** — Best for non-interactive and CI environments.
+1. **`LEGION_ORG_ID` environment variable** — Best for non-interactive and CI environments.
 
 2. **`Persisted selection from the last `/teams` pick`** — If you've run an interactive session and selected an organization via `/teams`, that selection is stored in the CLI auth file and reused automatically.

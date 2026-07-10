@@ -13,13 +13,13 @@ import { testEffect } from "../lib/effect"
 const testStateLayer = Layer.effectDiscard(
   Effect.gen(function* () {
     const original = {
-      BLITX_SERVER_PASSWORD: Flag.BLITX_SERVER_PASSWORD,
+      LEGION_SERVER_PASSWORD: Flag.LEGION_SERVER_PASSWORD,
     }
-    Flag.BLITX_SERVER_PASSWORD = "secret"
+    Flag.LEGION_SERVER_PASSWORD = "secret"
     yield* Effect.promise(() => resetDatabase())
     yield* Effect.addFinalizer(() =>
       Effect.promise(async () => {
-        Flag.BLITX_SERVER_PASSWORD = original.BLITX_SERVER_PASSWORD
+        Flag.LEGION_SERVER_PASSWORD = original.LEGION_SERVER_PASSWORD
         await resetDatabase()
       }),
     )
@@ -64,7 +64,7 @@ describe("HttpApi CORS", () => {
     Effect.gen(function* () {
       const handler = HttpRouter.toWebHandler(
         HttpApiApp.createRoutes().pipe(
-          Layer.provide(ConfigProvider.layer(ConfigProvider.fromUnknown({ BLITX_SERVER_PASSWORD: "secret" }))),
+          Layer.provide(ConfigProvider.layer(ConfigProvider.fromUnknown({ LEGION_SERVER_PASSWORD: "secret" }))),
         ),
         { disableLogger: true },
       ).handler

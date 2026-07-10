@@ -1,6 +1,6 @@
-# Releasing Blitx CLI
+# Releasing Legion CLI
 
-Blitx CLI uses a fully automated CI pipeline triggered via GitHub Actions `workflow_dispatch`. A single workflow handles version bumping, building all artifacts, publishing to every distribution channel, and updating package registries.
+Legion CLI uses a fully automated CI pipeline triggered via GitHub Actions `workflow_dispatch`. A single workflow handles version bumping, building all artifacts, publishing to every distribution channel, and updating package registries.
 
 ## How to Trigger a Release
 
@@ -30,7 +30,7 @@ The `publish.yml` workflow runs three jobs sequentially:
 
 ### 2. Build CLI (`build-cli`)
 
-- Runs `packages/opencode/script/build.ts` to compile the Blitx CLI binary.
+- Runs `packages/opencode/script/build.ts` to compile the Legion CLI binary.
 - Builds native binaries for **all supported platforms and architectures**:
   - Linux: x64, arm64 (glibc and musl), plus baseline (non-AVX2) variants
   - macOS: x64, arm64, plus baseline variants

@@ -12,8 +12,8 @@ export const GenerateCommand = {
       paths: Record<string, Record<string, any>>
     }
     // kilocode_change start
-    specs.info.title = "blitx"
-    specs.info.description = "blitx api"
+    specs.info.title = "legion"
+    specs.info.description = "Legion api"
     // kilocode_change end
     for (const item of Object.values(specs.paths)) {
       for (const method of ["get", "post", "put", "delete", "patch"] as const) {
@@ -38,10 +38,10 @@ export const GenerateCommand = {
     }
     const raw = JSON.stringify(specs, null, 2)
       // kilocode_change start - replace upstream product name in all descriptions
-      .replaceAll("OpenCode", "Blitx")
-      .replaceAll("opencode.local", "blitx.local")
-      .replaceAll("opencode serve", "blitx serve")
-      .replaceAll("https://opencode.ai/", "https://blitx.ai/")
+      .replaceAll("OpenCode", "legion")
+      .replaceAll("opencode.local", "Legion.local")
+      .replaceAll("opencode serve", "legion serve")
+      .replaceAll("https://opencode.ai/", "https://legion.ai/")
     // kilocode_change end
 
     // Format through prettier so output is byte-identical to committed file

@@ -38,7 +38,7 @@ Before connecting:
 
 ### 1. Open the Integrations Page
 
-Go to your **Personal** or **Organization Dashboard**, and navigate to the [Integrations](https://app.kilo.ai/integrations) <!-- TODO: Replace with Blitx dashboard URL --> tab.
+Go to your **Personal** or **Organization Dashboard**, and navigate to the [Integrations](https://app.kilo.ai/integrations) <!-- TODO: Replace with Legion dashboard URL --> tab.
 
 ### 2. Start the Connection Flow
 

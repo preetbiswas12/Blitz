@@ -2498,7 +2498,7 @@ describe("ProviderTransform.variants", () => {
   test("minimax via kilo gateway returns instant/thinking toggle", () => {
     const model = createMockModel({
       id: "kilo/minimax/minimax-m3",
-      providerID: "blitx",
+      providerID: "legion",
       api: {
         id: "minimax/minimax-m3",
         url: "https://gateway.kilo.ai",
@@ -2811,7 +2811,7 @@ describe("ProviderTransform.variants", () => {
     test("claude models return empty variants (reasoning disabled)", () => {
       const model = createMockModel({
         id: "kilo/anthropic/claude-sonnet-4",
-        providerID: "blitx",
+        providerID: "legion",
         capabilities: { reasoning: false },
         api: {
           id: "anthropic/claude-sonnet-4",
@@ -2825,7 +2825,7 @@ describe("ProviderTransform.variants", () => {
     test("anthropic models in api.id return empty variants (reasoning disabled)", () => {
       const model = createMockModel({
         id: "kilo/anthropic/claude-opus-4",
-        providerID: "blitx",
+        providerID: "legion",
         capabilities: { reasoning: false },
         api: {
           id: "anthropic/claude-opus-4",
@@ -2839,7 +2839,7 @@ describe("ProviderTransform.variants", () => {
     test("gpt models return OPENAI_EFFORTS with reasoning", () => {
       const model = createMockModel({
         id: "kilo/openai/gpt-5",
-        providerID: "blitx",
+        providerID: "legion",
         api: {
           id: "openai/gpt-5",
           url: "https://gateway.kilo.ai",
@@ -2853,7 +2853,7 @@ describe("ProviderTransform.variants", () => {
     test("gemini-3 models return OPENAI_EFFORTS with reasoning and encrypted content", () => {
       const model = createMockModel({
         id: "kilo/google/gemini-3-pro",
-        providerID: "blitx",
+        providerID: "legion",
         api: {
           id: "google/gemini-3-pro",
           url: "https://gateway.kilo.ai",
@@ -2866,7 +2866,7 @@ describe("ProviderTransform.variants", () => {
     test("non-qualifying models return empty object", () => {
       const model = createMockModel({
         id: "kilo/meta/llama-4",
-        providerID: "blitx",
+        providerID: "legion",
         api: {
           id: "meta/llama-4",
           url: "https://gateway.kilo.ai",
@@ -2879,7 +2879,7 @@ describe("ProviderTransform.variants", () => {
     test("grok-3-mini returns low and high with reasoning", () => {
       const model = createMockModel({
         id: "kilo/x-ai/grok-3-mini",
-        providerID: "blitx",
+        providerID: "legion",
         api: {
           id: "x-ai/grok-3-mini",
           url: "https://gateway.kilo.ai",
@@ -2894,7 +2894,7 @@ describe("ProviderTransform.variants", () => {
     test("codex models return OPENAI_EFFORTS with object-based reasoning format", () => {
       const model = createMockModel({
         id: "kilo/openai/gpt-5.2-codex",
-        providerID: "blitx",
+        providerID: "legion",
         api: {
           id: "openai/gpt-5.2-codex",
           url: "https://gateway.kilo.ai",
@@ -2916,7 +2916,7 @@ describe("ProviderTransform.variants", () => {
       }
       const model = createMockModel({
         id: "kilo/inception/mercury-2",
-        providerID: "blitx",
+        providerID: "legion",
         api: {
           id: "inception/mercury-2",
           url: "https://gateway.kilo.ai",
@@ -4093,7 +4093,7 @@ describe("ProviderTransform.variants", () => {
       test("claude models use their default reasoning effort", () => {
         const model = createMockModel({
           id: "kilo/anthropic/claude-sonnet-4",
-          providerID: "blitx",
+          providerID: "legion",
           api: {
             id: "anthropic/claude-sonnet-4",
             url: "https://gateway.kilo.ai",
@@ -4106,7 +4106,7 @@ describe("ProviderTransform.variants", () => {
       test("non-claude models use their default reasoning effort", () => {
         const model = createMockModel({
           id: "kilo/openai/gpt-4",
-          providerID: "blitx",
+          providerID: "legion",
           api: {
             id: "openai/gpt-4",
             url: "https://gateway.kilo.ai",
@@ -4119,7 +4119,7 @@ describe("ProviderTransform.variants", () => {
       test("google models use their default reasoning effort", () => {
         const model = createMockModel({
           id: "kilo/google/gemini-2.0-flash",
-          providerID: "blitx",
+          providerID: "legion",
           api: {
             id: "google/gemini-2.0-flash",
             url: "https://gateway.kilo.ai",

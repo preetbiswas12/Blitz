@@ -1,10 +1,10 @@
 import React from "react"
 import { Icon } from "./Icon"
 
-interface BlitxCodeIconProps {
+interface LegionCodeIconProps {
   size?: string
 }
 
-export function BlitxCodeIcon({ size = "1.2em" }: BlitxCodeIconProps) {
-  return <Icon src="/docs/img/kilo-v1.svg" srcDark="/docs/img/kilo-v1-white.svg" alt="Blitx Code Icon" size={size} />
+export function LegionCodeIcon({ size = "1.2em" }: LegionCodeIconProps) {
+  return <Icon src="/docs/img/kilo-v1.svg" srcDark="/docs/img/kilo-v1-white.svg" alt="Legion Code Icon" size={size} />
 }

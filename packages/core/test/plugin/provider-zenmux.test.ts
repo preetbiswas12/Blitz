@@ -32,7 +32,7 @@ describe("ZenmuxPlugin", () => {
         })
       })
       const result = yield* catalog.provider.get(ProviderV2.ID.make("zenmux"))
-      expect(result.options.headers).toEqual({ "HTTP-Referer": "https://blitx.ai/", "X-Title": "Blitx Code" })
+      expect(result.options.headers).toEqual({ "HTTP-Referer": "https://legion.ai/", "X-Title": "Legion Code" })
       expect(Object.keys(result.options.headers).sort()).toEqual(["HTTP-Referer", "X-Title"])
     }),
   )
@@ -56,8 +56,8 @@ describe("ZenmuxPlugin", () => {
 
       expect((yield* catalog.provider.get(ProviderV2.ID.make("zenmux"))).options.headers).toEqual({
         Existing: "value",
-        "HTTP-Referer": "https://blitx.ai/",
-        "X-Title": "Blitx Code",
+        "HTTP-Referer": "https://legion.ai/",
+        "X-Title": "Legion Code",
       })
     }),
   )

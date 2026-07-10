@@ -38,7 +38,7 @@ describe("event types", () => {
       userMessageId: "u1",
       agent: "claude",
       modeId: "build",
-      model: { providerId: "blitx", modelId: "free-1", isFree: true },
+      model: { providerId: "legion", modelId: "free-1", isFree: true },
       input: {
         system: ["You are..."],
         messages: [],

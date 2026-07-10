@@ -36,8 +36,8 @@ describe("NvidiaPlugin", () => {
       })
       expect((yield* catalog.provider.get(ProviderV2.ID.make("nvidia"))).options.headers).toEqual({
         Existing: "value",
-        "HTTP-Referer": "https://blitx.ai/",
-        "X-Title": "Blitx Code",
+        "HTTP-Referer": "https://legion.ai/",
+        "X-Title": "Legion Code",
         "X-BILLING-INVOKE-ORIGIN": "KiloCode",
       })
       expect((yield* catalog.provider.get(ProviderV2.ID.openrouter)).options.headers).toEqual({})
@@ -62,8 +62,8 @@ describe("NvidiaPlugin", () => {
       })
 
       expect((yield* catalog.provider.get(ProviderV2.ID.make("nvidia"))).options.headers).toEqual({
-        "HTTP-Referer": "https://blitx.ai/",
-        "X-Title": "Blitx Code",
+        "HTTP-Referer": "https://legion.ai/",
+        "X-Title": "Legion Code",
         "X-BILLING-INVOKE-ORIGIN": "KiloCode",
       })
     }),
@@ -91,8 +91,8 @@ describe("NvidiaPlugin", () => {
       })
 
       expect((yield* catalog.provider.get(ProviderV2.ID.make("nvidia"))).options.headers).toEqual({
-        "HTTP-Referer": "https://blitx.ai/",
-        "X-Title": "Blitx Code",
+        "HTTP-Referer": "https://legion.ai/",
+        "X-Title": "Legion Code",
         "X-BILLING-INVOKE-ORIGIN": "CustomOrigin",
       })
     }),

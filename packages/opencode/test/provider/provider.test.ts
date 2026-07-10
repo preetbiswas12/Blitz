@@ -1116,8 +1116,8 @@ it.instance(
     const providers = yield* list
     expect(providers[ProviderID.make("nvidia")].options.headers).toEqual({
       "HTTP-Referer": "https://kilo.ai/", // kilocode_change
-      "X-Title": "Blitx Code", // kilocode_change
-      "X-BILLING-INVOKE-ORIGIN": "BlitxCode", // kilocode_change
+      "X-Title": "Legion Code", // kilocode_change
+      "X-BILLING-INVOKE-ORIGIN": "LegionCode", // kilocode_change
     })
   }),
   { config: { provider: { nvidia: { options: { apiKey: "test-api-key" } } } } },
@@ -1129,8 +1129,8 @@ it.instance(
     const providers = yield* list
     expect(providers[ProviderID.make("nvidia")].options.headers).toEqual({
       "HTTP-Referer": "https://kilo.ai/", // kilocode_change
-      "X-Title": "Blitx Code", // kilocode_change
-      "X-BILLING-INVOKE-ORIGIN": "BlitxCode", // kilocode_change
+      "X-Title": "Legion Code", // kilocode_change
+      "X-BILLING-INVOKE-ORIGIN": "LegionCode", // kilocode_change
     })
   }),
   { config: { provider: { nvidia: { options: { apiKey: "test-api-key", baseURL: "http://localhost:8000/v1" } } } } },

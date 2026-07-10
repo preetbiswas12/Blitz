@@ -1,7 +1,7 @@
 import type { Model, Provider } from "@legion/sdk/v2/client"
 
 export function hasGateway(providers: Pick<Provider, "id">[]) {
-  return providers.some((provider) => provider.id === "blitx")
+  return providers.some((provider) => provider.id === "legion")
 }
 
 export function visible(
@@ -9,5 +9,5 @@ export function visible(
   model: Pick<Model, "mayTrainOnYourPrompts">,
   privacy: boolean,
 ) {
-  return !privacy || provider.id !== "blitx" || model.mayTrainOnYourPrompts !== true
+  return !privacy || provider.id !== "legion" || model.mayTrainOnYourPrompts !== true
 }

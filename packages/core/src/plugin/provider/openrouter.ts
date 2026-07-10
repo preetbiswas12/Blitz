@@ -13,8 +13,8 @@ export const OpenRouterPlugin = PluginV2.define({
           if (item.provider.endpoint.package !== "@openrouter/ai-sdk-provider") continue
           if (item.provider.id !== ProviderV2.ID.openrouter) continue // kilocode_change
           evt.provider.update(item.provider.id, (provider) => {
-            provider.options.headers["HTTP-Referer"] = "https://blitx.ai/" // kilocode_change
-            provider.options.headers["X-Title"] = "Blitx Code" // kilocode_change
+            provider.options.headers["HTTP-Referer"] = "https://legion.ai/" // kilocode_change
+            provider.options.headers["X-Title"] = "Legion Code" // kilocode_change
           })
           for (const modelID of [ModelV2.ID.make("gpt-5-chat-latest"), ModelV2.ID.make("openai/gpt-5-chat")]) {
             if (!item.models.has(modelID)) continue

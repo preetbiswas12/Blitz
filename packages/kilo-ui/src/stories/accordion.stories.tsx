@@ -21,11 +21,11 @@ export const Default: Story = {
     <Accordion collapsible defaultValue={["item-1"]}>
       <Accordion.Item value="item-1">
         <Accordion.Header>
-          <Accordion.Trigger>What is Blitx?</Accordion.Trigger>
+          <Accordion.Trigger>What is Legion?</Accordion.Trigger>
         </Accordion.Header>
         <Accordion.Content>
           <div style={{ padding: "8px 16px" }}>
-            Blitx is an AI-powered coding assistant that helps you write, debug, and understand code.
+            Legion is an AI-powered coding assistant that helps you write, debug, and understand code.
           </div>
         </Accordion.Content>
       </Accordion.Item>
@@ -35,7 +35,7 @@ export const Default: Story = {
         </Accordion.Header>
         <Accordion.Content>
           <div style={{ padding: "8px 16px" }}>
-            Blitx uses large language models to understand your codebase and provide intelligent suggestions.
+            Legion uses large language models to understand your codebase and provide intelligent suggestions.
           </div>
         </Accordion.Content>
       </Accordion.Item>
@@ -45,7 +45,7 @@ export const Default: Story = {
         </Accordion.Header>
         <Accordion.Content>
           <div style={{ padding: "8px 16px" }}>
-            Blitx supports all major programming languages including TypeScript, Python, Go, Rust, and more.
+            Legion supports all major programming languages including TypeScript, Python, Go, Rust, and more.
           </div>
         </Accordion.Content>
       </Accordion.Item>

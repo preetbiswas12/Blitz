@@ -1,7 +1,7 @@
 import { createMemo } from "solid-js"
 import type { JSX } from "solid-js"
 import { useLocation } from "@solidjs/router"
-import { ThemeProvider } from "@blitxcode/kilo-web-ui/theme"
+import { ThemeProvider } from "@Legioncode/kilo-web-ui/theme"
 import { ConsoleLayout } from "./layouts/ConsoleLayout"
 import { path as route } from "./shared/navigation"
 

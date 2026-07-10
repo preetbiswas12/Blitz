@@ -27,7 +27,7 @@ async function main() {
   const kiloVersion = await getCurrentKiloVersion()
 
   console.log()
-  success(`Current Blitx version: ${kiloVersion}`)
+  success(`Current Legion version: ${kiloVersion}`)
   console.log()
 
   info("Available upstream versions (newest first):")

@@ -1209,7 +1209,7 @@ export type ReferenceConfig = {
 export type IndexingConfig = {
   enabled?: boolean
   provider?:
-    | "blitx"
+    | "legion"
     | "openai"
     | "ollama"
     | "openai-compatible"
@@ -1222,7 +1222,7 @@ export type IndexingConfig = {
   model?: string | null
   dimension?: number | null
   vectorStore?: "lancedb" | "qdrant"
-  blitx?: {
+  Legion?: {
     apiKey?: string
     baseUrl?: string
     organizationId?: string
@@ -1563,7 +1563,7 @@ export type Config = {
   indexing?: IndexingConfig
   console?: {
     /**
-     * Width of the Blitx Console project context sidebar in pixels
+     * Width of the Legion Console project context sidebar in pixels
      */
     context_sidebar_width?: number
     diff_style?: "unified" | "split"
@@ -2551,7 +2551,7 @@ export type TuiKeybindListResponse = {
   keybinds: Array<TuiKeybindInfo>
 }
 
-export type BlitxEmbeddingModelCatalog = {
+export type LegionEmbeddingModelCatalog = {
   defaultModel: string
   models: Array<{
     id: string
@@ -10313,9 +10313,9 @@ export type IndexingModelsError = IndexingModelsErrors[keyof IndexingModelsError
 
 export type IndexingModelsResponses = {
   /**
-   * Blitx embedding model catalog
+   * Legion embedding model catalog
    */
-  200: BlitxEmbeddingModelCatalog
+  200: LegionEmbeddingModelCatalog
 }
 
 export type IndexingModelsResponse = IndexingModelsResponses[keyof IndexingModelsResponses]
@@ -10556,7 +10556,7 @@ export type KiloAuthStatusError = KiloAuthStatusErrors[keyof KiloAuthStatusError
 
 export type KiloAuthStatusResponses = {
   /**
-   * Blitx authentication status
+   * legion authentication status
    */
   200: {
     authenticated: boolean

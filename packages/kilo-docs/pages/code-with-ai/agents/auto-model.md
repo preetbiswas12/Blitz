@@ -101,7 +101,7 @@ You may want to select a specific model instead when:
 ## Feedback
 
 {% callout type="note" title="Help Us Improve" %}
-Auto Model is actively being improved. We'd love to hear how it's working for you! Share feedback in our [Discord](https://blitx.ai/discord) or [open an issue on GitHub](https://github.com/Kilo-Org/kilocode/issues).
+Auto Model is actively being improved. We'd love to hear how it's working for you! Share feedback in our [Discord](https://legion.ai/discord) or [open an issue on GitHub](https://github.com/Kilo-Org/kilocode/issues).
 {% /callout %}
 
 ## Related

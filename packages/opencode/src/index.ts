@@ -40,7 +40,7 @@ import { Heap } from "./cli/heap"
 import { drizzle } from "drizzle-orm/bun-sqlite"
 import { ensureProcessMetadata } from "@opencode-ai/core/util/opencode-process"
 import { isRecord } from "@/util/record"
-import { BlitxCli } from "@/kilocode/cli/setup" // kilocode_change
+import { LegionCli } from "@/kilocode/cli/setup" // kilocode_change
 
 const processMetadata = ensureProcessMetadata("main")
 
@@ -58,7 +58,7 @@ process.on("uncaughtException", (e) => {
 
 const args = hideBin(process.argv)
 
-if (await BlitxCli.runner()) process.exit() // kilocode_change - run persistent process guardians before CLI bootstrap
+if (await LegionCli.runner()) process.exit() // kilocode_change - run persistent process guardians before CLI bootstrap
 
 function show(out: string) {
   const text = out.trimStart()
@@ -72,7 +72,7 @@ function show(out: string) {
 
 let cli = yargs(args) // kilocode_change
   .parserConfiguration({ "populate--": true })
-  .scriptName("blitz") // kilocode_change
+  .scriptName("legion") // kilocode_change
   .wrap(100)
   .help("help", "show help")
   .alias("help", "h")
@@ -119,7 +119,7 @@ let cli = yargs(args) // kilocode_change
       run_id: processMetadata.runID,
     })
 
-    await BlitxCli.bootstrap() // kilocode_change - env tagging, telemetry init, legacy auth migration
+    await LegionCli.bootstrap() // kilocode_change - env tagging, telemetry init, legacy auth migration
 
     const marker = path.join(Global.Path.data, "kilo.db")
     if (!(await Filesystem.exists(marker))) {
@@ -167,7 +167,7 @@ let cli = yargs(args) // kilocode_change
   .command(RunCommand)
   .command(GenerateCommand)
   .command(DebugCommand)
-  // kilocode_change - upstream account console intentionally not registered; KiloConsole is added by BlitxCli.register
+  // kilocode_change - upstream account console intentionally not registered; KiloConsole is added by LegionCli.register
   .command(ProvidersCommand)
   .command(AgentCommand)
   .command(UpgradeCommand)
@@ -185,7 +185,7 @@ let cli = yargs(args) // kilocode_change
   .command(DbCommand)
 
 // kilocode_change start - register Kilo-specific commands after the upstream chain
-cli = BlitxCli.register(cli)
+cli = LegionCli.register(cli)
 cli = cli
   // kilocode_change end
   .fail((msg, err) => {
@@ -253,7 +253,7 @@ try {
   }
   process.exitCode = 1
 } finally {
-  await BlitxCli.shutdown() // kilocode_change - telemetry/session-export shutdown + instance disposal
+  await LegionCli.shutdown() // kilocode_change - telemetry/session-export shutdown + instance disposal
 
   // Some subprocesses don't react properly to SIGTERM and similar signals.
   // Most notably, some docker-container-based MCP servers don't handle such signals unless

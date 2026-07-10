@@ -38,13 +38,13 @@ function normalizeProjectId(input: string): string {
 }
 
 /**
- * Read project ID from .blitx/config.json, falling back to .kilocode/config.json
+ * Read project ID from .legion/config.json, falling back to .kilocode/config.json
  * @param directory - Project directory
  * @returns Normalized project ID or undefined
  */
 async function getProjectIdFromConfig(directory: string): Promise<string | undefined> {
-  // Check .blitx first, then legacy .kilocode
-  for (const dir of [".blitx", ".kilocode"]) {
+  // Check .legion first, then legacy .kilocode
+  for (const dir of [".legion", ".kilocode"]) {
     const file = Bun.file(path.join(directory, dir, "config.json"))
     const text = await file.text().catch(() => undefined)
     if (!text) continue
@@ -80,13 +80,13 @@ async function getProjectIdFromGit(directory: string): Promise<string | undefine
 }
 
 /**
- * Resolve project ID with priority: .blitx/config.json -> .kilocode/config.json -> git origin URL
+ * Resolve project ID with priority: .legion/config.json -> .kilocode/config.json -> git origin URL
  * @returns Normalized project ID or undefined
  */
 async function resolveProjectId(): Promise<string | undefined> {
   const dir = Instance.directory
 
-  // Priority 1: .blitx/config.json (falls back to .kilocode/config.json)
+  // Priority 1: .legion/config.json (falls back to .kilocode/config.json)
   const id = await getProjectIdFromConfig(dir)
   if (id) return id
 
@@ -94,18 +94,18 @@ async function resolveProjectId(): Promise<string | undefined> {
   return getProjectIdFromGit(dir)
 }
 
-export namespace BlitxProjectID {
+export namespace LegionProjectID {
   export interface Interface {
     readonly get: () => Effect.Effect<string | undefined>
   }
 
-  export class Service extends Context.Service<Service, Interface>()("@legion/BlitxProjectID") {}
+  export class Service extends Context.Service<Service, Interface>()("@legion/LegionProjectID") {}
 
   export const layer = Layer.effect(
     Service,
     Effect.gen(function* () {
       const state = yield* InstanceState.make(
-        Effect.fn("BlitxProjectID.state")(function* () {
+        Effect.fn("LegionProjectID.state")(function* () {
           return { id: yield* Effect.promise(() => resolveProjectId()) }
         }),
       )
@@ -118,12 +118,12 @@ export namespace BlitxProjectID {
   export const defaultLayer = layer
 }
 
-const { runPromise } = makeRuntime(BlitxProjectID.Service, BlitxProjectID.defaultLayer)
+const { runPromise } = makeRuntime(LegionProjectID.Service, LegionProjectID.defaultLayer)
 
 /**
  * Get the project ID for the current Instance context (cached per-project)
  * @returns Normalized project ID or undefined
  */
-export async function getBlitxProjectId(): Promise<string | undefined> {
+export async function getLegionProjectID(): Promise<string | undefined> {
   return runPromise((svc) => svc.get())
 }

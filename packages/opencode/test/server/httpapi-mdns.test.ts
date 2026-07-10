@@ -29,13 +29,13 @@ void mock.module("bonjour-service", () => ({
 const { Server } = await import("../../src/server/server")
 
 const original = {
-  BLITX_SERVER_PASSWORD: Flag.BLITX_SERVER_PASSWORD,
+  LEGION_SERVER_PASSWORD: Flag.LEGION_SERVER_PASSWORD,
   KILO_SERVER_USERNAME: Flag.KILO_SERVER_USERNAME,
 }
 
 afterEach(async () => {
   events.length = 0
-  Flag.BLITX_SERVER_PASSWORD = original.BLITX_SERVER_PASSWORD
+  Flag.LEGION_SERVER_PASSWORD = original.LEGION_SERVER_PASSWORD
   Flag.KILO_SERVER_USERNAME = original.KILO_SERVER_USERNAME
   await disposeAllInstances()
   await resetDatabase()
@@ -43,7 +43,7 @@ afterEach(async () => {
 
 describe("HttpApi Server.listen mDNS", () => {
   test("skips publish for loopback hostnames", async () => {
-    Flag.BLITX_SERVER_PASSWORD = "mdns-secret"
+    Flag.LEGION_SERVER_PASSWORD = "mdns-secret"
     Flag.KILO_SERVER_USERNAME = "opencode"
     const listener = await Server.listen({ hostname: "127.0.0.1", port: 0, mdns: true })
     try {
@@ -55,7 +55,7 @@ describe("HttpApi Server.listen mDNS", () => {
   })
 
   test("publishes for non-loopback hostnames and unpublishes on stop", async () => {
-    Flag.BLITX_SERVER_PASSWORD = "mdns-secret"
+    Flag.LEGION_SERVER_PASSWORD = "mdns-secret"
     Flag.KILO_SERVER_USERNAME = "opencode"
     const listener = await Server.listen({ hostname: "0.0.0.0", port: 0, mdns: true })
     try {
@@ -71,7 +71,7 @@ describe("HttpApi Server.listen mDNS", () => {
   })
 
   test("scope finalizer unpublishes even if stop() is not called for force-close", async () => {
-    Flag.BLITX_SERVER_PASSWORD = "mdns-secret"
+    Flag.LEGION_SERVER_PASSWORD = "mdns-secret"
     Flag.KILO_SERVER_USERNAME = "opencode"
     const listener = await Server.listen({ hostname: "0.0.0.0", port: 0, mdns: true })
     expect(events.filter((e) => e.kind === "publish").length).toBe(1)

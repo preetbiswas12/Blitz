@@ -13,10 +13,10 @@ export const NvidiaPlugin = PluginV2.define({
           if (item.provider.endpoint.url !== "https://integrate.api.nvidia.com/v1") continue
           if (item.provider.id !== ProviderV2.ID.make("nvidia")) continue // kilocode_change
           evt.provider.update(item.provider.id, (provider) => {
-            provider.options.headers["HTTP-Referer"] = "https://blitx.ai/" // kilocode_change
+            provider.options.headers["HTTP-Referer"] = "https://legion.ai/" // kilocode_change
             // kilocode_change start
-            provider.options.headers["X-Title"] = "Blitx Code"
-            provider.options.headers["X-BILLING-INVOKE-ORIGIN"] ??= "BlitxCode"
+            provider.options.headers["X-Title"] = "Legion Code"
+            provider.options.headers["X-BILLING-INVOKE-ORIGIN"] ??= "LegionCode"
             // kilocode_change end
           })
         }

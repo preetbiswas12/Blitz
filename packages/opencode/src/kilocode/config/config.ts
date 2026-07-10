@@ -36,22 +36,22 @@ export namespace KilocodeConfig {
 
   // ── Config file constants ────────────────────────────────────────────
 
-  /** Blitx-specific config file names (highest-to-lowest precedence within blitx). */
-  export const KILO_CONFIG_FILES = ["blitx.jsonc", "blitx.json"] as const
+  /** Legion-specific config file names (highest-to-lowest precedence within Legion). */
+  export const KILO_CONFIG_FILES = ["legion.jsonc", "legion.json"] as const
 
-  /** All config file names in precedence order (blitx + opencode). */
-  export const ALL_CONFIG_FILES = ["blitx.jsonc", "blitx.json", "opencode.jsonc", "opencode.json"] as const
+  /** All config file names in precedence order (Legion + opencode). */
+  export const ALL_CONFIG_FILES = ["legion.jsonc", "legion.json", "opencode.jsonc", "opencode.json"] as const
 
   /** Config directory suffixes in update-target preference order. */
-  export const KILO_DIR_SUFFIXES = [".blitx", ".kilocode"] as const
+  export const KILO_DIR_SUFFIXES = [".legion", ".kilocode"] as const
 
-  /** Path patterns for resolving blitx agent names from file paths. */
-  export const AGENT_PATTERNS = ["/.blitx/agent/", "/.blitx/agents/", "/.kilocode/agent/", "/.kilocode/agents/"] as const
+  /** Path patterns for resolving Legion agent names from file paths. */
+  export const AGENT_PATTERNS = ["/.legion/agent/", "/.legion/agents/", "/.kilocode/agent/", "/.kilocode/agents/"] as const
 
-  /** Path patterns for resolving blitx command names from file paths. */
+  /** Path patterns for resolving Legion command names from file paths. */
   export const COMMAND_PATTERNS = [
-    "/.blitx/command/",
-    "/.blitx/commands/",
+    "/.legion/command/",
+    "/.legion/commands/",
     "/.kilocode/command/",
     "/.kilocode/commands/",
   ] as const
@@ -61,9 +61,9 @@ export namespace KilocodeConfig {
    *
    * This mirrors the Kilo project-config load chain: prefer existing config files
    * in ancestor config directories, then existing root config files, and create
-   * `.blitx/blitx.jsonc` when no project config exists yet.
+   * `.legion/legion.jsonc` when no project config exists yet.
    */
-  export const projectConfigUpdateTarget = Effect.fn("BlitxConfig.projectConfigUpdateTarget")(function* (input: {
+  export const projectConfigUpdateTarget = Effect.fn("LegionConfig.projectConfigUpdateTarget")(function* (input: {
     fs: AppFileSystem.Interface
     directory: string
     worktree?: string
@@ -75,10 +75,10 @@ export namespace KilocodeConfig {
       .up({ targets: [...ALL_CONFIG_FILES], start: input.directory, stop: input.worktree })
       .pipe(Effect.orDie)
     const files = [...dirs.flatMap((dir) => ALL_CONFIG_FILES.map((file) => path.join(dir, file))), ...roots]
-    return files.find((file) => existsSync(file)) ?? path.join(input.directory, ".blitx", "blitx.jsonc")
+    return files.find((file) => existsSync(file)) ?? path.join(input.directory, ".legion", "legion.jsonc")
   })
 
-  export const updateProjectConfig = Effect.fn("BlitxConfig.updateProjectConfig")(function* (input: {
+  export const updateProjectConfig = Effect.fn("LegionConfig.updateProjectConfig")(function* (input: {
     fs: AppFileSystem.Interface
     directory: string
     worktree?: string
@@ -268,7 +268,7 @@ export namespace KilocodeConfig {
     }
 
     // Load Kilocode MCP servers (skip global VSCode extension paths unless running in an editor or Console daemon)
-    const skipGlobal = process.env["BLITX_PLATFORM"] !== "vscode" && process.env["KILOCODE_FEATURE"] !== "daemon"
+    const skipGlobal = process.env["LEGION_PLATFORM"] !== "vscode" && process.env["KILOCODE_FEATURE"] !== "daemon"
     const mcp = await McpMigrator.loadMcpConfig(input.projectDir, skipGlobal)
     if (Object.keys(mcp).length > 0) {
       result = input.merge(result, { mcp })
@@ -306,7 +306,7 @@ export namespace KilocodeConfig {
 
   // ── Bash permission migration ────────────────────────────────────────
 
-  const GLOBAL_CONFIG_FILES = ["config.json", "blitx.json", "blitx.jsonc", "opencode.json", "opencode.jsonc"]
+  const GLOBAL_CONFIG_FILES = ["config.json", "legion.json", "legion.jsonc", "opencode.json", "opencode.jsonc"]
 
   /**
    * Migrate bash permission for existing users before config is consumed.
@@ -417,6 +417,6 @@ export namespace KilocodeConfig {
 
   /** Check whether a directory path should be treated as a config directory (for loading config files). */
   export function isConfigDir(dir: string, flagDir?: string): boolean {
-    return dir.endsWith(".blitx") || dir.endsWith(".kilocode") || dir === flagDir
+    return dir.endsWith(".legion") || dir.endsWith(".kilocode") || dir === flagDir
   }
 }

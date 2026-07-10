@@ -21,8 +21,8 @@ import { AppFileSystem } from "@opencode-ai/core/filesystem"
 import { Format } from "../../src/format"
 import { Git } from "../../src/git"
 import { Image } from "../../src/image/image"
-import { BlitxSession } from "../../src/kilocode/session"
-import { BlitxSessionPrompt } from "../../src/kilocode/session/prompt"
+import { LegionSession} from "../../src/kilocode/session"
+import { LegionSessionrompt } from "../../src/kilocode/session/prompt"
 import { LSP } from "../../src/lsp/lsp"
 import { MCP } from "../../src/mcp"
 import { Permission } from "../../src/permission"
@@ -283,8 +283,8 @@ describe("session compaction cap", () => {
           yield* llm.text("summary 3") // 6
           yield* llm.error(400, overflowBody) // 7 — exhausts, breaks
 
-          const turnClose = yield* Deferred.make<BlitxSession.CloseReason>()
-          const unsub = yield* bus.subscribeCallback(BlitxSession.Event.TurnClose, (evt) => {
+          const turnClose = yield* Deferred.make<LegionSessionCloseReason>()
+          const unsub = yield* bus.subscribeCallback(LegionSessionEvent.TurnClose, (evt) => {
             if (evt.properties.sessionID === chat.id)
               Deferred.doneUnsafe(turnClose, Effect.succeed(evt.properties.reason))
           })
@@ -301,7 +301,7 @@ describe("session compaction cap", () => {
 
           // Each compaction round costs 2 LLM calls in this replay-mode path (one
           // top-level overflow + one summary) plus 1 final overflow that trips the cap.
-          expect(yield* llm.calls).toBe(BlitxSessionPrompt.MAX_COMPACTION_ATTEMPTS * 2 + 1)
+          expect(yield* llm.calls).toBe(LegionSessionrompt.MAX_COMPACTION_ATTEMPTS * 2 + 1)
           expect(reason).toBe("error")
           expect(result.info.role).toBe("assistant")
           if (result.info.role !== "assistant") return
@@ -332,8 +332,8 @@ describe("session compaction cap", () => {
           yield* llm.text("summary ok") // 2 — summary succeeds
           yield* llm.text("final answer") // 3 — replayed turn completes
 
-          const turnClose = yield* Deferred.make<BlitxSession.CloseReason>()
-          const unsub = yield* bus.subscribeCallback(BlitxSession.Event.TurnClose, (evt) => {
+          const turnClose = yield* Deferred.make<LegionSessionCloseReason>()
+          const unsub = yield* bus.subscribeCallback(LegionSessionEvent.TurnClose, (evt) => {
             if (evt.properties.sessionID === chat.id)
               Deferred.doneUnsafe(turnClose, Effect.succeed(evt.properties.reason))
           })
@@ -379,14 +379,14 @@ function makeAssistantStub(sessionID: string): MessageV2.Assistant {
   }
 }
 
-describe("BlitxSessionPrompt.guardCompactionAttempt", () => {
+describe("LegionSessionrompt.guardCompactionAttempt", () => {
   it.effect("returns { exhausted: false } and does not mutate state below the cap", () =>
     Effect.sync(() => {
-      const closeReasons = new Map<string, BlitxSession.CloseReason>()
+      const closeReasons = new Map<string, LegionSessionCloseReason>()
       const msg = makeAssistantStub("ses_under")
-      const result = BlitxSessionPrompt.guardCompactionAttempt({
+      const result = LegionSessionrompt.guardCompactionAttempt({
         sessionID: "ses_under",
-        attempts: BlitxSessionPrompt.MAX_COMPACTION_ATTEMPTS - 1,
+        attempts: LegionSessionrompt.MAX_COMPACTION_ATTEMPTS - 1,
         closeReasons,
         message: msg,
       })
@@ -399,11 +399,11 @@ describe("BlitxSessionPrompt.guardCompactionAttempt", () => {
 
   it.effect("sets close reason and attaches error once attempts reach the cap", () =>
     Effect.sync(() => {
-      const closeReasons = new Map<string, BlitxSession.CloseReason>()
+      const closeReasons = new Map<string, LegionSessionCloseReason>()
       const msg = makeAssistantStub("ses_cap")
-      const result = BlitxSessionPrompt.guardCompactionAttempt({
+      const result = LegionSessionrompt.guardCompactionAttempt({
         sessionID: "ses_cap",
-        attempts: BlitxSessionPrompt.MAX_COMPACTION_ATTEMPTS,
+        attempts: LegionSessionrompt.MAX_COMPACTION_ATTEMPTS,
         closeReasons,
         message: msg,
       })
@@ -420,10 +420,10 @@ describe("BlitxSessionPrompt.guardCompactionAttempt", () => {
 
   it.effect("works without a message and still sets the close reason", () =>
     Effect.sync(() => {
-      const closeReasons = new Map<string, BlitxSession.CloseReason>()
-      const result = BlitxSessionPrompt.guardCompactionAttempt({
+      const closeReasons = new Map<string, LegionSessionCloseReason>()
+      const result = LegionSessionrompt.guardCompactionAttempt({
         sessionID: "ses_no_msg",
-        attempts: BlitxSessionPrompt.MAX_COMPACTION_ATTEMPTS,
+        attempts: LegionSessionrompt.MAX_COMPACTION_ATTEMPTS,
         closeReasons,
       })
       expect(result.exhausted).toBe(true)

@@ -68,7 +68,7 @@ export const TelemetryApi = HttpApi.make("telemetry")
   )
   .annotateMerge(
     OpenApi.annotations({
-      title: "blitx HttpApi",
+      title: "Legion HttpApi",
       version: "0.0.1",
       description: "Kilo HttpApi surface.",
     }),

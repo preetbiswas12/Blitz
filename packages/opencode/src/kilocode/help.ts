@@ -19,7 +19,7 @@ function extractCommandName(cmd: Cmd): string | undefined {
 
 async function getHelpText(name: string, cmd: Cmd): Promise<string> {
   const inst = yargs([])
-    .scriptName(name ? `blitz ${name}` : "blitz")
+    .scriptName(name ? `legion ${name}` : "legion")
     .wrap(null)
   if (cmd.builder) {
     if (typeof cmd.builder === "function") {
@@ -43,7 +43,7 @@ async function getSubcommands(
   if (!builder || typeof builder !== "function") return []
   if (depth > 4) return [] // guard against infinite recursion
 
-  const inst = yargs([]).scriptName(`blitz ${name}`).wrap(null)
+  const inst = yargs([]).scriptName(`legion ${name}`).wrap(null)
   builder(inst)
 
   const result: Array<{ name: string; hidden: boolean; help: string }> = []
@@ -60,7 +60,7 @@ async function getSubcommands(
       if (sub === "$0") continue
 
       const full = `${name} ${sub}`
-      const subInst = yargs([]).scriptName(`blitz ${full}`).wrap(null)
+      const subInst = yargs([]).scriptName(`legion ${full}`).wrap(null)
 
       if (handler.builder && typeof handler.builder === "function") {
         handler.builder(subInst)
@@ -105,7 +105,7 @@ function formatMarkdown(
   const parts: string[] = []
 
   for (const section of sections) {
-    parts.push(`## ${section.name ? `blitz ${section.name}` : "blitz"}`)
+    parts.push(`## ${section.name ? `legion ${section.name}` : "legion"}`)
     parts.push("")
     if (section.hidden) {
       parts.push("> **Internal command** — not intended for direct use.")
@@ -117,7 +117,7 @@ function formatMarkdown(
     parts.push("")
 
     for (const sub of section.subs) {
-      parts.push(`### blitz ${sub.name}`)
+      parts.push(`### legion ${sub.name}`)
       parts.push("")
       if (sub.hidden) {
         parts.push("> **Internal command** — not intended for direct use.")
@@ -146,7 +146,7 @@ function formatText(
 
   for (const section of sections) {
     parts.push(rule)
-    const display = section.name ? `blitz ${section.name}` : "blitz"
+    const display = section.name ? `legion ${section.name}` : "legion"
     const label = section.hidden ? `${display} [internal]` : display
     parts.push(label)
     parts.push(rule)
@@ -155,7 +155,7 @@ function formatText(
     parts.push("")
 
     for (const sub of section.subs) {
-      const sublabel = sub.hidden ? `--- blitz ${sub.name} [internal] ---` : `--- blitz ${sub.name} ---`
+      const sublabel = sub.hidden ? `--- legion ${sub.name} [internal] ---` : `--- legion ${sub.name} ---`
       parts.push(sublabel)
       parts.push("")
       parts.push(sub.help)
@@ -219,7 +219,7 @@ export async function generateCommandTable(options?: { commands?: Cmd[] }) {
     if (!raw) continue
     if (!cmd.describe) continue
 
-    const display = raw.startsWith("$0") ? "blitz" + raw.slice(2) : "blitz " + raw
+    const display = raw.startsWith("$0") ? "legion" + raw.slice(2) : "legion " + raw
 
     rows.push({
       display: display.trim(),

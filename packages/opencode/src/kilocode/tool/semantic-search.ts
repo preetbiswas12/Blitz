@@ -1,7 +1,7 @@
 import { Effect, Schema } from "effect"
 import path from "path"
 import * as Tool from "@/tool/tool"
-import { BlitxIndexing as KiloIndexing } from "@/kilocode/indexing"
+import { LegionIndexing as KiloIndexing } from "@/kilocode/indexing"
 import { Instance } from "@/kilocode/instance"
 
 import DESCRIPTION from "./semantic-search.txt"

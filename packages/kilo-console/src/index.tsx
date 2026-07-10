@@ -1,4 +1,4 @@
-import "@blitxcode/kilo-web-ui/styles"
+import "@Legioncode/kilo-web-ui/styles"
 import { Router, Route } from "@solidjs/router"
 import { render } from "solid-js/web"
 import App from "./App"

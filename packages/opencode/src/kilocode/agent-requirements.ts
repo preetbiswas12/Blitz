@@ -287,7 +287,7 @@ export const guard = Effect.fn("AgentRequirements.guard")(function* (
   input: Services & { agent: AgentInfo; directory: string },
 ) {
   const result = yield* status({ ...input, name: input.agent.name })
-  const unsupported = Flag.BLITX_CLIENT !== "vscode" && result.vscode_extensions.length > 0
+  const unsupported = Flag.LEGION_CLIENT !== "vscode" && result.vscode_extensions.length > 0
   if (result.state === "disabled" || (result.state === "ready" && !unsupported)) return
   const state = result.state === "error" ? result.state : "blocked"
 

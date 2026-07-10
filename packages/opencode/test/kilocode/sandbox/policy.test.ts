@@ -183,7 +183,7 @@ describe("sandbox policy", () => {
     expect(new Set(roots(ctx))).toEqual(expected(dirs.a))
     expect(policy.filesystem.temporaryDirectory).toBe(Global.Path.tmp)
     expect(policy.filesystem.denyWrite).toEqual([{ path: SandboxStore.root, kind: "subtree" }])
-    expect(policy.environment.deny).toEqual(["BLITX_SERVER_PASSWORD", "KILO_SERVER_USERNAME"])
+    expect(policy.environment.deny).toEqual(["LEGION_SERVER_PASSWORD", "KILO_SERVER_USERNAME"])
     expect(Exit.isFailure(write)).toBe(true)
   })
 

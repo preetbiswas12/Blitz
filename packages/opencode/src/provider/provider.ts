@@ -30,14 +30,14 @@ import { ModelStatus } from "./model-status"
 import { RuntimeFlags } from "@/effect/runtime-flags"
 // kilocode_change start
 import {
-  BLITX_BUNDLED_PROVIDERS,
-  blitxCustomLoaders,
-  BLITX_MODEL_SCHEMA_EXTENSIONS,
-  patchModelsDevModel as patchBlitxModel,
-  patchConfigModel as patchBlitxConfigModel,
+  LEGION_BUNDLED_PROVIDERS,
+  LegionCustomLoaders,
+  LEGION_MODEL_SCHEMA_EXTENSIONS,
+  patchModelsDevModel as patchLegionModel,
+  patchConfigModel as patchLegionConfigModel,
   patchCustomLoaderResult,
-  patchBlitxProviderPrivacy,
-  blitxSmallModelPriority,
+  patchLegionProviderPrivacy,
+  LegionSmallModelPriority,
   buildTimeoutSignal,
 } from "@/kilocode/provider/provider"
 import * as ModelsRefresh from "@/kilocode/provider/models-refresh"
@@ -146,7 +146,7 @@ const BUNDLED_PROVIDERS: Record<string, () => Promise<(opts: any) => BundledSDK>
   "@ai-sdk/github-copilot": () =>
     import("@opencode-ai/core/github-copilot/copilot-provider").then((m) => m.createOpenaiCompatible),
   "venice-ai-sdk-provider": () => import("venice-ai-sdk-provider").then((m) => m.createVenice),
-  ...BLITX_BUNDLED_PROVIDERS, // kilocode_change
+  ...LEGION_BUNDLED_PROVIDERS, // kilocode_change
 }
 
 type CustomModelLoader = (sdk: any, modelID: string, options?: Record<string, any>) => Promise<any>
@@ -457,9 +457,9 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
         autoload: false,
         options: {
           headers: {
-            "HTTP-Referer": "https://blitx.ai/", // kilocode_change
-            "X-Title": "Blitx Code", // kilocode_change
-            "X-Source": "blitx", // kilocode_change
+            "HTTP-Referer": "https://legion.ai/", // kilocode_change
+            "X-Title": "Legion Code", // kilocode_change
+            "X-Source": "legion", // kilocode_change
           },
         },
       }),
@@ -468,8 +468,8 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
         autoload: false,
         options: {
           headers: {
-            "HTTP-Referer": "https://blitx.ai/", // kilocode_change
-            "X-Title": "Blitx Code", // kilocode_change
+            "HTTP-Referer": "https://legion.ai/", // kilocode_change
+            "X-Title": "Legion Code", // kilocode_change
           },
         },
       }),
@@ -478,9 +478,9 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
         autoload: provider.source === "config",
         options: {
           headers: {
-            "HTTP-Referer": "https://blitx.ai/", // kilocode_change
-            "X-Title": "Blitx Code", // kilocode_change
-            "X-BILLING-INVOKE-ORIGIN": "BlitxCode", // kilocode_change
+            "HTTP-Referer": "https://legion.ai/", // kilocode_change
+            "X-Title": "Legion Code", // kilocode_change
+            "X-BILLING-INVOKE-ORIGIN": "LegionCode", // kilocode_change
           },
         },
       }),
@@ -489,8 +489,8 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
         autoload: false,
         options: {
           headers: {
-            "http-referer": "https://blitx.ai/", // kilocode_change
-            "x-title": "Blitx Code", // kilocode_change
+            "http-referer": "https://legion.ai/", // kilocode_change
+            "x-title": "Legion Code", // kilocode_change
           },
         },
       }),
@@ -595,8 +595,8 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
         autoload: false,
         options: {
           headers: {
-            "HTTP-Referer": "https://blitx.ai/", // kilocode_change
-            "X-Title": "Blitx Code", // kilocode_change
+            "HTTP-Referer": "https://legion.ai/", // kilocode_change
+            "X-Title": "Legion Code", // kilocode_change
           },
         },
       }),
@@ -621,7 +621,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
       const directory = yield* InstanceState.directory
 
       const aiGatewayHeaders = {
-        "User-Agent": `blitx/${InstallationVersion} gitlab-ai-provider/${GITLAB_PROVIDER_VERSION} (${os.platform()} ${os.release()}; ${os.arch()})`, // kilocode_change
+        "User-Agent": `Legion/${InstallationVersion} gitlab-ai-provider/${GITLAB_PROVIDER_VERSION} (${os.platform()} ${os.release()}; ${os.arch()})`, // kilocode_change
         "anthropic-beta": "context-1m-2025-08-07",
         ...providerConfig?.options?.aiGatewayHeaders,
       }
@@ -823,7 +823,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
       if (!apiToken) {
         throw new Error(
           "CLOUDFLARE_API_TOKEN (or CF_AIG_TOKEN) is required for Cloudflare AI Gateway. " +
-            "Set it via environment variable or run `blitx auth cloudflare-ai-gateway`.", // kilocode_change
+            "Set it via environment variable or run `legion auth cloudflare-ai-gateway`.", // kilocode_change
         )
       }
 
@@ -872,7 +872,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
         autoload: false,
         options: {
           headers: {
-            "X-Cerebras-3rd-Party-Integration": "Blitx Code", // kilocode_change
+            "X-Cerebras-3rd-Party-Integration": "Legion Code", // kilocode_change
           },
         },
       }),
@@ -881,8 +881,8 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
         autoload: false,
         options: {
           headers: {
-            "HTTP-Referer": "https://blitx.ai/", // kilocode_change
-            "X-Title": "Blitx Code", // kilocode_change
+            "HTTP-Referer": "https://legion.ai/", // kilocode_change
+            "X-Title": "Legion Code", // kilocode_change
           },
         },
       }),
@@ -977,7 +977,7 @@ export const Model = Schema.Struct({
   headers: Schema.Record(Schema.String, Schema.String),
   release_date: Schema.String,
   variants: optionalOmitUndefined(Schema.Record(Schema.String, Schema.Record(Schema.String, Schema.Any))),
-  ...BLITX_MODEL_SCHEMA_EXTENSIONS, // kilocode_change
+  ...LEGION_MODEL_SCHEMA_EXTENSIONS, // kilocode_change
 }).annotate({ identifier: "Model" })
 export type Model = Types.DeepMutable<Schema.Schema.Type<typeof Model>>
 
@@ -1165,7 +1165,7 @@ function fromModelsDevModel(provider: ModelsDev.Provider, model: ModelsDev.Model
     release_date: model.release_date ?? "",
     variants: {},
   }
-  Object.assign(base, patchBlitxModel(provider.id, model)) // kilocode_change
+  Object.assign(base, patchLegionModel(provider.id, model)) // kilocode_change
 
   return {
     ...base,
@@ -1419,8 +1419,8 @@ export const layer = Layer.effect(
               headers: mergeDeep(existingModel?.headers ?? {}, model.headers ?? {}),
               family: model.family ?? existingModel?.family ?? "",
               release_date: model.release_date ?? existingModel?.release_date ?? "",
-              // variants: {}, // kilocode_change, moved into patchBlitxConfigModel
-              ...patchBlitxConfigModel(model, existingModel), // kilocode_change
+              // variants: {}, // kilocode_change, moved into patchLegionConfigModel
+              ...patchLegionConfigModel(model, existingModel), // kilocode_change
             }
             const merged = mergeDeep(ProviderTransform.variants(parsedModel), model.variants ?? {})
             parsedModel.variants = mapValues(
@@ -1491,7 +1491,7 @@ export const layer = Layer.effect(
         // kilocode_change start - resolve env once for patchCustomLoaderResult (azure env fallback)
         const kiloEnv = yield* env.all()
         // kilocode_change end
-        for (const [id, fn] of Object.entries({ ...custom(dep), ...blitxCustomLoaders(dep) })) {
+        for (const [id, fn] of Object.entries({ ...custom(dep), ...LegionCustomLoaders(dep) })) {
           // kilocode_change
           const providerID = ProviderID.make(id)
           if (disabled.has(providerID)) continue
@@ -1526,7 +1526,7 @@ export const layer = Layer.effect(
           if (provider.options) partial.options = provider.options
           mergeProvider(providerID, partial)
         }
-        patchBlitxProviderPrivacy(providers[ProviderID.make("blitx")], cfg) // kilocode_change
+        patchLegionProviderPrivacy(providers[ProviderID.make("legion")], cfg) // kilocode_change
 
         const gitlab = ProviderID.make("gitlab")
         if (discoveryLoaders[gitlab] && providers[gitlab] && isProviderAllowed(gitlab)) {
@@ -1874,7 +1874,7 @@ export const layer = Layer.effect(
         priority = ["gpt-5-mini", "claude-haiku-4.5", ...priority]
       }
       // kilocode_change start
-      const kiloPriority = blitxSmallModelPriority(providerID)
+      const kiloPriority = LegionSmallModelPriority(providerID)
       if (kiloPriority) priority = kiloPriority
       // kilocode_change end
       for (const item of priority) {
@@ -1904,8 +1904,8 @@ export const layer = Layer.effect(
       }
 
       // kilocode_change start - fall back to kilo's auto small model
-      const blitxFallback = s.providers[ProviderID.make("blitx")]
-      if (blitxFallback?.models["kilo-auto/small"]) return blitxFallback.models["kilo-auto/small"]
+      const LegionFallback = s.providers[ProviderID.make("legion")]
+      if (LegionFallback?.models["kilo-auto/small"]) return LegionFallback.models["kilo-auto/small"]
       // kilocode_change end
 
       return undefined

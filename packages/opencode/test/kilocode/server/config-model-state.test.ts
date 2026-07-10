@@ -32,10 +32,10 @@ describe("config model state routes", () => {
     await Bun.write(
       path.join(tmp.path, "model.json"),
       JSON.stringify({
-        recent: [{ providerID: "blitx", modelID: "gpt-5.5" }],
+        recent: [{ providerID: "legion", modelID: "gpt-5.5" }],
         favorite: [
-          { providerID: "blitx", modelID: "gpt-5.5" },
-          { providerID: "blitx", modelID: "qwen/qwen3-8b" },
+          { providerID: "legion", modelID: "gpt-5.5" },
+          { providerID: "legion", modelID: "qwen/qwen3-8b" },
         ],
         model: {},
         variant: {},
@@ -47,8 +47,8 @@ describe("config model state routes", () => {
     )
 
     expect(body.favorite).toEqual([
-      { providerID: "blitx", modelID: "gpt-5.5" },
-      { providerID: "blitx", modelID: "qwen/qwen3-8b" },
+      { providerID: "legion", modelID: "gpt-5.5" },
+      { providerID: "legion", modelID: "qwen/qwen3-8b" },
     ])
   })
 
@@ -58,7 +58,7 @@ describe("config model state routes", () => {
     await Bun.write(
       path.join(tmp.path, "model.json"),
       JSON.stringify({
-        recent: [{ providerID: "blitx", modelID: "recent" }],
+        recent: [{ providerID: "legion", modelID: "recent" }],
         favorite: [],
         model: {},
         variant: {},
@@ -69,11 +69,11 @@ describe("config model state routes", () => {
       await req("/config/model-state", {
         method: "PATCH",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ favorite: [{ providerID: "blitx", modelID: "gpt-5.5" }] }),
+        body: JSON.stringify({ favorite: [{ providerID: "legion", modelID: "gpt-5.5" }] }),
       }),
     )
 
-    expect(body.recent).toEqual([{ providerID: "blitx", modelID: "recent" }])
-    expect(body.favorite).toEqual([{ providerID: "blitx", modelID: "gpt-5.5" }])
+    expect(body.recent).toEqual([{ providerID: "legion", modelID: "recent" }])
+    expect(body.favorite).toEqual([{ providerID: "legion", modelID: "gpt-5.5" }])
   })
 })

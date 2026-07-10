@@ -1,6 +1,6 @@
 import { Provider } from "@/provider/provider"
 import { LLM } from "@/session/llm"
-import { BlitxLLM } from "@/kilocode/session/llm"
+import { LegionLLM } from "@/kilocode/session/llm"
 import { Agent } from "@/agent/agent"
 import { AppRuntime } from "@/effect/app-runtime"
 import { Effect } from "effect"
@@ -27,7 +27,7 @@ export const CommitMessageRuntime = {
   generate(input: LLM.StreamInput, signal: AbortSignal) {
     // runPromise is needed until generateCommitMessage() uses Effect
     return AppRuntime.runPromise(
-      LLM.Service.use((svc) => BlitxLLM.text(svc.stream(input)).pipe(Effect.orDie)),
+      LLM.Service.use((svc) => LegionLLM.text(svc.stream(input)).pipe(Effect.orDie)),
       {
         signal,
       },

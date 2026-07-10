@@ -1,14 +1,14 @@
 #!/usr/bin/env bun
 /**
- * Enhanced package.json transform with Blitx dependency injection
+ * Enhanced package.json transform with Legion dependency injection
  *
  * This script handles package.json conflicts by:
  * 1. Taking upstream's version (to get new dependencies)
  * 2. Transforming package names (opencode -> kilo)
- * 3. Injecting Blitx-specific dependencies
- * 4. Preserving Blitx's version number
+ * 3. Injecting Legion-specific dependencies
+ * 4. Preserving Legion's version number
  * 5. Preserving overrides and patchedDependencies
- * 6. Preserving Blitx's repository configuration
+ * 6. Preserving Legion's repository configuration
  * 7. Using "newest wins" strategy for dependency versions
  */
 
@@ -131,7 +131,7 @@ export function fixPackageManager(
   const next = selectBunPackageManager(ours?.packageManager, pkg.packageManager)
   if (!next || pkg.packageManager === next) return
   const prior = typeof pkg.packageManager === "string" ? pkg.packageManager : "missing or invalid"
-  changes.push(`packageManager: ${prior} -> ${next} (preserved Blitx pin)`)
+  changes.push(`packageManager: ${prior} -> ${next} (preserved Legion pin)`)
   pkg.packageManager = next
 }
 
@@ -238,8 +238,8 @@ const PACKAGE_NAME_MAP: Record<string, string> = {
   "@opencode-ai/plugin": "@legion/plugin",
 }
 
-// Blitx-specific dependencies to inject into specific packages
-// NOTE: When adding new Blitx-specific workspace dependencies (packages starting with @legion/kilo-*),
+// Legion-specific dependencies to inject into specific packages
+// NOTE: When adding new Legion-specific workspace dependencies (packages starting with @legion/kilo-*),
 // add them here to prevent them from being removed during upstream merges
 const KILO_DEPENDENCIES: Record<string, Record<string, string>> = {
   // packages/opencode/package.json needs these
@@ -248,7 +248,7 @@ const KILO_DEPENDENCIES: Record<string, Record<string, string>> = {
   },
 }
 
-// Blitx-specific bin entries to set on specific packages
+// Legion-specific bin entries to set on specific packages
 const KILO_BIN: Record<string, Record<string, string>> = {
   "packages/opencode/package.json": {
     kilo: "./bin/kilo",
@@ -264,7 +264,7 @@ const TRANSFORM_PACKAGE_NAMES: Record<string, string> = {
   "packages/sdk/js/package.json": "@legion/sdk",
 }
 
-// Blitx-specific scripts to preserve from the base branch per package.json.
+// Legion-specific scripts to preserve from the base branch per package.json.
 // Upstream's version wholesale-replaces the scripts block, so anything listed
 // here gets re-applied from ours after taking theirs.
 const PRESERVE_SCRIPTS: Record<string, string[]> = {
@@ -273,22 +273,22 @@ const PRESERVE_SCRIPTS: Record<string, string[]> = {
 }
 
 // Upstream-only scripts to delete per package.json. These reference packages
-// Blitx doesn't ship (desktop-electron, console/app, app) and would otherwise
+// Legion doesn't ship (desktop-electron, console/app, app) and would otherwise
 // reappear on every merge.
 const DELETE_UPSTREAM_SCRIPTS: Record<string, string[]> = {
   "package.json": ["dev:desktop", "dev:web", "dev:console"],
 }
 
 // Upstream-only catalog entries to delete per package.json. These are pulled
-// in by upstream features (e.g. desktop Sentry integration) that Blitx doesn't
+// in by upstream features (e.g. desktop Sentry integration) that Legion doesn't
 // ship, so they add install weight with zero consumers in our tree.
 const DELETE_UPSTREAM_CATALOG: Record<string, string[]> = {
   "package.json": ["@sentry/solid", "@sentry/vite-plugin"],
 }
 
 /**
- * Re-apply Blitx-specific scripts on top of the upstream-shaped scripts block,
- * and prune upstream-only scripts that target packages Blitx doesn't ship.
+ * Re-apply Legion-specific scripts on top of the upstream-shaped scripts block,
+ * and prune upstream-only scripts that target packages Legion doesn't ship.
  */
 export function fixScripts(
   pkg: Record<string, unknown>,
@@ -310,7 +310,7 @@ export function fixScripts(
   for (const name of DELETE_UPSTREAM_SCRIPTS[path] || []) {
     if (theirs[name]) {
       delete theirs[name]
-      changes.push(`scripts.${name}: removed (upstream-only, no Blitx target)`)
+      changes.push(`scripts.${name}: removed (upstream-only, no Legion target)`)
     }
   }
 
@@ -318,7 +318,7 @@ export function fixScripts(
 }
 
 /**
- * Prune upstream-only catalog entries that have no consumers in Blitx.
+ * Prune upstream-only catalog entries that have no consumers in Legion.
  */
 export function fixCatalog(pkg: Record<string, unknown>, path: string, changes: string[]): void {
   const ws = pkg.workspaces as { catalog?: Record<string, string> } | undefined
@@ -327,7 +327,7 @@ export function fixCatalog(pkg: Record<string, unknown>, path: string, changes: 
   for (const name of DELETE_UPSTREAM_CATALOG[path] || []) {
     if (cat[name]) {
       delete cat[name]
-      changes.push(`workspaces.catalog.${name}: removed (upstream-only, no Blitx consumer)`)
+      changes.push(`workspaces.catalog.${name}: removed (upstream-only, no Legion consumer)`)
     }
   }
 }
@@ -400,7 +400,7 @@ export async function transformPackageJson(file: string, options: PackageJsonOpt
   }
 
   try {
-    // Save Blitx's version BEFORE taking theirs
+    // Save Legion's version BEFORE taking theirs
     let ourPkg: Record<string, unknown> | null = null
     try {
       const ourContent = await $`git show :2:${file}`.text() // :2: is "ours" in merge
@@ -437,7 +437,7 @@ export async function transformPackageJson(file: string, options: PackageJsonOpt
 
     fixPackageManager(pkg, relativePath, ourPkg, changes)
 
-    // 2. Preserve Blitx version if requested
+    // 2. Preserve Legion version if requested
     if (options.preserveVersion !== false) {
       const kiloVersion = await getCurrentVersion()
       if (pkg.version !== kiloVersion) {
@@ -475,7 +475,7 @@ export async function transformPackageJson(file: string, options: PackageJsonOpt
         pkg.overrides = mergeWithNewestVersions(ourOverrides, pkg.overrides, changes, "overrides")
       }
 
-      // 5. Preserve patchedDependencies (Blitx-specific, upstream won't have these)
+      // 5. Preserve patchedDependencies (Legion-specific, upstream won't have these)
       const ourPatchedDeps = ourPkg.patchedDependencies as Record<string, string> | undefined
       if (ourPatchedDeps) {
         pkg.patchedDependencies = pkg.patchedDependencies || {}
@@ -487,25 +487,25 @@ export async function transformPackageJson(file: string, options: PackageJsonOpt
         }
       }
 
-      // 6. Preserve repository (Blitx-specific, upstream doesn't have this)
+      // 6. Preserve repository (Legion-specific, upstream doesn't have this)
       const ourRepo = ourPkg.repository
       if (ourRepo && JSON.stringify(pkg.repository) !== JSON.stringify(ourRepo)) {
         pkg.repository = ourRepo
-          changes.push(`repository: preserved Blitx's repository configuration`)
+          changes.push(`repository: preserved Legion's repository configuration`)
       }
 
       fixMetadata(pkg, relativePath, ourPkg, changes)
 
       // 7. Handle workspaces for root package.json
-      // Blitx has removed hosted platform packages (console/*, slack, etc.)
-      // so we need to preserve Blitx's workspace configuration instead of taking upstream's
+      // Legion has removed hosted platform packages (console/*, slack, etc.)
+      // so we need to preserve Legion's workspace configuration instead of taking upstream's
       const ourWorkspaces = ourPkg.workspaces as { packages?: string[]; catalog?: Record<string, string> } | undefined
       const theirWorkspaces = pkg.workspaces as { packages?: string[]; catalog?: Record<string, string> } | undefined
 
       if (relativePath === "package.json" && ourWorkspaces?.packages) {
         pkg.workspaces = pkg.workspaces || {}
         pkg.workspaces.packages = ourWorkspaces.packages
-          changes.push(`workspaces.packages: preserved Blitx's workspace configuration`)
+          changes.push(`workspaces.packages: preserved Legion's workspace configuration`)
       }
 
       fixScripts(pkg, relativePath, ourPkg, changes)
@@ -547,7 +547,7 @@ export async function transformPackageJson(file: string, options: PackageJsonOpt
       }
     }
 
-    // 8. Inject Blitx-specific dependencies
+    // 8. Inject Legion-specific dependencies
     const kiloDeps = KILO_DEPENDENCIES[relativePath]
     if (kiloDeps) {
       pkg.dependencies = pkg.dependencies || {}
@@ -559,11 +559,11 @@ export async function transformPackageJson(file: string, options: PackageJsonOpt
       }
     }
 
-    // 9. Set Blitx-specific bin entries
+    // 9. Set Legion-specific bin entries
     const kiloBin = KILO_BIN[relativePath]
     if (kiloBin) {
       pkg.bin = kiloBin
-      changes.push(`bin: set Blitx bin entries`)
+      changes.push(`bin: set Legion bin entries`)
     }
 
     // Write back with proper formatting
@@ -610,8 +610,8 @@ export async function transformConflictedPackageJson(
 }
 
 /**
- * Get Blitx's package.json from the base branch (main) for comparison
- * Used during pre-merge to compare upstream versions against Blitx's versions
+ * Get Legion's package.json from the base branch (main) for comparison
+ * Used during pre-merge to compare upstream versions against Legion's versions
  */
 async function getKiloPackageJson(path: string, baseBranch = "main"): Promise<Record<string, unknown> | null> {
   try {
@@ -619,14 +619,14 @@ async function getKiloPackageJson(path: string, baseBranch = "main"): Promise<Re
     const content = await $`git show origin/${baseBranch}:${path}`.text()
     return JSON.parse(content)
   } catch {
-    // File might not exist in Blitx
+    // File might not exist in Legion
     return null
   }
 }
 
 /**
  * Transform all package.json files (pre-merge, on opencode branch)
- * This function merges Blitx's versions with upstream, using "newest wins" strategy
+ * This function merges Legion's versions with upstream, using "newest wins" strategy
  */
 export async function transformAllPackageJson(options: PackageJsonOptions = {}): Promise<PackageJsonResult[]> {
   const { Glob } = await import("bun")
@@ -647,7 +647,7 @@ export async function transformAllPackageJson(options: PackageJsonOptions = {}):
       const pkg = JSON.parse(content) // This is upstream's version
       const changes: string[] = []
 
-      // Get Blitx's version from base branch for comparison
+      // Get Legion's version from base branch for comparison
       const kiloPkg = await getKiloPackageJson(path)
 
       // 1. Transform package name if needed
@@ -659,7 +659,7 @@ export async function transformAllPackageJson(options: PackageJsonOptions = {}):
 
       fixPackageManager(pkg, path, kiloPkg, changes)
 
-    // 2. Preserve Blitx version if requested
+    // 2. Preserve Legion version if requested
     if (options.preserveVersion !== false) {
       const kiloVersion = await getCurrentVersion()
       if (pkg.version !== kiloVersion) {
@@ -668,7 +668,7 @@ export async function transformAllPackageJson(options: PackageJsonOptions = {}):
       }
     }
 
-    // 3. Merge dependencies with "newest wins" strategy (if Blitx has this file)
+    // 3. Merge dependencies with "newest wins" strategy (if Legion has this file)
       if (kiloPkg) {
         pkg.dependencies = mergeWithNewestVersions(
           kiloPkg.dependencies as Record<string, string> | undefined,
@@ -697,7 +697,7 @@ export async function transformAllPackageJson(options: PackageJsonOptions = {}):
           pkg.overrides = mergeWithNewestVersions(kiloOverrides, pkg.overrides, changes, "overrides")
         }
 
-        // 5. Preserve patchedDependencies (Blitx-specific, upstream won't have these)
+        // 5. Preserve patchedDependencies (Legion-specific, upstream won't have these)
         const kiloPatchedDeps = kiloPkg.patchedDependencies as Record<string, string> | undefined
         if (kiloPatchedDeps) {
           pkg.patchedDependencies = pkg.patchedDependencies || {}
@@ -709,18 +709,18 @@ export async function transformAllPackageJson(options: PackageJsonOptions = {}):
           }
         }
 
-        // 6. Preserve repository (Blitx-specific, upstream doesn't have this)
+        // 6. Preserve repository (Legion-specific, upstream doesn't have this)
         const kiloRepo = kiloPkg.repository
         if (kiloRepo && JSON.stringify(pkg.repository) !== JSON.stringify(kiloRepo)) {
           pkg.repository = kiloRepo
-        changes.push(`repository: preserved Blitx's repository configuration`)
+        changes.push(`repository: preserved Legion's repository configuration`)
         }
 
         fixMetadata(pkg, path, kiloPkg, changes)
 
         // 7. Handle workspaces for root package.json
-        // Blitx has removed hosted platform packages (console/*, slack, etc.)
-        // so we need to preserve Blitx's workspace configuration instead of taking upstream's
+        // Legion has removed hosted platform packages (console/*, slack, etc.)
+        // so we need to preserve Legion's workspace configuration instead of taking upstream's
         const kiloWorkspaces = kiloPkg.workspaces as
           | { packages?: string[]; catalog?: Record<string, string> }
           | undefined
@@ -731,7 +731,7 @@ export async function transformAllPackageJson(options: PackageJsonOptions = {}):
         if (path === "package.json" && kiloWorkspaces?.packages) {
           pkg.workspaces = pkg.workspaces || {}
           pkg.workspaces.packages = kiloWorkspaces.packages
-        changes.push(`workspaces.packages: preserved Blitx's workspace configuration`)
+        changes.push(`workspaces.packages: preserved Legion's workspace configuration`)
         }
 
         fixScripts(pkg, path, kiloPkg, changes)
@@ -775,7 +775,7 @@ export async function transformAllPackageJson(options: PackageJsonOptions = {}):
         }
       }
 
-    // 8. Inject Blitx-specific dependencies
+    // 8. Inject Legion-specific dependencies
       const kiloDeps = KILO_DEPENDENCIES[path]
       if (kiloDeps) {
         pkg.dependencies = pkg.dependencies || {}
@@ -787,11 +787,11 @@ export async function transformAllPackageJson(options: PackageJsonOptions = {}):
         }
       }
 
-    // 9. Set Blitx-specific bin entries
+    // 9. Set Legion-specific bin entries
       const kiloBin = KILO_BIN[path]
       if (kiloBin) {
         pkg.bin = kiloBin
-      changes.push(`bin: set Blitx bin entries`)
+      changes.push(`bin: set Legion bin entries`)
       }
 
       if (changes.length > 0) {
@@ -926,7 +926,7 @@ export async function reconcilePackageJsonFromRefs(
     const ourRepo = ourPkg.repository
     if (ourRepo && JSON.stringify(pkg.repository) !== JSON.stringify(ourRepo)) {
       pkg.repository = ourRepo
-      changes.push(`repository: preserved Blitx's repository configuration`)
+      changes.push(`repository: preserved Legion's repository configuration`)
     }
 
     fixMetadata(pkg, relativePath, ourPkg, changes)
@@ -937,7 +937,7 @@ export async function reconcilePackageJsonFromRefs(
     if (relativePath === "package.json" && ourWs?.packages) {
       pkg.workspaces = (pkg.workspaces as Record<string, unknown>) || {}
       ;(pkg.workspaces as { packages: string[] }).packages = ourWs.packages
-      changes.push(`workspaces.packages: preserved Blitx's workspace configuration`)
+      changes.push(`workspaces.packages: preserved Legion's workspace configuration`)
     }
 
     fixScripts(pkg, relativePath, ourPkg, changes)
@@ -990,7 +990,7 @@ export async function reconcilePackageJsonFromRefs(
   const kiloBin = KILO_BIN[relativePath]
   if (kiloBin) {
     pkg.bin = kiloBin
-    changes.push(`bin: set Blitx bin entries`)
+    changes.push(`bin: set Legion bin entries`)
   }
 
   if (dryRun) {

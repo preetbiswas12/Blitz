@@ -55,7 +55,7 @@ export function DialogStatus() {
         </text>
       </box>
       {/* kilocode_change start */}
-      <text fg={theme.textMuted}>Blitx v{InstallationVersion}</text>
+      <text fg={theme.textMuted}>Legion v{InstallationVersion}</text>
       {/* kilocode_change end */}
       {/* kilocode_change start */}
       <box>

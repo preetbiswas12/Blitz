@@ -152,7 +152,7 @@ export const ExperimentalApi = HttpApi.make("experimental")
           OpenApi.annotations({
             identifier: "experimental.console.switchOrg",
             summary: "Switch active Console org",
-            description: "Persist a new active Console account/org selection for the current local Blitx state.", // kilocode_change
+            description: "Persist a new active Console account/org selection for the current local Legion state.", // kilocode_change
           }),
         ),
         HttpApiEndpoint.get("tool", ExperimentalPaths.tool, {
@@ -187,7 +187,7 @@ export const ExperimentalApi = HttpApi.make("experimental")
           OpenApi.annotations({
             identifier: "worktree.list",
             summary: "List worktrees",
-            description: "List all git worktrees for the current project and whether Blitx manages them.", // kilocode_change
+            description: "List all git worktrees for the current project and whether Legion manages them.", // kilocode_change
           }),
         ),
         HttpApiEndpoint.post("worktreeCreate", ExperimentalPaths.worktree, {
@@ -270,7 +270,7 @@ export const ExperimentalApi = HttpApi.make("experimental")
             identifier: "experimental.session.list",
             summary: "List sessions",
             description:
-              "Get a list of all Blitx sessions across projects, sorted by most recently updated. Archived sessions are excluded by default.", // kilocode_change
+              "Get a list of all Legion sessions across projects, sorted by most recently updated. Archived sessions are excluded by default.", // kilocode_change
           }),
         ),
         HttpApiEndpoint.get("resource", ExperimentalPaths.resource, {

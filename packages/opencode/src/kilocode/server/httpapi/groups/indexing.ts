@@ -11,7 +11,7 @@ import { described } from "@/server/routes/instance/httpapi/groups/metadata"
 
 export { IndexingStatusInfo, IndexingStatusState, IndexingWarningInfo } from "@/kilocode/indexing-event"
 
-export const BlitxEmbeddingModel = Schema.Struct({
+export const LegionEmbeddingModel = Schema.Struct({
   id: Schema.String,
   name: Schema.String,
   dimension: Schema.Int.check(Schema.isGreaterThan(0)),
@@ -19,11 +19,11 @@ export const BlitxEmbeddingModel = Schema.Struct({
   note: Schema.optional(Schema.String),
 })
 
-export const BlitxEmbeddingModelCatalog = Schema.Struct({
+export const LegionEmbeddingModelCatalog = Schema.Struct({
   defaultModel: Schema.String,
-  models: Schema.Array(BlitxEmbeddingModel),
+  models: Schema.Array(LegionEmbeddingModel),
   aliases: Schema.Record(Schema.String, Schema.String),
-}).annotate({ identifier: "BlitxEmbeddingModelCatalog" })
+}).annotate({ identifier: "LegionEmbeddingModelCatalog" })
 
 const root = "/indexing"
 
@@ -61,7 +61,7 @@ export const IndexingApi = HttpApi.make("indexing")
       .add(
         HttpApiEndpoint.get("models", IndexingPaths.models, {
           query: WorkspaceRoutingQuery,
-          success: described(BlitxEmbeddingModelCatalog, "Blitx embedding model catalog"),
+          success: described(LegionEmbeddingModelCatalog, "Legion embedding model catalog"),
         }).annotateMerge(
           OpenApi.annotations({
             identifier: "indexing.models",
@@ -82,7 +82,7 @@ export const IndexingApi = HttpApi.make("indexing")
   )
   .annotateMerge(
     OpenApi.annotations({
-      title: "blitx HttpApi",
+      title: "Legion HttpApi",
       version: "0.0.1",
       description: "Kilo HttpApi surface.",
     }),

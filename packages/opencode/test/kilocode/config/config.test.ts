@@ -16,7 +16,7 @@ import { ConfigMarkdown } from "../../../src/config/markdown"
 import { ConfigParse } from "../../../src/config/parse"
 import { Env } from "../../../src/env"
 import { Git } from "../../../src/git"
-import { BlitxIndexing as KiloIndexing } from "../../../src/kilocode/indexing"
+import { LegionIndexing as KiloIndexing } from "../../../src/kilocode/indexing"
 import { KilocodeConfig } from "../../../src/kilocode/config/config"
 import { provideTestInstance } from "../../fixture/fixture"
 import { Filesystem } from "../../../src/util/filesystem"
@@ -87,20 +87,20 @@ const cfg: Partial<Config.Info> = {
 }
 
 afterEach(async () => {
-  delete process.env.BLITX_MD_TEST
+  delete process.env.LEGION_MD_TEST
   await clear()
   await disposeAllInstances()
 })
 
 describe("markdown substitutions", () => {
   test("applies file and env substitutions to parsed markdown body", async () => {
-    process.env.BLITX_MD_TEST = "env content"
+    process.env.LEGION_MD_TEST = "env content"
     await using tmp = await tmpdir({
       init: async (dir) => {
         await Filesystem.write(path.join(dir, "body.md"), "file content")
         await Filesystem.write(
           path.join(dir, "SKILL.md"),
-          ["---", "name: test", "description: Test", "---", "{file:body.md}", "{env:BLITX_MD_TEST}"].join("\n"),
+          ["---", "name: test", "description: Test", "---", "{file:body.md}", "{env:LEGION_MD_TEST}"].join("\n"),
         )
       },
     })
@@ -560,22 +560,22 @@ describe("linked worktree config", () => {
     }
   })
 
-  test("keeps BLITX_CONFIG_DIR above the primary fallback", async () => {
+  test("keeps LEGION_CONFIG_DIR above the primary fallback", async () => {
     await using primary = await tmpdir({ git: true })
     await using explicit = await tmpdir()
     const worktree = path.join(path.dirname(primary.path), `${path.basename(primary.path)}-config-explicit`)
     await $`git worktree add -b config-explicit-worktree ${worktree}`.cwd(primary.path).quiet()
     await Bun.write(path.join(primary.path, ".kilo", "kilo.jsonc"), JSON.stringify({ username: "primary-dir" }))
     await Bun.write(path.join(explicit.path, "kilo.jsonc"), JSON.stringify({ username: "explicit-dir" }))
-    const previous = process.env["BLITX_CONFIG_DIR"]
-    process.env["BLITX_CONFIG_DIR"] = explicit.path
+    const previous = process.env["LEGION_CONFIG_DIR"]
+    process.env["LEGION_CONFIG_DIR"] = explicit.path
 
     try {
       const config = await provideTestInstance({ directory: worktree, fn: load })
       expect(config.username).toBe("explicit-dir")
     } finally {
-      if (previous === undefined) delete process.env["BLITX_CONFIG_DIR"]
-      else process.env["BLITX_CONFIG_DIR"] = previous
+      if (previous === undefined) delete process.env["LEGION_CONFIG_DIR"]
+      else process.env["LEGION_CONFIG_DIR"] = previous
       await $`git worktree remove --force ${worktree}`.cwd(primary.path).quiet().nothrow()
     }
   })

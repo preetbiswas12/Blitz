@@ -7,7 +7,7 @@ import type { EmbedderProvider } from "./indexing/interfaces/manager"
 export { DEFAULT_VECTOR_STORE } from "./indexing/constants"
 
 const providers = [
-  "blitx",
+  "legion",
   "openai",
   "ollama",
   "openai-compatible",
@@ -41,7 +41,7 @@ export const IndexingConfig = z
       })
       .strict()
       .optional()
-      .describe("Blitx-hosted embedding provider options"),
+      .describe("Legion-hosted embedding provider options"),
     openai: z
       .object({ apiKey: z.string().optional() })
       .strict()
@@ -157,7 +157,7 @@ export const IndexingSchema = Schema.Struct({
       baseUrl: Schema.optional(Schema.String),
       organizationId: Schema.optional(Schema.String),
     }),
-  ).annotate({ description: "Blitx-hosted embedding provider options" }),
+  ).annotate({ description: "Legion-hosted embedding provider options" }),
   openai: Schema.optional(
     Schema.Struct({
       apiKey: Schema.optional(Schema.String),

@@ -108,7 +108,7 @@ function smokeEnv(root: string) {
   delete env.KILO_MODELS_PATH
   delete env.KILO_MODELS_URL
   delete env.KILO_CONFIG
-  delete env.BLITX_CONFIG_DIR
+  delete env.LEGION_CONFIG_DIR
   return {
     ...env,
     XDG_DATA_HOME: path.join(root, "data"),

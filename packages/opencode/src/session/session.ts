@@ -10,7 +10,7 @@ import { InstallationVersion } from "@opencode-ai/core/installation/version"
 
 import { Database } from "@/storage/db"
 import { NotFoundError } from "@/storage/storage"
-// kilocode_change - drop unused inArray/lt (listGlobal delegated to BlitxSession)
+// kilocode_change - drop unused inArray/lt (listGlobal delegated to LegionSession
 import { eq, and, gte, isNull, desc, like, or } from "drizzle-orm"
 import { SyncEvent } from "../sync"
 import { PartTable, SessionTable } from "./session.sql"
@@ -32,7 +32,7 @@ import { Global } from "@opencode-ai/core/global"
 // kilocode_change start - Kilo session behavior extensions
 import { BackgroundProcess } from "@/kilocode/background-process"
 import { InteractiveTerminal } from "@/kilocode/interactive-terminal"
-import { BlitxSession, blitxSessionFork } from "@/kilocode/session"
+import { LegionSession LegionSessionork } from "@/kilocode/session"
 import { SessionExport } from "@/kilocode/session-export"
 import * as SandboxPolicy from "@/kilocode/sandbox/policy"
 import { baseKey, cumulativeSessionDiff } from "@/kilocode/session-portability/cumulative-diff" // kilocode_change
@@ -383,14 +383,14 @@ export const Event = {
     }),
   ),
   // kilocode_change start
-  TurnOpen: BlitxSession.Event.TurnOpen,
-  TurnClose: BlitxSession.Event.TurnClose,
+  TurnOpen: LegionSessionEvent.TurnOpen,
+  TurnClose: LegionSessionEvent.TurnClose,
   // kilocode_change end
 }
 
 export function plan(input: { slug: string; time: { created: number } }, instance: InstanceContext) {
   const base = instance.project.vcs
-    ? path.join(instance.worktree, ".blitx", "plans") // kilocode_change
+    ? path.join(instance.worktree, ".legion", "plans") // kilocode_change
     : path.join(Global.Path.data, "plans")
   return path.join(base, [input.time.created, input.slug].join("-") + ".md")
 }
@@ -444,7 +444,7 @@ export const getUsage = (input: {
   }
 
   // kilocode_change start - Use provider-reported cost when available for OpenRouter/Kilo
-  const reported = BlitxSession.providerCost({
+  const reported = LegionSessionproviderCost({
     metadata: input.metadata,
     usage: input.usage,
     provider: input.provider,
@@ -598,7 +598,7 @@ export const layer: Layer.Layer<
       log.info("created", result)
 
       // kilocode_change start - initialize inherited state before session.created subscribers run
-      BlitxSession.register({ id: result.id, parentID: result.parentID, platform: input.platform })
+      LegionSessionregister({ id: result.id, parentID: result.parentID, platform: input.platform })
       const source = input.sourceID ?? result.parentID
       if (source) yield* SandboxPolicy.inherit(source, result.id, input.sandboxFallback)
       // kilocode_change end
@@ -670,8 +670,8 @@ export const layer: Layer.Layer<
         yield* SandboxPolicy.dispose(
           sessionID,
           Effect.gen(function* () {
-            yield* Effect.promise(() => BlitxSession.removeSession(sessionID)).pipe(Effect.ignore)
-            BlitxSession.clearPlatformOverride(sessionID)
+            yield* Effect.promise(() => LegionSessionremoveSession(sessionID)).pipe(Effect.ignore)
+            LegionSessionclearPlatformOverride(sessionID)
             if (hasInstance) {
               yield* Effect.promise(() => BackgroundProcess.stopSession(sessionID)).pipe(Effect.ignore)
               yield* Effect.promise(() => InteractiveTerminal.stopSession(sessionID)).pipe(Effect.ignore)
@@ -697,7 +697,7 @@ export const layer: Layer.Layer<
     const updateMessage = <T extends MessageV2.Info>(msg: T): Effect.Effect<T> =>
       Effect.gen(function* () {
         // kilocode_change start - ignore FK errors when session was deleted while processor was still running
-        yield* BlitxSession.runSyncSafe(sync.run(MessageV2.Event.Updated, { sessionID: msg.sessionID, info: msg }), {
+        yield* LegionSessionrunSyncSafe(sync.run(MessageV2.Event.Updated, { sessionID: msg.sessionID, info: msg }), {
           type: "message update",
           id: msg.id,
           sessionID: msg.sessionID,
@@ -709,7 +709,7 @@ export const layer: Layer.Layer<
     const updatePart = <T extends MessageV2.Part>(part: T): Effect.Effect<T> =>
       Effect.gen(function* () {
         // kilocode_change start - ignore FK errors when session was deleted while processor was still running
-        yield* BlitxSession.runSyncSafe(
+        yield* LegionSessionrunSyncSafe(
           sync.run(MessageV2.Event.PartUpdated, {
             sessionID: part.sessionID,
             part: structuredClone(part),
@@ -789,7 +789,7 @@ export const layer: Layer.Layer<
       })
       const msgs = yield* messages({ sessionID: input.sessionID })
       const idMap = new Map<string, MessageID>()
-      const writer = BlitxSession.writer(session.id, sync) // kilocode_change - commit copied transcript in one transaction
+      const writer = LegionSessionwriter(session.id, sync) // kilocode_change - commit copied transcript in one transaction
 
       for (const msg of msgs) {
         if (input.messageID && msg.info.id >= input.messageID) break
@@ -1016,13 +1016,13 @@ function* listByProject(
     experimentalWorkspaces: boolean
   },
 ) {
-  // kilocode_change start - BlitxSession.filters keeps sessions visible across project_id changes
+  // kilocode_change start - LegionSessionfilters keeps sessions visible across project_id changes
   // (see PR #8875). That directory-anchored filter conflicts with upstream's path-prefix filter,
   // so bypass it when input.path is provided and fall back to the plain project_id base.
   const conditions =
     input.path !== undefined
       ? [eq(SessionTable.project_id, input.projectID)]
-      : BlitxSession.filters({ projectID: input.projectID, directory: input.directory })
+      : LegionSessionfilters({ projectID: input.projectID, directory: input.directory })
   // kilocode_change end
 
   if (input.workspaceID) {
@@ -1039,7 +1039,7 @@ function* listByProject(
       )
     }
   } else if (input.scope !== "project" && !input.experimentalWorkspaces) {
-    // kilocode_change start - directory filtering handled by BlitxSession.filters above
+    // kilocode_change start - directory filtering handled by LegionSessionfilters above
     // if (input.directory) {
     //   conditions.push(eq(SessionTable.directory, input.directory))
     // }
@@ -1071,7 +1071,7 @@ function* listByProject(
   }
 }
 
-// kilocode_change start - delegate to BlitxSession.listGlobal (adds projectID worktree family + directories[])
+// kilocode_change start - delegate to LegionSessionlistGlobal (adds projectID worktree family + directories[])
 export function* listGlobal(input?: {
   projectID?: string
   directory?: string
@@ -1084,11 +1084,11 @@ export function* listGlobal(input?: {
   limit?: number
   archived?: boolean
 }) {
-  yield* BlitxSession.listGlobal<GlobalInfo>({ ...input, fromRow })
+  yield* LegionSessionlistGlobal<GlobalInfo>({ ...input, fromRow })
 }
 // kilocode_change end
 
 // kilocode_change - delegate the exported Promise facade to the Kilo session runtime
-export const fork = blitxSessionFork
+export const fork = LegionSessionork
 
 export * as Session from "./session"

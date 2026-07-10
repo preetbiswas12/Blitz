@@ -1,6 +1,6 @@
 import { For, Show } from "solid-js"
-import { Button } from "@blitxcode/kilo-web-ui/button"
-import { Card } from "@blitxcode/kilo-web-ui/card"
+import { Button } from "@Legioncode/kilo-web-ui/button"
+import { Card } from "@Legioncode/kilo-web-ui/card"
 import { CustomSelect, type SelectOption } from "../../components/CustomSelect"
 import { SearchField } from "../../components/SearchField"
 import { ConfigPage, ConfigTag as Tag } from "./ConfigPage"

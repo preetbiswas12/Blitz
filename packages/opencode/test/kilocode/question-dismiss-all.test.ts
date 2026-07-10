@@ -1,7 +1,7 @@
 import { describe, expect } from "bun:test"
 import { Cause, Effect, Exit, Fiber, Layer } from "effect"
 import { CrossSpawnSpawner } from "@opencode-ai/core/cross-spawn-spawner"
-import { BlitxSessionPromptQueue } from "../../src/kilocode/session/prompt-queue"
+import { LegionSessionromptQueue } from "../../src/kilocode/session/prompt-queue"
 import { Question } from "../../src/question"
 import { MessageID, SessionID } from "../../src/session/schema"
 import { testEffect } from "../lib/effect"
@@ -84,7 +84,7 @@ describe("Question.dismissAll", () => {
         const started = Promise.withResolvers<void>()
         const release = Promise.withResolvers<void>()
 
-        const first = yield* BlitxSessionPromptQueue.enqueue(
+        const first = yield* LegionSessionromptQueue.enqueue(
           sessionID,
           MessageID.make("msg_ask_1"),
           Effect.gen(function* () {
@@ -96,14 +96,14 @@ describe("Question.dismissAll", () => {
         ).pipe(Effect.forkScoped)
         yield* Effect.promise(() => started.promise)
 
-        const second = yield* BlitxSessionPromptQueue.enqueue(
+        const second = yield* LegionSessionromptQueue.enqueue(
           sessionID,
           MessageID.make("msg_ask_2"),
           Effect.succeed("second" as const),
           Effect.succeed("second-cancelled" as const),
         ).pipe(Effect.forkScoped)
         yield* Effect.sleep("10 millis")
-        expect(BlitxSessionPromptQueue.hasFollowup(sessionID)).toBe(true)
+        expect(LegionSessionromptQueue.hasFollowup(sessionID)).toBe(true)
 
         const exit = yield* question.ask({ sessionID, questions: prompt }).pipe(Effect.exit)
         expect(Exit.isFailure(exit)).toBe(true)

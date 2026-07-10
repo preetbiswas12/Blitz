@@ -4,18 +4,18 @@ import { Flag } from "@opencode-ai/core/flag/flag"
 import { ServerAuth } from "../../src/server/auth"
 
 const original = {
-  BLITX_SERVER_PASSWORD: Flag.BLITX_SERVER_PASSWORD,
+  LEGION_SERVER_PASSWORD: Flag.LEGION_SERVER_PASSWORD,
   KILO_SERVER_USERNAME: Flag.KILO_SERVER_USERNAME,
 }
 
 afterEach(() => {
-  Flag.BLITX_SERVER_PASSWORD = original.BLITX_SERVER_PASSWORD
+  Flag.LEGION_SERVER_PASSWORD = original.LEGION_SERVER_PASSWORD
   Flag.KILO_SERVER_USERNAME = original.KILO_SERVER_USERNAME
 })
 
 describe("ServerAuth", () => {
   test("does not emit auth headers without a password", () => {
-    Flag.BLITX_SERVER_PASSWORD = undefined
+    Flag.LEGION_SERVER_PASSWORD = undefined
     Flag.KILO_SERVER_USERNAME = "alice"
 
     expect(ServerAuth.header()).toBeUndefined()
@@ -24,7 +24,7 @@ describe("ServerAuth", () => {
 
   test("defaults to the kilo username", () => {
     // kilocode_change
-    Flag.BLITX_SERVER_PASSWORD = "secret"
+    Flag.LEGION_SERVER_PASSWORD = "secret"
     Flag.KILO_SERVER_USERNAME = undefined
 
     expect(ServerAuth.headers()).toEqual({
@@ -33,7 +33,7 @@ describe("ServerAuth", () => {
   })
 
   test("uses the configured username", () => {
-    Flag.BLITX_SERVER_PASSWORD = "secret"
+    Flag.LEGION_SERVER_PASSWORD = "secret"
     Flag.KILO_SERVER_USERNAME = "alice"
 
     expect(ServerAuth.headers()).toEqual({
@@ -42,7 +42,7 @@ describe("ServerAuth", () => {
   })
 
   test("prefers explicit credentials", () => {
-    Flag.BLITX_SERVER_PASSWORD = "secret"
+    Flag.LEGION_SERVER_PASSWORD = "secret"
     Flag.KILO_SERVER_USERNAME = "alice"
 
     expect(ServerAuth.headers({ password: "cli-secret", username: "bob" })).toEqual({
@@ -55,6 +55,6 @@ describe("ServerAuth", () => {
 
     expect(ServerAuth.required(config)).toBe(true)
     expect(ServerAuth.authorized({ username: "alice", password: Redacted.make("secret") }, config)).toBe(true)
-    expect(ServerAuth.authorized({ username: "blitx", password: Redacted.make("secret") }, config)).toBe(false) // kilocode_change
+    expect(ServerAuth.authorized({ username: "legion", password: Redacted.make("secret") }, config)).toBe(false) // kilocode_change
   })
 })

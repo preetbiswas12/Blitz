@@ -1,6 +1,6 @@
 import { A, useLocation, useNavigate } from "@solidjs/router"
-import { Button } from "@blitxcode/kilo-web-ui/button"
-import { Card } from "@blitxcode/kilo-web-ui/card"
+import { Button } from "@Legioncode/kilo-web-ui/button"
+import { Card } from "@Legioncode/kilo-web-ui/card"
 import { createEffect, createMemo, createResource, createSignal, For, Show } from "solid-js"
 import { LoadingScreen } from "../../components/LoadingScreen"
 import { loadKiloProfile, logoutKilo, setKiloOrganization, type KiloProfileData, type ProjectQuery } from "../../client"
@@ -151,9 +151,9 @@ export function ProfileRoute() {
           <Show when={!disconnected()}>
             <header class="profile-header">
               <div>
-                <p class="eyebrow">Blitx Account</p>
+                <p class="eyebrow">Legion Account</p>
                 <h1>Your Profile</h1>
-                <p>Manage your Blitx identity, account context, credits, and billing shortcuts.</p>
+                <p>Manage your Legion identity, account context, credits, and billing shortcuts.</p>
               </div>
               <div class="profile-actions">
                 <Button variant="secondary" type="button" onClick={refresh} disabled={data.loading || !server.query()}>
@@ -188,9 +188,9 @@ export function ProfileRoute() {
                 KG
               </span>
               <div class="profile-connect-copy">
-                <p class="eyebrow">Blitx Account</p>
-                <h1>Connect your Blitx account</h1>
-                <p>Sign in to view your credits, organizations, and account details in Blitx Console.</p>
+                <p class="eyebrow">Legion Account</p>
+                <h1>Connect your Legion account</h1>
+                <p>Sign in to view your credits, organizations, and account details in Legion Console.</p>
               </div>
               <A
                 class="profile-primary-link"
@@ -206,8 +206,8 @@ export function ProfileRoute() {
 
           <Show when={!server.query() && !server.discoverable()}>
             <Card class="profile-banner" variant="warning">
-              <strong>Blitx server not found</strong>
-              <span>Start Blitx Console from a running Blitx server or pass a server URL with ?server=.</span>
+              <strong>legion server not found</strong>
+              <span>Start Legion Console from a running legion server or pass a server URL with ?server=.</span>
             </Card>
           </Show>
 
@@ -279,7 +279,7 @@ export function ProfileRoute() {
                       </span>
                       <span class="profile-org-body">
                         <strong>Personal Account</strong>
-                        <span>Your personal Blitx credits and settings</span>
+                        <span>Your personal Legion credits and settings</span>
                       </span>
                       <span class="profile-org-state">{!info().currentOrgId ? "Current" : "Use"}</span>
                     </button>

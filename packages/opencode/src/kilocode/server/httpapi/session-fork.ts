@@ -4,7 +4,7 @@ import { Effect, Schema } from "effect"
 import { HttpServerRequest } from "effect/unstable/http"
 import { HttpApiError } from "effect/unstable/httpapi"
 
-export namespace BlitxSessionHttpApi {
+export namespace LegionSessionttpApi {
   type Input = {
     params: { sessionID: SessionID }
     payload: typeof ForkPayload.Type
@@ -16,7 +16,7 @@ export namespace BlitxSessionHttpApi {
   }
 
   export function forkRaw<A extends { id: SessionID }, E, R>(fork: (ctx: Input) => Effect.Effect<A, E, R>) {
-    return Effect.fn("BlitxSessionHttpApi.forkRaw")(function* (ctx: Raw) {
+    return Effect.fn("LegionSessionttpApi.forkRaw")(function* (ctx: Raw) {
       const body = yield* Effect.orDie(ctx.request.text)
       const payload = yield* Effect.gen(function* () {
         if (body.trim().length === 0) return {}

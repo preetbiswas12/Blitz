@@ -3,12 +3,12 @@ import type { Model } from "@/provider/provider"
 import { ProviderTransform } from "@/provider/transform"
 import { ModelID, ProviderID } from "@/provider/schema"
 import { SessionID } from "@/session/schema"
-import { BlitxSessionPrompt } from "@/kilocode/session/prompt"
+import { LegionSessionrompt } from "@/kilocode/session/prompt"
 
 function model(id: string, reasoning = true): Model {
   return {
     id: ModelID.make(id),
-    providerID: ProviderID.make("blitx"),
+    providerID: ProviderID.make("legion"),
     api: {
       id,
       npm: "@ai-sdk/openai",
@@ -35,7 +35,7 @@ function model(id: string, reasoning = true): Model {
 
 describe("session title generation", () => {
   test("uses an isolated task ID", () => {
-    expect(BlitxSessionPrompt.titleID(SessionID.make("ses_test"))).toBe("title-ses_test")
+    expect(LegionSessionrompt.titleID(SessionID.make("ses_test"))).toBe("title-ses_test")
   })
 
   test("uses the model default for reasoning-capable small models", () => {

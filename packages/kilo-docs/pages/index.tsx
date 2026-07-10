@@ -6,37 +6,37 @@ import Link from "next/link"
 const terminalContent = {
   installation: (
     <>
-      <span className="terminal-comment"># Install Blitx Code VS Code Extension</span>
+      <span className="terminal-comment"># Install Legion Code VS Code Extension</span>
       {"\n"}
       <span className="terminal-prompt">$</span> code --install-extension kilocode.kilo-code
       {"\n"}
       {"\n"}
       <span className="terminal-comment"># Or install via CLI</span>
       {"\n"}
-      <span className="terminal-prompt">$</span> npm install -g @blitxcode/cli
+      <span className="terminal-prompt">$</span> npm install -g @Legioncode/cli
     </>
   ),
   gateway: (
     <>
-      <span className="terminal-comment"># Call Blitx Gateway with a quick curl script</span>
+      <span className="terminal-comment"># Call Legion Gateway with a quick curl script</span>
       {"\n"}
-      <span className="terminal-prompt">$</span> export BLITX_API_KEY="YOUR_API_KEY"
+      <span className="terminal-prompt">$</span> export LEGION_API_KEY="YOUR_API_KEY"
       {"\n"}
       <span className="terminal-prompt">$</span> curl https://api.kilo.ai/api/gateway/chat/completions \{"\n"}
-      -H "Authorization: Bearer $BLITX_API_KEY" \{"\n"}
+      -H "Authorization: Bearer $LEGION_API_KEY" \{"\n"}
       -H "Content-Type: application/json" \{"\n"}
-      {`  -d '{"model":"anthropic/claude-sonnet-4.5","messages":[{"role":"user","content":"Say hi from Blitx Gateway"}]}'`}
+      {`  -d '{"model":"anthropic/claude-sonnet-4.5","messages":[{"role":"user","content":"Say hi from Legion Gateway"}]}'`}
     </>
   ),
   firstTask: (
     <>
-      <span className="terminal-comment"># Start a new task with Blitx Code</span>
+      <span className="terminal-comment"># Start a new task with Legion Code</span>
       {"\n"}
       <span className="terminal-prompt">$</span> kilo "Create a React component for a user profile"
       {"\n"}
       {"\n"}
       <span className="terminal-comment">
-        # Or for interactive sessions, just run the Blitx CLI in your project folder
+        # Or for interactive sessions, just run the Legion CLI in your project folder
       </span>
       {"\n"}
       <span className="terminal-prompt">$</span> kilo
@@ -72,7 +72,7 @@ const terminalContent = {
 const categories = [
   {
     title: "Get Started",
-    description: "Install Blitx Code and get up and running in minutes",
+    description: "Install Legion Code and get up and running in minutes",
     href: "/getting-started",
     icon: (
       <svg className="category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -87,7 +87,7 @@ const categories = [
   },
   {
     title: "Code with AI",
-    description: "Learn how to use Blitx Code to write, edit, and understand code",
+    description: "Learn how to use Legion Code to write, edit, and understand code",
     href: "/code-with-ai",
     icon: (
       <svg className="category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -115,7 +115,7 @@ const categories = [
     ),
     links: [
       { title: "Sessions & Sharing", href: "/collaborate" },
-      { title: "Blitx for Teams", href: "/collaborate" },
+      { title: "Legion for Teams", href: "/collaborate" },
       { title: "Enterprise", href: "/collaborate" },
     ],
   },
@@ -154,7 +154,7 @@ const categories = [
     ],
   },
   {
-    title: "Blitx Gateway",
+    title: "Legion Gateway",
     description:
       "A unified API to access hundreds of AI models through a single endpoint with streaming, BYOK, and usage tracking.",
     href: "/gateway",
@@ -173,7 +173,7 @@ const categories = [
   },
   {
     title: "Contributing",
-    description: "Help improve Blitx Code and learn about its architecture",
+    description: "Help improve Legion Code and learn about its architecture",
     href: "/contributing",
     icon: (
       <svg className="category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -200,7 +200,7 @@ export default function HomePage() {
   return (
     <div className="homepage">
       <Head>
-        <title>Blitx Code Docs: Setup, Models, MCP, Custom Modes & CLI</title>
+        <title>Legion Code Docs: Setup, Models, MCP, Custom Modes & CLI</title>
       </Head>
       {/* Dotted background pattern */}
       <div className="dot-pattern" />
@@ -208,14 +208,14 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-content">
-          <h1 className="hero-title">Blitx Documentation</h1>
+          <h1 className="hero-title">Legion Documentation</h1>
           <p className="hero-subtitle">
-            Explore guides and examples for the Blitx platform — from coding agents and AI-powered development to hosted
+            Explore guides and examples for the Legion platform — from coding agents and AI-powered development to hosted
             agentic infrastructure.
           </p>
           <div className="hero-buttons">
             <Link href="/getting-started" className="btn btn-primary">
-              Get started with Blitx Code →
+              Get started with Legion Code →
             </Link>
           </div>
         </div>
@@ -223,7 +223,7 @@ export default function HomePage() {
         {/* Quick Links Panel - Stripe style */}
         <div className="quick-panel">
           <div className="quick-section">
-            <h3 className="quick-title">BLITX CODE</h3>
+            <h3 className="quick-title">Legion CODE</h3>
             <div className="quick-links">
               <Link href="/getting-started/installing" className="quick-link">
                 Installation Guide
@@ -295,7 +295,7 @@ export default function HomePage() {
       <section className="terminal-section">
         <div className="terminal-intro">
           <h2 className="section-title">Try it out</h2>
-          <p className="terminal-description">Get started quickly with Blitx Code and Blitx Gateway</p>
+          <p className="terminal-description">Get started quickly with Legion Code and Legion Gateway</p>
         </div>
         <div className="terminal-container">
           <div className="terminal-tabs">
@@ -322,7 +322,7 @@ export default function HomePage() {
               className={`terminal-tab ${activeTab === "gateway" ? "active" : ""}`}
               onClick={() => setActiveTab("gateway")}
             >
-              Blitx Gateway
+              Legion Gateway
             </button>
           </div>
           <div className="terminal-window">
@@ -350,7 +350,7 @@ export default function HomePage() {
             <span className="footer-icon">💬</span>
             <div>
               <strong>Need help?</strong>
-              <Link href="https://blitx.ai/discord" className="footer-link">
+              <Link href="https://legion.ai/discord" className="footer-link">
                 Join our Discord
               </Link>
             </div>

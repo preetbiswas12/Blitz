@@ -1,19 +1,19 @@
 export const dict = {
-  // Blitx Gateway provider translations
-  "provider.connect.blitxGateway.line1":
-    "يمنحك Blitx Gateway الوصول إلى مجموعة مختارة من النماذج الموثوقة والمحسّنة لوكلاء البرمجة.",
-  "provider.connect.blitxGateway.line2":
+  // Legion Gateway provider translations
+  "provider.connect.LegionGateway.line1":
+    "يمنحك Legion Gateway الوصول إلى مجموعة مختارة من النماذج الموثوقة والمحسّنة لوكلاء البرمجة.",
+  "provider.connect.LegionGateway.line2":
     "بمفتاح API واحد، ستحصل على إمكانية الوصول إلى نماذج مثل Claude وGPT وGemini وGLM والمزيد.",
-  "provider.connect.blitxGateway.visit.prefix": "قم بزيارة ",
-  "provider.connect.blitxGateway.visit.link": "blitx.ai",
-  "provider.connect.blitxGateway.visit.suffix": " للحصول على مفتاح API الخاص بك.",
-  "provider.connect.blitxGateway.byok.prefix": "للحصول على المزيد من إحصائيات الاستخدام، استخدم ",
-  "provider.connect.blitxGateway.byok.link": "BYOK عبر Blitx's Gateway",
-  "provider.connect.blitxGateway.byok.suffix": ".",
+  "provider.connect.LegionGateway.visit.prefix": "قم بزيارة ",
+  "provider.connect.LegionGateway.visit.link": "legion.ai",
+  "provider.connect.LegionGateway.visit.suffix": " للحصول على مفتاح API الخاص بك.",
+  "provider.connect.LegionGateway.byok.prefix": "للحصول على المزيد من إحصائيات الاستخدام، استخدم ",
+  "provider.connect.LegionGateway.byok.link": "BYOK عبر Legion's Gateway",
+  "provider.connect.LegionGateway.byok.suffix": ".",
 
   // Provider settings translations
   "settings.providers.group.recommended": "موصى به",
-  "settings.providers.note.blitx": "الوصول إلى أكثر من 500 نموذج ذكاء اصطناعي",
+  "settings.providers.note.Legion": "الوصول إلى أكثر من 500 نموذج ذكاء اصطناعي",
   "settings.providers.note.opencode": "نماذج منتقاة تشمل Claude وGPT وGemini والمزيد",
   "settings.providers.note.anthropic": "وصول مباشر إلى نماذج Claude، بما في ذلك Pro وMax",
   "settings.providers.note.deepseek": "نماذج DeepSeek لمهام الاستدلال والبرمجة",
@@ -48,11 +48,11 @@ export const dict = {
     "جميع المشاريع على هذا الجهاز. تُحفظ في إعدادات المستخدم الخاصة بك.",
   "marketplace.install.destination": "وجهة التثبيت",
   "marketplace.install.about.mcp":
-    "يمنح خادم MCP منصة Blitx أدوات إضافية للعمل مع الخدمات الخارجية أو البرامج المحلية.",
+    "يمنح خادم MCP منصة Legion أدوات إضافية للعمل مع الخدمات الخارجية أو البرامج المحلية.",
   "marketplace.install.about.agent": "يضيف الوكيل دورًا قابلاً لإعادة الاستخدام بتعليماته وأذوناته الخاصة.",
-  "marketplace.install.about.skill": "تضيف المهارة تعليمات وموارد خاصة بمهام معينة يمكن لـ Blitx تحميلها عند الحاجة.",
+  "marketplace.install.about.skill": "تضيف المهارة تعليمات وموارد خاصة بمهام معينة يمكن لـ Legion تحميلها عند الحاجة.",
   "marketplace.install.mcp.warning":
-    "يمكن لخوادم MCP تشغيل أوامر محلية أو الاتصال بخدمات خارجية. ستطلب Blitx الإذن قبل استخدام أدواتها ما لم تسمح أذوناتك بذلك تلقائيًا.",
+    "يمكن لخوادم MCP تشغيل أوامر محلية أو الاتصال بخدمات خارجية. ستطلب Legion الإذن قبل استخدام أدواتها ما لم تسمح أذوناتك بذلك تلقائيًا.",
   "marketplace.install.project.warning":
     "قد تُضاف ملفات المشروع إلى نظام التحكم في الإصدارات. لا تخزّن الأسرار هنا إلا إذا كان الإعداد يشير إلى متغير بيئة.",
   "marketplace.install.learnMore": "تعرّف على كيفية عمل عمليات التثبيت من Marketplace",
@@ -124,7 +124,7 @@ export const dict = {
     "استمر في الانتظار حتى تكتمل اللقطة. تكون الدورات اللاحقة سريعة بعد إنشاء اللقطة الأولى.",
   "snapshot.slowRepo.answer.disable": "تعطيل لهذا المشروع",
   "snapshot.slowRepo.answer.disable.description":
-    "أوقف لقطات Blitx لهذا المشروع. ستفقد ميزة التراجع/الإعادة لتعديلات Blitx، لكن git سيستمر في تتبع كل شيء.",
+    "أوقف لقطات Legion لهذا المشروع. ستفقد ميزة التراجع/الإعادة لتعديلات Legion، لكن git سيستمر في تتبع كل شيء.",
 
   // Edit-tool header and shell-tool section labels
   "ui.messagePart.openInDiffViewer": "فتح في عارض الفروقات",

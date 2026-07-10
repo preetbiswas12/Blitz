@@ -146,14 +146,14 @@ async function backupAndStripLegacy(file: string, source: string) {
 }
 
 async function opencodeFiles(input: { directories: string[]; cwd: string }) {
-  // kilocode_change start: use blitx directory everywhere
+  // kilocode_change start: use Legion directory everywhere
   const project = Flag.KILO_DISABLE_PROJECT_CONFIG
     ? []
-    : await Filesystem.findUp(["blitx.json", "blitx.jsonc"], input.cwd, undefined, { rootFirst: true })
-  const files = [...project, ...ConfigPaths.fileInDirectory(Global.Path.config, "blitx")]
+    : await Filesystem.findUp(["legion.json", "legion.jsonc"], input.cwd, undefined, { rootFirst: true })
+  const files = [...project, ...ConfigPaths.fileInDirectory(Global.Path.config, "legion")]
   // kilocode_change end
   for (const dir of unique(input.directories)) {
-    files.push(...ConfigPaths.fileInDirectory(dir, "blitx"))
+    files.push(...ConfigPaths.fileInDirectory(dir, "legion"))
   }
   if (Flag.KILO_CONFIG) files.push(Flag.KILO_CONFIG)
 

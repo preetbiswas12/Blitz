@@ -303,7 +303,7 @@ export const ProvidersLoginCommand = effectCmd({
   builder: (yargs) =>
     yargs
       .positional("url", {
-        describe: "blitx auth provider",
+        describe: "legion auth provider",
         type: "string",
       })
       .option("provider", {
@@ -455,7 +455,7 @@ export const ProvidersLoginCommand = effectCmd({
       }
 
       yield* Prompt.log.warn(
-        `This only stores a credential for ${provider} - you will need configure it in blitx.json, check the docs for examples.`, // kilocode_change
+        `This only stores a credential for ${provider} - you will need configure it in legion.json, check the docs for examples.`, // kilocode_change
       )
     }
 
@@ -464,7 +464,7 @@ export const ProvidersLoginCommand = effectCmd({
         "Amazon Bedrock authentication priority:\n" +
           "  1. Bearer token (AWS_BEARER_TOKEN_BEDROCK or /connect)\n" +
           "  2. AWS credential chain (profile, access keys, IAM roles, EKS IRSA)\n\n" +
-          "Configure via blitx.json options (profile, region, endpoint) or\n" + // kilocode_change
+          "Configure via legion.json options (profile, region, endpoint) or\n" + // kilocode_change
           "AWS environment variables (AWS_PROFILE, AWS_REGION, AWS_ACCESS_KEY_ID, AWS_WEB_IDENTITY_TOKEN_FILE).",
       )
     }
@@ -475,7 +475,7 @@ export const ProvidersLoginCommand = effectCmd({
 
     if (["cloudflare", "cloudflare-ai-gateway"].includes(provider)) {
       yield* Prompt.log.info(
-        "Cloudflare AI Gateway can be configured with CLOUDFLARE_GATEWAY_ID, CLOUDFLARE_ACCOUNT_ID, and CLOUDFLARE_API_TOKEN environment variables. Read more: https://blitx.ai/docs/ai-providers/cloudflare", // kilocode_change
+        "Cloudflare AI Gateway can be configured with CLOUDFLARE_GATEWAY_ID, CLOUDFLARE_ACCOUNT_ID, and CLOUDFLARE_API_TOKEN environment variables. Read more: https://legion.ai/docs/ai-providers/cloudflare", // kilocode_change
       )
     }
 

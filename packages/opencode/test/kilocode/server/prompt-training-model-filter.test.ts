@@ -37,7 +37,7 @@ function record(input: unknown): input is Record<string, unknown> {
 
 function models(input: unknown, key: "all" | "providers") {
   if (!record(input) || !Array.isArray(input[key])) return []
-  const kilo = input[key].find((provider) => record(provider) && provider.id === "blitx")
+  const kilo = input[key].find((provider) => record(provider) && provider.id === "legion")
   if (!record(kilo) || !record(kilo.models)) return []
   return Object.keys(kilo.models)
 }
@@ -76,7 +76,7 @@ it.live(
           config: {
             formatter: false,
             lsp: false,
-            enabled_providers: ["blitx"],
+            enabled_providers: ["legion"],
             hide_prompt_training_models: true,
             provider: { kilo: { options: { baseURL } } },
           },

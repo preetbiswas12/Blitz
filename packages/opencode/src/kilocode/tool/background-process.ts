@@ -3,7 +3,7 @@ import { Tool } from "@/tool/tool"
 import { AppFileSystem } from "@opencode-ai/core/filesystem"
 import { containsPath } from "@/project/instance-context"
 import { InstanceState } from "@/effect/instance-state"
-import { BlitxSession } from "@/kilocode/session"
+import { LegionSession} from "@/kilocode/session"
 import { SessionID } from "@/session/schema"
 import { Effect, Schema } from "effect"
 import { enabled as sandboxed } from "@legion/sandbox"
@@ -159,7 +159,7 @@ export const BackgroundProcessTool = Tool.define<typeof Params, Meta, never, "ba
 
         const command = params.command?.trim()
         if (!command) return invalid(params.action, "Missing command")
-        const parent = params.inherit ? BlitxSession.resolveParent(ctx.sessionID) : undefined
+        const parent = params.inherit ? LegionSessionresolveParent(ctx.sessionID) : undefined
         const parentID = parent ? SessionID.make(parent) : undefined
         if (params.inherit && !parentID) return invalid(params.action, "inherit requires a subagent session")
         const err = pattern(params.ready)

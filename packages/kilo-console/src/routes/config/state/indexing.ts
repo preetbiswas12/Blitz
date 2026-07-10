@@ -42,7 +42,7 @@ export function clean(input: IndexingConfig): IndexingConfig {
 export function providerPatch(provider: IndexingConfig["provider"] | "", model?: string): IndexingConfig {
   return {
     provider: provider || undefined,
-    model: provider === "blitx" ? model || undefined : undefined,
+    model: provider === "legion" ? model || undefined : undefined,
     dimension: undefined,
   }
 }

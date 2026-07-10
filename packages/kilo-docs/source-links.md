@@ -105,40 +105,40 @@
   <!-- packages/opencode/src/cli/cmd/github.ts -->
   <!-- packages/opencode/src/mcp/oauth-provider.ts -->
   <!-- packages/opencode/src/session/network.ts -->
-- <https://blitx.ai/>
+- <https://legion.ai/>
   <!-- packages/opencode/src/cli/cmd/generate.ts -->
   <!-- packages/opencode/src/kilocode/server/httpapi/public.ts -->
   <!-- packages/opencode/src/provider/provider.ts -->
-- <https://blitx.ai/cli/install>
+- <https://legion.ai/cli/install>
   <!-- packages/opencode/src/kilocode/installation/index.ts -->
-- <https://blitx.ai/discord>
+- <https://legion.ai/discord>
   <!-- packages/kilo-vscode/webview-ui/src/components/chat/FeedbackDialog.tsx -->
   <!-- packages/kilo-vscode/webview-ui/src/components/settings/AboutKiloCodeTab.tsx -->
-- <https://blitx.ai/docs>
+- <https://legion.ai/docs>
   <!-- packages/kilo-vscode/webview-ui/src/hooks/useSlashCommand.ts -->
   <!-- packages/opencode/src/kilocode/cli/cmd/tui/app.tsx -->
-- <https://blitx.ai/docs/ai-providers/cloudflare>
+- <https://legion.ai/docs/ai-providers/cloudflare>
   <!-- packages/opencode/src/cli/cmd/providers.ts -->
-- <https://blitx.ai/docs/ai-providers#custom-provider>
+- <https://legion.ai/docs/ai-providers#custom-provider>
   <!-- packages/kilo-vscode/webview-ui/src/components/settings/CustomProviderDialog.tsx -->
-- <https://blitx.ai/docs/automate/mcp/what-is-mcp>
+- <https://legion.ai/docs/automate/mcp/what-is-mcp>
   <!-- packages/kilo-vscode/webview-ui/src/components/marketplace/InstallModal.tsx -->
-- <https://blitx.ai/docs/code-with-ai/platforms/vscode/whats-new>
+- <https://legion.ai/docs/code-with-ai/platforms/vscode/whats-new>
   <!-- packages/kilo-vscode/webview-ui/src/components/migration/MigrationWizard.tsx -->
-- <https://blitx.ai/docs/customize/custom-subagents>
+- <https://legion.ai/docs/customize/custom-subagents>
   <!-- packages/opencode/src/config/config.ts -->
-- <https://blitx.ai/docs/customize/marketplace>
+- <https://legion.ai/docs/customize/marketplace>
   <!-- packages/kilo-vscode/webview-ui/src/components/marketplace/InstallModal.tsx -->
   <!-- packages/kilo-vscode/webview-ui/src/components/marketplace/MarketplaceListView.tsx -->
-- <https://blitx.ai/docs/customize/workflows>
+- <https://legion.ai/docs/customize/workflows>
   <!-- packages/opencode/src/config/config.ts -->
-- <https://blitx.ai/gateway>
+- <https://legion.ai/gateway>
   <!-- packages/opencode/src/kilocode/cli/cmd/tui/component/dialog-provider.tsx -->
-- <https://blitx.ai/pricing>
+- <https://legion.ai/pricing>
   <!-- packages/opencode/src/cli/cmd/tui/component/dialog-retry-action.tsx -->
-- <https://blitx.ai/pricing/kilo-pass>
+- <https://legion.ai/pricing/kilo-pass>
   <!-- packages/kilo-vscode/webview-ui/src/components/profile/ProfileView.tsx -->
-- <https://blitx.ai/support>
+- <https://legion.ai/support>
   <!-- packages/kilo-vscode/webview-ui/src/components/chat/FeedbackDialog.tsx -->
   <!-- packages/kilo-vscode/webview-ui/src/components/settings/AboutKiloCodeTab.tsx -->
 - <https://kilocode.ai>

@@ -56,8 +56,8 @@ export namespace KilocodeConfigSources {
 
   type Pending = Omit<Source, "order">
 
-  const roots = [".kilocode", ".blitx"] as const
-  const global = ["config.json", "blitx.json", "blitx.jsonc", "opencode.json", "opencode.jsonc"] as const
+  const roots = [".kilocode", ".legion"] as const
+  const global = ["config.json", "legion.json", "legion.jsonc", "opencode.json", "opencode.jsonc"] as const
 
   export async function list(input: Input): Promise<Result> {
     const project = Flag.KILO_DISABLE_PROJECT_CONFIG ? [] : await projectSources(input)
@@ -135,9 +135,9 @@ export namespace KilocodeConfigSources {
   async function configDirSources(input: Input): Promise<Pending[]> {
     const project = await Filesystem.findUp([...roots], input.directory, input.worktree)
     const home = await Filesystem.findUp([...roots], Global.Path.home, Global.Path.home)
-    const env = Flag.BLITX_CONFIG_DIR ? [Flag.BLITX_CONFIG_DIR] : []
+    const env = Flag.LEGION_CONFIG_DIR ? [Flag.LEGION_CONFIG_DIR] : []
     const dirs = unique([Global.Path.config, ...project, ...home, ...env]).filter((dir) =>
-      KilocodeConfig.isConfigDir(dir, Flag.BLITX_CONFIG_DIR),
+      KilocodeConfig.isConfigDir(dir, Flag.LEGION_CONFIG_DIR),
     )
 
     const result: Pending[] = []
@@ -162,7 +162,7 @@ export namespace KilocodeConfigSources {
   }
 
   function dirScope(dir: string, input: { project: string[]; home: string[] }): Scope {
-    if (dir === Flag.BLITX_CONFIG_DIR) return "env"
+    if (dir === Flag.LEGION_CONFIG_DIR) return "env"
     if (input.project.includes(dir)) return "project"
     if (input.home.includes(dir)) return "global"
     return "global"
@@ -181,13 +181,13 @@ export namespace KilocodeConfigSources {
         reason: "Inline config content from the process environment; value is not exposed.",
       })
     }
-    if (Flag.BLITX_CONFIG_DIR) {
+    if (Flag.LEGION_CONFIG_DIR) {
       sources.push({
         kind: "runtime-env",
         scope: "env",
-        label: "BLITX_CONFIG_DIR",
-        source: "BLITX_CONFIG_DIR",
-        path: Flag.BLITX_CONFIG_DIR,
+        label: "LEGION_CONFIG_DIR",
+        source: "LEGION_CONFIG_DIR",
+        path: Flag.LEGION_CONFIG_DIR,
         exists: true,
         editable: false,
         reason: "Adds an extra config directory to the load chain.",
@@ -213,11 +213,11 @@ export namespace KilocodeConfigSources {
       {
         kind: "cloud-org",
         scope: "cloud",
-        label: "Blitx Cloud organization config",
+        label: "Legion Cloud organization config",
         source: `${account.url}/api/config`,
         exists: true,
         editable: false,
-        reason: "Active organization config is managed by Blitx Cloud; values are not exposed here.",
+        reason: "Active organization config is managed by Legion Cloud; values are not exposed here.",
       },
     ]
   }

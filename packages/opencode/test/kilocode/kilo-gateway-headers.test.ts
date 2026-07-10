@@ -1,10 +1,10 @@
 import { describe, it, expect, afterEach, beforeEach } from "bun:test"
 
 const HEADER_FEATURE = "X-Kilo-Feature"
-const ENV_FEATURE = "BLITX_FEATURE"
+const ENV_FEATURE = "LEGION_FEATURE"
 const ENV_EDITOR_NAME = "KILO_EDITOR_NAME"
 const ENV_VERSION = "KILOCODE_VERSION"
-const DEFAULT_EDITOR_NAME = "blitx"
+const DEFAULT_EDITOR_NAME = "legion"
 
 function getFeatureHeader(): string | undefined {
   const value = process.env[ENV_FEATURE]

@@ -12,7 +12,7 @@ type Provider = {
   options?: Record<string, unknown>
 }
 
-export type BlitxIndexingAuth = {
+export type LegionIndexingAuth = {
   apiKey?: string
   baseUrl?: string
   organizationId?: string
@@ -66,12 +66,12 @@ function hasOtherProvider(indexing: unknown): boolean {
   return providers.some((provider) => value(cfg[provider]))
 }
 
-export function resolveBlitxIndexingAuth(input: {
+export function resolveLegionIndexingAuth(input: {
   config?: unknown
   provider?: Provider
   auth?: Auth
   env?: Env
-}): BlitxIndexingAuth {
+}): LegionIndexingAuth {
   const config = record(input.config)
   const options = record(record(config.provider).kilo)
   const provider = input.provider ?? record(input.provider)
@@ -98,20 +98,20 @@ export function resolveBlitxIndexingAuth(input: {
   }
 }
 
-export function hasBlitxIndexingAuth(input: Parameters<typeof resolveBlitxIndexingAuth>[0]): boolean {
-  return !!resolveBlitxIndexingAuth(input).apiKey
+export function hasLegionIndexingAuth(input: Parameters<typeof resolveLegionIndexingAuth>[0]): boolean {
+  return !!resolveLegionIndexingAuth(input).apiKey
 }
 
-export function shouldDefaultIndexingToBlitx(indexing: unknown, auth: BlitxIndexingAuth): boolean {
+export function shouldDefaultIndexingToLegion(indexing: unknown, auth: LegionIndexingAuth): boolean {
   const cfg = record(indexing)
   if (cfg.provider !== undefined || !auth.apiKey) return false
   return !hasOtherProvider(cfg)
 }
 
-export function indexingWithBlitxDefault(
+export function indexingWithLegionDefault(
   indexing: IndexingConfig | undefined,
-  auth: BlitxIndexingAuth,
+  auth: LegionIndexingAuth,
 ): IndexingConfig | undefined {
-  if (!shouldDefaultIndexingToBlitx(indexing, auth)) return indexing
-  return { ...indexing, provider: "blitx" }
+  if (!shouldDefaultIndexingToLegion(indexing, auth)) return indexing
+  return { ...indexing, provider: "legion" }
 }

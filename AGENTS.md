@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Blitx CLI is an open source AI coding agent that generates code from natural language, automates tasks, and supports 500+ AI models.
+Legion CLI is an open source AI coding agent that generates code from natural language, automates tasks, and supports 500+ AI models.
 
 - ALWAYS USE PARALLEL TOOLS WHEN APPLICABLE.
 - The default branch in this repo is `main`.
@@ -14,12 +14,12 @@ Blitx CLI is an open source AI coding agent that generates code from natural lan
 - **Typecheck**: `bun turbo typecheck` (uses `tsgo`, not `tsc`).
 - **Test**: `bun test` from `packages/opencode/` (NOT from root -- root blocks tests)
 - **Single test**: `bun test ./test/tool/tool-define.test.ts` from `packages/opencode/`
-- **CLI build artifact size check**: after `bun run script/build.ts --single --skip-install` in `packages/opencode/`, use `du -h dist/*/*/bin/blitx` (scoped package output lives under `dist/@legion/`)
+- **CLI build artifact size check**: after `bun run script/build.ts --single --skip-install` in `packages/opencode/`, use `du -h dist/*/*/bin/Legion` (scoped package output lives under `dist/@legion/`)
 - **SDK regen**: After changing server endpoints in `packages/opencode/src/server/`, run `./script/generate.ts` from root to regenerate `packages/sdk/js/`
-- **opencode annotation check**: `bun run script/check-opencode-annotations.ts` from repo root. CI runs this on PRs touching `packages/opencode/` — every Blitx-specific change in shared opencode files must be annotated with `kilocode_change` markers. Exempt paths (no markers needed): `packages/opencode/src/kilocode/`, `packages/opencode/test/kilocode/`, and any path containing `kilocode` in the name.
-- **Effect facade ratchet**: Do not add runtime-backed Promise facades to shared `packages/opencode/src` Effect services; use service dependencies, `AppRuntime`, or Blitx-owned boundaries. Run `bun run script/check-opencode-promise-facades.ts` when touching service adapters.
+- **opencode annotation check**: `bun run script/check-opencode-annotations.ts` from repo root. CI runs this on PRs touching `packages/opencode/` — every Legion-specific change in shared opencode files must be annotated with `kilocode_change` markers. Exempt paths (no markers needed): `packages/opencode/src/kilocode/`, `packages/opencode/test/kilocode/`, and any path containing `kilocode` in the name.
+- **Effect facade ratchet**: Do not add runtime-backed Promise facades to shared `packages/opencode/src` Effect services; use service dependencies, `AppRuntime`, or Legion-owned boundaries. Run `bun run script/check-opencode-promise-facades.ts` when touching service adapters.
 - **workflow allowlist**: `bun run script/check-workflows.ts` from repo root. CI runs this as part of the annotations workflow — any `.yml` / `.yaml` file added to or removed from `.github/workflows/` must be reflected in the hardcoded list in `script/check-workflows.ts`. Prevents upstream-merged workflows from silently starting to run in our CI.
-- **Backend/SDK programmatic testing**: see [TESTING.md](./TESTING.md) for spawning the local main-branch backend (`bun dev serve`) and driving it via `curl` — use this instead of `blitx serve` (prod binary) when testing backend fixes.
+- **Backend/SDK programmatic testing**: see [TESTING.md](./TESTING.md) for spawning the local main-branch backend (`bun dev serve`) and driving it via `curl` — use this instead of `Legion serve` (prod binary) when testing backend fixes.
 
 ## Quality Checks
 
@@ -36,7 +36,7 @@ Never run root `bun test`; the root script prints `do not run tests from root` a
 
 | Product | Package | Description |
 |---|---|---|
-| Blitx CLI | `packages/opencode/` | Core engine. TUI, `blitx run`, `blitx serve`. Fork of upstream OpenCode. |
+| Legion CLI | `packages/opencode/` | Core engine. TUI, `Legion run`, `Legion serve`. Fork of upstream OpenCode. |
 
 ## Monorepo Structure
 
@@ -46,8 +46,8 @@ Turborepo + Bun workspaces. The packages you'll work with most:
 |---|---|---|
 | `packages/opencode/` | `@legion/cli` | Core CLI -- agents, tools, sessions, server, TUI. This is where most work happens. |
 | `packages/sdk/js/` | `@legion/sdk` | Auto-generated TypeScript SDK (client for the server API). Do not edit `src/gen/` by hand. |
-| `packages/kilo-vscode/` | `blitx-code` | VS Code extension with sidebar chat + Agent Manager. See its own `AGENTS.md` for details. |
-| `packages/kilo-gateway/` | `@legion/kilo-gateway` | Blitx auth, provider routing, API integration |
+| `packages/kilo-vscode/` | `Legion-code` | VS Code extension with sidebar chat + Agent Manager. See its own `AGENTS.md` for details. |
+| `packages/kilo-gateway/` | `@legion/kilo-gateway` | Legion auth, provider routing, API integration |
 | `packages/kilo-telemetry/` | `@legion/kilo-telemetry` | PostHog analytics + OpenTelemetry |
 | `packages/kilo-i18n/` | `@legion/kilo-i18n` | Internationalization / translations |
 | `packages/kilo-ui/` | `@legion/kilo-ui` | SolidJS component library shared by the extension webview and docs screenshot stories |
@@ -115,7 +115,7 @@ Do not pad markdown table cells for column alignment. Use the compact form with 
 ```
 | Command | What it runs |
 |---|---|
-| `blitx serve` | The prod CLI on `$PATH`. |
+| `Legion serve` | The prod CLI on `$PATH`. |
 ```
 
 Do **not** right-pad cells to line up columns:
@@ -123,7 +123,7 @@ Do **not** right-pad cells to line up columns:
 ```
 | Command                       | What it runs             |
 | ----------------------------- | ------------------------ |
-| `blitx serve`                  | The prod CLI on `$PATH`. |
+| `Legion serve`                  | The prod CLI on `$PATH`. |
 ```
 
 Padding makes every content change rewrite the entire table, which blows up diffs on untouched rows. Markdown files are excluded from prettier (see `.prettierignore`) so running the formatter won't re-pad them, and `script/check-md-table-padding.ts` enforces the rule in CI. Run `bun run script/check-md-table-padding.ts --fix` to auto-rewrite padded tables.
@@ -148,7 +148,7 @@ When creating or managing GitHub issues via `gh`, load `.kilo/skills/gh-issues/S
 
 ## Fork Merge Process
 
-Blitx CLI is a fork of [opencode](https://github.com/anomalyco/opencode).
+Legion CLI is a fork of [opencode](https://github.com/anomalyco/opencode).
 
 **Very important**: when planning or coding, update shared files with OpenCode as last resort! Everything is shared code from OpenCode, except folders that contain `kilo` in the name or have a parent directory that contains `kilo` in the name. Example of kilo specific folders: `packages/opencode/src/kilocode/` and `packages/kilo-docs/`. Always look for ways to implement your feature or fix in a way that minimizes changes to shared code.
 
@@ -156,10 +156,10 @@ Blitx CLI is a fork of [opencode](https://github.com/anomalyco/opencode).
 
 We regularly merge upstream changes from opencode. To minimize merge conflicts and keep the sync process smooth:
 
-1. **Prefer `kilocode` directories** - Place Blitx-specific code in dedicated directories whenever possible:
-   - `packages/opencode/src/kilocode/` - Blitx-specific source code
-   - `packages/opencode/test/kilocode/` - Blitx-specific tests
-   - `packages/kilo-gateway/` - The Blitx Gateway package
+1. **Prefer `kilocode` directories** - Place Legion-specific code in dedicated directories whenever possible:
+   - `packages/opencode/src/kilocode/` - Legion-specific source code
+   - `packages/opencode/test/kilocode/` - Legion-specific tests
+   - `packages/kilo-gateway/` - The Legion Gateway package
 
 2. **Minimize changes to shared files** - When you must modify files that exist in upstream opencode, keep changes as small and isolated as possible.
 
@@ -178,13 +178,13 @@ The goal is to keep our diff from upstream as small as possible, making regular 
 
 ### Kilocode Change Markers
 
-When editing shared upstream files, mark Blitx-specific lines with `kilocode_change` comments so future merges can find them. The basic forms are:
+When editing shared upstream files, mark Legion-specific lines with `kilocode_change` comments so future merges can find them. The basic forms are:
 
 - Single line: `const value = 42 // kilocode_change`
 - Multi-line block: wrap with `// kilocode_change start` / `// kilocode_change end`
 - New file in a shared path: `// kilocode_change - new file` at the top
 - JSX/TSX: use `{/* kilocode_change */}` (and `{/* kilocode_change start */}` / `end`)
 
-Markers are NOT needed in paths that contain `kilocode` in the name (e.g. `packages/opencode/src/kilocode/`, `packages/opencode/test/kilocode/`) — these are entirely Blitx additions and won't conflict with upstream.
+Markers are NOT needed in paths that contain `kilocode` in the name (e.g. `packages/opencode/src/kilocode/`, `packages/opencode/test/kilocode/`) — these are entirely Legion additions and won't conflict with upstream.
 
-For decision rules on when to keep changes inline vs. extract Blitx logic, marker placement guidance, and verification commands, load `.kilo/skills/kilocode-merge-minimizer/SKILL.md`.
+For decision rules on when to keep changes inline vs. extract Legion logic, marker placement guidance, and verification commands, load `.kilo/skills/kilocode-merge-minimizer/SKILL.md`.

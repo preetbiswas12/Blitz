@@ -28,8 +28,8 @@ const auth = Layer.mock(Auth.Service)({
 
 function layer() {
   const models = Layer.succeed(
-    ModelCache.BlitxModelsService,
-    ModelCache.BlitxModelsService.of({
+    ModelCache.LegionModelsService,
+    ModelCache.LegionModelsService.of({
       fetch: () => (error ? Effect.fail(error) : Effect.succeed(result)),
     }),
   )
@@ -51,7 +51,7 @@ beforeEach(() => {
 it.live("failedProviders returns empty array when no fetch has occurred", () =>
   ModelCache.Service.use((cache) =>
     Effect.gen(function* () {
-      expect(yield* cache.failedProviders()).not.toContain("blitx")
+      expect(yield* cache.failedProviders()).not.toContain("legion")
     }),
   ).pipe(Effect.provide(layer())),
 )
@@ -75,9 +75,9 @@ it.live("getFailure returns undefined when fetch succeeds", () =>
     }
     yield* ModelCache.Service.use((cache) =>
       Effect.gen(function* () {
-        yield* cache.fetch("blitx")
-        expect(yield* cache.getFailure("blitx")).toBeUndefined()
-        expect(yield* cache.failedProviders()).not.toContain("blitx")
+        yield* cache.fetch("legion")
+        expect(yield* cache.getFailure("legion")).toBeUndefined()
+        expect(yield* cache.failedProviders()).not.toContain("legion")
       }),
     ).pipe(Effect.provide(layer()))
   }),
@@ -88,9 +88,9 @@ it.live("failedProviders includes provider after auth error", () =>
     result = { models: {}, error: "unauthorized" }
     yield* ModelCache.Service.use((cache) =>
       Effect.gen(function* () {
-        yield* cache.fetch("blitx")
-        expect(yield* cache.failedProviders()).toContain("blitx")
-        expect(yield* cache.getFailure("blitx")).toBe("unauthorized")
+        yield* cache.fetch("legion")
+        expect(yield* cache.failedProviders()).toContain("legion")
+        expect(yield* cache.getFailure("legion")).toBe("unauthorized")
       }),
     ).pipe(Effect.provide(layer()))
   }),
@@ -101,7 +101,7 @@ it.live("gateway rejection remains recoverable through the Effect error channel"
     error = new Error("gateway failed")
     yield* ModelCache.Service.use((cache) =>
       Effect.gen(function* () {
-        const models = yield* cache.fetch("blitx").pipe(Effect.catch(() => Effect.succeed({})))
+        const models = yield* cache.fetch("legion").pipe(Effect.catch(() => Effect.succeed({})))
         expect(models).toEqual({})
       }),
     ).pipe(Effect.provide(layer()))
@@ -113,11 +113,11 @@ it.live("clear removes failure state", () =>
     result = { models: {}, error: "network" }
     yield* ModelCache.Service.use((cache) =>
       Effect.gen(function* () {
-        yield* cache.fetch("blitx")
-        expect(yield* cache.failedProviders()).toContain("blitx")
-        yield* cache.clear("blitx")
-        expect(yield* cache.failedProviders()).not.toContain("blitx")
-        expect(yield* cache.getFailure("blitx")).toBeUndefined()
+        yield* cache.fetch("legion")
+        expect(yield* cache.failedProviders()).toContain("legion")
+        yield* cache.clear("legion")
+        expect(yield* cache.failedProviders()).not.toContain("legion")
+        expect(yield* cache.getFailure("legion")).toBeUndefined()
       }),
     ).pipe(Effect.provide(layer()))
   }),
@@ -128,8 +128,8 @@ it.live("failure state is cleared when subsequent refresh succeeds", () =>
     result = { models: {}, error: "unauthorized" }
     yield* ModelCache.Service.use((cache) =>
       Effect.gen(function* () {
-        yield* cache.fetch("blitx")
-        expect(yield* cache.failedProviders()).toContain("blitx")
+        yield* cache.fetch("legion")
+        expect(yield* cache.failedProviders()).toContain("legion")
         result = {
           models: {
             "test/model": {
@@ -145,9 +145,9 @@ it.live("failure state is cleared when subsequent refresh succeeds", () =>
             },
           },
         }
-        yield* cache.refresh("blitx")
-        expect(yield* cache.failedProviders()).not.toContain("blitx")
-        expect(yield* cache.getFailure("blitx")).toBeUndefined()
+        yield* cache.refresh("legion")
+        expect(yield* cache.failedProviders()).not.toContain("legion")
+        expect(yield* cache.getFailure("legion")).toBeUndefined()
       }),
     ).pipe(Effect.provide(layer()))
   }),

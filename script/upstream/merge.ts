@@ -2,7 +2,7 @@
 /**
  * Upstream Merge Orchestration Script
  *
- * Automates the process of merging upstream opencode changes into Blitx.
+ * Automates the process of merging upstream opencode changes into Legion.
  *
  * Usage:
  *   bun run script/upstream/merge.ts [options]
@@ -184,7 +184,7 @@ function logWorktrees(refs: worktree.RefInfo, input: worktree.RefInput, baseName
   logger.info("Agent prompt:")
   logger.info("  Use these references while resolving the merge:")
   logger.info(`  - upstream opencode: ${refs.opencode}`)
-  logger.info(`  - Blitx base main: ${refs.main}`)
+  logger.info(`  - Legion base main: ${refs.main}`)
   logger.info(`  - automated merge snapshot: ${refs.auto}`)
 }
 
@@ -251,7 +251,7 @@ async function main() {
     logger.setVerbose(true)
   }
 
-  logger.header("Blitx Upstream Merge Tool")
+  logger.header("Legion Upstream Merge Tool")
 
   // Step 1: Validate environment
   logger.step(1, 8, "Validating environment...")
@@ -376,7 +376,7 @@ async function main() {
     conflictReport.recommendations.push(`${i18nCount} i18n files will be auto-transformed`)
   }
   if (keepOursCount > 0) {
-    conflictReport.recommendations.push(`${keepOursCount} files will keep Blitx's version`)
+    conflictReport.recommendations.push(`${keepOursCount} files will keep Legion's version`)
   }
   if (codemodCount > 0) {
     conflictReport.recommendations.push(`${codemodCount} files will be processed by codemods`)
@@ -425,7 +425,7 @@ async function main() {
   const backupBranch = await createBackupBranch(config.baseBranch)
   logger.info(`Created backup branch: ${backupBranch}`)
 
-  // Create Blitx merge branch
+  // Create Legion merge branch
   const kiloBranch = `${author}/kilo-opencode-${targetVersion.tag}`
   const kiloBackup = await git.backupAndDeleteBranch(kiloBranch)
   if (kiloBackup) {
@@ -436,7 +436,7 @@ async function main() {
   if (options.push) {
     await git.push(config.originRemote, kiloBranch, true)
   }
-  logger.info(`Created Blitx branch: ${kiloBranch}`)
+  logger.info(`Created Legion branch: ${kiloBranch}`)
 
   // Create opencode compatibility branch from upstream commit
   const opencodeBranch = `${author}/opencode-${targetVersion.tag}`
@@ -458,10 +458,10 @@ async function main() {
   }
 
   // Step 6: Apply ALL transformations to opencode branch (pre-merge)
-  // This reduces conflicts by transforming upstream code to Blitx conventions BEFORE merging
+  // This reduces conflicts by transforming upstream code to Legion conventions BEFORE merging
   logger.step(6, 8, "Applying transformations to opencode branch (pre-merge)...")
 
-  logger.info("Removing files skipped in Blitx...")
+  logger.info("Removing files skipped in Legion...")
   const skips = await skipFiles({ dryRun: false, verbose: options.verbose, force: true })
   const count = skips.filter((r) => r.action === "removed").length
   if (count > 0) {
@@ -473,8 +473,8 @@ async function main() {
   const nameResults = await transformPackageNames({ dryRun: false, verbose: options.verbose })
   logger.success(`Transformed ${nameResults.length} files`)
 
-  // 6b. Preserve Blitx versions
-  logger.info("Preserving Blitx versions...")
+  // 6b. Preserve Legion versions
+  logger.info("Preserving Legion versions...")
   const versionResults = await preserveAllVersions({
     dryRun: false,
     verbose: options.verbose,
@@ -482,12 +482,12 @@ async function main() {
   })
   logger.success(`Preserved versions in ${versionResults.length} files`)
 
-  // 6c. Transform i18n files (OpenCode -> Blitx branding)
+  // 6c. Transform i18n files (OpenCode -> Legion branding)
   logger.info("Transforming i18n files...")
   const i18nPreResults = await transformAllI18n({ dryRun: false, verbose: options.verbose })
   const i18nPreCount = i18nPreResults.filter((r) => r.replacements > 0).length
   if (i18nPreCount > 0) {
-    logger.success(`Transformed ${i18nPreCount} i18n files with Blitx branding`)
+    logger.success(`Transformed ${i18nPreCount} i18n files with Legion branding`)
   }
 
   // 6d. Transform branding-only files (take-theirs patterns)
@@ -495,10 +495,10 @@ async function main() {
   const brandingResults = await transformAllTakeTheirs({ dryRun: false, verbose: options.verbose })
   const brandingCount = brandingResults.filter((r) => r.action === "transformed" && r.replacements > 0).length
   if (brandingCount > 0) {
-    logger.success(`Transformed ${brandingCount} files with Blitx branding`)
+    logger.success(`Transformed ${brandingCount} files with Legion branding`)
   }
 
-  // 6f. Transform package.json files (names, deps, Blitx injections)
+  // 6f. Transform package.json files (names, deps, Legion injections)
   logger.info("Transforming package.json files...")
   const pkgPreResults = await transformAllPackageJson({ dryRun: false, verbose: options.verbose })
   const pkgPreCount = pkgPreResults.filter((r) => r.action === "transformed" && r.changes.length > 0).length
@@ -530,21 +530,21 @@ async function main() {
     logger.success(`Transformed ${webPreCount} web/docs files`)
   }
 
-  // 6j. Reset keep-ours files to Blitx's version
-  logger.info("Resetting Blitx-specific files...")
+  // 6j. Reset keep-ours files to Legion's version
+  logger.info("Resetting Legion-specific files...")
   const keepOursResults = await resetToOurs(config.keepOurs, { dryRun: false, verbose: options.verbose })
-  logger.success(`Reset ${keepOursResults.length} files to Blitx's version`)
+  logger.success(`Reset ${keepOursResults.length} files to Legion's version`)
 
   // 6k. Record the last merged upstream tag so future automation can find it
   // without walking ls-remote + isAncestor for every tag.
   const versionFile = await writeVersion(targetVersion.tag)
   logger.success(`Recorded ${targetVersion.tag} in ${versionFile.split("/").pop()}`)
 
-  // Clean untracked build artifacts from Blitx-specific directories.
+  // Clean untracked build artifacts from Legion-specific directories.
   // These packages don't exist in upstream, so their .gitignore files are absent
   // on the opencode branch. Artifacts like bin/, out/, .next/ etc. would otherwise
   // be picked up by the git add -A below.
-  logger.info("Cleaning Blitx-specific directory artifacts...")
+  logger.info("Cleaning Legion-specific directory artifacts...")
   await git.cleanDirectories(config.kiloDirectories)
 
   // Commit all transformations
@@ -560,13 +560,13 @@ async function main() {
   }
   logger.success("Committed pre-merge transformations")
 
-  // Step 7: Merge into Blitx branch
-  logger.step(7, 8, "Merging into Blitx branch...")
+  // Step 7: Merge into Legion branch
+  logger.step(7, 8, "Merging into Legion branch...")
 
   await git.checkout(kiloBranch)
   if (prior) {
     const linked = await git.recordAncestor(targetVersion.commit, `merge: record upstream ${targetVersion.tag}`)
-    if (linked) logger.info(`Recorded upstream ${targetVersion.tag} as Blitx branch ancestry`)
+    if (linked) logger.info(`Recorded upstream ${targetVersion.tag} as Legion branch ancestry`)
   }
   const mergeResult = await git.merge(opencodeBranch)
 
@@ -586,8 +586,8 @@ async function main() {
     // Since we applied all branding transforms pre-merge, remaining conflicts should be minimal.
     // These are likely files with kilocode_change markers or actual logic differences.
 
-    // Step 7a: Skip files that shouldn't exist in Blitx
-    logger.info("Removing files that shouldn't exist in Blitx...")
+    // Step 7a: Skip files that shouldn't exist in Legion
+    logger.info("Removing files that shouldn't exist in Legion...")
     const skipResults = await skipFiles({ dryRun: false, verbose: options.verbose })
     const skippedCount = skipResults.filter((r) => r.action === "removed").length
     if (skippedCount > 0) {
@@ -595,11 +595,11 @@ async function main() {
     }
 
     // Step 7b: Auto-resolve keep-ours conflicts
-    logger.info("Keeping Blitx-specific files...")
+    logger.info("Keeping Legion-specific files...")
     const resolved = await keepOursFiles({ dryRun: false, verbose: options.verbose })
     const autoResolved = resolved.filter((r) => r.action === "kept")
     if (autoResolved.length > 0) {
-      logger.success(`Auto-resolved ${autoResolved.length} conflicts (kept Blitx's version)`)
+      logger.success(`Auto-resolved ${autoResolved.length} conflicts (kept Legion's version)`)
     }
 
     // Step 7c: Try to auto-resolve remaining conflicts with post-merge transforms
@@ -786,7 +786,7 @@ async function main() {
       if (flaggedFiles.length > 0) {
         logger.warn(`${flaggedFiles.length} file(s) were flagged because they contain kilocode_change markers:`)
         logger.list(flaggedFiles)
-        logger.info("  These files have intentional Blitx-specific changes. Keep our version or merge carefully.")
+        logger.info("  These files have intentional Legion-specific changes. Keep our version or merge carefully.")
         logger.info("")
       }
       if (remaining.length > 0) {
@@ -908,7 +908,7 @@ async function main() {
   logger.header("Merge Summary")
 
   logger.info(`Upstream version: ${targetVersion.tag}`)
-  logger.info(`Blitx branch: ${kiloBranch}`)
+  logger.info(`Legion branch: ${kiloBranch}`)
   logger.info(`Opencode branch: ${opencodeBranch}`)
   logger.info(`Backup branch: ${backupBranch}`)
   logger.info(`Report: ${reportPath}`)

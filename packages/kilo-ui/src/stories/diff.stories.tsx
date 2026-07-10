@@ -1,6 +1,6 @@
 /** @jsxImportSource solid-js */
 import type { Meta, StoryObj } from "storybook-solidjs-vite"
-import { Diff } from "@blitxcode/kilo-ui/diff"
+import { Diff } from "@Legioncode/kilo-ui/diff"
 
 const meta: Meta = {
   title: "Components/Diff",

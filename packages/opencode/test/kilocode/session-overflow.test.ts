@@ -3,8 +3,8 @@ import { Schema } from "effect"
 import type { ModelMessage } from "ai"
 import { Config } from "@/config/config"
 import type { Provider } from "@/provider/provider"
-import { BlitxLLM } from "@/kilocode/session/llm"
-import { BlitxSessionOverflow } from "@/kilocode/session/overflow"
+import { LegionLLM } from "@/kilocode/session/llm"
+import { LegionSessionverflow } from "@/kilocode/session/overflow"
 import type { MessageV2 } from "@/session/message-v2"
 import { isOverflow, usable } from "@/session/overflow"
 
@@ -129,10 +129,10 @@ describe("Kilo request estimation", () => {
   test("skips output estimation when no output cap can use it", () => {
     const mdl = model({ context: 200_000, output: 32_000 })
 
-    expect(BlitxLLM.needsEstimate({ model: mdl, configured: undefined })).toBe(false)
-    expect(BlitxLLM.needsEstimate({ model: mdl, configured: 0 })).toBe(false)
-    expect(BlitxLLM.needsEstimate({ model: model({ context: 0, output: 32_000 }), configured: 32_000 })).toBe(false)
-    expect(BlitxLLM.needsEstimate({ model: mdl, configured: 32_000 })).toBe(true)
+    expect(LegionLLM.needsEstimate({ model: mdl, configured: undefined })).toBe(false)
+    expect(LegionLLM.needsEstimate({ model: mdl, configured: 0 })).toBe(false)
+    expect(LegionLLM.needsEstimate({ model: model({ context: 0, output: 32_000 }), configured: 32_000 })).toBe(false)
+    expect(LegionLLM.needsEstimate({ model: mdl, configured: 32_000 })).toBe(true)
   })
 })
 
@@ -143,7 +143,7 @@ describe("Kilo preflight compaction", () => {
     const messages = [{ role: "user" as const, content: "x".repeat(600_000) }]
 
     expect(
-      BlitxSessionOverflow.shouldCompact({
+      LegionSessionverflow.shouldCompact({
         cfg: conf,
         model: mdl,
         usable: usable({ cfg: conf, model: mdl }),
@@ -158,7 +158,7 @@ describe("Kilo preflight compaction", () => {
     const mdl = model({ context: 10_000, output: 1_000 })
 
     expect(
-      BlitxSessionOverflow.shouldCompact({
+      LegionSessionverflow.shouldCompact({
         cfg: conf,
         model: mdl,
         usable: usable({ cfg: conf, model: mdl }),
@@ -178,7 +178,7 @@ describe("Kilo preflight compaction", () => {
     const mdl = model({ context: 400_000, input: 200_000, output: 32_000 })
 
     expect(
-      BlitxSessionOverflow.shouldCompact({
+      LegionSessionverflow.shouldCompact({
         cfg: conf,
         model: mdl,
         usable: usable({ cfg: conf, model: mdl }),
@@ -211,7 +211,7 @@ describe("Kilo preflight compaction", () => {
     ] satisfies ModelMessage[]
 
     expect(
-      BlitxSessionOverflow.shouldCompact({
+      LegionSessionverflow.shouldCompact({
         cfg: conf,
         model: mdl,
         usable: usable({ cfg: conf, model: mdl }),
@@ -227,7 +227,7 @@ describe("Kilo preflight compaction", () => {
     const messages = [{ role: "user" as const, content: "x".repeat(600_000) }]
 
     expect(
-      BlitxSessionOverflow.shouldCompact({
+      LegionSessionverflow.shouldCompact({
         cfg: conf,
         model: mdl,
         usable: usable({ cfg: conf, model: mdl }),
@@ -243,7 +243,7 @@ describe("Kilo preflight compaction", () => {
     const messages = [{ role: "user" as const, content: "x".repeat(600_000) }]
 
     expect(
-      BlitxSessionOverflow.shouldCompact({
+      LegionSessionverflow.shouldCompact({
         cfg: conf,
         model: mdl,
         usable: usable({ cfg: conf, model: mdl }),
@@ -267,7 +267,7 @@ describe("Kilo preflight compaction", () => {
     ] satisfies ModelMessage[]
 
     expect(
-      BlitxSessionOverflow.shouldCompact({
+      LegionSessionverflow.shouldCompact({
         cfg: conf,
         model: mdl,
         usable: usable({ cfg: conf, model: mdl }),
@@ -285,7 +285,7 @@ describe("Kilo preflight compaction", () => {
       },
     ] satisfies ModelMessage[]
 
-    const usage = BlitxSessionOverflow.measure({ messages, tools: {} })
+    const usage = LegionSessionverflow.measure({ messages, tools: {} })
     expect(usage.normalized).toBeLessThan(100)
     expect(usage.raw).toBeGreaterThan(100_000)
   })
@@ -298,7 +298,7 @@ describe("Kilo preflight compaction", () => {
       },
     ] satisfies ModelMessage[]
 
-    const usage = BlitxSessionOverflow.measure({ messages, tools: {} })
+    const usage = LegionSessionverflow.measure({ messages, tools: {} })
     expect(usage.normalized).toBeLessThan(100)
     expect(usage.raw).toBeGreaterThan(100_000)
   })
@@ -317,7 +317,7 @@ describe("Kilo preflight compaction", () => {
     ] satisfies ModelMessage[]
 
     expect(
-      BlitxSessionOverflow.shouldCompact({
+      LegionSessionverflow.shouldCompact({
         cfg: conf,
         model: mdl,
         usable: usable({ cfg: conf, model: mdl }),

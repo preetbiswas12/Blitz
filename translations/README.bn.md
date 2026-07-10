@@ -3,25 +3,25 @@
 </p>
 
 <p align="center">
-  <a href="https://blitz.ai"><img width="250" alt="Blitz logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
+  <a href="https://legion.ai"><img width="250" alt="Legion logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
 </p>
 
 <p align="center">VS Code, JetBrains বা CLI-তে AI দিয়ে তৈরি করার জন্য ওপেন সোর্স কোডিং এজেন্ট।</p>
 
 <p align="center">
-  <a href="https://marketplace.visualstudio.com/items?itemName=blitzcode.Blitz-Code"><img src="https://raster.shields.io/badge/VS_Code_Marketplace-007ACC?style=flat&logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace" height="20"></a>
-  <a href="https://www.npmjs.com/package/@blitzcode/cli"><img alt="npm" src="https://raster.shields.io/npm/v/@blitzcode/cli?style=flat" height="20" /></a>
-  <a href="https://x.com/blitzcode"><img src="https://raster.shields.io/badge/blitzcode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="20"></a>
-  <a href="https://blog.blitz.ai"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
-  <a href="https://blitz.ai/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
-  <a href="https://www.reddit.com/r/blitzcode/"><img src="https://raster.shields.io/badge/Join%20r%2Fblitzcode-D84315?style=flat&logo=reddit&logoColor=white" alt="Reddit" height="20"></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=legioncode.legion-code"><img src="https://raster.shields.io/badge/VS_Code_Marketplace-007ACC?style=flat&logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace" height="20"></a>
+  <a href="https://www.npmjs.com/package/@legioncode/cli"><img alt="npm" src="https://raster.shields.io/npm/v/@legioncode/cli?style=flat" height="20" /></a>
+  <a href="https://x.com/legioncode"><img src="https://raster.shields.io/badge/legioncode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="20"></a>
+  <a href="https://blog.legion.ai"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
+  <a href="https://legion.ai/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
+  <a href="https://www.reddit.com/r/legioncode/"><img src="https://raster.shields.io/badge/Join%20r%2Flegioncode-D84315?style=flat&logo=reddit&logoColor=white" alt="Reddit" height="20"></a>
 </p>
 
 ![Blitz-in-VS-Code-and-CLI](https://github.com/user-attachments/assets/0536ca59-ed81-4512-9e05-d186187a1b52)
 
 ---
 
-Blitz হলো একটি AI কোডিং এজেন্ট যা আপনি যেখানে কাজ করেন সেখানেই কাজ করে: [VS Code](https://blitz.ai/landing/vs-code), [JetBrains](https://blitz.ai/features/jetbrains-native) এবং [CLI](https://blitz.ai/cli)। এটি ওপেন সোর্স এবং খোলা মূল্যনীতির। আপনি 500টির বেশি মডেল থেকে বেছে নিতে পারেন, কাজের মাঝখানে মডেল বদলাতে পারেন এবং কোনো অতিরিক্ত চার্জ ছাড়াই মডেল প্রদানকারীর রেট পরিশোধ করেন। শুরু করতে API key দরকার নেই।
+Blitz হলো একটি AI কোডিং এজেন্ট যা আপনি যেখানে কাজ করেন সেখানেই কাজ করে: [VS Code](https://legion.ai/landing/vs-code), [JetBrains](https://legion.ai/features/jetbrains-native) এবং [CLI](https://legion.ai/cli)। এটি ওপেন সোর্স এবং খোলা মূল্যনীতির। আপনি 500টির বেশি মডেল থেকে বেছে নিতে পারেন, কাজের মাঝখানে মডেল বদলাতে পারেন এবং কোনো অতিরিক্ত চার্জ ছাড়াই মডেল প্রদানকারীর রেট পরিশোধ করেন। শুরু করতে API key দরকার নেই।
 
 ### ইনস্টলেশন
 
@@ -32,7 +32,7 @@ Blitz হলো একটি AI কোডিং এজেন্ট যা আপ
 
 <br>
 
-[Blitz extension](vscode:extension/Blitzcode.Blitz-code) সরাসরি ইনস্টল করুন, অথবা [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=blitzcode.Blitz-Code) থেকে নিন। একটি অ্যাকাউন্ট তৈরি করলে GPT-5.5, Claude Opus 4.7, Claude Sonnet 4.6 এবং Gemini 3.1 Pro Preview সহ 500টির বেশি মডেলে প্রদানকারীর দামে অ্যাক্সেস পাবেন।
+[Blitz extension](vscode:extension/legioncode.legion-code) সরাসরি ইনস্টল করুন, অথবা [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=legioncode.legion-code) থেকে নিন। একটি অ্যাকাউন্ট তৈরি করলে GPT-5.5, Claude Opus 4.7, Claude Sonnet 4.6 এবং Gemini 3.1 Pro Preview সহ 500টির বেশি মডেলে প্রদানকারীর দামে অ্যাক্সেস পাবেন।
 
 </details>
 
@@ -43,19 +43,19 @@ Blitz হলো একটি AI কোডিং এজেন্ট যা আপ
 
 ```bash
 # npm
-npm install -g @blitzcode/cli
+npm install -g @legioncode/cli
 
 # curl
-curl -fsSL https://blitz.ai/cli/install | bash
+curl -fsSL https://legion.ai/cli/install | bash
 
 # pnpm
-pnpm add -g @blitzcode/cli
+pnpm add -g @legioncode/cli
 
 # bun
-bun add -g @blitzcode/cli
+bun add -g @legioncode/cli
 
 # Homebrew (macOS / Linux)
-brew install Blitz-Org/tap/kilo
+brew install Legion-Org/tap/kilo
 
 # Arch Linux (AUR)
 paru -S kilo-bin
@@ -70,7 +70,7 @@ paru -S kilo-bin
 
 <br>
 
-JetBrains Marketplace থেকে [Blitz plugin](https://plugins.jetbrains.com/plugin/28350-Blitz-code) ইনস্টল করুন, অথবা যেকোনো JetBrains IDE-তে `Settings → Plugins`-এ "Blitz" খুঁজুন।
+JetBrains Marketplace থেকে [Blitz plugin](https://plugins.jetbrains.com/plugin/28350-legion-code) ইনস্টল করুন, অথবা যেকোনো JetBrains IDE-তে `Settings → Plugins`-এ "Blitz" খুঁজুন।
 
 </details>
 
@@ -79,7 +79,7 @@ JetBrains Marketplace থেকে [Blitz plugin](https://plugins.jetbrains.com/
 
 <br>
 
-লোকাল মেশিন ছাড়াই ওয়েব থেকে [app.Blitz.ai/cloud](https://app.blitz.ai/cloud)-এ Blitz চালান।
+লোকাল মেশিন ছাড়াই ওয়েব থেকে [app.legion.ai/cloud](https://app.legion.ai/cloud)-এ Blitz চালান।
 
 </details>
 
@@ -88,7 +88,7 @@ JetBrains Marketplace থেকে [Blitz plugin](https://plugins.jetbrains.com/
 
 <br>
 
-[app.Blitz.ai/code-reviews](https://app.blitz.ai/code-reviews)-এ আপনার pull request-এ স্বয়ংক্রিয় AI code review সেট আপ করুন।
+[app.legion.ai/code-reviews](https://app.legion.ai/code-reviews)-এ আপনার pull request-এ স্বয়ংক্রিয় AI code review সেট আপ করুন।
 
 </details>
 
@@ -97,14 +97,14 @@ JetBrains Marketplace থেকে [Blitz plugin](https://plugins.jetbrains.com/
 
 <br>
 
-[app.blitz.ai/claw](https://app.blitz.ai/claw)-এ আপনার always-on AI agent চালু করুন।
+[app.legion.ai/claw](https://app.legion.ai/claw)-এ আপনার always-on AI agent চালু করুন।
 
 </details>
 
 <details>
 <summary>GitHub Releases থেকে CLI ইনস্টল করুন (বাইনারি)</summary>
 
-[Releases page](https://github.com/Blitz-Org/Blitzcode/releases) থেকে সর্বশেষ বাইনারি ডাউনলোড করুন।
+[Releases page](https://github.com/Legion-Org/legioncode/releases) থেকে সর্বশেষ বাইনারি ডাউনলোড করুন।
 
 | প্ল্যাটফর্ম | Asset |
 |---|---|
@@ -128,7 +128,7 @@ Blitz বিশেষায়িত agents সহ আসে, কাজ অন�
 - **Debug** - সমস্যা troubleshoot এবং trace করে।
 - **Review** - আপনার পরিবর্তন review করে এবং performance, security, style ও test coverage-এর সমস্যা তুলে ধরে।
 
-[agents এবং custom agents](https://blitz.ai/docs/code-with-ai/agents/using-agents) সম্পর্কে আরও জানুন।
+[agents এবং custom agents](https://legion.ai/docs/code-with-ai/agents/using-agents) সম্পর্কে আরও জানুন।
 
 ### এটি কী করে
 
@@ -151,7 +151,7 @@ kilo run --auto "run tests and fix any failures"
 
 ### ডকুমেন্টেশন
 
-Configuration এবং বাকি সবকিছুর জন্য [docs](https://blitz.ai/docs) দেখুন।
+Configuration এবং বাকি সবকিছুর জন্য [docs](https://legion.ai/docs) দেখুন।
 
 ### Contributing
 
@@ -174,4 +174,4 @@ Blitz CLI হলো [OpenCode](https://github.com/anomalyco/opencode)-এর এ
 
 ---
 
-**কমিউনিটিতে যোগ দিন** [Discord](https://blitz.ai/discord) | [X](https://x.com/blitzcode) | [Reddit](https://www.reddit.com/r/blitzcode/)
+**কমিউনিটিতে যোগ দিন** [Discord](https://legion.ai/discord) | [X](https://x.com/legioncode) | [Reddit](https://www.reddit.com/r/legioncode/)

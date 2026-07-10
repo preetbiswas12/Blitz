@@ -1,7 +1,7 @@
 // kilocode_change - new file
 import { cmd } from "./cmd"
 import { bootstrap } from "../bootstrap"
-import { BlitxSessions } from "@/kilo-sessions/kilo-sessions"
+import { LegionSessions } from "@/kilo-sessions/kilo-sessions"
 import { context } from "@/project/instance-context"
 import { InstanceRuntime } from "@/project/instance-runtime"
 
@@ -11,13 +11,13 @@ export const RemoteCommand = cmd({
   builder: (yargs) => yargs,
   handler: async () => {
     await bootstrap(process.cwd(), async () => {
-      await BlitxSessions.enableRemote()
+      await LegionSessions.enableRemote()
       console.log("Remote connection enabled.")
 
       const abort = new AbortController()
       const shutdown = async () => {
         try {
-          BlitxSessions.disableRemote()
+          LegionSessions.disableRemote()
           await InstanceRuntime.disposeInstance(context.use())
         } finally {
           abort.abort()

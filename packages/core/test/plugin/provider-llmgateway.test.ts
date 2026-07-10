@@ -43,9 +43,9 @@ describe("LLMGatewayPlugin", () => {
       })
       expect((yield* catalog.provider.get(ProviderV2.ID.make("llmgateway"))).options.headers).toEqual({
         Existing: "value",
-        "HTTP-Referer": "https://blitx.ai/",
-        "X-Title": "Blitx Code",
-        "X-Source": "blitx",
+        "HTTP-Referer": "https://legion.ai/",
+        "X-Title": "Legion Code",
+        "X-Source": "legion",
       })
       expect((yield* catalog.provider.get(ProviderV2.ID.openrouter)).options.headers).toEqual({})
     }),

@@ -51,7 +51,7 @@ export const GlobalApi = HttpApi.make("global").add(
         OpenApi.annotations({
           identifier: "global.health",
           summary: "Get health",
-          description: "Get health information about the Blitx server.", // kilocode_change
+          description: "Get health information about the legion server.", // kilocode_change
         }),
       ),
       HttpApiEndpoint.get("event", GlobalPaths.event, {
@@ -60,7 +60,7 @@ export const GlobalApi = HttpApi.make("global").add(
         OpenApi.annotations({
           identifier: "global.event",
           summary: "Get global events",
-          description: "Subscribe to global events from the Blitx system using server-sent events.", // kilocode_change
+          description: "Subscribe to global events from the Legion system using server-sent events.", // kilocode_change
         }),
       ),
       HttpApiEndpoint.get("configGet", GlobalPaths.config, {
@@ -69,7 +69,7 @@ export const GlobalApi = HttpApi.make("global").add(
         OpenApi.annotations({
           identifier: "global.config.get",
           summary: "Get global configuration",
-          description: "Retrieve the current global Blitx configuration settings and preferences.", // kilocode_change
+          description: "Retrieve the current global Legion configuration settings and preferences.", // kilocode_change
         }),
       ),
       HttpApiEndpoint.patch("configUpdate", GlobalPaths.config, {
@@ -80,7 +80,7 @@ export const GlobalApi = HttpApi.make("global").add(
         OpenApi.annotations({
           identifier: "global.config.update",
           summary: "Update global configuration",
-          description: "Update global Blitx configuration settings and preferences.", // kilocode_change
+          description: "Update global Legion configuration settings and preferences.", // kilocode_change
         }),
       ),
       HttpApiEndpoint.post("dispose", GlobalPaths.dispose, {
@@ -89,7 +89,7 @@ export const GlobalApi = HttpApi.make("global").add(
         OpenApi.annotations({
           identifier: "global.dispose",
           summary: "Dispose instance",
-          description: "Clean up and dispose all Blitx instances, releasing all resources.", // kilocode_change
+          description: "Clean up and dispose all Legion instances, releasing all resources.", // kilocode_change
         }),
       ),
       HttpApiEndpoint.post("upgrade", GlobalPaths.upgrade, {
@@ -99,8 +99,8 @@ export const GlobalApi = HttpApi.make("global").add(
       }).annotateMerge(
         OpenApi.annotations({
           identifier: "global.upgrade",
-          summary: "Upgrade Blitx", // kilocode_change
-          description: "Upgrade Blitx to the specified version or latest if not specified.", // kilocode_change
+          summary: "Upgrade Legion", // kilocode_change
+          description: "Upgrade Legion to the specified version or latest if not specified.", // kilocode_change
         }),
       ),
     )

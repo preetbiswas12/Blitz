@@ -21,8 +21,8 @@ function state(input: Partial<Daemon.Network> = {}) {
     hostname: options.hostname,
     port: options.port,
     url: `http://${options.hostname}:${options.port}`,
-    username: "blitx",
-    password: "blitx",
+    username: "legion",
+    password: "legion",
     token: "token",
     version: "test",
     startedAt: new Date(0).toISOString(),
@@ -70,7 +70,7 @@ describe("console daemon startup", () => {
   test("detects every explicit network option form", () => {
     expect(
       explicitNetworkOptions([
-        "blitx",
+        "legion",
         "console",
         "--port=4321",
         "--hostname",
@@ -81,7 +81,7 @@ describe("console daemon startup", () => {
         "https://example.com",
       ]),
     ).toStrictEqual(["port", "hostname", "mdns", "mdnsDomain", "cors"])
-    expect(explicitNetworkOptions(["blitx", "console", "--", "--port=4321"])).toStrictEqual([])
+    expect(explicitNetworkOptions(["legion", "console", "--", "--port=4321"])).toStrictEqual([])
   })
 
   test("matches every explicit network option", () => {

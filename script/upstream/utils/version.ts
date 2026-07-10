@@ -122,7 +122,7 @@ export async function getAvailableUpstreamVersions(): Promise<VersionInfo[]> {
 }
 
 /**
- * Get current Blitx version from package.json
+ * Get current Legion version from package.json
  */
 export async function getCurrentKiloVersion(): Promise<string> {
   // Resolve path relative to repo root (script is in script/upstream/)

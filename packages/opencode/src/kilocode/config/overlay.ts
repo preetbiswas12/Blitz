@@ -70,8 +70,8 @@ export namespace KilocodeConfigOverlay {
     sources: KilocodeConfigSources.Source[]
   }
 
-  const files = ["blitx.jsonc", "blitx.json", "opencode.jsonc", "opencode.json"] as const
-  const dirs = [".kilocode", ".blitx"] as const
+  const files = ["legion.jsonc", "legion.json", "opencode.jsonc", "opencode.json"] as const
+  const dirs = [".kilocode", ".legion"] as const
 
   const fieldPaths = [
     ["model"],
@@ -90,9 +90,9 @@ export namespace KilocodeConfigOverlay {
     ["indexing", "model"],
     ["indexing", "dimension"],
     ["indexing", "vectorStore"],
-    ["indexing", "blitx", "apiKey"],
-    ["indexing", "blitx", "baseUrl"],
-    ["indexing", "blitx", "organizationId"],
+    ["indexing", "legion", "apiKey"],
+    ["indexing", "legion", "baseUrl"],
+    ["indexing", "legion", "organizationId"],
     ["indexing", "openai", "apiKey"],
     ["indexing", "ollama", "baseUrl"],
     ["indexing", "openai-compatible", "baseUrl"],
@@ -127,11 +127,11 @@ export namespace KilocodeConfigOverlay {
     const found = await Filesystem.findUp(dirs.toReversed(), input.directory, input.worktree)
     const roots = await Filesystem.findUp([...files], input.directory, input.worktree)
     const candidates = [...found.flatMap((dir) => files.map((file) => path.join(dir, file))), ...roots]
-    return candidates.find((file) => existsSync(file)) ?? path.join(input.directory, ".blitx", "blitx.jsonc")
+    return candidates.find((file) => existsSync(file)) ?? path.join(input.directory, ".legion", "legion.jsonc")
   }
 
   export function globalTarget() {
-    const candidates = ["blitx.jsonc", "blitx.json", "opencode.jsonc", "opencode.json", "config.json"].map((file) =>
+    const candidates = ["legion.jsonc", "legion.json", "opencode.jsonc", "opencode.json", "config.json"].map((file) =>
       path.join(Global.Path.config, file),
     )
     return candidates.find((file) => existsSync(file)) ?? candidates[0]
@@ -182,7 +182,7 @@ export namespace KilocodeConfigOverlay {
   }
 
   function globalDirs() {
-    return [Global.Path.config, path.join(Global.Path.home, ".kilocode"), path.join(Global.Path.home, ".blitx")]
+    return [Global.Path.config, path.join(Global.Path.home, ".kilocode"), path.join(Global.Path.home, ".legion")]
   }
 
   async function withAgents(input: Config.Info, dirs: string[]): Promise<Config.Info> {

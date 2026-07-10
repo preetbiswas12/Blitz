@@ -11,19 +11,19 @@ import { disposeAllInstances, tmpdir } from "../fixture/fixture"
 void Log.init({ print: false })
 
 const original = {
-  BLITX_SERVER_PASSWORD: Flag.BLITX_SERVER_PASSWORD,
+  LEGION_SERVER_PASSWORD: Flag.LEGION_SERVER_PASSWORD,
   KILO_SERVER_USERNAME: Flag.KILO_SERVER_USERNAME,
-  envPassword: process.env.BLITX_SERVER_PASSWORD,
+  envPassword: process.env.LEGION_SERVER_PASSWORD,
   envUsername: process.env.KILO_SERVER_USERNAME,
 }
 const auth = { username: "opencode", password: "listen-secret" }
 const testPty = process.platform === "win32" ? test.skip : test
 
 afterEach(async () => {
-  Flag.BLITX_SERVER_PASSWORD = original.BLITX_SERVER_PASSWORD
+  Flag.LEGION_SERVER_PASSWORD = original.LEGION_SERVER_PASSWORD
   Flag.KILO_SERVER_USERNAME = original.KILO_SERVER_USERNAME
-  if (original.envPassword === undefined) delete process.env.BLITX_SERVER_PASSWORD
-  else process.env.BLITX_SERVER_PASSWORD = original.envPassword
+  if (original.envPassword === undefined) delete process.env.LEGION_SERVER_PASSWORD
+  else process.env.LEGION_SERVER_PASSWORD = original.envPassword
   if (original.envUsername === undefined) delete process.env.KILO_SERVER_USERNAME
   else process.env.KILO_SERVER_USERNAME = original.envUsername
   await disposeAllInstances()
@@ -31,17 +31,17 @@ afterEach(async () => {
 })
 
 async function startListener() {
-  Flag.BLITX_SERVER_PASSWORD = auth.password
+  Flag.LEGION_SERVER_PASSWORD = auth.password
   Flag.KILO_SERVER_USERNAME = auth.username
-  process.env.BLITX_SERVER_PASSWORD = auth.password
+  process.env.LEGION_SERVER_PASSWORD = auth.password
   process.env.KILO_SERVER_USERNAME = auth.username
   return Server.listen({ hostname: "127.0.0.1", port: 0 })
 }
 
 async function startNoAuthListener() {
-  Flag.BLITX_SERVER_PASSWORD = undefined
+  Flag.LEGION_SERVER_PASSWORD = undefined
   Flag.KILO_SERVER_USERNAME = auth.username
-  delete process.env.BLITX_SERVER_PASSWORD
+  delete process.env.LEGION_SERVER_PASSWORD
   process.env.KILO_SERVER_USERNAME = auth.username
   return Server.listen({ hostname: "127.0.0.1", port: 0 })
 }
@@ -295,9 +295,9 @@ describe("HttpApi Server.listen", () => {
     }) as typeof process.stderr.write
     try {
       // kilocode_change start - use an authenticated local route instead of proxy-dependent status
-      Flag.BLITX_SERVER_PASSWORD = auth.password
+      Flag.LEGION_SERVER_PASSWORD = auth.password
       Flag.KILO_SERVER_USERNAME = auth.username
-      process.env.BLITX_SERVER_PASSWORD = auth.password
+      process.env.LEGION_SERVER_PASSWORD = auth.password
       process.env.KILO_SERVER_USERNAME = auth.username
       const response = await Server.Default().app.request("/doc", {
         headers: { authorization: authorization() },

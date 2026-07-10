@@ -1,18 +1,18 @@
 export const dict = {
-  // Blitx Gateway provider translations
-  "provider.connect.blitxGateway.line1":
-    "Blitx Gatewayは、コーディングエージェント向けに厳選された信頼性の高い最適化モデルへのアクセスを提供します。",
-  "provider.connect.blitxGateway.line2": "1つのAPIキーで、Claude、GPT、Gemini、GLMなどのモデルにアクセスできます。",
-  "provider.connect.blitxGateway.visit.prefix": "",
-  "provider.connect.blitxGateway.visit.link": "blitx.ai",
-  "provider.connect.blitxGateway.visit.suffix": " にアクセスしてAPIキーを取得してください。",
-  "provider.connect.blitxGateway.byok.prefix": "詳細な使用統計については、",
-  "provider.connect.blitxGateway.byok.link": "Blitx's Gateway経由でBYOK",
-  "provider.connect.blitxGateway.byok.suffix": "をご利用ください。",
+  // Legion Gateway provider translations
+  "provider.connect.LegionGateway.line1":
+    "Legion Gatewayは、コーディングエージェント向けに厳選された信頼性の高い最適化モデルへのアクセスを提供します。",
+  "provider.connect.LegionGateway.line2": "1つのAPIキーで、Claude、GPT、Gemini、GLMなどのモデルにアクセスできます。",
+  "provider.connect.LegionGateway.visit.prefix": "",
+  "provider.connect.LegionGateway.visit.link": "legion.ai",
+  "provider.connect.LegionGateway.visit.suffix": " にアクセスしてAPIキーを取得してください。",
+  "provider.connect.LegionGateway.byok.prefix": "詳細な使用統計については、",
+  "provider.connect.LegionGateway.byok.link": "Legion's Gateway経由でBYOK",
+  "provider.connect.LegionGateway.byok.suffix": "をご利用ください。",
 
   // Provider settings translations
   "settings.providers.group.recommended": "おすすめ",
-  "settings.providers.note.blitx": "500以上のAIモデルにアクセス",
+  "settings.providers.note.Legion": "500以上のAIモデルにアクセス",
   "settings.providers.note.opencode": "Claude、GPT、Geminiなどの厳選モデル",
   "settings.providers.note.anthropic": "ProやMaxを含むClaudeモデルへ直接アクセス",
   "settings.providers.note.deepseek": "推論とコーディング作業向けのDeepSeekモデル",
@@ -47,12 +47,12 @@ export const dict = {
     "このマシン上のすべてのプロジェクト。ユーザー設定に保存されます。",
   "marketplace.install.destination": "インストール先",
   "marketplace.install.about.mcp":
-    "MCPサーバーは、外部サービスやローカルプログラムを操作するための追加ツールをBlitxに提供します。",
+    "MCPサーバーは、外部サービスやローカルプログラムを操作するための追加ツールをLegionに提供します。",
   "marketplace.install.about.agent": "エージェントは、独自の指示と権限を持つ再利用可能な役割を追加します。",
   "marketplace.install.about.skill":
-    "スキルは、必要に応じてBlitxが読み込めるタスク固有の指示とリソースを追加します。",
+    "スキルは、必要に応じてLegionが読み込めるタスク固有の指示とリソースを追加します。",
   "marketplace.install.mcp.warning":
-    "MCPサーバーはローカルコマンドを実行したり、外部サービスに接続したりできます。権限で自動的に許可されていない限り、Blitxはツールを使用する前に許可を求めます。",
+    "MCPサーバーはローカルコマンドを実行したり、外部サービスに接続したりできます。権限で自動的に許可されていない限り、Legionはツールを使用する前に許可を求めます。",
   "marketplace.install.project.warning":
     "プロジェクトファイルはバージョン管理に追加される場合があります。設定で環境変数を参照している場合を除き、ここにシークレットを保存しないでください。",
   "marketplace.install.learnMore": "Marketplaceからのインストールの仕組みを見る",
@@ -124,7 +124,7 @@ export const dict = {
     "スナップショットが完了するまで待機します。初回のスナップショットが作成された後は、以降のターンは高速になります。",
   "snapshot.slowRepo.answer.disable": "このプロジェクトで無効化",
   "snapshot.slowRepo.answer.disable.description":
-    "このプロジェクトではBlitx のスナップショットを無効にします。Blitx による変更の取り消し/やり直しはできなくなりますが、git は引き続きすべてを追跡します。",
+    "このプロジェクトではLegion のスナップショットを無効にします。Legion による変更の取り消し/やり直しはできなくなりますが、git は引き続きすべてを追跡します。",
 
   // Edit-tool header and shell-tool section labels
   "ui.messagePart.openInDiffViewer": "差分ビューアーで開く",

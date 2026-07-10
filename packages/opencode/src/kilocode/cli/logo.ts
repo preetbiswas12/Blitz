@@ -163,7 +163,7 @@ function windows(env: NodeJS.ProcessEnv) {
 }
 
 export function supports(env = process.env, platform = process.platform) {
-  const override = flag(env.BLITX_UNICODE_LOGO)
+  const override = flag(env.LEGION_UNICODE_LOGO)
   if (override !== undefined) return override
   if (env.TERM === "dumb") return false
   // Old Windows Console Host cannot render the sextant glyphs used by the modern logo.
@@ -190,5 +190,5 @@ export function session(
   platform = process.platform,
 ) {
   const logo = supports(env, platform) ? modern.exit : fallback.exit
-  return [``, `${logo[0]}${dim}${title}${normal}`, `${logo[1]}${dim}blitz -s ${id}${normal}`, logo[2]].join("\n")
+  return [``, `${logo[0]}${dim}${title}${normal}`, `${logo[1]}${dim}legion -s ${id}${normal}`, logo[2]].join("\n")
 }

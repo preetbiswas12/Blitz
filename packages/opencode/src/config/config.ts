@@ -181,7 +181,7 @@ export const Info = Schema.Struct({
     description: "Server configuration for the kilo serve command", // kilocode_change
   }),
   command: Schema.optional(Schema.Record(Schema.String, ConfigCommand.Info)).annotate({
-    description: "Command configuration, see https://blitx.ai/docs/customize/workflows", // kilocode_change
+    description: "Command configuration, see https://legion.ai/docs/customize/workflows", // kilocode_change
   }),
   skills: Schema.optional(ConfigSkills.Info).annotate({ description: "Additional skill folder paths" }),
   reference: Schema.optional(ConfigReference.Info).annotate({
@@ -230,14 +230,14 @@ export const Info = Schema.Struct({
     Schema.Struct({
       context_sidebar_width: Schema.optional(
         Schema.Int.check(Schema.isBetween({ minimum: 250, maximum: 800 })).annotate({
-          description: "Width of the Blitx Console project context sidebar in pixels",
+          description: "Width of the Legion Console project context sidebar in pixels",
         }),
       ),
       diff_style: Schema.optional(Schema.Literals(["unified", "split"])).annotate({
-        description: "Default diff layout in Blitx Console project reviews",
+        description: "Default diff layout in Legion Console project reviews",
       }),
     }),
-  ).annotate({ description: "Blitx Console user interface configuration" }),
+  ).annotate({ description: "Legion Console user interface configuration" }),
   terminal_command_display: Schema.optional(Schema.Literals(["expanded", "collapsed"])).annotate({
     description: "Controls whether terminal command blocks are expanded or collapsed by default in the VS Code chat UI",
   }),
@@ -246,7 +246,7 @@ export const Info = Schema.Struct({
       "Controls whether code edit and diff blocks are expanded or collapsed by default in the VS Code chat UI",
   }),
   hide_prompt_training_models: Schema.optional(Schema.Boolean).annotate({
-    description: "Hide Blitx Gateway models that may train on your prompts from model listings",
+    description: "Hide Legion Gateway models that may train on your prompts from model listings",
   }),
   model: Schema.optional(Schema.NullOr(ConfigModelID)).annotate({
     description: "Model to use in the format of provider/model, eg anthropic/claude-2",
@@ -307,7 +307,7 @@ export const Info = Schema.Struct({
       [Schema.Record(Schema.String, ConfigAgent.Info)],
     ),
     // kilocode_change start
-  ).annotate({ description: "Agent configuration, see https://blitx.ai/docs/customize/custom-subagents" }), // kilocode_change
+  ).annotate({ description: "Agent configuration, see https://legion.ai/docs/customize/custom-subagents" }), // kilocode_change
   provider: Schema.optional(Schema.Record(Schema.String, Schema.NullOr(ConfigProvider.Info))).annotate({
     // kilocode_change end
     description: "Custom provider configurations and model overrides",
@@ -412,7 +412,7 @@ export const Info = Schema.Struct({
       // kilocode_change start
       sandbox: Schema.optional(Schema.Boolean).annotate({
         description:
-          "Run agent tools inside a sandbox that restricts writes to project and Blitx state directories and can restrict outbound network access",
+          "Run agent tools inside a sandbox that restricts writes to project and Legion state directories and can restrict outbound network access",
       }),
       sandbox_restrict_network: Schema.optional(Schema.Boolean).annotate({
         description:
@@ -469,7 +469,7 @@ export const use = serviceUse(Service)
 
 function globalConfigFile() {
   // kilocode_change start
-  const candidates = ["blitx.jsonc", "blitx.json", "opencode.jsonc", "opencode.json", "config.json"].map((file) =>
+  const candidates = ["legion.jsonc", "legion.json", "opencode.jsonc", "opencode.json", "config.json"].map((file) =>
     // kilocode_change end
     path.join(Global.Path.config, file),
   )
@@ -607,7 +607,7 @@ export const layer = Layer.effect(
       let result: Info = {}
       // Seed the default global config with the schema for editor completion, but avoid writing when the user
       // explicitly routes config through env-provided paths or content.
-      if (!Flag.KILO_CONFIG && !Flag.BLITX_CONFIG_DIR && !Flag.KILO_CONFIG_CONTENT) {
+      if (!Flag.KILO_CONFIG && !Flag.LEGION_CONFIG_DIR && !Flag.KILO_CONFIG_CONTENT) {
         const file = globalConfigFile()
         if (!existsSync(file)) {
           yield* fs
@@ -617,8 +617,8 @@ export const layer = Layer.effect(
       }
       result = mergeConfig(result, yield* loadFile(path.join(Global.Path.config, "config.json"), env))
       // kilocode_change start
-      result = mergeConfig(result, yield* loadFile(path.join(Global.Path.config, "blitx.json"), env))
-      result = mergeConfig(result, yield* loadFile(path.join(Global.Path.config, "blitx.jsonc"), env))
+      result = mergeConfig(result, yield* loadFile(path.join(Global.Path.config, "legion.json"), env))
+      result = mergeConfig(result, yield* loadFile(path.join(Global.Path.config, "legion.jsonc"), env))
       // kilocode_change end
       result = mergeConfig(result, yield* loadFile(path.join(Global.Path.config, "opencode.json"), env))
       result = mergeConfig(result, yield* loadFile(path.join(Global.Path.config, "opencode.jsonc"), env))
@@ -845,8 +845,8 @@ export const layer = Layer.effect(
         }
 
         if (!Flag.KILO_DISABLE_PROJECT_CONFIG) {
-          // kilocode_change start - also discover blitx.json project files
-          for (const name of ["blitx", "opencode"] as const) {
+          // kilocode_change start - also discover legion.json project files
+          for (const name of ["legion", "opencode"] as const) {
             for (const file of yield* ConfigPaths.files(name, ctx.directory, ctx.worktree).pipe(Effect.orDie)) {
               yield* merge(
                 file,
@@ -871,14 +871,14 @@ export const layer = Layer.effect(
         const directories = yield* ConfigPaths.directories(ctx.directory, ctx.worktree)
         const primary = Flag.KILO_DISABLE_PROJECT_CONFIG
           ? []
-          : yield* primaryPaths(ctx.directory, ctx.worktree, [".blitxcode", ".blitx"])
+          : yield* primaryPaths(ctx.directory, ctx.worktree, [".Legioncode", ".legion"])
         // Load primary fallbacks before active-worktree config, then track them as local.
         directories.splice(1, 0, ...primary)
         const primarySet = new Set(primary)
         // kilocode_change end
 
-        if (Flag.BLITX_CONFIG_DIR) {
-          log.debug("loading config from BLITX_CONFIG_DIR", { path: Flag.BLITX_CONFIG_DIR })
+        if (Flag.LEGION_CONFIG_DIR) {
+          log.debug("loading config from LEGION_CONFIG_DIR", { path: Flag.LEGION_CONFIG_DIR })
         }
 
         const deps: Fiber.Fiber<void>[] = []
@@ -886,7 +886,7 @@ export const layer = Layer.effect(
         // kilocode_change start
         for (const dir of unique(directories)) {
           const scope = primarySet.has(dir) ? "local" : undefined
-          if (KilocodeConfig.isConfigDir(dir, Flag.BLITX_CONFIG_DIR)) {
+          if (KilocodeConfig.isConfigDir(dir, Flag.LEGION_CONFIG_DIR)) {
             for (const file of KilocodeConfig.ALL_CONFIG_FILES) {
               const source = path.join(dir, file)
               log.debug(`loading config from ${source}`)
@@ -1006,7 +1006,7 @@ export const layer = Layer.effect(
         }
 
         const managedDir = ConfigManaged.managedConfigDir()
-        // kilocode_change start - include blitx.json/blitx.jsonc in managed dir loading
+        // kilocode_change start - include legion.json/legion.jsonc in managed dir loading
         if (existsSync(managedDir)) {
           for (const file of KilocodeConfig.ALL_CONFIG_FILES) {
             const source = path.join(managedDir, file)

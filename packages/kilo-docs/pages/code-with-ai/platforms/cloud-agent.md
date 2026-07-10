@@ -19,17 +19,17 @@ Cloud Agents let you run Kilo Code in the cloud from any device, without relying
 Before using Cloud Agents:
 
 - **GitHub or GitLab Integration must be configured**
-  Connect your account via the [Integrations tab](https://app.kilo.ai/integrations) <!-- TODO: Replace with Blitx dashboard URL --> so that Cloud Agents can access your repositories.
+  Connect your account via the [Integrations tab](https://app.kilo.ai/integrations) <!-- TODO: Replace with Legion dashboard URL --> so that Cloud Agents can access your repositories.
 
 ## Cost
 
 - **Compute is free during limited beta**
-  - Please provide any feedback in our Cloud Agents beta Discord channel: [Kilo Discord](https://blitx.ai/discord)
+  - Please provide any feedback in our Cloud Agents beta Discord channel: [Kilo Discord](https://legion.ai/discord)
 - **Kilo Code credits are still used** when the agent performs work (model usage, operations, etc.).
 
 ## How to Use
 
-1. **Connect your GitHub or GitLab account** in the [Integrations](https://app.kilo.ai/integrations) <!-- TODO: Replace with Blitx dashboard URL --> tab of your personal or organization dashboard.
+1. **Connect your GitHub or GitLab account** in the [Integrations](https://app.kilo.ai/integrations) <!-- TODO: Replace with Legion dashboard URL --> tab of your personal or organization dashboard.
 2. **Select a repository** to use as your workspace.
 3. **Add environment variables** (secrets supported) and set optional startup commands.
 4. **Start chatting with Kilo Code.**
@@ -155,7 +155,7 @@ instance.
 
 ### Accessing Triggers
 
-Triggers are accessible from the main sidebar under **Webhooks / Triggers** and link to [https://app.kilo.ai/cloud/triggers](https://app.kilo.ai/cloud/triggers) <!-- TODO: Replace with Blitx dashboard URL --> for personal accounts. Organization-level trigger configurations are available through your organization's sidebar.
+Triggers are accessible from the main sidebar under **Webhooks / Triggers** and link to [https://app.kilo.ai/cloud/triggers](https://app.kilo.ai/cloud/triggers) <!-- TODO: Replace with Legion dashboard URL --> for personal accounts. Organization-level trigger configurations are available through your organization's sidebar.
 
 ### Activation Modes
 

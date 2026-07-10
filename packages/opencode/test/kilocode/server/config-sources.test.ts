@@ -28,7 +28,7 @@ type Body = {
 const env = {
   KILO_CONFIG: process.env.KILO_CONFIG,
   KILO_CONFIG_CONTENT: process.env.KILO_CONFIG_CONTENT,
-  BLITX_CONFIG_DIR: process.env.BLITX_CONFIG_DIR,
+  LEGION_CONFIG_DIR: process.env.LEGION_CONFIG_DIR,
   KILO_DISABLE_PROJECT_CONFIG: process.env.KILO_DISABLE_PROJECT_CONFIG,
   KILO_TEST_MANAGED_CONFIG_DIR: process.env.KILO_TEST_MANAGED_CONFIG_DIR,
   flagConfig: Flag.KILO_CONFIG,
@@ -43,7 +43,7 @@ afterEach(async () => {
 function restore() {
   set("KILO_CONFIG", env.KILO_CONFIG)
   set("KILO_CONFIG_CONTENT", env.KILO_CONFIG_CONTENT)
-  set("BLITX_CONFIG_DIR", env.BLITX_CONFIG_DIR)
+  set("LEGION_CONFIG_DIR", env.LEGION_CONFIG_DIR)
   set("KILO_DISABLE_PROJECT_CONFIG", env.KILO_DISABLE_PROJECT_CONFIG)
   set("KILO_TEST_MANAGED_CONFIG_DIR", env.KILO_TEST_MANAGED_CONFIG_DIR)
   Flag.KILO_CONFIG = env.flagConfig
@@ -105,7 +105,7 @@ describe("config source routes", () => {
     process.env.KILO_CONFIG = envFile
     Flag.KILO_CONFIG = envFile
     process.env.KILO_CONFIG_CONTENT = '{"username":"secret-inline-value"}'
-    process.env.BLITX_CONFIG_DIR = path.join(tmp.path, "extra")
+    process.env.LEGION_CONFIG_DIR = path.join(tmp.path, "extra")
     process.env.KILO_TEST_MANAGED_CONFIG_DIR = path.join(tmp.path, "managed")
 
     const body = await sources(tmp.path)

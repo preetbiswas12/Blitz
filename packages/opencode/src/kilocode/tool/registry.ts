@@ -18,7 +18,7 @@ import type { Config } from "@/config/config"
 const log = Log.create({ service: "kilocode-tool-registry" })
 type Deps = { agent: Agent.Interface; truncate: Truncate.Interface; indexing?: boolean }
 type Loaders = {
-  indexing?: () => Promise<{ BlitxIndexing: { ready: () => boolean } }>
+  indexing?: () => Promise<{ LegionIndexing: { ready: () => boolean } }>
   semantic?: () => Promise<Pick<typeof import("@/kilocode/tool/semantic-search"), "SemanticSearchTool">>
 }
 
@@ -108,7 +108,7 @@ export namespace KiloToolRegistry {
       const ready = yield* deps.indexing === undefined
         ? (() => {
             const indexing = loaders.indexing ?? (() => import("@/kilocode/indexing"))
-            return Effect.tryPromise(() => indexing().then((mod) => mod.BlitxIndexing.ready())).pipe(
+            return Effect.tryPromise(() => indexing().then((mod) => mod.LegionIndexing.ready())).pipe(
               Effect.catch((err) =>
                 Effect.sync(() => {
                   log.warn("semantic search unavailable", { err })
@@ -166,11 +166,11 @@ export namespace KiloToolRegistry {
       ...(cfg.experimental?.codebase_search === true ? [tools.codebase] : []),
       ...(tools.semantic ? [tools.semantic] : []),
       tools.recall,
-      ...(Flag.BLITX_CLIENT === "cli" || Flag.BLITX_CLIENT === "vscode" ? [tools.process] : []),
-      ...(Flag.BLITX_CLIENT === "cli" && tools.terminal ? [tools.terminal] : []),
+      ...(Flag.LEGION_CLIENT === "cli" || Flag.LEGION_CLIENT === "vscode" ? [tools.process] : []),
+      ...(Flag.LEGION_CLIENT === "cli" && tools.terminal ? [tools.terminal] : []),
       // Agent Manager tools are useful only when the extension can create and display their sessions.
-      ...(Flag.BLITX_CLIENT === "vscode" ? [tools.managerModels, tools.manager] : []),
-      ...(Flag.BLITX_CLIENT === "vscode" &&
+      ...(Flag.LEGION_CLIENT === "vscode" ? [tools.managerModels, tools.manager] : []),
+      ...(Flag.LEGION_CLIENT === "vscode" &&
       cfg.experimental?.native_notebook_tools === true &&
       tools.notebookRead &&
       tools.notebookEdit &&

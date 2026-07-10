@@ -38,8 +38,8 @@ describe("OpenRouterPlugin", () => {
 
       expect((yield* catalog.provider.get(ProviderV2.ID.make("openrouter"))).options.headers).toEqual({
         Existing: "value",
-        "HTTP-Referer": "https://blitx.ai/",
-        "X-Title": "Blitx Code",
+        "HTTP-Referer": "https://legion.ai/",
+        "X-Title": "Legion Code",
       })
       expect((yield* catalog.provider.get(ProviderV2.ID.make("nvidia"))).options.headers).toEqual({})
     }),

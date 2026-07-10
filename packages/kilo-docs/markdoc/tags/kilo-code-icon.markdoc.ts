@@ -1,7 +1,7 @@
-import { BlitxCodeIcon } from "../../components"
+import { LegionCodeIcon } from "../../components"
 
 export const kiloCodeIcon = {
-  render: BlitxCodeIcon,
+  render: LegionCodeIcon,
   selfClosing: true,
   attributes: {
     size: {

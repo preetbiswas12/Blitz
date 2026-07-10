@@ -23,7 +23,7 @@ import type { Provider } from "@/provider/provider"
 import { ModelID, ProviderID } from "@/provider/schema"
 import { SessionNetwork } from "./network" // kilocode_change
 import { CodexAuthExpiredError } from "@/kilocode/provider/codex-refresh" // kilocode_change
-import { BlitxSessionMessageOrder } from "@/kilocode/session/message-order" // kilocode_change
+import { LegionSessionessageOrder } from "@/kilocode/session/message-order" // kilocode_change
 import * as TextStream from "@/kilocode/text-stream" // kilocode_change
 import { Effect, Schema, Types } from "effect"
 import { NonNegativeInt } from "@opencode-ai/core/schema"
@@ -1155,7 +1155,7 @@ export function filterCompacted(msgs: Iterable<WithParts>) {
       completed.add(msg.info.parentID)
   }
   result.reverse()
-  BlitxSessionMessageOrder.annotate(result) // kilocode_change - preserve chronology before retained-tail projection
+  LegionSessionessageOrder.annotate(result) // kilocode_change - preserve chronology before retained-tail projection
   const compactionIndex = result.findLastIndex(
     (msg) =>
       msg.info.role === "user" &&

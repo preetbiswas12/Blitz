@@ -12,8 +12,8 @@ import type { SessionStatus } from "@/session/status"
 import { Flag } from "@opencode-ai/core/flag/flag"
 import { PlanFollowup } from "@/kilocode/plan-followup"
 import { PlanFile } from "@/kilocode/plan-file"
-import { BlitxSession } from "@/kilocode/session"
-import { BlitxSessionMessageOrder } from "@/kilocode/session/message-order"
+import { LegionSession} from "@/kilocode/session"
+import { LegionSessionessageOrder } from "@/kilocode/session/message-order"
 import { Permission } from "@/permission"
 import { Question } from "@/question"
 import { environmentDetails, type EditorContext } from "@/kilocode/editor-context"
@@ -23,7 +23,7 @@ import { InstanceState } from "@/effect/instance-state"
 import NATIVE_PLAN_PROMPT from "@/kilocode/session/native-plan-prompt.txt"
 import CODE_SWITCH from "@/session/prompt/code-switch.txt"
 
-export namespace BlitxSessionPrompt {
+export namespace LegionSessionrompt {
   const modes = ["ask", "plan", "architect"]
 
   export function titleID(sessionID: SessionID) {
@@ -41,7 +41,7 @@ export namespace BlitxSessionPrompt {
   }
 
   function supportsPlanFollowup() {
-    return ["cli", "vscode", "jetbrains"].includes(Flag.BLITX_CLIENT)
+    return ["cli", "vscode", "jetbrains"].includes(Flag.LEGION_CLIENT)
   }
 
   /**
@@ -94,7 +94,7 @@ export namespace BlitxSessionPrompt {
     return PlanFollowup.abort(sessionID)
   }
 
-  export const recoverDanglingAssistant = Effect.fn("BlitxSessionPrompt.recoverDanglingAssistant")(function* (input: {
+  export const recoverDanglingAssistant = Effect.fn("LegionSessionrompt.recoverDanglingAssistant")(function* (input: {
     sessionID: SessionID
     status: Pick<SessionStatus.Interface, "get">
     sessions: Pick<Session.Interface, "messages" | "removeMessage">
@@ -114,7 +114,7 @@ export namespace BlitxSessionPrompt {
     yield* input.sessions.removeMessage({ sessionID: input.sessionID, messageID: tail.info.id })
   })
 
-  export const recoverProviderFinishError = Effect.fn("BlitxSessionPrompt.recoverProviderFinishError")(
+  export const recoverProviderFinishError = Effect.fn("LegionSessionrompt.recoverProviderFinishError")(
     function* (input: {
       sessionID: SessionID
       status: Pick<SessionStatus.Interface, "get">
@@ -160,7 +160,7 @@ export namespace BlitxSessionPrompt {
     return [...input.existing.filter((rule) => !names.has(rule.permission)), ...input.toggles]
   }
 
-  export const askPermission = Effect.fn("BlitxSessionPrompt.askPermission")(function* (input: {
+  export const askPermission = Effect.fn("LegionSessionrompt.askPermission")(function* (input: {
     permission: Pick<Permission.Interface, "ask">
     agents: Pick<Agent.Interface, "get">
     sessions: Pick<Session.Interface, "get">
@@ -323,9 +323,9 @@ export namespace BlitxSessionPrompt {
    */
   export function resolveCloseReason(input: {
     sessionID: string
-    closeReasons: Map<string, BlitxSession.CloseReason>
+    closeReasons: Map<string, LegionSessionCloseReason>
     exit: Exit.Exit<any, any>
-  }): BlitxSession.CloseReason {
+  }): LegionSessionCloseReason {
     const explicit = input.closeReasons.get(input.sessionID)
     input.closeReasons.delete(input.sessionID)
     if (explicit) return explicit
@@ -352,7 +352,7 @@ export namespace BlitxSessionPrompt {
   export function guardCompactionAttempt(input: {
     sessionID: string
     attempts: number
-    closeReasons: Map<string, BlitxSession.CloseReason>
+    closeReasons: Map<string, LegionSessionCloseReason>
     message?: MessageV2.Assistant
   }) {
     if (input.attempts < MAX_COMPACTION_ATTEMPTS) return { exhausted: false as const }
@@ -395,7 +395,7 @@ export namespace BlitxSessionPrompt {
     const summary = msgs.reduce<{ msg: MessageV2.WithParts; index: number } | undefined>((latest, msg, index) => {
       const info = msg.info
       if (info.role !== "assistant" || info.summary !== true || !info.finish || info.error) return latest
-      if (!latest || BlitxSessionMessageOrder.compare(msg, latest.msg, index, latest.index) > 0) return { msg, index }
+      if (!latest || LegionSessionessageOrder.compare(msg, latest.msg, index, latest.index) > 0) return { msg, index }
       return latest
     }, undefined)
     if (!summary) return msgs

@@ -1,19 +1,19 @@
 export const dict = {
-  // Blitx Gateway provider translations
-  "provider.connect.blitxGateway.line1":
-    "Blitx Gateway zapewnia dostęp do wyselekcjonowanego zestawu niezawodnych, zoptymalizowanych modeli dla agentów kodowania.",
-  "provider.connect.blitxGateway.line2":
+  // Legion Gateway provider translations
+  "provider.connect.LegionGateway.line1":
+    "Legion Gateway zapewnia dostęp do wyselekcjonowanego zestawu niezawodnych, zoptymalizowanych modeli dla agentów kodowania.",
+  "provider.connect.LegionGateway.line2":
     "Za pomocą jednego klucza API uzyskasz dostęp do modeli takich jak Claude, GPT, Gemini, GLM i innych.",
-  "provider.connect.blitxGateway.visit.prefix": "Odwiedź ",
-  "provider.connect.blitxGateway.visit.link": "blitx.ai",
-  "provider.connect.blitxGateway.visit.suffix": ", aby otrzymać swój klucz API.",
-  "provider.connect.blitxGateway.byok.prefix": "Aby uzyskać więcej statystyk użycia, użyj ",
-  "provider.connect.blitxGateway.byok.link": "BYOK przez Blitx's Gateway",
-  "provider.connect.blitxGateway.byok.suffix": ".",
+  "provider.connect.LegionGateway.visit.prefix": "Odwiedź ",
+  "provider.connect.LegionGateway.visit.link": "legion.ai",
+  "provider.connect.LegionGateway.visit.suffix": ", aby otrzymać swój klucz API.",
+  "provider.connect.LegionGateway.byok.prefix": "Aby uzyskać więcej statystyk użycia, użyj ",
+  "provider.connect.LegionGateway.byok.link": "BYOK przez Legion's Gateway",
+  "provider.connect.LegionGateway.byok.suffix": ".",
 
   // Provider settings translations
   "settings.providers.group.recommended": "Polecane",
-  "settings.providers.note.blitx": "Dostęp do ponad 500 modeli AI",
+  "settings.providers.note.Legion": "Dostęp do ponad 500 modeli AI",
   "settings.providers.note.opencode": "Wyselekcjonowane modele, w tym Claude, GPT, Gemini i inne",
   "settings.providers.note.anthropic": "Bezpośredni dostęp do modeli Claude, w tym Pro i Max",
   "settings.providers.note.deepseek": "Modele DeepSeek do zadań rozumowania i kodowania",
@@ -48,12 +48,12 @@ export const dict = {
     "Wszystkie projekty na tym komputerze. Zapisywane w konfiguracji użytkownika.",
   "marketplace.install.destination": "Miejsce instalacji",
   "marketplace.install.about.mcp":
-    "Serwer MCP zapewnia Blitx dodatkowe narzędzia do pracy z usługami zewnętrznymi lub programami lokalnymi.",
+    "Serwer MCP zapewnia Legion dodatkowe narzędzia do pracy z usługami zewnętrznymi lub programami lokalnymi.",
   "marketplace.install.about.agent": "Agent dodaje rolę wielokrotnego użytku z własnymi instrukcjami i uprawnieniami.",
   "marketplace.install.about.skill":
-    "Umiejętność dodaje instrukcje i zasoby dotyczące określonych zadań, które Blitx może wczytać w razie potrzeby.",
+    "Umiejętność dodaje instrukcje i zasoby dotyczące określonych zadań, które Legion może wczytać w razie potrzeby.",
   "marketplace.install.mcp.warning":
-    "Serwery MCP mogą uruchamiać lokalne polecenia lub łączyć się z usługami zewnętrznymi. Blitx poprosi o pozwolenie przed użyciem ich narzędzi, chyba że uprawnienia zezwalają na to automatycznie.",
+    "Serwery MCP mogą uruchamiać lokalne polecenia lub łączyć się z usługami zewnętrznymi. Legion poprosi o pozwolenie przed użyciem ich narzędzi, chyba że uprawnienia zezwalają na to automatycznie.",
   "marketplace.install.project.warning":
     "Pliki projektu mogą zostać dodane do systemu kontroli wersji. Nie przechowuj tutaj sekretów, chyba że konfiguracja odwołuje się do zmiennej środowiskowej.",
   "marketplace.install.learnMore": "Dowiedz się, jak działają instalacje z Marketplace",
@@ -126,7 +126,7 @@ export const dict = {
     "Poczekaj, aż snapshot się zakończy. Kolejne tury są szybkie, gdy początkowy snapshot jest już zbudowany.",
   "snapshot.slowRepo.answer.disable": "Wyłącz dla tego projektu",
   "snapshot.slowRepo.answer.disable.description":
-    "Wyłącz snapshoty Blitx dla tego projektu. Stracisz cofanie/przywracanie zmian Blitx, ale git nadal śledzi wszystko.",
+    "Wyłącz snapshoty Legion dla tego projektu. Stracisz cofanie/przywracanie zmian Legion, ale git nadal śledzi wszystko.",
 
   // Edit-tool header and shell-tool section labels
   "ui.messagePart.openInDiffViewer": "Otwórz w podglądzie różnic",

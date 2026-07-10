@@ -10,8 +10,8 @@ process.env.XDG_DATA_HOME = path.join(exerciseGlobalRoot, "data")
 process.env.XDG_CONFIG_HOME = path.join(exerciseGlobalRoot, "config")
 process.env.XDG_STATE_HOME = path.join(exerciseGlobalRoot, "state")
 process.env.XDG_CACHE_HOME = path.join(exerciseGlobalRoot, "cache")
-process.env.BLITX_DISABLE_SHARE = "true"
-process.env.BLITX_DISABLE_SESSION_INGEST = "true" // kilocode_change - isolate the exerciser from async Kilo session sync
+process.env.LEGION_DISABLE_SHARE = "true"
+process.env.LEGION_DISABLE_SESSION_INGEST = "true" // kilocode_change - isolate the exerciser from async Kilo session sync
 export const exerciseConfigDirectory = path.join(exerciseGlobalRoot, "config", "opencode")
 export const exerciseDataDirectory = path.join(exerciseGlobalRoot, "data", "kilo") // kilocode_change
 
@@ -23,7 +23,7 @@ process.env.KILO_DB = exerciseDatabasePath
 Flag.KILO_DB = exerciseDatabasePath
 
 export const original = {
-  BLITX_SERVER_PASSWORD: Flag.BLITX_SERVER_PASSWORD,
+  LEGION_SERVER_PASSWORD: Flag.LEGION_SERVER_PASSWORD,
   KILO_SERVER_USERNAME: Flag.KILO_SERVER_USERNAME,
 }
 

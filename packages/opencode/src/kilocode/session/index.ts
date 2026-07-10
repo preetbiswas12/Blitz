@@ -19,7 +19,7 @@ import { fn } from "@/kilocode/fn"
 import { existsSync } from "fs"
 import path from "path"
 
-export namespace BlitxSession {
+export namespace LegionSession{
   const log = Log.create({ service: "session.kilo" })
 
   // ---------------------------------------------------------------------------
@@ -109,7 +109,7 @@ export namespace BlitxSession {
 
   export function attribution(id: string): { rootID: string; feature?: string } {
     const rootID = resolveRoot(id)
-    const platform = resolvePlatform(rootID) ?? process.env["BLITX_PLATFORM"]
+    const platform = resolvePlatform(rootID) ?? process.env["LEGION_PLATFORM"]
     const feature = featureForPlatform(platform) ?? process.env["KILOCODE_FEATURE"]
     return { rootID, ...(feature ? { feature } : {}) }
   }
@@ -150,7 +150,7 @@ export namespace BlitxSession {
   }
 
   // ---------------------------------------------------------------------------
-  // Provider-reported cost (Blitx / OpenRouter / Vercel AI Gateway)
+  // Provider-reported cost (Legion / OpenRouter / Vercel AI Gateway)
   // ---------------------------------------------------------------------------
 
   /**
@@ -158,7 +158,7 @@ export namespace BlitxSession {
    *
    * Supports the following internal transports:
    *   1. OpenRouter chat completions  -> `metadata.openrouter.usage.cost`
-   *                                      (`costDetails.upstreamInferenceCost` for Blitx)
+   *                                      (`costDetails.upstreamInferenceCost` for Legion)
    *   2. Anthropic Messages or OpenAI Responses via OpenRouter
    *                                   -> `usage.providerMetadata.<provider>.cost_details`
    *      (native LLM usage retains the verbatim provider payload under its provider key,
@@ -168,7 +168,7 @@ export namespace BlitxSession {
    *      gateway emits this in the SSE `provider_metadata` field, which the current AI SDK
    *      providers drop before they reach this layer)
    *
-   * Blitx does not charge end users a per-request fee, so for the Blitx provider the
+   * Legion does not charge end users a per-request fee, so for the Legion provider the
    * top-level `cost` field (the gateway/marketplace fee) would understate the user's
    * actual upstream spend. Always prefer the upstream/market cost when present.
    *
@@ -183,7 +183,7 @@ export namespace BlitxSession {
     provider?: Provider.Info
     providerID: string
   }): number | undefined {
-    const isKilo = (input.provider?.id ?? input.providerID) === "blitx"
+    const isKilo = (input.provider?.id ?? input.providerID) === "legion"
 
     const num = (value: unknown): number | undefined => {
       if (value === undefined || value === null) return undefined
@@ -198,7 +198,7 @@ export namespace BlitxSession {
     if (orUsage) {
       const upstream = num(orUsage.costDetails?.upstreamInferenceCost)
       const regular = num(orUsage.cost)
-      // Kilo doesn't charge a fee on top of the upstream inference cost, so for Blitx
+      // Kilo doesn't charge a fee on top of the upstream inference cost, so for Legion
       // prefer the upstream cost (the user's true spend). For the OpenRouter provider
       // itself, the regular `cost` field is what the user is billed.
       const cost = isKilo && upstream !== undefined ? upstream : regular
@@ -207,7 +207,7 @@ export namespace BlitxSession {
 
     // 2. Anthropic Messages or OpenAI Responses via OpenRouter. Native LLM usage keeps
     //    each provider's verbatim usage payload under `providerMetadata`, so OpenRouter's
-    //    upstream inference cost remains available with snake_case preserved. Blitx doesn't
+    //    upstream inference cost remains available with snake_case preserved. Legion doesn't
     //    charge end users a per-request fee, so only the upstream cost is meaningful here.
     const usage = input.usage?.providerMetadata
     const anthropic = usage?.["anthropic"]?.["cost_details"] as { upstream_inference_cost?: number } | undefined
@@ -219,7 +219,7 @@ export namespace BlitxSession {
     if (upstream !== undefined) return upstream
 
     // 3. Anthropic Messages or OpenAI Responses via Vercel AI Gateway. `cost` is the
-    //    gateway fee that Blitx would pass through, but Blitx doesn't charge end users a
+    //    gateway fee that Legion would pass through, but Legion doesn't charge end users a
     //    per-request fee, so always use `marketCost` (the upstream provider's price).
     //    Values are emitted as strings on the wire.
     //
@@ -240,21 +240,21 @@ export namespace BlitxSession {
 
   export function shareSession(id: SessionID) {
     return EffectBridge.fromPromise(async () => {
-      const { BlitxSessions } = await import("@/kilo-sessions/kilo-sessions")
-      return BlitxSessions.share(id)
+      const { LegionSessions } = await import("@/kilo-sessions/kilo-sessions")
+      return LegionSessions.share(id)
     }).pipe(Effect.catchCause((cause) => Effect.fail(Cause.squash(cause))))
   }
 
   export function unshareSession(id: SessionID) {
     return EffectBridge.fromPromise(async () => {
-      const { BlitxSessions } = await import("@/kilo-sessions/kilo-sessions")
-      await BlitxSessions.unshare(id)
+      const { LegionSessions } = await import("@/kilo-sessions/kilo-sessions")
+      await LegionSessions.unshare(id)
     }).pipe(Effect.catchCause((cause) => Effect.fail(Cause.squash(cause))))
   }
 
   export async function removeSession(id: string): Promise<void> {
-    const { BlitxSessions } = await import("@/kilo-sessions/kilo-sessions")
-    await BlitxSessions.remove(id).catch(() => {})
+    const { LegionSessions } = await import("@/kilo-sessions/kilo-sessions")
+    await LegionSessions.remove(id).catch(() => {})
   }
 
   export async function cleanup(id: string): Promise<void> {
@@ -376,7 +376,7 @@ export namespace BlitxSession {
         if (!Filesystem.contains(root, dir) || nested(root, dir)) continue
         const rel = path.relative(root, dir)
         const parts = rel.split(path.sep)
-        if ((parts[0] === ".blitx" || parts[0] === ".kilocode") && parts[1] === "worktrees" && parts[2]) {
+        if ((parts[0] === ".legion" || parts[0] === ".kilocode") && parts[1] === "worktrees" && parts[2]) {
           return path.join(root, parts[0], parts[1], parts[2])
         }
         return root
@@ -436,7 +436,7 @@ export namespace BlitxSession {
   export const writer = _writer
 }
 
-export const blitxSessionFork = fn(
+export const LegionSessionork = fn(
   z.object({ sessionID: toZod(SessionID), messageID: toZod(MessageID).optional() }),
   async (input) => {
     const { AppRuntime } = await import("@/effect/app-runtime")

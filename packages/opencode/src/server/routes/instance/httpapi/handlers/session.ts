@@ -1,5 +1,5 @@
 import { Image } from "@/image/image" // kilocode_change - classify user image validation defects
-import { BlitxSessionHttpApi } from "@/kilocode/server/httpapi/session-fork" // kilocode_change
+import { LegionSessionttpApi } from "@/kilocode/server/httpapi/session-fork" // kilocode_change
 import { BlockedError as AgentRequirementError } from "@/kilocode/agent-requirements" // kilocode_change
 import { Agent } from "@/agent/agent"
 import { Bus } from "@/bus"
@@ -216,7 +216,7 @@ export const sessionHandlers = HttpApiBuilder.group(InstanceHttpApi, "session", 
       )
     })
 
-    const forkRaw = BlitxSessionHttpApi.forkRaw(fork) // kilocode_change - carry upstream bodyless full-session fork support
+    const forkRaw = LegionSessionttpApi.forkRaw(fork) // kilocode_change - carry upstream bodyless full-session fork support
 
     const abort = Effect.fn("SessionHttpApi.abort")(function* (ctx: { params: { sessionID: SessionID } }) {
       yield* promptSvc.cancel(ctx.params.sessionID)
@@ -420,8 +420,8 @@ export const sessionHandlers = HttpApiBuilder.group(InstanceHttpApi, "session", 
 
     // kilocode_change start
     const viewed = Effect.fn("SessionHttpApi.viewed")(function* (ctx: { payload: typeof ViewedPayload.Type }) {
-      const { BlitxSessions } = yield* Effect.promise(() => import("@/kilo-sessions/kilo-sessions"))
-      BlitxSessions.setViewedSessions({ focused: ctx.payload.focused ?? [], open: ctx.payload.open ?? [] })
+      const { LegionSessions } = yield* Effect.promise(() => import("@/kilo-sessions/kilo-sessions"))
+      LegionSessions.setViewedSessions({ focused: ctx.payload.focused ?? [], open: ctx.payload.open ?? [] })
       return true
     })
     // kilocode_change end

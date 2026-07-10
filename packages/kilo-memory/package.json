@@ -6,8 +6,8 @@
   "license": "MIT",
   "description": "Project memory storage, indexing, recall, and command helpers for Blitx",
   "keywords": [
-    "blitx",
-    "blitxcode",
+    "legion",
+    "legioncode",
     "memory",
     "agent"
   ],

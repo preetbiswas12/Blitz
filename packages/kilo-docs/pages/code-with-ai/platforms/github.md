@@ -72,14 +72,14 @@ For implementation requests, the bot creates a new branch, commits the changes, 
 ## Prerequisites
 
 - A Kilo Code account with available credits
-- Your GitHub integration configured via the Integrations tab at [app.kilo.ai](https://app.kilo.ai) <!-- TODO: Replace with Blitx dashboard URL -->
+- Your GitHub integration configured via the Integrations tab at [app.kilo.ai](https://app.kilo.ai) <!-- TODO: Replace with Legion dashboard URL -->
 - The Kilo Code Bot GitHub App installed on the relevant repositories
 
 ---
 
 ## Setup
 
-1. Go to [app.kilo.ai](https://app.kilo.ai) <!-- TODO: Replace with Blitx dashboard URL --> and navigate to the **Integrations** tab
+1. Go to [app.kilo.ai](https://app.kilo.ai) <!-- TODO: Replace with Legion dashboard URL --> and navigate to the **Integrations** tab
 2. Connect your GitHub account through the **KiloConnect** GitHub App if you haven't already
 3. Install the **Kilo Code Bot** GitHub App on your repositories at [github.com/apps/kilo-code-bot](https://github.com/apps/kilo-code-bot/)
 

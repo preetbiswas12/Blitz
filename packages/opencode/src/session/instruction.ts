@@ -62,8 +62,8 @@ export const layer: Layer.Layer<
     const flags = yield* RuntimeFlags.Service
     const http = HttpClient.filterStatusOk(withTransientReadRetry(yield* HttpClient.HttpClient))
     const globalFiles = [
-      // kilocode_change start - prefer BLITX_CONFIG_DIR profile when set
-      ...(Flag.BLITX_CONFIG_DIR ? [path.join(Flag.BLITX_CONFIG_DIR, "AGENTS.md")] : []),
+      // kilocode_change start - prefer LEGION_CONFIG_DIR profile when set
+      ...(Flag.LEGION_CONFIG_DIR ? [path.join(Flag.LEGION_CONFIG_DIR, "AGENTS.md")] : []),
       // kilocode_change end
       path.join(global.config, "AGENTS.md"),
       ...(!flags.disableClaudeCodePrompt ? [path.join(global.home, ".claude", "CLAUDE.md")] : []),
@@ -86,8 +86,8 @@ export const layer: Layer.Layer<
           .globUp(instruction, ctx.directory, ctx.worktree)
           .pipe(Effect.catch(() => Effect.succeed([] as string[])))
       }
-      // kilocode_change - prefer BLITX_CONFIG_DIR profile when set, else fall back to global.config
-      const root = Flag.BLITX_CONFIG_DIR ?? global.config
+      // kilocode_change - prefer LEGION_CONFIG_DIR profile when set, else fall back to global.config
+      const root = Flag.LEGION_CONFIG_DIR ?? global.config
       return yield* fs.globUp(instruction, root, root).pipe(Effect.catch(() => Effect.succeed([] as string[]))) // kilocode_change
     })
 

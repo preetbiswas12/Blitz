@@ -10,7 +10,7 @@ import { ServerAuth } from "@/server/auth"
 
 export const AttachCommand = cmd({
   command: "attach <url>",
-  describe: "attach to a running blitx server",
+  describe: "attach to a running legion server",
   builder: (yargs) =>
     yargs
       .positional("url", {
@@ -43,12 +43,12 @@ export const AttachCommand = cmd({
       .option("password", {
         alias: ["p"],
         type: "string",
-        describe: "basic auth password (defaults to BLITX_SERVER_PASSWORD)",
+        describe: "basic auth password (defaults to LEGION_SERVER_PASSWORD)",
       })
       .option("username", {
         alias: ["u"],
         type: "string",
-        describe: "basic auth username (defaults to BLITX_SERVER_USERNAME or 'blitx')", // kilocode_change
+        describe: "basic auth username (defaults to LEGION_SERVER_USERNAME or 'legion')", // kilocode_change
       }),
   handler: async (args) => {
     const unguard = win32InstallCtrlCGuard()

@@ -19,7 +19,7 @@ Auto Model is Kilo's smart routing system. Instead of selecting a specific provi
 | `kilo-auto/free` | Auto Free | No credits required — rotates through available free models | Free |
 
 {% callout type="info" title="Live model assignments" %}
-The underlying models behind each tier are updated server-side as better options become available or as providers change pricing. See [kilo.ai/models](https://blitx.ai/models) for current model assignments and live pricing.
+The underlying models behind each tier are updated server-side as better options become available or as providers change pricing. See [kilo.ai/models](https://legion.ai/models) for current model assignments and live pricing.
 {% /callout %}
 
 ## Balanced vs Efficient — What's the Difference?
@@ -86,7 +86,7 @@ Kilo automatically applies prompt caching on supported providers. Repeated conte
 - Requests using **Auto Free** models are billed at $0 on Kilo's side.
 - **BYOK (Bring Your Own Key)** requests are billed at $0 on Kilo's side — you pay the provider directly.
 
-For current pricing, visit [kilo.ai/models](https://blitx.ai/models).
+For current pricing, visit [kilo.ai/models](https://legion.ai/models).
 
 ## Related
 

@@ -136,7 +136,7 @@ linux("reports configured network namespace availability", async () => {
   try {
     const result = Bun.spawnSync([process.execPath, "-e", script], {
       cwd: import.meta.dir,
-      env: { ...process.env, KILO_BWRAP_PATH: helper, BLITX_SERVER_PASSWORD: "sandbox-test" },
+      env: { ...process.env, KILO_BWRAP_PATH: helper, LEGION_SERVER_PASSWORD: "sandbox-test" },
       stdout: "pipe",
       stderr: "pipe",
       windowsHide: true,
@@ -150,8 +150,8 @@ linux("reports configured network namespace availability", async () => {
 it.instance("snapshots the primary kilo config for the session lifetime", () =>
   Effect.acquireUseRelease(
     Effect.sync(() => {
-      const password = Flag.BLITX_SERVER_PASSWORD
-      Flag.BLITX_SERVER_PASSWORD = "sandbox-test"
+      const password = Flag.LEGION_SERVER_PASSWORD
+      Flag.LEGION_SERVER_PASSWORD = "sandbox-test"
       return password
     }),
     () =>
@@ -186,7 +186,7 @@ it.instance("snapshots the primary kilo config for the session lifetime", () =>
         expect((yield* SandboxPolicy.status(next)).enabled).toBe(false)
         expect(yield* execute(next, sandboxed)).toBe(false)
       }),
-    (password) => Effect.sync(() => (Flag.BLITX_SERVER_PASSWORD = password)),
+    (password) => Effect.sync(() => (Flag.LEGION_SERVER_PASSWORD = password)),
   ),
 )
 

@@ -170,7 +170,7 @@ export function args(file: string, command: string, cwd: string) {
         cd -- "$1"
         eval ${JSON.stringify(command)}
       `,
-      "blitx", // kilocode_change
+      "legion", // kilocode_change
       cwd,
     ]
   }
@@ -184,7 +184,7 @@ export function args(file: string, command: string, cwd: string) {
         cd -- "$1"
         eval ${JSON.stringify(command)}
       `,
-      "blitx", // kilocode_change
+      "legion", // kilocode_change
       cwd,
     ]
   }

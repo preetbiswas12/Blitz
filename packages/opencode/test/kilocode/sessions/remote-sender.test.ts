@@ -366,7 +366,7 @@ describe("RemoteSender", () => {
       {
         sessionID: SessionID.make("ses_x"),
         parts: [{ type: "text", text: "hello" }],
-        model: { providerID: ProviderID.make("blitx"), modelID: ModelID.make("anthropic/claude-sonnet-4-20250514") },
+        model: { providerID: ProviderID.make("legion"), modelID: ModelID.make("anthropic/claude-sonnet-4-20250514") },
       },
     ])
   })
@@ -400,7 +400,7 @@ describe("RemoteSender", () => {
       {
         sessionID: SessionID.make("ses_x"),
         parts: [{ type: "text", text: "hello" }],
-        model: { providerID: ProviderID.make("blitx"), modelID: ModelID.make("gpt-5-mini") },
+        model: { providerID: ProviderID.make("legion"), modelID: ModelID.make("gpt-5-mini") },
       },
     ])
   })
@@ -462,7 +462,7 @@ describe("RemoteSender", () => {
       {
         sessionID: SessionID.make("ses_x"),
         parts: [{ type: "text", text: "hello" }],
-        model: { providerID: ProviderID.make("blitx"), modelID: ModelID.make("kilo/gpt-5-mini") },
+        model: { providerID: ProviderID.make("legion"), modelID: ModelID.make("kilo/gpt-5-mini") },
       },
     ])
   })

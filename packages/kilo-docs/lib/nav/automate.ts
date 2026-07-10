@@ -26,7 +26,7 @@ export const AutomateNav: NavSection[] = [
     ],
   },
   {
-    title: "Extending Blitx",
+    title: "Extending Legion",
     links: [
       { href: "/automate/extending/local-models", children: "Local Models" },
       {
@@ -45,7 +45,7 @@ export const AutomateNav: NavSection[] = [
           { href: "/automate/mcp/overview", children: "MCP Overview" },
           {
             href: "/automate/mcp/using-in-kilo-code",
-            children: "Using MCP in Blitx Code",
+            children: "Using MCP in Legion Code",
           },
           { href: "/automate/mcp/using-in-cli", children: "Using MCP in CLI" },
           { href: "/automate/mcp/what-is-mcp", children: "What is MCP" },

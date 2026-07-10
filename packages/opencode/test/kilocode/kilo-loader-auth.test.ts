@@ -7,7 +7,7 @@ import { ModelsDev } from "../../src/provider/models"
 import * as CoreModels from "@opencode-ai/core/models-dev"
 import { Effect, Layer } from "effect"
 import { FetchHttpClient } from "effect/unstable/http"
-import { blitxCustomLoaders, patchBlitxProviderPrivacy } from "../../src/kilocode/provider/provider"
+import { LegionCustomLoaders, patchLegionProviderPrivacy } from "../../src/kilocode/provider/provider"
 import { Auth } from "../../src/auth"
 import { ModelCache } from "../../src/provider/model-cache"
 import { Provider } from "../../src/provider/provider"
@@ -16,7 +16,7 @@ import { testEffect } from "../lib/effect"
 import { provideInstance } from "../fixture/fixture"
 
 const input = {
-  id: "blitx",
+  id: "legion",
   env: ["KILO_API_KEY"],
   models: {
     "free-model": {
@@ -60,7 +60,7 @@ const files = Layer.effect(
 ).pipe(Layer.provide(AppFileSystem.defaultLayer))
 
 function load(data?: { auth?: object; config?: object; env?: Record<string, string | undefined> }) {
-  return blitxCustomLoaders({
+  return LegionCustomLoaders({
     auth: () => Effect.succeed(data?.auth),
     config: () => Effect.succeed(data?.config ?? {}),
     env: () => Effect.succeed(data?.env ?? {}),
@@ -71,8 +71,8 @@ function load(data?: { auth?: object; config?: object; env?: Record<string, stri
 function layer() {
   const cfg = TestConfig.layer()
   const models = Layer.succeed(
-    ModelCache.BlitxModelsService,
-    ModelCache.BlitxModelsService.of({
+    ModelCache.LegionModelsService,
+    ModelCache.LegionModelsService.of({
       fetch: () =>
         Effect.succeed({
           models: {
@@ -129,7 +129,7 @@ it.live("assembles paid Kilo models without auth", () =>
 
     expect(kilo.models["paid-model"]).toMatchObject({
       id: "paid-model",
-      providerID: "blitx",
+      providerID: "legion",
       cost: { input: 1, output: 2 },
       isFree: false,
       mayTrainOnYourPrompts: true,
@@ -175,7 +175,7 @@ it.effect("denies provider data collection when prompt-training models are hidde
 it.effect("keeps data collection denied after configured options are applied", () =>
   Effect.sync(() => {
     const provider = { options: { dataCollection: "allow", baseURL: "https://api.kilo.ai" } }
-    patchBlitxProviderPrivacy(provider, { hide_prompt_training_models: true })
+    patchLegionProviderPrivacy(provider, { hide_prompt_training_models: true })
     expect(provider.options).toEqual({ dataCollection: "deny", baseURL: "https://api.kilo.ai" })
   }),
 )

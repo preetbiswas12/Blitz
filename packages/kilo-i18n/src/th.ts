@@ -1,19 +1,19 @@
 export const dict = {
-  // Blitx Gateway provider translations
-  "provider.connect.blitxGateway.line1":
-    "Blitx Gateway ให้คุณเข้าถึงชุดโมเดลที่คัดสรรมาอย่างดีและเชื่อถือได้สำหรับตัวแทนเขียนโค้ด",
-  "provider.connect.blitxGateway.line2":
+  // Legion Gateway provider translations
+  "provider.connect.LegionGateway.line1":
+    "Legion Gateway ให้คุณเข้าถึงชุดโมเดลที่คัดสรรมาอย่างดีและเชื่อถือได้สำหรับตัวแทนเขียนโค้ด",
+  "provider.connect.LegionGateway.line2":
     "ด้วย API key เดียว คุณจะสามารถเข้าถึงโมเดลต่างๆ เช่น Claude, GPT, Gemini, GLM และอื่นๆ",
-  "provider.connect.blitxGateway.visit.prefix": "เยี่ยมชม ",
-  "provider.connect.blitxGateway.visit.link": "blitx.ai",
-  "provider.connect.blitxGateway.visit.suffix": " เพื่อรับ API key ของคุณ",
-  "provider.connect.blitxGateway.byok.prefix": "สำหรับสถิติการใช้งานเพิ่มเติม โปรดใช้ ",
-  "provider.connect.blitxGateway.byok.link": "BYOK ผ่าน Blitx's Gateway",
-  "provider.connect.blitxGateway.byok.suffix": "",
+  "provider.connect.LegionGateway.visit.prefix": "เยี่ยมชม ",
+  "provider.connect.LegionGateway.visit.link": "legion.ai",
+  "provider.connect.LegionGateway.visit.suffix": " เพื่อรับ API key ของคุณ",
+  "provider.connect.LegionGateway.byok.prefix": "สำหรับสถิติการใช้งานเพิ่มเติม โปรดใช้ ",
+  "provider.connect.LegionGateway.byok.link": "BYOK ผ่าน Legion's Gateway",
+  "provider.connect.LegionGateway.byok.suffix": "",
 
   // Provider settings translations
   "settings.providers.group.recommended": "แนะนำ",
-  "settings.providers.note.blitx": "เข้าถึงโมเดล AI มากกว่า 500 รายการ",
+  "settings.providers.note.Legion": "เข้าถึงโมเดล AI มากกว่า 500 รายการ",
   "settings.providers.note.opencode": "โมเดลที่คัดสรร รวมถึง Claude, GPT, Gemini และอื่น ๆ",
   "settings.providers.note.anthropic": "เข้าถึงโมเดล Claude โดยตรง รวมถึง Pro และ Max",
   "settings.providers.note.deepseek": "โมเดล DeepSeek สำหรับงานใช้เหตุผลและเขียนโค้ด",
@@ -48,12 +48,12 @@ export const dict = {
     "ทุกโปรเจกต์ในเครื่องนี้ จัดเก็บไว้ในการกำหนดค่าผู้ใช้ของคุณ",
   "marketplace.install.destination": "ปลายทางการติดตั้ง",
   "marketplace.install.about.mcp":
-    "เซิร์ฟเวอร์ MCP เพิ่มเครื่องมือให้ Blitx สำหรับทำงานกับบริการภายนอกหรือโปรแกรมในเครื่อง",
+    "เซิร์ฟเวอร์ MCP เพิ่มเครื่องมือให้ Legion สำหรับทำงานกับบริการภายนอกหรือโปรแกรมในเครื่อง",
   "marketplace.install.about.agent": "เอเจนต์เพิ่มบทบาทที่นำกลับมาใช้ใหม่ได้พร้อมคำสั่งและสิทธิ์ของตนเอง",
   "marketplace.install.about.skill":
-    "ทักษะเพิ่มคำสั่งและทรัพยากรเฉพาะงานที่ Blitx สามารถโหลดได้เมื่อจำเป็น",
+    "ทักษะเพิ่มคำสั่งและทรัพยากรเฉพาะงานที่ Legion สามารถโหลดได้เมื่อจำเป็น",
   "marketplace.install.mcp.warning":
-    "เซิร์ฟเวอร์ MCP สามารถเรียกใช้คำสั่งในเครื่องหรือเชื่อมต่อกับบริการภายนอกได้ Blitx จะขออนุญาตก่อนใช้เครื่องมือ เว้นแต่สิทธิ์ของคุณจะอนุญาตโดยอัตโนมัติ",
+    "เซิร์ฟเวอร์ MCP สามารถเรียกใช้คำสั่งในเครื่องหรือเชื่อมต่อกับบริการภายนอกได้ Legion จะขออนุญาตก่อนใช้เครื่องมือ เว้นแต่สิทธิ์ของคุณจะอนุญาตโดยอัตโนมัติ",
   "marketplace.install.project.warning":
     "ไฟล์โปรเจกต์อาจถูกเพิ่มลงในระบบควบคุมเวอร์ชัน อย่าเก็บข้อมูลลับไว้ที่นี่ เว้นแต่การกำหนดค่าจะอ้างอิงตัวแปรสภาพแวดล้อม",
   "marketplace.install.learnMore": "เรียนรู้วิธีการติดตั้งจาก Marketplace",
@@ -125,7 +125,7 @@ export const dict = {
     "รอจนกว่าสแน็ปช็อตจะเสร็จ เทิร์นถัดไปจะเร็วขึ้นเมื่อสร้างสแน็ปช็อตแรกเสร็จแล้ว",
   "snapshot.slowRepo.answer.disable": "ปิดใช้งานสำหรับโปรเจกต์นี้",
   "snapshot.slowRepo.answer.disable.description":
-    "ปิดสแน็ปช็อตของ Blitx สำหรับโปรเจกต์นี้ คุณจะสูญเสียการยกเลิก/ทำซ้ำสำหรับการเปลี่ยนแปลงของ Blitx แต่ git ยังคงติดตามทุกอย่าง",
+    "ปิดสแน็ปช็อตของ Legion สำหรับโปรเจกต์นี้ คุณจะสูญเสียการยกเลิก/ทำซ้ำสำหรับการเปลี่ยนแปลงของ Legion แต่ git ยังคงติดตามทุกอย่าง",
 
   // Edit-tool header and shell-tool section labels
   "ui.messagePart.openInDiffViewer": "เปิดในตัวดูความแตกต่าง",

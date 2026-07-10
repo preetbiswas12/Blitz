@@ -95,7 +95,7 @@ function suggest(all: Candidate[], value: string): string[] {
 // without forcing the agent to know about provider plumbing.
 function rank(providerID: string, preferred: string | undefined): number {
   if (providerID === preferred) return 0
-  if (providerID === "blitx") return 1
+  if (providerID === "legion") return 1
   return 2
 }
 

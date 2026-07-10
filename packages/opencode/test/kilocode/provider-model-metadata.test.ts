@@ -5,7 +5,7 @@ import { patchModelsDevModel } from "../../src/kilocode/provider/provider"
 
 describe("Kilo provider model metadata", () => {
   test("preserves Auto Efficient routing models from Models.dev data", () => {
-    const patch = patchModelsDevModel("blitx", {
+    const patch = patchModelsDevModel("legion", {
       autoRouting: { models: ["google/gemini-2.5-flash", "anthropic/claude-sonnet-4.6"] },
     })
 
@@ -17,7 +17,7 @@ describe("Kilo provider model metadata", () => {
   test("Provider.Model schema accepts Auto Efficient routing models", () => {
     const model = Schema.decodeUnknownSync(Provider.Model)({
       id: "kilo-auto/efficient",
-      providerID: "blitx",
+      providerID: "legion",
       name: "Kilo Auto Efficient",
       family: "kilo-auto",
       capabilities: {

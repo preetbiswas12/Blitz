@@ -50,12 +50,12 @@ function print(input: Daemon.Status, json?: boolean) {
     return
   }
   if (!input.running) {
-    console.log(input.stale ? `Blitx daemon stale: ${input.reason}` : `Blitx daemon not running`)
+    console.log(input.stale ? `Legion daemon stale: ${input.reason}` : `Legion daemon not running`)
     console.log(`state: ${input.file}`)
     if (input.state?.log) console.log(`log: ${input.state.log}`)
     return
   }
-  console.log(`Blitx daemon running`)
+  console.log(`Legion daemon running`)
   if (input.state?.urls) {
     const urls = input.state.urls
     console.log(`local:   ${urls.local}`)
@@ -77,7 +77,7 @@ async function hold(enabled: boolean, json: boolean, run: (signal?: AbortSignal)
   }
   await Daemon.foreground(async (signal) => {
     const state = await run(signal)
-    if (!signal.aborted && !json) console.log("Press Ctrl+C to stop the Blitx daemon.")
+    if (!signal.aborted && !json) console.log("Press Ctrl+C to stop the Legion daemon.")
     return state
   })
 }
@@ -85,7 +85,7 @@ async function hold(enabled: boolean, json: boolean, run: (signal?: AbortSignal)
 function start(command: string) {
   return cmd({
     command,
-    describe: "start the local Blitx daemon",
+    describe: "start the local Legion daemon",
     builder: (yargs) => withForeground(withJson(withNetworkOptions(yargs))),
     handler: async (args) => {
       await hold(Boolean(args.foreground), Boolean(args.json), async (signal) => {
@@ -94,16 +94,16 @@ function start(command: string) {
         const daemon = await Daemon.ensure(opts, explicitNetworkOptions())
         const result = daemon.result
         const state = result.state
-        if (!state) throw new Error("Blitx daemon did not provide process state")
+        if (!state) throw new Error("Legion daemon did not provide process state")
         if (signal?.aborted) return state
         if (args.json) print(result, true)
         if (!args.json) {
           console.log(
             result.reused
-              ? "Blitx daemon already running"
+              ? "Legion daemon already running"
               : daemon.restarted
-                ? "Blitx daemon restarted"
-                : "Blitx daemon started",
+                ? "Legion daemon restarted"
+                : "Legion daemon started",
           )
           print(result)
         }
@@ -118,7 +118,7 @@ const StartCommand = start("start")
 
 const StatusCommand = cmd({
   command: "status",
-  describe: "show local Blitx daemon status",
+  describe: "show local Legion daemon status",
   builder: (yargs) => withJson(yargs),
   handler: async (args) => {
     print(await Daemon.status(), Boolean(args.json))
@@ -127,7 +127,7 @@ const StatusCommand = cmd({
 
 export const StopCommand = cmd({
   command: "stop",
-  describe: "stop the local Blitx daemon",
+  describe: "stop the local Legion daemon",
   builder: (yargs) => withJson(yargs),
   handler: async (args) => {
     const result = await Daemon.stop()
@@ -135,13 +135,13 @@ export const StopCommand = cmd({
       print(result, true)
       return
     }
-    console.log(result.stopped ? "Blitx daemon stopped" : "Blitx daemon not running")
+    console.log(result.stopped ? "Legion daemon stopped" : "Legion daemon not running")
   },
 })
 
 const RestartCommand = cmd({
   command: "restart",
-  describe: "restart the local Blitx daemon",
+  describe: "restart the local Legion daemon",
   builder: (yargs) => withForeground(withJson(withNetworkOptions(yargs))),
   handler: async (args) => {
     await hold(Boolean(args.foreground), Boolean(args.json), async (signal) => {
@@ -149,11 +149,11 @@ const RestartCommand = cmd({
       warnPort(opts.port)
       const result = await Daemon.restart(opts)
       const state = result.state
-      if (!state) throw new Error("Blitx daemon did not provide process state")
+      if (!state) throw new Error("Legion daemon did not provide process state")
       if (signal?.aborted) return state
       if (args.json) print(result, true)
       if (!args.json) {
-        console.log("Blitx daemon restarted")
+        console.log("Legion daemon restarted")
         print(result)
       }
       return state
@@ -163,7 +163,7 @@ const RestartCommand = cmd({
 
 export const DaemonCommand = cmd({
   command: "daemon",
-  describe: "manage the local Blitx daemon",
+  describe: "manage the local Legion daemon",
   builder: (yargs: Argv) =>
     yargs
       .command(DefaultCommand)

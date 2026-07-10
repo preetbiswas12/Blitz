@@ -1,7 +1,7 @@
 /** @jsxImportSource solid-js */
 import type { Meta, StoryObj } from "storybook-solidjs-vite"
 import { MessageNav } from "@opencode-ai/ui/message-nav"
-import type { UserMessage } from "@blitxcode/sdk/v2"
+import type { UserMessage } from "@Legioncode/sdk/v2"
 
 const meta: Meta = {
   title: "Components/MessageNav",

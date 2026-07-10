@@ -6,8 +6,8 @@
   "license": "MIT",
   "description": "Standalone indexing engine and host helpers for Blitx",
   "keywords": [
-    "blitx",
-    "blitxcode",
+    "legion",
+    "legioncode",
     "indexing",
     "plugin",
     "search",
@@ -17,7 +17,7 @@
     ".": "./src/index.ts",
     "./config": "./src/config.ts",
     "./detect": "./src/detect.ts",
-    "./embedding-models": "./src/blitx-embedding-models.ts",
+    "./embedding-models": "./src/legion-embedding-models.ts",
     "./engine": "./src/indexing/index.ts",
     "./server": "./src/server/routes.ts",
     "./status": "./src/status.ts"

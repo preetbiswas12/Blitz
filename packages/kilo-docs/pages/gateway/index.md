@@ -26,7 +26,7 @@ import { createOpenAI } from "@ai-sdk/openai"
 
 const kilo = createOpenAI({
   baseURL: "https://api.kilo.ai/api/gateway",
-  apiKey: process.env.BLITX_API_KEY,
+  apiKey: process.env.LEGION_API_KEY,
 })
 
 const result = streamText({

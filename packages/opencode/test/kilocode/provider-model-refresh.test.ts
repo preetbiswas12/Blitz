@@ -103,5 +103,5 @@ it.instance(
         }),
     )
   }),
-  { config: { disabled_providers: ["blitx", "apertis"] } },
+  { config: { disabled_providers: ["legion", "apertis"] } },
 )

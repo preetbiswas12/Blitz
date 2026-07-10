@@ -69,7 +69,7 @@ export const NetworkApi = HttpApi.make("network")
   )
   .annotateMerge(
     OpenApi.annotations({
-      title: "blitx HttpApi",
+      title: "Legion HttpApi",
       version: "0.0.1",
       description: "Kilo HttpApi surface.",
     }),

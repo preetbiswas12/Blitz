@@ -1,7 +1,7 @@
 import { For, Show } from "solid-js"
-import { Button } from "@blitxcode/kilo-web-ui/button"
-import { ConfigRow, SectionTitle } from "@blitxcode/kilo-web-ui/console"
-import { IconButton } from "@blitxcode/kilo-web-ui/icon-button"
+import { Button } from "@Legioncode/kilo-web-ui/button"
+import { ConfigRow, SectionTitle } from "@Legioncode/kilo-web-ui/console"
+import { IconButton } from "@Legioncode/kilo-web-ui/icon-button"
 import { ConfigCountTag as CountTag, ConfigPage, ConfigTag as Tag, SourceBadge } from "./ConfigPage"
 import { useFormatterSettings, type ToolRow } from "./state/formatters"
 

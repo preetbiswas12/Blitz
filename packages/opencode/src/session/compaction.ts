@@ -18,11 +18,11 @@ import { InstanceState } from "@/effect/instance-state"
 import { isOverflow as overflow, usable } from "./overflow"
 import { serviceUse } from "@opencode-ai/core/effect/service-use"
 // kilocode_change start
-import { BlitxSessionPromptQueue } from "@/kilocode/session/prompt-queue"
+import { LegionSessionromptQueue } from "@/kilocode/session/prompt-queue"
 import { KiloCompactionPayloadRecovery } from "@/kilocode/session/compaction-payload-recovery"
 import { KiloCompactionChunks } from "@/kilocode/session/compaction-chunks"
 import { SessionExport } from "@/kilocode/session-export"
-import { BlitxSession } from "@/kilocode/session"
+import { LegionSession} from "@/kilocode/session"
 // kilocode_change end
 import { RuntimeFlags } from "@/effect/runtime-flags"
 import { EventV2Bridge } from "@/event-v2-bridge"
@@ -558,7 +558,7 @@ export const layer = Layer.effect(
             tools: original.tools,
             system: original.system,
           })
-          BlitxSessionPromptQueue.retarget(input.sessionID, replayMsg.id) // kilocode_change - expose replay to scope()
+          LegionSessionromptQueue.retarget(input.sessionID, replayMsg.id) // kilocode_change - expose replay to scope()
           for (const part of replay.parts) {
             if (part.type === "compaction") continue
             // kilocode_change start - preserve media for preflight replay but strip it after provider overflow
@@ -606,7 +606,7 @@ export const layer = Layer.effect(
               agent: userMessage.agent,
               model: userMessage.model,
             })
-            BlitxSessionPromptQueue.retarget(input.sessionID, continueMsg.id) // kilocode_change - expose auto-continue to scope()
+            LegionSessionromptQueue.retarget(input.sessionID, continueMsg.id) // kilocode_change - expose auto-continue to scope()
             const text =
               (input.overflow
                 ? "The previous request exceeded the provider's size limit due to large media attachments. The conversation was compacted and media files were removed from context. If the user was asking about attached images or files, explain that the attachments were too large to process and suggest they try again with smaller or fewer files.\n\n"
@@ -652,8 +652,8 @@ export const layer = Layer.effect(
           })
         }
         // kilocode_change start - export self-contained compaction capture
-        const parent = BlitxSession.resolveParent(input.sessionID)
-        const found = BlitxSession.resolveRoot(input.sessionID)
+        const parent = LegionSessionresolveParent(input.sessionID)
+        const found = LegionSessionresolveRoot(input.sessionID)
         const root = parent ? (found === input.sessionID ? parent : found) : input.sessionID
         const workspace = yield* InstanceState.context
         SessionExport.compaction({
@@ -712,7 +712,7 @@ export const layer = Layer.effect(
         overflow: input.overflow,
       })
       // kilocode_change start - keep auto-compaction markers visible during queued turns
-      BlitxSessionPromptQueue.retarget(input.sessionID, msg.id)
+      LegionSessionromptQueue.retarget(input.sessionID, msg.id)
       // kilocode_change end
       if (flags.experimentalEventSystem) {
         yield* events.publish(SessionEvent.Compaction.Started, {

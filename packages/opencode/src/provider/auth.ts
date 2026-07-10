@@ -225,7 +225,7 @@ export const layer: Layer.Layer<Service, never, Auth.Service | Plugin.Service | 
       }
 
       // kilocode_change start - Update telemetry identity on Kilo auth
-      if (input.providerID === "blitx") {
+      if (input.providerID === "legion") {
         const info = yield* auth.get(input.providerID)
         if (info) {
           const token = info.type === "oauth" ? info.access : info.type === "api" ? info.key : null

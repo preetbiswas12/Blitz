@@ -8,10 +8,10 @@ function createKilo(_options: unknown): unknown {
   return undefined
 }
 
-const id = ProviderV2.ID.make("blitx") // kilocode_change
+const id = ProviderV2.ID.make("legion") // kilocode_change
 
 export const KiloPlugin = PluginV2.define({
-  id: PluginV2.ID.make("blitx"),
+  id: PluginV2.ID.make("legion"),
   effect: Effect.gen(function* () {
     return {
       "catalog.transform": Effect.fn(function* (evt) {
@@ -29,9 +29,9 @@ export const KiloPlugin = PluginV2.define({
               url: KILO_OPENROUTER_BASE,
             }
             // kilocode_change end
-            provider.options.headers["HTTP-Referer"] = "https://blitx.ai/"
+            provider.options.headers["HTTP-Referer"] = "https://legion.ai/"
             // kilocode_change start
-            provider.options.headers["X-Title"] = "Blitx Code"
+            provider.options.headers["X-Title"] = "Legion Code"
             options.kilocodeToken = token ?? "anonymous"
             if (org) options.kilocodeOrganizationId = org
             if (!provider.enabled) provider.enabled = { via: "custom", data: { anonymous: true } }

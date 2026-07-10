@@ -26,7 +26,7 @@ export type ShareData =
   | { type: "model"; data: unknown }
 
 // kilocode_change start
-/** Extract share ID from a Kilo share URL like https://app.kilo.ai/s/abc123 */ // TODO: Replace with Blitx share URL
+/** Extract share ID from a Kilo share URL like https://app.kilo.ai/s/abc123 */ // TODO: Replace with Legion share URL
 export function parseShareUrl(url: string): string | null {
   const match = url.match(/^https?:\/\/app\.kilo\.ai\/s\/([a-zA-Z0-9_-]+)$/)
   return match ? match[1] : null
@@ -88,8 +88,8 @@ export function ingestBootstrapWarning(sessionId: string, error: unknown) {
 }
 
 async function ingestBootstrap(sessionId: string) {
-  const { BlitxSessions } = await import("../../kilo-sessions/kilo-sessions")
-  return BlitxSessions.bootstrap(sessionId)
+  const { LegionSessions } = await import("../../kilo-sessions/kilo-sessions")
+  return LegionSessions.bootstrap(sessionId)
 }
 
 export async function bootstrapImportedSessionIngest(
@@ -148,12 +148,12 @@ const runImport = Effect.fn("Cli.import.body")(function* (file: string, ctx: Ins
     // kilocode_change start - Migrate to upstream ShareNext architecture #10281
     const slug = parseShareUrl(file)
     if (!slug) {
-      process.stdout.write(`Invalid URL format. Expected: https://app.kilo.ai/s/<id>`) // TODO: Replace with Blitx share URL
+      process.stdout.write(`Invalid URL format. Expected: https://app.kilo.ai/s/<id>`) // TODO: Replace with Legion share URL
       process.stdout.write(EOL)
       return
     }
 
-    const base = process.env["BLITX_SESSION_INGEST_URL"] ?? "https://ingest.kilosessions.ai"
+    const base = process.env["LEGION_SESSION_INGEST_URL"] ?? "https://ingest.kilosessions.ai"
     const response = yield* Effect.tryPromise({
       try: () => fetch(`${base}/session/${encodeURIComponent(slug)}`),
       catch: (e) =>

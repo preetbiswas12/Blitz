@@ -49,6 +49,6 @@ Kilo Code is open source. You can inspect the code, contribute features, or fork
 
 ## Get Help
 
-- [**Discord**](https://blitx.ai/discord) — Real-time help and community discussion
+- [**Discord**](https://legion.ai/discord) — Real-time help and community discussion
 
-- [**YouTube**](https://blitx.ai/youtube) — Tutorials and walkthroughs
+- [**YouTube**](https://legion.ai/youtube) — Tutorials and walkthroughs

@@ -40,7 +40,7 @@ function layer(
     Layer.provide(Layer.succeed(HttpClient.HttpClient, http)),
     Layer.provide(cfg),
     Layer.provide(access),
-    Layer.provide(ModelCache.blitxModelsLayer),
+    Layer.provide(ModelCache.LegionModelsLayer),
   )
 }
 

@@ -108,7 +108,7 @@ describe("session routed model", () => {
     const parts = [reason, finish(model)]
 
     const routed = RoutedModelMeta.info(undefined, parts, false, {
-      providerID: "blitx",
+      providerID: "legion",
       modelID: "kilo-auto/efficient",
     })
     expect(routed.labels.get("reasoning")).toBe("gpt-5.5")
@@ -125,10 +125,10 @@ describe("session routed model", () => {
 
     const same = RoutedModelMeta.info(
       undefined,
-      [reason, finish({ providerID: "blitx", modelID: "kilo-auto/efficient" })],
+      [reason, finish({ providerID: "legion", modelID: "kilo-auto/efficient" })],
       false,
       {
-        providerID: "blitx",
+        providerID: "legion",
         modelID: "kilo-auto/efficient",
       },
     )
@@ -141,7 +141,7 @@ describe("session routed model", () => {
     const parts = [text, finish({ providerID: "qwen", modelID: "qwen/qwen3.7-plus" })]
 
     const routed = RoutedModelMeta.info(undefined, parts, false, {
-      providerID: "blitx",
+      providerID: "legion",
       modelID: "kilo-auto/efficient",
     })
     expect(routed.labels.size).toBe(0)
@@ -159,7 +159,7 @@ describe("session routed model", () => {
     ]
 
     const routed = RoutedModelMeta.info(undefined, parts, false, {
-      providerID: "blitx",
+      providerID: "legion",
       modelID: "kilo-auto/efficient",
     })
     expect(routed.labels.get("reasoning")).toBe("qwen 3.7-plus")
@@ -174,17 +174,17 @@ describe("session routed model", () => {
 
     expect(
       KiloRoutedModel.readAuto(meta, {
-        providerID: ProviderID.blitx,
+        providerID: ProviderID.legion,
         modelID: "kilo-auto/efficient",
       }),
     ).toEqual({
-      providerID: ProviderID.blitx,
+      providerID: ProviderID.legion,
       modelID: ModelID.make("openai/gpt-5.5-20260423"),
     })
 
     expect(
       KiloRoutedModel.readAuto(meta, {
-        providerID: ProviderID.blitx,
+        providerID: ProviderID.legion,
         modelID: "openai/gpt-5.5",
       }),
     ).toBeUndefined()

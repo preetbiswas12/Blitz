@@ -65,9 +65,9 @@ export class CodeIndexServiceFactory {
     const config = this.configManager.getConfig()
     const provider = config.embedderProvider
 
-    if (provider === "blitx") {
-      if (!config.kiloOptions?.apiKey) throw new Error("Blitx API key is required for embedding.")
-      if (!config.modelId) throw new Error("Blitx embedding model is required.")
+    if (provider === "legion") {
+      if (!config.kiloOptions?.apiKey) throw new Error("Legion API key is required for embedding.")
+      if (!config.modelId) throw new Error("Legion embedding model is required.")
       return new KiloEmbedder({
         apiKey: config.kiloOptions.apiKey,
         baseUrl: config.kiloOptions.baseUrl,

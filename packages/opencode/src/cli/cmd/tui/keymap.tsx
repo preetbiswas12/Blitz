@@ -93,7 +93,7 @@ export function useOpencodeModeStack() {
 
 export function getOpencodeModeStack(keymap: OpenTuiKeymap) {
   const value = modeStacks.get(keymap)
-  if (!value) throw new Error("Blitx mode stack is not registered for this keymap") // kilocode_change
+  if (!value) throw new Error("Legion mode stack is not registered for this keymap") // kilocode_change
   return value
 }
 

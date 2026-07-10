@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 // kilocode_change - new file
-// Sync every Blitx version string across the monorepo to a single target.
+// Sync every Legion version string across the monorepo to a single target.
 //
 // Why this exists: upstream opencode stamps its own version into shared files
 // during each release (notably `packages/extensions/zed/extension.toml`). When
@@ -10,7 +10,7 @@
 //
 // Run this in a dedicated commit after resolving an upstream merge (see
 // `.kilo/command/upstream-manual-merge.md`). It's also handy mid-merge to
-// rebase our version bumps onto any new Blitx main releases.
+// rebase our version bumps onto any new Legion main releases.
 //
 // Usage:
 //   bun run script/sync-versions.ts            # use root package.json version

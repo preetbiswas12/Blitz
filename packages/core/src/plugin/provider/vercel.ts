@@ -12,8 +12,8 @@ export const VercelPlugin = PluginV2.define({
           if (item.provider.endpoint.package !== "@ai-sdk/vercel") continue
           if (item.provider.id !== ProviderV2.ID.make("vercel")) continue // kilocode_change
           evt.provider.update(item.provider.id, (provider) => {
-            provider.options.headers["http-referer"] = "https://blitx.ai/" // kilocode_change
-            provider.options.headers["x-title"] = "Blitx Code" // kilocode_change
+            provider.options.headers["http-referer"] = "https://legion.ai/" // kilocode_change
+            provider.options.headers["x-title"] = "Legion Code" // kilocode_change
           })
         }
       }),

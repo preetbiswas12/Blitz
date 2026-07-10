@@ -1,1 +1,1 @@
-export * from "@blitxcode/kilo-ui/message-part"
+export * from "@Legioncode/kilo-ui/message-part"

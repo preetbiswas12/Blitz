@@ -1,19 +1,19 @@
 export const dict = {
-  // Blitx Gateway provider translations
-  "provider.connect.blitxGateway.line1":
-    "Blitx Gateway, kodlama ajanları için optimize edilmiş güvenilir modellere erişim sağlar.",
-  "provider.connect.blitxGateway.line2":
+  // Legion Gateway provider translations
+  "provider.connect.LegionGateway.line1":
+    "Legion Gateway, kodlama ajanları için optimize edilmiş güvenilir modellere erişim sağlar.",
+  "provider.connect.LegionGateway.line2":
     "Tek bir API anahtarıyla Claude, GPT, Gemini, GLM ve daha fazlası gibi modellere erişebilirsiniz.",
-  "provider.connect.blitxGateway.visit.prefix": "API anahtarınızı almak için ",
-  "provider.connect.blitxGateway.visit.link": "blitx.ai",
-  "provider.connect.blitxGateway.visit.suffix": " adresini ziyaret edin.",
-  "provider.connect.blitxGateway.byok.prefix": "Daha fazla kullanım istatistiği için ",
-  "provider.connect.blitxGateway.byok.link": "Blitx's Gateway üzerinden BYOK",
-  "provider.connect.blitxGateway.byok.suffix": " kullanın.",
+  "provider.connect.LegionGateway.visit.prefix": "API anahtarınızı almak için ",
+  "provider.connect.LegionGateway.visit.link": "legion.ai",
+  "provider.connect.LegionGateway.visit.suffix": " adresini ziyaret edin.",
+  "provider.connect.LegionGateway.byok.prefix": "Daha fazla kullanım istatistiği için ",
+  "provider.connect.LegionGateway.byok.link": "Legion's Gateway üzerinden BYOK",
+  "provider.connect.LegionGateway.byok.suffix": " kullanın.",
 
   // Provider settings translations
   "settings.providers.group.recommended": "Önerilen",
-  "settings.providers.note.blitx": "500+ AI modeline erişim",
+  "settings.providers.note.Legion": "500+ AI modeline erişim",
   "settings.providers.note.opencode": "Claude, GPT, Gemini ve daha fazlasını içeren seçilmiş modeller",
   "settings.providers.note.anthropic": "Pro ve Max dahil Claude modellerine doğrudan erişim",
   "settings.providers.note.deepseek": "Akıl yürütme ve kodlama görevleri için DeepSeek modelleri",
@@ -48,12 +48,12 @@ export const dict = {
     "Bu makinedeki tüm projeler. Kullanıcı yapılandırmanızda saklanır.",
   "marketplace.install.destination": "Yükleme hedefi",
   "marketplace.install.about.mcp":
-    "Bir MCP sunucusu, harici hizmetler veya yerel programlarla çalışmak için Blitx'e ek araçlar sağlar.",
+    "Bir MCP sunucusu, harici hizmetler veya yerel programlarla çalışmak için Legion'e ek araçlar sağlar.",
   "marketplace.install.about.agent": "Bir ajan, kendi talimatları ve izinleri olan yeniden kullanılabilir bir rol ekler.",
   "marketplace.install.about.skill":
-    "Bir yetenek, Blitx'nun gerektiğinde yükleyebileceği göreve özel talimatlar ve kaynaklar ekler.",
+    "Bir yetenek, Legion'nun gerektiğinde yükleyebileceği göreve özel talimatlar ve kaynaklar ekler.",
   "marketplace.install.mcp.warning":
-    "MCP sunucuları yerel komutları çalıştırabilir veya harici hizmetlere bağlanabilir. İzinleriniz otomatik olarak izin vermediği sürece Blitx, araçlarını kullanmadan önce izin ister.",
+    "MCP sunucuları yerel komutları çalıştırabilir veya harici hizmetlere bağlanabilir. İzinleriniz otomatik olarak izin vermediği sürece Legion, araçlarını kullanmadan önce izin ister.",
   "marketplace.install.project.warning":
     "Proje dosyaları sürüm kontrolüne eklenebilir. Yapılandırma bir ortam değişkenine başvurmuyorsa gizli bilgileri burada saklamayın.",
   "marketplace.install.learnMore": "Marketplace yüklemelerinin nasıl çalıştığını öğrenin",
@@ -126,7 +126,7 @@ export const dict = {
     "Anlık görüntü tamamlanana kadar bekleyin. İlk anlık görüntü oluşturulduktan sonra sonraki turlar hızlıdır.",
   "snapshot.slowRepo.answer.disable": "Bu proje için devre dışı bırak",
   "snapshot.slowRepo.answer.disable.description":
-    "Bu proje için Blitx anlık görüntülerini kapat. Blitx değişiklikleri için geri alma/yeniden yapmayı kaybedersiniz, ancak git her şeyi izlemeye devam eder.",
+    "Bu proje için Legion anlık görüntülerini kapat. Legion değişiklikleri için geri alma/yeniden yapmayı kaybedersiniz, ancak git her şeyi izlemeye devam eder.",
 
   // Edit-tool header and shell-tool section labels
   "ui.messagePart.openInDiffViewer": "Fark Görüntüleyicide Aç",

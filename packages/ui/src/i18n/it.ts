@@ -56,7 +56,7 @@ export const dict: Record<string, string> = {
 
   "dialog.usageExceeded.freeTier.title": "Limite gratuito raggiunto",
   "dialog.usageExceeded.freeTier.description":
-    "Abbonati a Blitx Go per un accesso affidabile ai migliori modelli open source, a partire da $5 al mese.",
+    "Abbonati a Legion Go per un accesso affidabile ai migliori modelli open source, a partire da $5 al mese.",
   "dialog.usageExceeded.freeTier.actionLabel": "Abbonati",
   "dialog.usageExceeded.accountRateLimit.title": "Limite Go raggiunto",
   "dialog.usageExceeded.accountRateLimit.description":

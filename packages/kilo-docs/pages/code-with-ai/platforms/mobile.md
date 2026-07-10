@@ -23,7 +23,7 @@ The mobile app lets you:
 
 ## Kilo Pass and Billing
 
-For Kilo Pass pricing, billing, and account management details, use the [Kilo Pass pricing page](https://blitx.ai/pricing/kilo-pass).
+For Kilo Pass pricing, billing, and account management details, use the [Kilo Pass pricing page](https://legion.ai/pricing/kilo-pass).
 
 {% imageGallery columns="3" width="220px" %}
 {% image src="/docs/img/mobile-apps/home.webp" alt="Kilo Code mobile home screen showing KiloClaw and active agent sessions" caption="Start coding tasks, open KiloClaw, and resume active sessions from the mobile home screen." /%}
@@ -49,4 +49,4 @@ The Android app is available now on Google Play.
 
 The iOS app is in review with the App Store team and will be available soon. You can already sign up for the iOS waitlist to be notified when it launches.
 
-[Join the iOS app waitlist →](https://blitx.ai/features/ios-app)
+[Join the iOS app waitlist →](https://legion.ai/features/ios-app)

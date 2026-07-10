@@ -197,7 +197,7 @@ describe("CodeIndexServiceFactory", () => {
 
   test("creates Kilo embedder with Cloud-provided model", async () => {
     const factory = createFactory({
-      embedderProvider: "blitx",
+      embedderProvider: "legion",
       openAiKey: undefined,
       kiloApiKey: "kilo-token",
       kiloOrganizationId: "org_123",

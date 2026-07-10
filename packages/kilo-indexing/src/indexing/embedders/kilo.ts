@@ -25,9 +25,9 @@ export class KiloEmbedder implements IEmbedder {
     modelId?: string
     dimensions?: number
   }) {
-    if (!input.apiKey) throw new Error("Blitx API key is required for embedding.")
+    if (!input.apiKey) throw new Error("Legion API key is required for embedding.")
 
-    if (!input.modelId) throw new Error("Blitx embedding model is required.")
+    if (!input.modelId) throw new Error("Legion embedding model is required.")
     this.model = input.modelId
     const headers: Record<string, string> = {
       [HEADER_FEATURE]: KILO_INDEXING_FEATURE,
@@ -47,9 +47,9 @@ export class KiloEmbedder implements IEmbedder {
     try {
       return await this.embedder.createEmbeddings(texts, model || this.model)
     } catch (err) {
-      log.error("Blitx embedder error", {
+      log.error("Legion embedder error", {
         err: err instanceof Error ? err.message : String(err),
-        location: "BlitxEmbedder:createEmbeddings",
+        location: "LegionEmbedder:createEmbeddings",
       })
       throw err
     }
@@ -59,9 +59,9 @@ export class KiloEmbedder implements IEmbedder {
     try {
       return await this.embedder.validateConfiguration()
     } catch (err) {
-      log.error("Blitx embedder validation error", {
+      log.error("Legion embedder validation error", {
         err: err instanceof Error ? err.message : String(err),
-        location: "BlitxEmbedder:validateConfiguration",
+        location: "LegionEmbedder:validateConfiguration",
       })
       throw err
     }

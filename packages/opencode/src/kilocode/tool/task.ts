@@ -108,8 +108,8 @@ export namespace KiloTask {
     }
   }
 
-  const saved = Effect.fn("BlitxTask.savedModel")(function* (name: string) {
-    if (Flag.BLITX_CLIENT !== "cli") return undefined
+  const saved = Effect.fn("LegionTask.savedModel")(function* (name: string) {
+    if (Flag.LEGION_CLIENT !== "cli") return undefined
     const file = path.join(Global.Path.state, "model.json")
     const state = yield* Effect.tryPromise({
       try: () =>
@@ -129,7 +129,7 @@ export namespace KiloTask {
   })
 
   /** Resolve the task subagent model while discarding stale unavailable overrides. */
-  export const resolveModel = Effect.fn("BlitxTask.resolveModel")(function* (input: {
+  export const resolveModel = Effect.fn("LegionTask.resolveModel")(function* (input: {
     name: string
     agent: Pick<Agent.Info, "model" | "variant">
     config: Pick<Config.Info, "subagent_model" | "subagent_variant" | "subagent_variant_overrides">

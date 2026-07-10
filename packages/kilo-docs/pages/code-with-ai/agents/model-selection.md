@@ -11,7 +11,7 @@ Instead of maintaining a static list that's perpetually behind, we built somethi
 
 ## Check the Live Models List
 
-**[👉 See what's working today at kilo.ai/models](https://blitx.ai/models)**
+**[👉 See what's working today at kilo.ai/models](https://legion.ai/models)**
 
 This isn't benchmarks from some lab. It's real usage data from developers like you, updated continuously. You'll see which models people are choosing for different tasks, what's delivering results, and how the landscape is shifting in real-time.
 
@@ -55,10 +55,10 @@ While the specifics change constantly, some principles stay consistent:
 
 You don't need a paid API key to use Kilo Code productively. For the lowest cost on paid work, [Auto Efficient](/docs/code-with-ai/agents/auto-model#tiers) (`kilo-auto/efficient`) routes each request to the cheapest model proven accurate enough for that task. The fastest way to start for free is [Auto Model Free](/docs/code-with-ai/agents/auto-model) (`kilo-auto/free`), which routes to the best available free models automatically. See [Using Kilo for Free](/docs/getting-started/using-kilo-for-free) for the full zero-cost setup.
 
-If you prefer to pick models yourself, type `free` in the model picker to filter by free models, or browse the full list at [kilo.ai/models](https://blitx.ai/models).
+If you prefer to pick models yourself, type `free` in the model picker to filter by free models, or browse the full list at [kilo.ai/models](https://legion.ai/models).
 
 {% callout type="info" %}
-Free model availability changes as providers adjust promotional periods. Check [kilo.ai/models](https://blitx.ai/models) for the live list.
+Free model availability changes as providers adjust promotional periods. Check [kilo.ai/models](https://legion.ai/models) for the live list.
 {% /callout %}
 
 ## Context Windows Matter
@@ -187,4 +187,4 @@ Or share as a plain URL that users can paste into their browser's address bar.
 
 ## Stay Current
 
-The AI model space moves fast. Bookmark [kilo.ai/models](https://blitx.ai/models) and check back when you're evaluating options. What's best today might not be best next month — and that's actually exciting.
+The AI model space moves fast. Bookmark [kilo.ai/models](https://legion.ai/models) and check back when you're evaluating options. What's best today might not be best next month — and that's actually exciting.

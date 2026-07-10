@@ -9,7 +9,7 @@ describe("sitemap.xml", () => {
     expect(xml).toContain("</urlset>")
   })
 
-  it("all <loc> values start with https://blitx.ai/docs", () => {
+  it("all <loc> values start with https://legion.ai/docs", () => {
     const xml = buildSitemapXml()
     const locs = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1])
     expect(locs.length).toBeGreaterThan(0)
@@ -20,18 +20,18 @@ describe("sitemap.xml", () => {
 
   it("includes the docs root URL", () => {
     const xml = buildSitemapXml()
-    expect(xml).toContain("<loc>https://blitx.ai/docs</loc>")
+    expect(xml).toContain("<loc>https://legion.ai/docs</loc>")
   })
 
   it("includes representative current product pages", () => {
     const xml = buildSitemapXml()
-    expect(xml).toContain("https://blitx.ai/docs/getting-started/installing")
-    expect(xml).toContain("https://blitx.ai/docs/code-with-ai/platforms/vscode")
-    expect(xml).toContain("https://blitx.ai/docs/code-with-ai/platforms/vscode/whats-new")
-    expect(xml).toContain("https://blitx.ai/docs/code-with-ai/platforms/cli")
-    expect(xml).toContain("https://blitx.ai/docs/code-with-ai/platforms/jetbrains")
-    expect(xml).toContain("https://blitx.ai/docs/automate/tools")
-    expect(xml).toContain("https://blitx.ai/docs/automate/tools/semantic-search")
+    expect(xml).toContain("https://legion.ai/docs/getting-started/installing")
+    expect(xml).toContain("https://legion.ai/docs/code-with-ai/platforms/vscode")
+    expect(xml).toContain("https://legion.ai/docs/code-with-ai/platforms/vscode/whats-new")
+    expect(xml).toContain("https://legion.ai/docs/code-with-ai/platforms/cli")
+    expect(xml).toContain("https://legion.ai/docs/code-with-ai/platforms/jetbrains")
+    expect(xml).toContain("https://legion.ai/docs/automate/tools")
+    expect(xml).toContain("https://legion.ai/docs/automate/tools/semantic-search")
   })
 
   it("excludes removed legacy product pages", () => {
@@ -47,7 +47,7 @@ describe("sitemap.xml", () => {
       "/ai-providers/vscode-lm",
     ]
 
-    for (const route of removed) expect(xml).not.toContain(`https://blitx.ai/docs${route}`)
+    for (const route of removed) expect(xml).not.toContain(`https://legion.ai/docs${route}`)
   })
 
   it("has no duplicate <loc> entries", () => {

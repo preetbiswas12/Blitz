@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test"
 import { plain, session, supports, tui } from "../../src/kilocode/cli/logo"
 
-describe("blitx logo", () => {
+describe("Legion logo", () => {
   test("allows remote terminals", () => {
     expect(supports({ SSH_TTY: "/dev/pts/0" }, "linux")).toBe(true)
     expect(supports({ SSH_CLIENT: "127.0.0.1 12345 22" }, "linux")).toBe(true)
@@ -22,12 +22,12 @@ describe("blitx logo", () => {
   })
 
   test("allows an override", () => {
-    expect(supports({ BLITX_UNICODE_LOGO: "1", SSH_TTY: "/dev/pts/0" }, "linux")).toBe(true)
-    expect(supports({ BLITX_UNICODE_LOGO: "0" }, "linux")).toBe(false)
+    expect(supports({ LEGION_UNICODE_LOGO: "1", SSH_TTY: "/dev/pts/0" }, "linux")).toBe(true)
+    expect(supports({ LEGION_UNICODE_LOGO: "0" }, "linux")).toBe(false)
   })
 
   test("uses modern and fallback logo variants", () => {
-    expect(tui({ BLITX_UNICODE_LOGO: "1" }, "linux").join("\n")).toContain("#")
+    expect(tui({ LEGION_UNICODE_LOGO: "1" }, "linux").join("\n")).toContain("#")
     expect(tui({}, "win32").join("\n")).toContain("#")
     expect(plain({}, "win32").join("\n")).toContain("#")
   })
@@ -35,6 +35,6 @@ describe("blitx logo", () => {
   test("formats child session exit logo", () => {
     const out = session("Title", "ses_test", "<dim>", "<reset>", {}, "win32")
     expect(out).toContain("<dim>Title<reset>")
-    expect(out).toContain("blitz -s ses_test")
+    expect(out).toContain("legion -s ses_test")
   })
 })

@@ -9,16 +9,16 @@ export interface PackageMapping {
 }
 
 export interface MergeConfig {
-  /** Package name mappings from opencode to Blitx */
+  /** Package name mappings from opencode to Legion */
   packageMappings: PackageMapping[]
 
-  /** Files to always keep Blitx's version (never take upstream changes) */
+  /** Files to always keep Legion's version (never take upstream changes) */
   keepOurs: string[]
 
   /** Files to skip entirely (don't add from upstream, remove if added) */
   skipFiles: string[]
 
-  /** Files that should take upstream version and apply Blitx branding transforms */
+  /** Files that should take upstream version and apply Legion branding transforms */
   takeTheirsAndTransform: string[]
 
   /** Script files with GitHub API references */
@@ -33,7 +33,7 @@ export interface MergeConfig {
   /** Lock files to accept ours and regenerate after merge */
   lockFiles: string[]
 
-  /** Directories that are Blitx-specific and should be preserved */
+  /** Directories that are Legion-specific and should be preserved */
   kiloDirectories: string[]
 
   /** File patterns to exclude from codemods */
@@ -74,23 +74,23 @@ export const defaultConfig: MergeConfig = {
     ".github/workflows/publish.yml",
     ".github/workflows/close-stale-prs.yml",
     ".github/pull_request_template.md",
-    // Blitx-specific command files
+    // Legion-specific command files
     ".opencode/command/commit.md",
-    // Blitx-specific publish scripts
+    // Legion-specific publish scripts
     "packages/opencode/script/publish-registries.ts",
     // Generated OpenAPI spec - kept ours and regenerated post-merge via script/generate.ts
     "packages/sdk/openapi.json",
-    // GitHub Action - Blitx version is fully ported and complete
+    // GitHub Action - Legion version is fully ported and complete
     "github/action.yml",
     "github/README.md",
     "github/script/release",
     "github/script/publish",
   ],
 
-  // Files that only exist in upstream and should NOT be added to Blitx
+  // Files that only exist in upstream and should NOT be added to Legion
   // These are removed during merge if they appear
   skipFiles: [
-    // Translated README files (Blitx doesn't have these)
+    // Translated README files (Legion doesn't have these)
     "README.ar.md",
     "README.bn.md",
     "README.br.md",
@@ -114,37 +114,37 @@ export const defaultConfig: MergeConfig = {
     "README.zht.md",
     // Stats file
     "STATS.md",
-    // Team members file (Blitx doesn't maintain this upstream list)
+    // Team members file (Legion doesn't maintain this upstream list)
     ".github/TEAM_MEMBERS",
-    // Workflows that don't exist in Blitx
+    // Workflows that don't exist in Legion
     ".github/workflows/update-nix-hashes.yml",
     ".github/workflows/deploy.yml",
     ".github/workflows/docs-update.yml",
     ".github/workflows/docs-locale-sync.yml",
-    // Workflows deleted in Blitx (replaced or no longer needed)
+    // Workflows deleted in Legion (replaced or no longer needed)
     ".github/workflows/close-prs.yml",
     ".github/workflows/opencode.yml",
     ".github/workflows/publish-vscode.yml",
-    // Upstream PR cleanup is replaced by .github/workflows/blitx-auto-close.yml
+    // Upstream PR cleanup is replaced by .github/workflows/Legion-auto-close.yml
     "script/github/close-prs.ts",
-    // VS Code example configs (Blitx ships real .vscode/* files)
+    // VS Code example configs (Legion ships real .vscode/* files)
     ".vscode/launch.example.json",
     ".vscode/settings.example.json",
-    // Nix files for packages Blitx has removed / replaced with nix/blitx.nix
+    // Nix files for packages Legion has removed / replaced with nix/Legion.nix
     "nix/desktop.nix",
     "nix/opencode.nix",
-    // opencode CLI bin (Blitx uses its own build output)
+    // opencode CLI bin (Legion uses its own build output)
     "packages/opencode/bin/opencode",
     // Removed prompt file
     "packages/opencode/src/session/prompt/build-switch.txt",
-    // Vouch files (Blitx doesn't use Vouch).
+    // Vouch files (Legion doesn't use Vouch).
     // Upstream currently ships VOUCHED.td (typo extension). The glob covers both
     // the current .td file and any future .md rename without another merge breaking.
     ".github/VOUCHED.*",
     ".github/workflows/vouch-check-issue.yml",
     ".github/workflows/vouch-check-pr.yml",
     ".github/workflows/vouch-manage-by-issue.yml",
-    // SST infrastructure files (Blitx is CLI-only, no hosted platform)
+    // SST infrastructure files (Legion is CLI-only, no hosted platform)
     "sst.config.ts",
     "sst-env.d.ts",
     // Hosted platform packages (not needed for CLI)
@@ -162,7 +162,7 @@ export const defaultConfig: MergeConfig = {
     "packages/cli/**",
     "packages/stats/**",
     "sdks/vscode/**",
-    // GitHub Action - Blitx version is fully ported and complete
+    // GitHub Action - Legion version is fully ported and complete
     "github/index.ts",
     "github/package.json",
     "github/tsconfig.json",
@@ -171,7 +171,7 @@ export const defaultConfig: MergeConfig = {
     "github/.gitignore",
   ],
 
-  // Files that should take upstream version and apply Blitx branding transforms
+  // Files that should take upstream version and apply Legion branding transforms
   // These are files with only branding differences, no logic changes
   takeTheirsAndTransform: [
     // UI components
@@ -229,7 +229,7 @@ export const defaultConfig: MergeConfig = {
   upstreamRemote: "upstream",
   originRemote: "origin",
 
-  // i18n translation files that need Blitx branding transforms
+  // i18n translation files that need Legion branding transforms
   i18nPatterns: ["packages/*/src/i18n/*.ts"],
 }
 

@@ -1,19 +1,19 @@
 export const dict = {
-  // Blitx Gateway provider translations
-  "provider.connect.blitxGateway.line1":
-    "Blitx Gateway vous donne accès à une sélection de modèles fiables et optimisés pour les agents de codage.",
-  "provider.connect.blitxGateway.line2":
+  // Legion Gateway provider translations
+  "provider.connect.LegionGateway.line1":
+    "Legion Gateway vous donne accès à une sélection de modèles fiables et optimisés pour les agents de codage.",
+  "provider.connect.LegionGateway.line2":
     "Avec une seule clé API, vous aurez accès à des modèles tels que Claude, GPT, Gemini, GLM et plus encore.",
-  "provider.connect.blitxGateway.visit.prefix": "Visitez ",
-  "provider.connect.blitxGateway.visit.link": "blitx.ai",
-  "provider.connect.blitxGateway.visit.suffix": " pour obtenir votre clé API.",
-  "provider.connect.blitxGateway.byok.prefix": "Pour plus de statistiques d'utilisation, utilisez ",
-  "provider.connect.blitxGateway.byok.link": "BYOK via Blitx's Gateway",
-  "provider.connect.blitxGateway.byok.suffix": ".",
+  "provider.connect.LegionGateway.visit.prefix": "Visitez ",
+  "provider.connect.LegionGateway.visit.link": "legion.ai",
+  "provider.connect.LegionGateway.visit.suffix": " pour obtenir votre clé API.",
+  "provider.connect.LegionGateway.byok.prefix": "Pour plus de statistiques d'utilisation, utilisez ",
+  "provider.connect.LegionGateway.byok.link": "BYOK via Legion's Gateway",
+  "provider.connect.LegionGateway.byok.suffix": ".",
 
   // Provider settings translations
   "settings.providers.group.recommended": "Recommandés",
-  "settings.providers.note.blitx": "Accès à plus de 500 modèles d'IA",
+  "settings.providers.note.Legion": "Accès à plus de 500 modèles d'IA",
   "settings.providers.note.opencode": "Modèles sélectionnés, dont Claude, GPT, Gemini et plus encore",
   "settings.providers.note.anthropic": "Accès direct aux modèles Claude, y compris Pro et Max",
   "settings.providers.note.deepseek": "Modèles DeepSeek pour les tâches de raisonnement et de codage",
@@ -48,13 +48,13 @@ export const dict = {
     "Tous les projets sur cette machine. Enregistré dans votre configuration utilisateur.",
   "marketplace.install.destination": "Destination de l'installation",
   "marketplace.install.about.mcp":
-    "Un serveur MCP fournit à Blitx des outils supplémentaires pour interagir avec des services externes ou des programmes locaux.",
+    "Un serveur MCP fournit à Legion des outils supplémentaires pour interagir avec des services externes ou des programmes locaux.",
   "marketplace.install.about.agent":
     "Un agent ajoute un rôle réutilisable avec ses propres instructions et autorisations.",
   "marketplace.install.about.skill":
-    "Une compétence ajoute des instructions et des ressources propres à une tâche que Blitx peut charger en cas de besoin.",
+    "Une compétence ajoute des instructions et des ressources propres à une tâche que Legion peut charger en cas de besoin.",
   "marketplace.install.mcp.warning":
-    "Les serveurs MCP peuvent exécuter des commandes locales ou se connecter à des services externes. Blitx demandera votre autorisation avant d'utiliser leurs outils, sauf si vos autorisations le permettent automatiquement.",
+    "Les serveurs MCP peuvent exécuter des commandes locales ou se connecter à des services externes. Legion demandera votre autorisation avant d'utiliser leurs outils, sauf si vos autorisations le permettent automatiquement.",
   "marketplace.install.project.warning":
     "Les fichiers du projet peuvent être ajoutés au contrôle de version. N'y stockez pas de secrets, sauf si la configuration fait référence à une variable d'environnement.",
   "marketplace.install.learnMore": "Découvrir le fonctionnement des installations depuis le Marketplace",
@@ -127,7 +127,7 @@ export const dict = {
     "Attendez la fin de l'instantané. Les tours suivants sont rapides une fois l'instantané initial créé.",
   "snapshot.slowRepo.answer.disable": "Désactiver pour ce projet",
   "snapshot.slowRepo.answer.disable.description":
-    "Désactivez les instantanés Blitx pour ce projet. Vous perdez l'annulation/restauration des modifications faites par Blitx, mais git continue de tout suivre.",
+    "Désactivez les instantanés Legion pour ce projet. Vous perdez l'annulation/restauration des modifications faites par Legion, mais git continue de tout suivre.",
 
   // Edit-tool header and shell-tool section labels
   "ui.messagePart.openInDiffViewer": "Ouvrir dans le visualiseur de différences",

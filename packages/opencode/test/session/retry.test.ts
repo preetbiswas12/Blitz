@@ -269,7 +269,7 @@ describe("session.retry.retryable", () => {
       }).toObject(),
     )
 
-    expect(SessionRetry.retryable(error, "blitx")).toBeUndefined()
+    expect(SessionRetry.retryable(error, "legion")).toBeUndefined()
   })
   // kilocode_change end
 })

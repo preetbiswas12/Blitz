@@ -1,6 +1,6 @@
 # TESTING.md
 
-How to spin up the **local main-branch** Blitx backend and test it with `curl` / `fetch`. Aimed at a running Blitx CLI agent iterating on backend fixes without rebuilding the VS Code extension or TUI.
+How to spin up the **local main-branch** Legion backend and test it with `curl` / `fetch`. Aimed at a running Legion CLI agent iterating on backend fixes without rebuilding the VS Code extension or TUI.
 
 All examples use plain shell + `curl`. Writing TypeScript files is a last resort (see Section 8).
 
@@ -9,7 +9,7 @@ All examples use plain shell + `curl`. Writing TypeScript files is a last resort
 ```bash
 # From repo root. Starts the LOCAL main-branch backend in the background.
 PASS=$(openssl rand -hex 16)
-BLITX_SERVER_PASSWORD="$PASS" bun dev serve --port 0 >/tmp/kilo-serve.log 2>&1 &
+LEGION_SERVER_PASSWORD="$PASS" bun dev serve --port 0 >/tmp/kilo-serve.log 2>&1 &
 echo $! >/tmp/kilo-serve.pid
 while ! grep -q "kilo server listening" /tmp/kilo-serve.log 2>/dev/null; do sleep 0.1; done
 PORT=$(grep -oE "listening on http://[^:]+:[0-9]+" /tmp/kilo-serve.log | grep -oE "[0-9]+$")
@@ -49,7 +49,7 @@ Do **not** use `createKiloServer()` from `@legion/sdk/v2` to test local code: it
 ### Random port (recommended)
 
 ```bash
-BLITX_SERVER_PASSWORD=$(openssl rand -hex 16) \
+LEGION_SERVER_PASSWORD=$(openssl rand -hex 16) \
   bun dev serve --port 0 >/tmp/kilo-serve.log 2>&1 &
 echo $! >/tmp/kilo-serve.pid
 while ! grep -q "kilo server listening" /tmp/kilo-serve.log; do sleep 0.1; done
@@ -59,7 +59,7 @@ PORT=$(grep -oE "listening on http://[^:]+:[0-9]+" /tmp/kilo-serve.log | grep -o
 ### Fixed port (if you need a stable URL)
 
 ```bash
-BLITX_SERVER_PASSWORD=secret \
+LEGION_SERVER_PASSWORD=secret \
   bun dev serve --port 4096 --hostname 127.0.0.1 \
   >/tmp/kilo-serve.log 2>&1 &
 echo $! >/tmp/kilo-serve.pid
@@ -69,7 +69,7 @@ PORT=4096
 
 ### No-auth quickstart (fastest)
 
-Omit `BLITX_SERVER_PASSWORD` entirely. The server prints `Warning: BLITX_SERVER_PASSWORD is not set; server is unsecured.` and the auth middleware is bypassed — fine for throwaway local testing, never for anything else.
+Omit `LEGION_SERVER_PASSWORD` entirely. The server prints `Warning: LEGION_SERVER_PASSWORD is not set; server is unsecured.` and the auth middleware is bypassed — fine for throwaway local testing, never for anything else.
 
 ```bash
 bun dev serve --port 0 >/tmp/kilo-serve.log 2>&1 &
@@ -92,10 +92,10 @@ BASE="http://127.0.0.1:$PORT"
 
 ## 4. The two mandatory request knobs
 
-### Auth header (only if `BLITX_SERVER_PASSWORD` was set)
+### Auth header (only if `LEGION_SERVER_PASSWORD` was set)
 
 ```bash
-AUTH="Authorization: Basic $(printf 'kilo:%s' "$BLITX_SERVER_PASSWORD" | base64 | tr -d '\n')"
+AUTH="Authorization: Basic $(printf 'kilo:%s' "$LEGION_SERVER_PASSWORD" | base64 | tr -d '\n')"
 ```
 
 The username is literally `kilo` (same as the VS Code extension). Skip this whole block if you launched without a password.
@@ -192,7 +192,7 @@ rm -f /tmp/kilo-serve.pid /tmp/kilo-serve.log
 
 | Var | Why you'd set it |
 |---|---|
-| `BLITX_SERVER_PASSWORD` | Enable Basic auth. Omit for auth-bypassed local testing. |
+| `LEGION_SERVER_PASSWORD` | Enable Basic auth. Omit for auth-bypassed local testing. |
 | `KILO_DB=":memory:"` | Skip on-disk SQLite — hermetic runs. |
 | `KILO_DISABLE_DEFAULT_PLUGINS=true` | Don't auto-load bundled plugins. |
 | `KILO_WORKSPACE_ID=<id>` | Single-workspace mode; disables control-plane routes. |
@@ -208,7 +208,7 @@ Use this only when `curl` can't express what you need — typed request/response
 import { createKiloClient } from "@legion/sdk/v2"
 
 const port = process.env.PORT!
-const pass = process.env.BLITX_SERVER_PASSWORD
+const pass = process.env.LEGION_SERVER_PASSWORD
 const headers = pass ? { Authorization: "Basic " + Buffer.from("kilo:" + pass).toString("base64") } : undefined
 
 const client = createKiloClient({
@@ -232,7 +232,7 @@ for await (const ev of events.stream) {
 ```
 
 ```bash
-PORT="$PORT" BLITX_SERVER_PASSWORD="$BLITX_SERVER_PASSWORD" bun /tmp/probe.ts
+PORT="$PORT" LEGION_SERVER_PASSWORD="$LEGION_SERVER_PASSWORD" bun /tmp/probe.ts
 rm /tmp/probe.ts
 ```
 
@@ -245,7 +245,7 @@ Reminder: this script **connects to** the server you launched in Section 3 — i
 - `curl` without `-N` buffers SSE output — you won't see events until the connection closes.
 - Hardcoding port `4096` breaks when a previous run didn't exit cleanly. Parse the log instead.
 - `--port` must appear literally in `argv` to override `opencode.json`'s `server.port` (`packages/opencode/src/cli/network.ts:45`).
-- `BLITX_SERVER_PASSWORD` must be set **before** launch — changing it after doesn't rotate credentials.
+- `LEGION_SERVER_PASSWORD` must be set **before** launch — changing it after doesn't rotate credentials.
 - When sharing `/tmp/kilo-serve.log` / `.pid` across terminals, unique-suffix the paths to avoid clobbering parallel runs.
 
 ## 10. After changing server routes

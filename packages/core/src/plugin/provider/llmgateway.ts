@@ -14,10 +14,10 @@ export const LLMGatewayPlugin = PluginV2.define({
           if (item.provider.endpoint.url !== "https://api.llmgateway.io/v1") continue
           if (item.provider.id !== ProviderV2.ID.make("llmgateway")) continue // kilocode_change
           evt.provider.update(item.provider.id, (provider) => {
-            provider.options.headers["HTTP-Referer"] = "https://blitx.ai/" // kilocode_change
+            provider.options.headers["HTTP-Referer"] = "https://legion.ai/" // kilocode_change
             // kilocode_change start
-            provider.options.headers["X-Title"] = "Blitx Code"
-            provider.options.headers["X-Source"] = "blitx"
+            provider.options.headers["X-Title"] = "Legion Code"
+            provider.options.headers["X-Source"] = "legion"
             // kilocode_change end
           })
         }

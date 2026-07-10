@@ -141,7 +141,7 @@ type IssueQueryResponse = {
 
 const AGENT_USERNAME = "kiloconnect[bot]" // kilocode_change
 const AGENT_REACTION = "eyes"
-const WORKFLOW_FILE = ".github/workflows/blitx.yml" // kilocode_change
+const WORKFLOW_FILE = ".github/workflows/legion.yml" // kilocode_change
 
 // Event categories for routing
 // USER_EVENTS: triggered by user actions, have actor/issueId, support reactions/comments
@@ -238,7 +238,7 @@ export const GithubInstallCommand = effectCmd({
               `    1. Commit the \`${WORKFLOW_FILE}\` file and push`,
               step2,
               "",
-              "    3. Go to a GitHub issue and comment `/blitx summarize` to see the agent in action", // kilocode_change
+              "    3. Go to a GitHub issue and comment `/legion summarize` to see the agent in action", // kilocode_change
             ].join("\n"),
           )
         }
@@ -359,7 +359,7 @@ export const GithubInstallCommand = effectCmd({
 
           async function getInstallation() {
             // kilocode_change start - updated to new endpoint
-            return await fetch(`https://api.blitx.ai/api/integrations/github/check-installation?owner=${app.owner}`)
+            return await fetch(`https://api.legion.ai/api/integrations/github/check-installation?owner=${app.owner}`)
               .then((res) => res.json())
               .then((data) => data.installation)
             // kilocode_change end
@@ -373,16 +373,16 @@ export const GithubInstallCommand = effectCmd({
               ? ""
               : providers[provider].env.map((e) => `\n          ${e}: \${{ secrets.${e} }}`).join("")
 
-          const blitxGatewayEnv =
-            provider === "blitx"
+          const LegionGatewayEnv =
+            provider === "legion"
               ? `\n          KILO_API_KEY: \${{ secrets.KILO_API_KEY }}\n          KILO_ORG_ID: \${{ secrets.KILO_ORG_ID }}`
               : ""
 
-          const envStr = providerEnvStr || blitxGatewayEnv ? `\n        env:${providerEnvStr}${blitxGatewayEnv}` : ""
+          const envStr = providerEnvStr || LegionGatewayEnv ? `\n        env:${providerEnvStr}${LegionGatewayEnv}` : ""
 
           await Filesystem.write(
             path.join(app.root, WORKFLOW_FILE),
-            `name: blitx
+            `name: Legion
 
 on:
   issue_comment:
@@ -391,12 +391,12 @@ on:
     types: [created]
 
 jobs:
-  blitx:
+  Legion:
     if: |
       contains(github.event.comment.body, ' /bx') ||
       startsWith(github.event.comment.body, '/bx') ||
-      contains(github.event.comment.body, ' /blitx') ||
-      startsWith(github.event.comment.body, '/blitx')
+      contains(github.event.comment.body, ' /Legion') ||
+      startsWith(github.event.comment.body, '/Legion')
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -409,7 +409,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Run Blitx
+      - name: Run Legion
         uses: Kilo-Org/kilocode/github@latest${envStr}
         with:
           model: ${provider}/${model}`,
@@ -489,7 +489,7 @@ export const GithubRunCommand = effectCmd({
           ? (payload as IssueCommentEvent | IssuesEvent).issue.number
           : (payload as PullRequestEvent | PullRequestReviewCommentEvent).pull_request.number
       const runUrl = `/${owner}/${repo}/actions/runs/${runId}`
-      const shareBaseUrl = isMock ? "https://dev.kilo.ai" : "https://blitx.ai"
+      const shareBaseUrl = isMock ? "https://dev.kilo.ai" : "https://legion.ai"
 
       let appToken: string
       let octoRest: Octokit
@@ -557,7 +557,7 @@ export const GithubRunCommand = effectCmd({
           await addReaction(commentType)
         }
 
-        // Setup blitx session // kilocode_change
+        // Setup Legion session // kilocode_change
         const repoData = await fetchRepo()
         session = await runLocalEffect(
           sessionSvc.create({
@@ -577,7 +577,7 @@ export const GithubRunCommand = effectCmd({
           await runLocalEffect(sessionShare.share(session.id))
           return session.id.slice(-8)
         })()
-        console.log("blitx session", session.id) // kilocode_change
+        console.log("Legion session", session.id) // kilocode_change
 
         // Handle event types:
         // REPO_EVENTS (schedule, workflow_dispatch): no issue/PR context, output to logs/PR only
@@ -750,7 +750,7 @@ export const GithubRunCommand = effectCmd({
 
       function normalizeOidcBaseUrl(): string {
         const value = process.env["OIDC_BASE_URL"]
-        if (!value) return "https://api.blitx.ai"
+        if (!value) return "https://api.legion.ai"
         return value.replace(/\/+$/, "")
       }
 
@@ -799,7 +799,7 @@ export const GithubRunCommand = effectCmd({
         }
 
         const reviewContext = getReviewCommentContext()
-        const mentions = (process.env["MENTIONS"] || "/blitx,/bx") // kilocode_change
+        const mentions = (process.env["MENTIONS"] || "/legion,/bx") // kilocode_change
           .split(",")
           .map((m) => m.trim().toLowerCase())
           .filter(Boolean)
@@ -1412,8 +1412,8 @@ export const GithubRunCommand = effectCmd({
 
       function footer(opts?: { image?: boolean }) {
         // kilocode_change start - simplified footer with text branding (no image backend yet)
-        const share = shareId ? `[blitx session](${shareBaseUrl}/s/${shareId})&nbsp;&nbsp;|&nbsp;&nbsp;` : ""
-        return `\n\n---\n*Powered by [Blitx](https://blitx.ai)*&nbsp;&nbsp;|&nbsp;&nbsp;${share}[github run](${runUrl})`
+        const share = shareId ? `[Legion session](${shareBaseUrl}/s/${shareId})&nbsp;&nbsp;|&nbsp;&nbsp;` : ""
+        return `\n\n---\n*Powered by [Legion](https://legion.ai)*&nbsp;&nbsp;|&nbsp;&nbsp;${share}[github run](${runUrl})`
         // kilocode_change end
       }
 

@@ -15,21 +15,21 @@ import { disposeAllInstances, reloadTestInstance, tmpdir } from "../../fixture/f
 void Log.init({ print: false })
 
 const previous = {
-  flag: Flag.BLITX_SERVER_PASSWORD,
-  env: process.env.BLITX_SERVER_PASSWORD,
+  flag: Flag.LEGION_SERVER_PASSWORD,
+  env: process.env.LEGION_SERVER_PASSWORD,
 }
 
 afterEach(async () => {
-  Flag.BLITX_SERVER_PASSWORD = previous.flag
-  if (previous.env === undefined) delete process.env.BLITX_SERVER_PASSWORD
-  else process.env.BLITX_SERVER_PASSWORD = previous.env
+  Flag.LEGION_SERVER_PASSWORD = previous.flag
+  if (previous.env === undefined) delete process.env.LEGION_SERVER_PASSWORD
+  else process.env.LEGION_SERVER_PASSWORD = previous.env
   await disposeAllInstances()
   await resetDatabase()
 })
 
 test("listener aborts shared session runners", async () => {
-  Flag.BLITX_SERVER_PASSWORD = undefined
-  delete process.env.BLITX_SERVER_PASSWORD
+  Flag.LEGION_SERVER_PASSWORD = undefined
+  delete process.env.LEGION_SERVER_PASSWORD
   await using tmp = await tmpdir({ git: true, config: { formatter: false, lsp: false } })
   const ctx = await reloadTestInstance({ directory: tmp.path })
   const sessionID = SessionID.descending()

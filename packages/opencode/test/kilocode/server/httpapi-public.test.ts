@@ -4,7 +4,7 @@ import { OpenApi } from "effect/unstable/httpapi"
 import { AgentBuilderPaths } from "../../../src/kilocode/server/httpapi/groups/agent-builder"
 import { BackgroundProcessPaths } from "../../../src/kilocode/server/httpapi/groups/background-process"
 import { ConfigConsolePaths } from "../../../src/kilocode/server/httpapi/groups/config-console"
-import { IndexingPaths, BlitxEmbeddingModel } from "../../../src/kilocode/server/httpapi/groups/indexing"
+import { IndexingPaths, LegionEmbeddingModel } from "../../../src/kilocode/server/httpapi/groups/indexing"
 import { KilocodePaths } from "../../../src/kilocode/server/httpapi/groups/kilocode"
 import { NetworkPaths } from "../../../src/kilocode/server/httpapi/groups/network"
 import { TelemetryPaths } from "../../../src/kilocode/server/httpapi/groups/telemetry"
@@ -35,17 +35,17 @@ type Body = {
   content?: Record<string, { schema?: Schema }>
 }
 
-describe("Blitx PublicApi OpenAPI contract", () => {
-  test("uses Blitx branding", () => {
+describe("Legion PublicApi OpenAPI contract", () => {
+  test("uses Legion branding", () => {
     const spec = OpenApi.fromApi(PublicApi)
-    expect(spec.info.title).toBe("blitx")
-    expect(spec.info.description).toBe("blitx api")
+    expect(spec.info.title).toBe("legion")
+    expect(spec.info.description).toBe("Legion api")
   })
 
   test("constrains embedding model metadata", () => {
     const accepts = (dimension: number, scoreThreshold: number) =>
       Result.isSuccess(
-        EffectSchema.decodeUnknownResult(BlitxEmbeddingModel)({
+        EffectSchema.decodeUnknownResult(LegionEmbeddingModel)({
           id: "provider/model",
           name: "Model",
           dimension,

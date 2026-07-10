@@ -3,25 +3,25 @@
 </p>
 
 <p align="center">
-  <a href="https://blitz.ai"><img width="250" alt="Blitz logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
+  <a href="https://legion.ai"><img width="250" alt="Legion logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
 </p>
 
 <p align="center">O agente de programação open source para criar com IA no VS Code, JetBrains ou CLI.</p>
 
 <p align="center">
-  <a href="https://marketplace.visualstudio.com/items?itemName=blitzcode.Blitz-Code"><img src="https://raster.shields.io/badge/VS_Code_Marketplace-007ACC?style=flat&logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace" height="20"></a>
-  <a href="https://www.npmjs.com/package/@blitzcode/cli"><img alt="npm" src="https://raster.shields.io/npm/v/@blitzcode/cli?style=flat" height="20" /></a>
-  <a href="https://x.com/blitzcode"><img src="https://raster.shields.io/badge/blitzcode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="20"></a>
-  <a href="https://blog.blitz.ai"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
-  <a href="https://blitz.ai/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
-  <a href="https://www.reddit.com/r/blitzcode/"><img src="https://raster.shields.io/badge/Join%20r%2Fblitzcode-D84315?style=flat&logo=reddit&logoColor=white" alt="Reddit" height="20"></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=legioncode.legion-code"><img src="https://raster.shields.io/badge/VS_Code_Marketplace-007ACC?style=flat&logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace" height="20"></a>
+  <a href="https://www.npmjs.com/package/@legioncode/cli"><img alt="npm" src="https://raster.shields.io/npm/v/@legioncode/cli?style=flat" height="20" /></a>
+  <a href="https://x.com/legioncode"><img src="https://raster.shields.io/badge/legioncode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="20"></a>
+  <a href="https://blog.legion.ai"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
+  <a href="https://legion.ai/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
+  <a href="https://www.reddit.com/r/legioncode/"><img src="https://raster.shields.io/badge/Join%20r%2Flegioncode-D84315?style=flat&logo=reddit&logoColor=white" alt="Reddit" height="20"></a>
 </p>
 
 ![Blitz-in-VS-Code-and-CLI](https://github.com/user-attachments/assets/0536ca59-ed81-4512-9e05-d186187a1b52)
 
 ---
 
-Blitz é um agente de programação com IA que acompanha você em todos os lugares onde trabalha: [VS Code](https://blitz.ai/landing/vs-code), [JetBrains](https://blitz.ai/features/jetbrains-native) e [CLI](https://blitz.ai/cli). É open source e tem preços abertos. Você escolhe entre mais de 500 modelos, alterna entre eles no meio da tarefa e paga a tarifa do provedor do modelo sem acréscimo. Não são necessárias chaves de API para começar.
+Blitz é um agente de programação com IA que acompanha você em todos os lugares onde trabalha: [VS Code](https://legion.ai/landing/vs-code), [JetBrains](https://legion.ai/features/jetbrains-native) e [CLI](https://legion.ai/cli). É open source e tem preços abertos. Você escolhe entre mais de 500 modelos, alterna entre eles no meio da tarefa e paga a tarifa do provedor do modelo sem acréscimo. Não são necessárias chaves de API para começar.
 
 ### Instalação
 
@@ -32,7 +32,7 @@ Escolha onde você quer executar o Blitz.
 
 <br>
 
-Instale a [extensão Blitz](vscode:extension/Blitzcode.Blitz-code) diretamente ou baixe pelo [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=blitzcode.Blitz-Code). Crie uma conta e você terá acesso a mais de 500 modelos, incluindo GPT-5.5, Claude Opus 4.7, Claude Sonnet 4.6 e Gemini 3.1 Pro Preview, todos com preço do provedor.
+Instale a [extensão Blitz](vscode:extension/legioncode.legion-code) diretamente ou baixe pelo [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=legioncode.legion-code). Crie uma conta e você terá acesso a mais de 500 modelos, incluindo GPT-5.5, Claude Opus 4.7, Claude Sonnet 4.6 e Gemini 3.1 Pro Preview, todos com preço do provedor.
 
 </details>
 
@@ -43,19 +43,19 @@ Instale a [extensão Blitz](vscode:extension/Blitzcode.Blitz-code) diretamente o
 
 ```bash
 # npm
-npm install -g @blitzcode/cli
+npm install -g @legioncode/cli
 
 # curl
-curl -fsSL https://blitz.ai/cli/install | bash
+curl -fsSL https://legion.ai/cli/install | bash
 
 # pnpm
-pnpm add -g @blitzcode/cli
+pnpm add -g @legioncode/cli
 
 # bun
-bun add -g @blitzcode/cli
+bun add -g @legioncode/cli
 
 # Homebrew (macOS / Linux)
-brew install Blitz-Org/tap/kilo
+brew install Legion-Org/tap/kilo
 
 # Arch Linux (AUR)
 paru -S kilo-bin
@@ -70,7 +70,7 @@ Depois execute `Blitz` em qualquer diretório de projeto para começar.
 
 <br>
 
-Instale o [plugin Blitz](https://plugins.jetbrains.com/plugin/28350-Blitz-code) pelo JetBrains Marketplace ou procure por "Blitz" em `Settings → Plugins` dentro de qualquer IDE JetBrains.
+Instale o [plugin Blitz](https://plugins.jetbrains.com/plugin/28350-legion-code) pelo JetBrains Marketplace ou procure por "Blitz" em `Settings → Plugins` dentro de qualquer IDE JetBrains.
 
 </details>
 
@@ -79,7 +79,7 @@ Instale o [plugin Blitz](https://plugins.jetbrains.com/plugin/28350-Blitz-code) 
 
 <br>
 
-Execute o Blitz pela web, sem máquina local, em [app.Blitz.ai/cloud](https://app.blitz.ai/cloud).
+Execute o Blitz pela web, sem máquina local, em [app.legion.ai/cloud](https://app.legion.ai/cloud).
 
 </details>
 
@@ -88,7 +88,7 @@ Execute o Blitz pela web, sem máquina local, em [app.Blitz.ai/cloud](https://ap
 
 <br>
 
-Configure revisões automáticas de código com IA nos seus pull requests em [app.Blitz.ai/code-reviews](https://app.blitz.ai/code-reviews).
+Configure revisões automáticas de código com IA nos seus pull requests em [app.legion.ai/code-reviews](https://app.legion.ai/code-reviews).
 
 </details>
 
@@ -97,14 +97,14 @@ Configure revisões automáticas de código com IA nos seus pull requests em [ap
 
 <br>
 
-Inicie seu agente de IA sempre ativo em [app.blitz.ai/claw](https://app.blitz.ai/claw).
+Inicie seu agente de IA sempre ativo em [app.legion.ai/claw](https://app.legion.ai/claw).
 
 </details>
 
 <details>
 <summary>Instalar a CLI pelo GitHub Releases (binários)</summary>
 
-Baixe o binário mais recente na [página de Releases](https://github.com/Blitz-Org/Blitzcode/releases).
+Baixe o binário mais recente na [página de Releases](https://github.com/Legion-Org/legioncode/releases).
 
 | Plataforma | Asset |
 |---|---|
@@ -128,7 +128,7 @@ Blitz vem com agents especializados para você alternar dependendo da tarefa. Vo
 - **Debug** - Soluciona e rastreia problemas.
 - **Review** - Revisa suas mudanças e aponta problemas de performance, segurança, estilo e cobertura de testes.
 
-Saiba mais sobre [agents e agents personalizados](https://blitz.ai/docs/code-with-ai/agents/using-agents).
+Saiba mais sobre [agents e agents personalizados](https://legion.ai/docs/code-with-ai/agents/using-agents).
 
 ### O que ele faz
 
@@ -151,7 +151,7 @@ kilo run --auto "run tests and fix any failures"
 
 ### Documentação
 
-Para configuração e todo o resto, consulte a [documentação](https://blitz.ai/docs).
+Para configuração e todo o resto, consulte a [documentação](https://legion.ai/docs).
 
 ### Contribuindo
 
@@ -174,4 +174,4 @@ Blitz CLI é um fork do [OpenCode](https://github.com/anomalyco/opencode), aprim
 
 ---
 
-**Participe da comunidade** [Discord](https://blitz.ai/discord) | [X](https://x.com/blitzcode) | [Reddit](https://www.reddit.com/r/blitzcode/)
+**Participe da comunidade** [Discord](https://legion.ai/discord) | [X](https://x.com/legioncode) | [Reddit](https://www.reddit.com/r/legioncode/)

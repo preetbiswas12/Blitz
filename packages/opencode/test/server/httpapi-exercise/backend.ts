@@ -52,7 +52,7 @@ function app(modules: Runtime, options: CallOptions) {
     modules.HttpApiApp.routes.pipe(
       Layer.provide(
         ConfigProvider.layer(
-          ConfigProvider.fromUnknown({ BLITX_SERVER_PASSWORD: password, KILO_SERVER_USERNAME: username }),
+          ConfigProvider.fromUnknown({ LEGION_SERVER_PASSWORD: password, KILO_SERVER_USERNAME: username }),
         ),
       ),
     ),
@@ -85,7 +85,7 @@ function toAuthProbeRequest(scenario: ActiveScenario, credentials: "missing" | "
   const headers = {
     ...(spec.body === undefined ? {} : { "content-type": "application/json" }),
     ...spec.headers,
-    ...(credentials === "valid" ? { authorization: basic("blitx", "secret") } : {}), // kilocode_change
+    ...(credentials === "valid" ? { authorization: basic("legion", "secret") } : {}), // kilocode_change
   }
   return new Request(new URL(spec.path, "http://localhost"), {
     method: scenario.method,

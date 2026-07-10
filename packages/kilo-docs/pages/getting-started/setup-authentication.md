@@ -35,14 +35,14 @@ kilo auth list
 {% /tabs %}
 
 {% callout type="tip" title="Add Credits" %}
-[Add credits to your account](https://app.kilo.ai/profile), <!-- TODO: Replace with Blitx dashboard URL --> or sign up for [Kilo Pass](https://blitx.ai/pricing/kilo-pass).
+[Add credits to your account](https://app.kilo.ai/profile), <!-- TODO: Replace with Legion dashboard URL --> or sign up for [Kilo Pass](https://legion.ai/pricing/kilo-pass).
 {% /callout %}
 
 ## Kilo Gateway API Key
 
 If you're using the [Kilo AI Gateway](/docs/gateway/) outside of the Kilo Code extension (for example, with the Vercel AI SDK or OpenAI SDK), you'll need an API key:
 
-1. Go to [app.kilo.ai](https://app.kilo.ai) <!-- TODO: Replace with Blitx dashboard URL -->
+1. Go to [app.kilo.ai](https://app.kilo.ai) <!-- TODO: Replace with Legion dashboard URL -->
 2. Go to **Your Profile** on your **personal account** (not in an organization)
 3. Scroll to the bottom of the page
 4. Copy your API key
@@ -126,5 +126,5 @@ To set a default model:
 {% /tabs %}
 
 {% callout type="info" title="Need Help?" %}
-Reach out to our [support team](mailto:hi@kilo.ai) or join our [Discord community](https://blitx.ai/discord).
+Reach out to our [support team](mailto:hi@kilo.ai) or join our [Discord community](https://legion.ai/discord).
 {% /callout %}

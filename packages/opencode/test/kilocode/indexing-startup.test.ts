@@ -8,7 +8,7 @@ import type { Config } from "../../src/config/config"
 import { GlobalBus } from "../../src/bus/global"
 import { WorkspaceID } from "../../src/control-plane/schema"
 import { WorkspaceContext } from "../../src/control-plane/workspace-context"
-import { BlitxIndexing as KiloIndexing } from "../../src/kilocode/indexing"
+import { LegionIndexing as KiloIndexing } from "../../src/kilocode/indexing"
 import { indexingWarningKey } from "../../src/kilocode/indexing-warning"
 import { IndexingWorker } from "../../src/kilocode/indexing-worker-client"
 import { provideTestInstance, withTestInstance } from "../fixture/fixture"
@@ -71,14 +71,14 @@ const staleKilo: Partial<Config.Info> = {
   plugin: ["@legion/kilo-indexing"],
   indexing: {
     enabled: true,
-    provider: "blitx",
+    provider: "legion",
     model: "custom/model",
     dimension: 2048,
     vectorStore: "qdrant",
   },
 }
-const configDir = process.env["BLITX_CONFIG_DIR"]
-const disabled = process.env["BLITX_DISABLE_CODEBASE_INDEXING"]
+const configDir = process.env["LEGION_CONFIG_DIR"]
+const disabled = process.env["LEGION_DISABLE_CODEBASE_INDEXING"]
 const error = new Error("test indexing initialization failed")
 
 function inline(directory: string, root: string, hooks: IndexingWorker.Hooks): IndexingWorker.Driver {
@@ -123,10 +123,10 @@ beforeEach(() => {
 
 afterEach(async () => {
   IndexingWorker.override()
-  if (configDir === undefined) delete process.env["BLITX_CONFIG_DIR"]
-  else process.env["BLITX_CONFIG_DIR"] = configDir
-  if (disabled === undefined) delete process.env["BLITX_DISABLE_CODEBASE_INDEXING"]
-  else process.env["BLITX_DISABLE_CODEBASE_INDEXING"] = disabled
+  if (configDir === undefined) delete process.env["LEGION_CONFIG_DIR"]
+  else process.env["LEGION_CONFIG_DIR"] = configDir
+  if (disabled === undefined) delete process.env["LEGION_DISABLE_CODEBASE_INDEXING"]
+  else process.env["LEGION_DISABLE_CODEBASE_INDEXING"] = disabled
   global.fetch = fetch
   await disposeAllInstances()
 })
@@ -148,7 +148,7 @@ describe("indexing model catalog", () => {
         return { global, project }
       },
     })
-    process.env["BLITX_CONFIG_DIR"] = tmp.extra.global
+    process.env["LEGION_CONFIG_DIR"] = tmp.extra.global
     const calls: string[] = []
     globalThis.fetch = (async (input) => {
       calls.push(String(input))
@@ -177,7 +177,7 @@ describe("indexing startup degradation", () => {
     const init = spyOn(CodeIndexManager.prototype, "initialize").mockRejectedValue(error)
 
     await using tmp = await tmpdir({ git: true, config: cfg })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
 
     try {
       const app = Server.Default().app
@@ -241,7 +241,7 @@ describe("indexing startup degradation", () => {
     })
 
     await using tmp = await tmpdir({ git: true, config: cfg })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
     const on = (data: {
       directory?: string
       workspace?: string
@@ -345,7 +345,7 @@ describe("indexing startup degradation", () => {
     }))
 
     await using tmp = await tmpdir({ git: true, config: cfg })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
     const events: KiloIndexing.Status[] = []
     const on = (data: {
       directory?: string
@@ -375,7 +375,7 @@ describe("indexing startup degradation", () => {
 
   test("reports routes as in progress while initialization is in flight", async () => {
     await using tmp = await tmpdir({ git: true, config: cfg })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
     const gate = Promise.withResolvers<{ requiresRestart: boolean }>()
     const init = spyOn(CodeIndexManager.prototype, "initialize").mockImplementation(() => gate.promise)
 
@@ -410,7 +410,7 @@ describe("indexing startup degradation", () => {
 
   test("does not publish initialized status after in-flight startup is disposed", async () => {
     await using tmp = await tmpdir({ git: true, config: cfg })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
     const gate = Promise.withResolvers<{ requiresRestart: boolean }>()
     const init = spyOn(CodeIndexManager.prototype, "initialize").mockImplementation(() => gate.promise)
     const events: KiloIndexing.Status[] = []
@@ -451,7 +451,7 @@ describe("indexing startup degradation", () => {
     const dispose = spyOn(CodeIndexManager.prototype, "dispose")
 
     await using tmp = await tmpdir({ git: true, config: cfg })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
 
     try {
       await provideTestInstance({
@@ -476,7 +476,7 @@ describe("indexing startup degradation", () => {
 
   test("reports not ready while initialization is in flight", async () => {
     await using tmp = await tmpdir({ git: true, config: cfg })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
     const gate = Promise.withResolvers<{ requiresRestart: boolean }>()
     const init = spyOn(CodeIndexManager.prototype, "initialize").mockImplementation(() => gate.promise)
 
@@ -505,7 +505,7 @@ describe("indexing startup degradation", () => {
 
   test("stays disabled when indexing enablement is unset", async () => {
     await using tmp = await tmpdir({ git: true, config: unset })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
     const init = spyOn(CodeIndexManager.prototype, "initialize")
 
     await provideTestInstance({
@@ -533,7 +533,7 @@ describe("indexing startup degradation", () => {
     })
 
     await using tmp = await tmpdir({ git: true, config: inactive })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
 
     await provideTestInstance({
       directory: tmp.path,
@@ -570,7 +570,7 @@ describe("indexing startup degradation", () => {
     const org = process.env.KILO_ORG_ID
 
     await using tmp = await tmpdir({ git: true, config: kilo })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
     process.env.KILO_API_KEY = "kilo-token"
     process.env.KILO_ORG_ID = "org_123"
 
@@ -581,7 +581,7 @@ describe("indexing startup degradation", () => {
         fn: async () => {
           await called(init)
           expect(init.mock.calls[0]?.[0]).toMatchObject({
-            embedderProvider: "blitx",
+            embedderProvider: "legion",
             kiloApiKey: "kilo-token",
             kiloOrganizationId: "org_123",
             modelId: "mistralai/mistral-embed-2312",
@@ -616,7 +616,7 @@ describe("indexing startup degradation", () => {
     const key = process.env.KILO_API_KEY
 
     await using tmp = await tmpdir({ git: true, config: staleKilo })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
     process.env.KILO_API_KEY = "kilo-token"
 
     try {
@@ -626,7 +626,7 @@ describe("indexing startup degradation", () => {
         fn: async () => {
           await called(init)
           expect(init.mock.calls[0]?.[0]).toMatchObject({
-            embedderProvider: "blitx",
+            embedderProvider: "legion",
             modelId: "mistralai/mistral-embed-2312",
             modelDimension: 1024,
             searchMinScore: 0.35,
@@ -671,7 +671,7 @@ describe("indexing startup degradation", () => {
     }
 
     await using tmp = await tmpdir({ git: true, config })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
     process.env.KILO_API_KEY = "kilo-token"
 
     try {
@@ -681,7 +681,7 @@ describe("indexing startup degradation", () => {
         fn: async () => {
           await called(init)
           expect(init.mock.calls[0]?.[0]).toMatchObject({
-            embedderProvider: "blitx",
+            embedderProvider: "legion",
             modelId: "openai/text-embedding-3-small",
             modelDimension: 1536,
           })
@@ -700,7 +700,7 @@ describe("indexing startup degradation", () => {
     const key = process.env.KILO_API_KEY
 
     await using tmp = await tmpdir({ git: true, config: staleKilo })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
     process.env.KILO_API_KEY = "kilo-token"
 
     try {
@@ -710,7 +710,7 @@ describe("indexing startup degradation", () => {
         fn: async () => {
           await called(init)
           expect(init.mock.calls[0]?.[0]).toMatchObject({
-            embedderProvider: "blitx",
+            embedderProvider: "legion",
             modelId: undefined,
             modelDimension: undefined,
             searchMinScore: undefined,
@@ -729,7 +729,7 @@ describe("indexing startup degradation", () => {
     const key = process.env.KILO_API_KEY
 
     await using tmp = await tmpdir({ git: true, config: implicitOpenAi })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
     process.env.KILO_API_KEY = "kilo-token"
 
     try {
@@ -753,8 +753,8 @@ describe("indexing startup degradation", () => {
 
   test("stays disabled when VS Code starts without a workspace folder", async () => {
     await using tmp = await tmpdir({ git: true, config: cfg })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
-    process.env["BLITX_DISABLE_CODEBASE_INDEXING"] = "vscode-no-workspace"
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_DISABLE_CODEBASE_INDEXING"] = "vscode-no-workspace"
     const init = spyOn(CodeIndexManager.prototype, "initialize")
 
     try {

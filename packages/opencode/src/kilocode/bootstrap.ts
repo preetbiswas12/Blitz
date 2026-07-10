@@ -1,6 +1,6 @@
 import { Cause, Context, Effect, Layer } from "effect"
 import { EffectBridge } from "@/effect/bridge"
-import { BlitxSessions } from "@/kilo-sessions/kilo-sessions"
+import { LegionSessions } from "@/kilo-sessions/kilo-sessions"
 import * as Log from "@opencode-ai/core/util/log"
 import { Global } from "@opencode-ai/core/global"
 import { InstallationVersion } from "@opencode-ai/core/installation/version"
@@ -23,9 +23,9 @@ export namespace KilocodeBootstrap {
   export const layer = Layer.effect(
     Service,
     Effect.gen(function* () {
-      const sessions = yield* BlitxSessions.Service
+      const sessions = yield* LegionSessions.Service
 
-      const init = Effect.fn("BlitxBootstrap.init")(function* () {
+      const init = Effect.fn("LegionBootstrap.init")(function* () {
         yield* sessions.init()
         // kilocode_change start - session export bootstrap
         yield* Effect.gen(function* () {
@@ -53,7 +53,7 @@ export namespace KilocodeBootstrap {
         )
         // kilocode_change end
         yield* EffectBridge.fromPromise(() =>
-          import("@/kilocode/indexing").then((mod) => mod.BlitxIndexing.init()),
+          import("@/kilocode/indexing").then((mod) => mod.LegionIndexing.init()),
         ).pipe(
           Effect.catchCause((cause) =>
             Effect.sync(() => log.warn("indexing bootstrap failed", { err: Cause.squash(cause) })),
@@ -66,5 +66,5 @@ export namespace KilocodeBootstrap {
     }),
   )
 
-  export const defaultLayer = layer.pipe(Layer.provide(BlitxSessions.defaultLayer))
+  export const defaultLayer = layer.pipe(Layer.provide(LegionSessions.defaultLayer))
 }

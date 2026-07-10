@@ -23,7 +23,7 @@ export const AcpCommand = effectCmd({
   },
   handler: Effect.fn("Cli.acp")(function* (args) {
     ACPProfile.mark("cli.acp.handler")
-    process.env.BLITX_CLIENT = "acp"
+    process.env.LEGION_CLIENT = "acp"
     const opts = yield* resolveNetworkOptions(args)
     const server = yield* Effect.promise(() => ACPProfile.measure("cli.acp.server.listen", () => Server.listen(opts)))
 

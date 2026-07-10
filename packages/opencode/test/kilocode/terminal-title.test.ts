@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test"
 import { KiloTerminalTitle } from "../../src/kilocode/cli/cmd/tui/terminal-title"
 
-const base = "Blitx CLI"
+const base = "Legion CLI"
 
 function data(input: Partial<KiloTerminalTitle.Data> = {}): KiloTerminalTitle.Data {
   return {
@@ -20,24 +20,24 @@ function data(input: Partial<KiloTerminalTitle.Data> = {}): KiloTerminalTitle.Da
 describe("KiloTerminalTitle", () => {
   test("format_noneStyle_hidesStatusIcon", () => {
     expect(KiloTerminalTitle.format({ base, title: "Build status", indicator: "working" })).toBe(
-      "Blitx CLI | Build status",
+      "Legion CLI | Build status",
     )
   })
 
   test("format_noIndicator_returnsBaseTitle", () => {
-    expect(KiloTerminalTitle.format({ base, indicator: "none", icon: "unicode" })).toBe("Blitx CLI")
+    expect(KiloTerminalTitle.format({ base, indicator: "none", icon: "unicode" })).toBe("Legion CLI")
   })
 
   test("format_unicodeStyle_usesUnicodeIcons", () => {
-    expect(KiloTerminalTitle.format({ base, indicator: "working", icon: "unicode" })).toBe("◔ Blitx CLI")
-    expect(KiloTerminalTitle.format({ base, indicator: "attention", icon: "unicode" })).toBe("⚠ Blitx CLI")
-    expect(KiloTerminalTitle.format({ base, indicator: "finished", icon: "unicode" })).toBe("✓ Blitx CLI")
+    expect(KiloTerminalTitle.format({ base, indicator: "working", icon: "unicode" })).toBe("◔ Legion CLI")
+    expect(KiloTerminalTitle.format({ base, indicator: "attention", icon: "unicode" })).toBe("⚠ Legion CLI")
+    expect(KiloTerminalTitle.format({ base, indicator: "finished", icon: "unicode" })).toBe("✓ Legion CLI")
   })
 
   test("format_emojiStyle_usesEmojiIcons", () => {
-    expect(KiloTerminalTitle.format({ base, indicator: "working", icon: "emojis" })).toBe("💭 Blitx CLI")
-    expect(KiloTerminalTitle.format({ base, indicator: "attention", icon: "emojis" })).toBe("🔶 Blitx CLI")
-    expect(KiloTerminalTitle.format({ base, indicator: "finished", icon: "emojis" })).toBe("✅ Blitx CLI")
+    expect(KiloTerminalTitle.format({ base, indicator: "working", icon: "emojis" })).toBe("💭 Legion CLI")
+    expect(KiloTerminalTitle.format({ base, indicator: "attention", icon: "emojis" })).toBe("🔶 Legion CLI")
+    expect(KiloTerminalTitle.format({ base, indicator: "finished", icon: "emojis" })).toBe("✅ Legion CLI")
   })
 
   test("format_longSessionTitle_truncatesToExistingLimit", () => {
@@ -48,7 +48,7 @@ describe("KiloTerminalTitle", () => {
         indicator: "working",
         icon: "unicode",
       }),
-    ).toBe("◔ Blitx CLI | 1234567890123456789012345678901234567...")
+    ).toBe("◔ Legion CLI | 1234567890123456789012345678901234567...")
   })
 
   test("session_newIdleSession_hasNoIndicator", () => {
@@ -59,7 +59,7 @@ describe("KiloTerminalTitle", () => {
         data: data(),
         done: {},
       }),
-    ).toEqual({ title: "Blitx CLI | Build status", id: "parent", active: false, indicator: "none" })
+    ).toEqual({ title: "Legion CLI | Build status", id: "parent", active: false, indicator: "none" })
   })
 
   test("session_busySession_isWorking", () => {
@@ -71,7 +71,7 @@ describe("KiloTerminalTitle", () => {
         done: {},
         icon: "unicode",
       }),
-    ).toEqual({ title: "◔ Blitx CLI | Build status", id: "parent", active: true, indicator: "working" })
+    ).toEqual({ title: "◔ Legion CLI | Build status", id: "parent", active: true, indicator: "working" })
   })
 
   test("session_pendingPermission_overridesBusy", () => {

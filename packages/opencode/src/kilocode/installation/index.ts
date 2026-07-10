@@ -22,5 +22,5 @@ export const Scoop = {
 
 export const Release = {
   api: "https://api.github.com/repos/Kilo-Org/kilocode/releases/latest",
-  install: "https://blitx.ai/cli/install",
+  install: "https://legion.ai/cli/install",
 }

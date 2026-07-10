@@ -1,1 +1,1 @@
-export * from "@blitxcode/kilo-ui/code"
+export * from "@Legioncode/kilo-ui/code"

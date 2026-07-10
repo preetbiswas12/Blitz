@@ -75,7 +75,7 @@ describe("CodeIndexConfigManager", () => {
   test("configures Kilo with hosted auth options and explicit model metadata", () => {
     const cfg = new CodeIndexConfigManager(
       createInput({
-        embedderProvider: "blitx",
+        embedderProvider: "legion",
         openAiKey: undefined,
         kiloApiKey: "kilo-token",
         kiloBaseUrl: "https://example.test/api/gateway/",
@@ -98,7 +98,7 @@ describe("CodeIndexConfigManager", () => {
   test("requires Kilo model metadata from Cloud config", () => {
     const cfg = new CodeIndexConfigManager(
       createInput({
-        embedderProvider: "blitx",
+        embedderProvider: "legion",
         openAiKey: undefined,
         kiloApiKey: "kilo-token",
       }),
@@ -112,7 +112,7 @@ describe("CodeIndexConfigManager", () => {
   test("uses configured dimension for Kilo models outside the fallback catalog", () => {
     const cfg = new CodeIndexConfigManager(
       createInput({
-        embedderProvider: "blitx",
+        embedderProvider: "legion",
         openAiKey: undefined,
         kiloApiKey: "kilo-token",
         modelId: "custom/model",
@@ -186,7 +186,7 @@ describe("CodeIndexConfigManager", () => {
     test("requires restart when Kilo auth changes", () => {
       const cfg = new CodeIndexConfigManager(
         createInput({
-          embedderProvider: "blitx",
+          embedderProvider: "legion",
           openAiKey: undefined,
           kiloApiKey: "old-token",
           modelId: "mistralai/mistral-embed-2312",
@@ -196,7 +196,7 @@ describe("CodeIndexConfigManager", () => {
 
       const result = cfg.loadConfiguration(
         createInput({
-          embedderProvider: "blitx",
+          embedderProvider: "legion",
           openAiKey: undefined,
           kiloApiKey: "new-token",
           modelId: "mistralai/mistral-embed-2312",

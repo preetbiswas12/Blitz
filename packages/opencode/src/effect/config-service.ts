@@ -30,7 +30,7 @@ export type ServiceClass<Self, Id extends string, Service> = Context.ServiceClas
  * class ServerAuthConfig extends ConfigService.Service<ServerAuthConfig>()(
  *   "@opencode/ServerAuthConfig",
  *   {
- *     password: Config.string("BLITX_SERVER_PASSWORD").pipe(Config.option),
+ *     password: Config.string("LEGION_SERVER_PASSWORD").pipe(Config.option),
  *     username: Config.string("KILO_SERVER_USERNAME").pipe(Config.withDefault("opencode")),
  *   },
  * ) {}

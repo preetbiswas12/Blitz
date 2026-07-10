@@ -1,5 +1,5 @@
-import { Button } from "@blitxcode/kilo-web-ui/button"
-import { Card } from "@blitxcode/kilo-web-ui/card"
+import { Button } from "@Legioncode/kilo-web-ui/button"
+import { Card } from "@Legioncode/kilo-web-ui/card"
 import { CustomSelect, type SelectOption } from "../../components/CustomSelect"
 import { ConfigPage, ConfigTag as Tag } from "./ConfigPage"
 import { type TitleIcon, useTuiNotificationSettings } from "./state/ui"

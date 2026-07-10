@@ -18,11 +18,11 @@ type Options = Parameters<ModelCache.KiloModels["fetch"]>[0]
 
 function layer(info: Auth.Info | undefined, captured: Ref.Ref<Options | undefined>) {
   const auth = Layer.mock(Auth.Service)({
-    get: (id) => Effect.succeed(id === "blitx" ? info : undefined),
+    get: (id) => Effect.succeed(id === "legion" ? info : undefined),
   })
   const models = Layer.succeed(
-    ModelCache.BlitxModelsService,
-    ModelCache.BlitxModelsService.of({
+    ModelCache.LegionModelsService,
+    ModelCache.LegionModelsService.of({
       fetch: (options) =>
         Ref.set(captured, options).pipe(
           Effect.as({
@@ -58,7 +58,7 @@ it.live("model fetch uses accountId from OAuth auth as kilocodeOrganizationId", 
       expires: Date.now() + 3600000,
       accountId: "org-enterprise-123",
     })
-    yield* ModelCache.Service.use((cache) => cache.fetch("blitx")).pipe(Effect.provide(layer(info, captured)))
+    yield* ModelCache.Service.use((cache) => cache.fetch("legion")).pipe(Effect.provide(layer(info, captured)))
     expect(yield* Ref.get(captured)).toMatchObject({
       kilocodeToken: "test-oauth-token",
       kilocodeOrganizationId: "org-enterprise-123",
@@ -75,7 +75,7 @@ it.live("model fetch without OAuth accountId does not set kilocodeOrganizationId
       refresh: "test-refresh-token",
       expires: Date.now() + 3600000,
     })
-    yield* ModelCache.Service.use((cache) => cache.fetch("blitx")).pipe(Effect.provide(layer(info, captured)))
+    yield* ModelCache.Service.use((cache) => cache.fetch("legion")).pipe(Effect.provide(layer(info, captured)))
     expect(yield* Ref.get(captured)).toMatchObject({ kilocodeToken: "test-personal-token" })
     expect((yield* Ref.get(captured))?.kilocodeOrganizationId).toBeUndefined()
   }),
@@ -93,18 +93,18 @@ it.live("ModelCache.clear removes cached entry so next fetch hits the network", 
     })
     yield* ModelCache.Service.use((cache) =>
       Effect.gen(function* () {
-        yield* cache.fetch("blitx")
+        yield* cache.fetch("legion")
         expect(yield* Ref.get(captured)).toBeDefined()
 
         yield* Ref.set(captured, undefined)
-        yield* cache.fetch("blitx")
+        yield* cache.fetch("legion")
         expect(yield* Ref.get(captured)).toBeUndefined()
-        expect(yield* cache.get("blitx")).toBeDefined()
+        expect(yield* cache.get("legion")).toBeDefined()
 
-        yield* cache.clear("blitx")
-        expect(yield* cache.get("blitx")).toBeUndefined()
+        yield* cache.clear("legion")
+        expect(yield* cache.get("legion")).toBeUndefined()
 
-        yield* cache.fetch("blitx")
+        yield* cache.fetch("legion")
         expect(yield* Ref.get(captured)).toBeDefined()
       }),
     ).pipe(Effect.provide(layer(info, captured)))

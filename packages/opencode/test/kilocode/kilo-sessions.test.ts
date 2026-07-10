@@ -6,7 +6,7 @@ import { Auth } from "../../src/auth"
 import { Bus } from "../../src/bus"
 import type { Config } from "../../src/config/config"
 import { clearInFlightCache } from "../../src/kilo-sessions/inflight-cache"
-import { BlitxSessions } from "../../src/kilo-sessions/kilo-sessions"
+import { LegionSessions } from "../../src/kilo-sessions/kilo-sessions"
 import { ProjectID } from "../../src/project/schema"
 import { Session } from "../../src/session/session"
 import { SessionID } from "../../src/session/schema"
@@ -17,7 +17,7 @@ const it = testEffect(CrossSpawnSpawner.defaultLayer)
 
 function layer(overrides: Partial<Config.Interface> = {}) {
   return Layer.merge(
-    BlitxSessions.layer.pipe(
+    LegionSessions.layer.pipe(
       Layer.provideMerge(Bus.layer),
       Layer.provide(TestConfig.layer(overrides)),
       Layer.provide(Session.defaultLayer),
@@ -27,16 +27,16 @@ function layer(overrides: Partial<Config.Interface> = {}) {
 }
 
 function reset(...tokens: string[]) {
-  clearInFlightCache("blitx-sessions:token")
-  clearInFlightCache("blitx-sessions:client")
-  for (const token of tokens) clearInFlightCache(`blitx-sessions:token-valid:${token}`)
+  clearInFlightCache("legion-sessions:token")
+  clearInFlightCache("legion-sessions:client")
+  for (const token of tokens) clearInFlightCache(`legion-sessions:token-valid:${token}`)
 }
 
 it.instance("initializes once per instance through Config.Service", () => {
   let reads = 0
 
   return Effect.gen(function* () {
-    const sessions = yield* BlitxSessions.Service
+    const sessions = yield* LegionSessions.Service
     yield* sessions.init()
     yield* sessions.init()
     expect(reads).toBe(1)
@@ -76,7 +76,7 @@ it.instance("bootstraps session ingest from KILO_API_KEY without stored auth", (
   process.env.KILO_API_KEY = "env-token"
   reset("env-token")
 
-  return Effect.promise(() => BlitxSessions.bootstrap("session-env")).pipe(
+  return Effect.promise(() => LegionSessions.bootstrap("session-env")).pipe(
     Effect.andThen(() => Effect.sync(() => expect(calls).toEqual(["Bearer env-token", "Bearer env-token"]))),
     Effect.ensuring(
       Effect.sync(() => {
@@ -115,14 +115,14 @@ it.instance("prefers stored auth over KILO_API_KEY for session ingest", () => {
 
   return Effect.gen(function* () {
     const auth = yield* Auth.Service
-    yield* auth.set("blitx", { type: "api", key: "stored-token" })
-    yield* Effect.promise(() => BlitxSessions.bootstrap("session-auth"))
+    yield* auth.set("legion", { type: "api", key: "stored-token" })
+    yield* Effect.promise(() => LegionSessions.bootstrap("session-auth"))
     expect(calls).toEqual(["Bearer stored-token", "Bearer stored-token"])
   }).pipe(
     Effect.ensuring(
       Effect.gen(function* () {
         const auth = yield* Auth.Service
-        yield* auth.remove("blitx").pipe(Effect.orDie)
+        yield* auth.remove("legion").pipe(Effect.orDie)
         if (original === undefined) delete process.env.KILO_API_KEY
         else process.env.KILO_API_KEY = original
         reset("env-token", "stored-token")
@@ -155,8 +155,8 @@ it.instance("does not duplicate created-session subscribers when init is repeate
   return Effect.gen(function* () {
     const auth = yield* Auth.Service
     const bus = yield* Bus.Service
-    const sessions = yield* BlitxSessions.Service
-    yield* auth.set("blitx", { type: "api", key: "test-token" })
+    const sessions = yield* LegionSessions.Service
+    yield* auth.set("legion", { type: "api", key: "test-token" })
     yield* sessions.init()
     yield* sessions.init()
     yield* Effect.sleep(50)
@@ -178,7 +178,7 @@ it.instance("does not duplicate created-session subscribers when init is repeate
     Effect.ensuring(
       Effect.gen(function* () {
         const auth = yield* Auth.Service
-        yield* auth.remove("blitx").pipe(Effect.orDie)
+        yield* auth.remove("legion").pipe(Effect.orDie)
         reset("test-token")
         request.mockRestore()
       }),

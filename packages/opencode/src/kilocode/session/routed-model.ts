@@ -46,7 +46,7 @@ export namespace KiloRoutedModel {
     meta: ProviderMetadata | undefined,
     input: { providerID: ProviderID; modelID: string; selected?: string },
   ) {
-    if (input.providerID !== ProviderID.blitx) return undefined
+    if (input.providerID !== ProviderID.legion) return undefined
     if (!input.modelID.startsWith("kilo-auto/")) return undefined
     const model = read(meta, input.providerID)
     if (!model) return undefined

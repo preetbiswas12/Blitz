@@ -19,8 +19,8 @@ import { SessionSummary } from "./summary"
 import type { Provider } from "@/provider/provider"
 import { Question } from "@/question"
 // kilocode_change start
-import { BlitxSessionProcessor, type ReviewTelemetry } from "@/kilocode/session/processor"
-import { BlitxSessionOverflow } from "@/kilocode/session/overflow"
+import { LegionSessionrocessor, type ReviewTelemetry } from "@/kilocode/session/processor"
+import { LegionSessionverflow } from "@/kilocode/session/overflow"
 import { KiloRoutedModel } from "@/kilocode/session/routed-model"
 import { Suggestion } from "@/kilocode/suggestion"
 // kilocode_change end
@@ -268,7 +268,7 @@ export const layer = Layer.effect(
         })
         // kilocode_change start - accepted suggest review actions tag following LLM completion telemetry
         if (match.part.tool === "suggest") {
-          ctx.telemetry = BlitxSessionProcessor.suggestionReviewTelemetry(output.metadata) ?? ctx.telemetry
+          ctx.telemetry = LegionSessionrocessor.suggestionReviewTelemetry(output.metadata) ?? ctx.telemetry
         }
         // kilocode_change end
         yield* settleToolCall(toolCallID)
@@ -696,7 +696,7 @@ export const layer = Layer.effect(
             // kilocode_change start - guard against finish-step without start-step:
             // ctx.stepStart is 0 until `start-step` fires, which would feed a
             // huge bogus `elapsed` into telemetry. Fall back to now().
-            BlitxSessionProcessor.trackStep({
+            LegionSessionrocessor.trackStep({
               sessionID: ctx.sessionID,
               model: ctx.model,
               tokens: usage.tokens,
@@ -736,7 +736,7 @@ export const layer = Layer.effect(
               cost: usage.cost,
             })
             // kilocode_change start - surface output limit stops, with a stronger message for reasoning-only stops
-            const warn = BlitxSessionProcessor.lengthWarning({ msg: ctx.assistantMessage, step: ctx.step })
+            const warn = LegionSessionrocessor.lengthWarning({ msg: ctx.assistantMessage, step: ctx.step })
             if (warn) {
               yield* session.updatePart({
                 id: PartID.ascending(),
@@ -747,7 +747,7 @@ export const layer = Layer.effect(
                 ignored: true,
               })
             }
-            const providerError = BlitxSessionProcessor.providerFinishError(ctx.assistantMessage)
+            const providerError = LegionSessionrocessor.providerFinishError(ctx.assistantMessage)
             if (providerError) {
               yield* bus.publish(Session.Event.Error, {
                 sessionID: ctx.assistantMessage.sessionID,
@@ -929,7 +929,7 @@ export const layer = Layer.effect(
         }
         ctx.toolcalls = {}
         ctx.toolmeta = {} // kilocode_change
-        BlitxSessionProcessor.guardEmptyToolCalls(ctx.assistantMessage, MessageV2.parts(ctx.assistantMessage.id)) // kilocode_change
+        LegionSessionrocessor.guardEmptyToolCalls(ctx.assistantMessage, MessageV2.parts(ctx.assistantMessage.id)) // kilocode_change
         ctx.assistantMessage.time.completed = Date.now()
         // kilocode_change start - reconcile cost with any subagent propagation written during tool calls (#6321)
         yield* reconcile()
@@ -939,7 +939,7 @@ export const layer = Layer.effect(
 
       const halt = Effect.fn("SessionProcessor.halt")(function* (e: unknown) {
         // kilocode_change start - internal preflight signal, not a provider error
-        if (e instanceof BlitxSessionOverflow.PreflightError) {
+        if (e instanceof LegionSessionverflow.PreflightError) {
           ctx.needsCompaction = true
           return
         }
@@ -1024,7 +1024,7 @@ export const layer = Layer.effect(
                 provider: input.model.providerID,
                 parse,
                 // kilocode_change start
-                ...BlitxSessionProcessor.retryOpts({ sessionID: ctx.sessionID, abort: ac.signal, set: status.set }),
+                ...LegionSessionrocessor.retryOpts({ sessionID: ctx.sessionID, abort: ac.signal, set: status.set }),
                 // kilocode_change end
                 set: (info) => {
                   // TODO(v2): Temporary dual-write while migrating session messages to v2 events.

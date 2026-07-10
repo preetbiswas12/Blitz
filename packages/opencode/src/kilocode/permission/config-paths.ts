@@ -5,9 +5,9 @@ import { KilocodePaths } from "@/kilocode/paths"
 export namespace ConfigProtection {
   /**
    * Config directory prefixes (relative paths, forward-slash normalized).
-   * Matches .blitx/ and legacy .kilocode/ at any depth within the project.
+   * Matches .legion/ and legacy .kilocode/ at any depth within the project.
    */
-  const CONFIG_DIRS = [".blitx/", ".kilocode/"]
+  const CONFIG_DIRS = [".legion/", ".kilocode/"]
 
   /**
    * Subdirectories under CONFIG_DIRS that are NOT config files (e.g. plan files).
@@ -19,7 +19,7 @@ export namespace ConfigProtection {
    * Root-level config files that must be protected.
    * Matched only when the relative path has no directory component.
    */
-  const CONFIG_ROOT_FILES = new Set(["blitx.json", "blitx.jsonc", "opencode.json", "opencode.jsonc", "AGENTS.md"])
+  const CONFIG_ROOT_FILES = new Set(["legion.json", "legion.jsonc", "opencode.json", "opencode.jsonc", "AGENTS.md"])
 
   /** Metadata key used to signal the UI to hide the "Allow always" option. */
   export const DISABLE_ALWAYS_KEY = "disableAlways" as const
@@ -37,8 +37,8 @@ export namespace ConfigProtection {
   export function isRelative(pattern: string): boolean {
     const normalized = normalize(pattern)
     for (const dir of CONFIG_DIRS) {
-      const bare = dir.slice(0, -1) // e.g. ".blitx"
-      // Match at root (e.g. ".blitx/foo") or nested (e.g. "packages/sub/.blitx/foo")
+      const bare = dir.slice(0, -1) // e.g. ".legion"
+      // Match at root (e.g. ".legion/foo") or nested (e.g. "packages/sub/.legion/foo")
       if (normalized === bare || normalized.endsWith("/" + bare)) return true
       if (normalized.startsWith(dir)) {
         if (excluded(normalized.slice(dir.length))) continue
@@ -75,10 +75,10 @@ export namespace ConfigProtection {
     if (process.platform !== "win32") return false
     return keys(p).some(
       (key) =>
-        key.endsWith("/config/blitx") ||
-        key.includes("/config/blitx/") ||
-        key.endsWith("/.config/blitx") ||
-        key.includes("/.config/blitx/"),
+        key.endsWith("/config/legion") ||
+        key.includes("/config/legion/") ||
+        key.endsWith("/.config/legion") ||
+        key.includes("/.config/legion/"),
     )
   }
 
@@ -94,12 +94,12 @@ export namespace ConfigProtection {
   export function isAbsolute(filepath: string): boolean {
     if (fallback(filepath)) return true
 
-    // ~/.config/blitx/ (XDG config)
+    // ~/.config/legion/ (XDG config)
     for (const dir of configs()) {
       if (within(filepath, dir)) return true
     }
 
-    // ~/.blitx/ and ~/.kilocode/ (legacy global dirs)
+    // ~/.legion/ and ~/.kilocode/ (legacy global dirs)
     for (const dir of KilocodePaths.globalDirs()) {
       if (within(filepath, dir)) return true
     }

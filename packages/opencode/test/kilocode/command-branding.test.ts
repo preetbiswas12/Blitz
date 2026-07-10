@@ -13,7 +13,7 @@ const files = [
 
 const command = /opencode\s+(--[a-z-]+|run|serve|auth|upgrade|agent|github|mcp)\b/g
 
-describe("Blitx command branding", () => {
+describe("Legion command branding", () => {
   test("user-facing command help uses the `kilo` binary name", async () => {
     const results = await Promise.all(
       files.map(async (file) => ({

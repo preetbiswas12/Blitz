@@ -38,8 +38,8 @@ describe("indexing config state", () => {
   })
 
   test("builds provider patches for custom selector changes", () => {
-    expect(providerPatch("blitx", "default-embedding")).toEqual({
-      provider: "blitx",
+    expect(providerPatch("legion", "default-embedding")).toEqual({
+      provider: "legion",
       model: "default-embedding",
       dimension: undefined,
     })

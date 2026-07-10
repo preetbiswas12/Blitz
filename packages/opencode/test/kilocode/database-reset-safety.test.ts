@@ -17,7 +17,7 @@ function dangerous(source: string) {
 // 1. test/server/httpapi-sdk.test.ts was run from a directory where Bun did not
 //    load the package bunfig.toml. test/preload.ts was therefore not applied,
 //    so KILO_DB was not set to :memory:.
-// 2. The test process inherited BLITX_DISABLE_CHANNEL_DB=true from the VS Code
+// 2. The test process inherited LEGION_DISABLE_CHANNEL_DB=true from the VS Code
 //    extension. Database.getPath() therefore returned the real shared database
 //    at ~/.local/share/kilo/kilo.db.
 // 3. The upstream resetDatabase() helper deleted kilo.db, kilo.db-wal, and

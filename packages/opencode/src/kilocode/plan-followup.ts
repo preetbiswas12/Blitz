@@ -12,14 +12,14 @@ import { Question } from "@/question"
 import { Session } from "@/session/session"
 import { SessionID, MessageID, PartID } from "@/session/schema"
 import { LLM } from "@/session/llm"
-import { BlitxLLM } from "@/kilocode/session/llm"
+import { LegionLLM } from "@/kilocode/session/llm"
 import { MessageV2 } from "@/session/message-v2"
 import { SessionStatus } from "@/session/status"
 import { Todo } from "@/session/todo"
 import { makeRuntime } from "@/effect/run-service"
 import { Effect, Schema } from "effect"
 import * as Log from "@opencode-ai/core/util/log"
-import { BlitxSessionPromptQueue } from "@/kilocode/session/prompt-queue"
+import { LegionSessionromptQueue } from "@/kilocode/session/prompt-queue"
 import { lazy } from "@/util/lazy"
 import path from "path"
 import z from "zod"
@@ -47,7 +47,7 @@ export const PlanFollowupRuntime = {
     },
   },
   handover(input: LLM.StreamInput, signal: AbortSignal) {
-    return llm().runPromise((svc) => BlitxLLM.text(svc.stream(input)).pipe(Effect.orDie), { signal })
+    return llm().runPromise((svc) => LegionLLM.text(svc.stream(input)).pipe(Effect.orDie), { signal })
   },
   async session<A, E>(run: (svc: Session.Interface) => Effect.Effect<A, E>) {
     const { AppRuntime } = await import("@/effect/app-runtime")
@@ -193,7 +193,7 @@ export namespace PlanFollowup {
 
   async function resolveCodeModel(input: Pick<MessageV2.User, "model">) {
     const state =
-      Flag.BLITX_CLIENT === "cli"
+      Flag.LEGION_CLIENT === "cli"
         ? await Bun.file(path.join(Global.Path.state, "model.json"))
             .text()
             .then((raw) => ModelState.safeParse(JSON.parse(raw)))
@@ -306,7 +306,7 @@ export namespace PlanFollowup {
           // main prompt input below the dock already routes typed text as a question
           // reply, so "Type your own answer" would be redundant (originally hidden in
           // 65566af7f8, flipped back during the v1.4.4 upstream merge).
-          custom: Flag.BLITX_CLIENT === "cli" || Flag.BLITX_CLIENT === "jetbrains",
+          custom: Flag.LEGION_CLIENT === "cli" || Flag.LEGION_CLIENT === "jetbrains",
           options: [
             {
               label: ANSWER_NEW_SESSION,
@@ -544,7 +544,7 @@ export namespace PlanFollowup {
         model: code.model,
         text: "Implement the plan above.",
       })
-      BlitxSessionPromptQueue.retarget(input.sessionID, msg.id)
+      LegionSessionromptQueue.retarget(input.sessionID, msg.id)
       return "continue"
     }
 
@@ -556,7 +556,7 @@ export namespace PlanFollowup {
         model: user.model,
         text: "Continue refining the plan. Do not implement yet.",
       })
-      BlitxSessionPromptQueue.retarget(input.sessionID, msg.id)
+      LegionSessionromptQueue.retarget(input.sessionID, msg.id)
       return "continue"
     }
 
@@ -567,7 +567,7 @@ export namespace PlanFollowup {
       model: user.model,
       text: answer,
     })
-    BlitxSessionPromptQueue.retarget(input.sessionID, msg.id)
+    LegionSessionromptQueue.retarget(input.sessionID, msg.id)
     return "continue"
   }
 }

@@ -12,7 +12,7 @@ describe("KiloPlugin", () => {
     Effect.sync(() =>
       expectPluginRegistered(
         ProviderPlugins.map((item) => item.id),
-        "blitx",
+        "legion",
       ),
     ),
   )
@@ -24,7 +24,7 @@ describe("KiloPlugin", () => {
       yield* plugin.add(KiloPlugin)
       const transform = yield* catalog.transform()
       yield* transform((catalog) => {
-        const kilo = provider("blitx", {
+        const kilo = provider("legion", {
           endpoint: { type: "aisdk", package: "@ai-sdk/openai-compatible", url: "https://api.kilo.ai/api/gateway" },
           options: { headers: { Existing: "value" }, body: {}, aisdk: { provider: {}, request: {} } },
         })
@@ -34,10 +34,10 @@ describe("KiloPlugin", () => {
         })
         catalog.provider.update(provider("openrouter").id, () => {})
       })
-      expect((yield* catalog.provider.get(ProviderV2.ID.make("blitx"))).options.headers).toEqual({
+      expect((yield* catalog.provider.get(ProviderV2.ID.make("legion"))).options.headers).toEqual({
         Existing: "value",
-        "HTTP-Referer": "https://blitx.ai/",
-        "X-Title": "Blitx Code", // kilocode_change
+        "HTTP-Referer": "https://legion.ai/",
+        "X-Title": "Legion Code", // kilocode_change
       })
       expect((yield* catalog.provider.get(ProviderV2.ID.openrouter)).options.headers).toEqual({})
     }),
@@ -50,7 +50,7 @@ describe("KiloPlugin", () => {
       yield* plugin.add(KiloPlugin)
       const transform = yield* catalog.transform()
       yield* transform((catalog) => {
-        const item = provider("blitx", {
+        const item = provider("legion", {
           endpoint: { type: "aisdk", package: "@ai-sdk/openai-compatible", url: "https://api.kilo.ai/api/gateway" },
         })
         catalog.provider.update(item.id, (draft) => {
@@ -58,10 +58,10 @@ describe("KiloPlugin", () => {
         })
       })
 
-      const result = yield* catalog.provider.get(ProviderV2.ID.make("blitx"))
+      const result = yield* catalog.provider.get(ProviderV2.ID.make("legion"))
       expect(result.options.headers).toEqual({
-        "HTTP-Referer": "https://blitx.ai/",
-        "X-Title": "Blitx Code", // kilocode_change
+        "HTTP-Referer": "https://legion.ai/",
+        "X-Title": "Legion Code", // kilocode_change
       })
       expect(result.options.headers).not.toHaveProperty("http-referer")
       expect(result.options.headers).not.toHaveProperty("x-title")
@@ -76,23 +76,23 @@ describe("KiloPlugin", () => {
       yield* plugin.add(KiloPlugin)
       const transform = yield* catalog.transform()
       yield* transform((catalog) => {
-        const kilo = provider("blitx", {
+        const kilo = provider("legion", {
           endpoint: { type: "aisdk", package: "@ai-sdk/openai-compatible", url: "https://api.kilo.ai/api/gateway" },
         })
         catalog.provider.update(kilo.id, (draft) => {
           draft.endpoint = kilo.endpoint
         })
         const custom = provider("custom-kilo", {
-          endpoint: { type: "aisdk", package: "blitx" },
+          endpoint: { type: "aisdk", package: "legion" },
         })
         catalog.provider.update(custom.id, (draft) => {
           draft.endpoint = custom.endpoint
         })
       })
 
-      expect((yield* catalog.provider.get(ProviderV2.ID.make("blitx"))).options.headers).toEqual({
-        "HTTP-Referer": "https://blitx.ai/",
-        "X-Title": "Blitx Code", // kilocode_change
+      expect((yield* catalog.provider.get(ProviderV2.ID.make("legion"))).options.headers).toEqual({
+        "HTTP-Referer": "https://legion.ai/",
+        "X-Title": "Legion Code", // kilocode_change
       })
       expect((yield* catalog.provider.get(ProviderV2.ID.make("custom-kilo"))).options.headers).toEqual({})
     }),
@@ -107,7 +107,7 @@ describe("KiloPlugin", () => {
         yield* plugin.add(KiloPlugin)
         const transform = yield* catalog.transform()
         yield* transform((catalog) => {
-          const item = provider("blitx", {
+          const item = provider("legion", {
             endpoint: { type: "aisdk", package: "@ai-sdk/openai-compatible", url: "https://api.kilo.ai/api/gateway" },
             options: {
               headers: {},
@@ -120,7 +120,7 @@ describe("KiloPlugin", () => {
             draft.options = item.options
           })
         })
-        const updated = yield* catalog.provider.get(ProviderV2.ID.make("blitx"))
+        const updated = yield* catalog.provider.get(ProviderV2.ID.make("legion"))
 
         expect(updated.endpoint).toEqual({
           type: "aisdk",
@@ -132,7 +132,7 @@ describe("KiloPlugin", () => {
         const result = yield* plugin.trigger(
           "aisdk.sdk",
           {
-            model: model("blitx", "kilo-auto/free"),
+            model: model("legion", "kilo-auto/free"),
             package: "@ai-sdk/openai-compatible",
             options: updated.options.aisdk.provider,
           },
@@ -153,8 +153,8 @@ describe("KiloPlugin", () => {
         yield* plugin.add(KiloPlugin)
         const transform = yield* catalog.transform()
         yield* transform((catalog) => {
-          const item = provider("blitx", {
-            enabled: { via: "account", service: "blitx" },
+          const item = provider("legion", {
+            enabled: { via: "account", service: "legion" },
             options: {
               headers: {},
               body: {},
@@ -169,9 +169,9 @@ describe("KiloPlugin", () => {
             draft.options = item.options
           })
         })
-        const result = yield* catalog.provider.get(ProviderV2.ID.make("blitx"))
+        const result = yield* catalog.provider.get(ProviderV2.ID.make("legion"))
 
-        expect(result.enabled).toEqual({ via: "account", service: "blitx" })
+        expect(result.enabled).toEqual({ via: "account", service: "legion" })
         expect(result.options.aisdk.provider.kilocodeToken).toBe("authenticated-token")
         expect(result.options.aisdk.provider.kilocodeOrganizationId).toBe("environment-org")
       }),
@@ -185,8 +185,8 @@ describe("KiloPlugin", () => {
         const catalog = yield* Catalog.Service
         yield* plugin.add(KiloPlugin)
         const transform = yield* catalog.transform()
-        yield* transform((catalog) => catalog.provider.update(ProviderV2.ID.make("blitx"), () => {}))
-        const result = yield* catalog.provider.get(ProviderV2.ID.make("blitx"))
+        yield* transform((catalog) => catalog.provider.update(ProviderV2.ID.make("legion"), () => {}))
+        const result = yield* catalog.provider.get(ProviderV2.ID.make("legion"))
 
         expect(result.enabled).toEqual({ via: "custom", data: { anonymous: true } })
         expect(result.options.aisdk.provider.kilocodeToken).toBe("anonymous")

@@ -8,13 +8,13 @@ import { InstanceRuntime } from "../../project/instance-runtime" // kilocode_cha
 export const ServeCommand = effectCmd({
   command: "serve",
   builder: (yargs) => withNetworkOptions(yargs),
-  describe: "starts a headless blitx server",
+  describe: "starts a headless legion server",
   // Server loads instances per-request via x-kilo-directory header — no
   // need for an ambient project InstanceContext at startup.
   instance: false, // kilocode_change
   handler: Effect.fn("Cli.serve")(function* (args) {
-    if (!Flag.BLITX_SERVER_PASSWORD) {
-      console.log("Warning: BLITX_SERVER_PASSWORD is not set; server is unsecured.")
+    if (!Flag.LEGION_SERVER_PASSWORD) {
+      console.log("Warning: LEGION_SERVER_PASSWORD is not set; server is unsecured.")
     }
     const opts = yield* resolveNetworkOptions(args)
     const server = yield* Effect.promise(() => Server.listen(opts))
@@ -22,7 +22,7 @@ export const ServeCommand = effectCmd({
     // kilocode_change start
     const urls = server.urls
 
-    console.log(`blitx server listening on ${urls.bind}`)
+    console.log(`legion server listening on ${urls.bind}`)
     if (urls.local !== urls.bind) console.log(`  Local:   ${urls.local}`)
     if (urls.network) console.log(`  Network: ${urls.network}`)
     // kilocode_change end

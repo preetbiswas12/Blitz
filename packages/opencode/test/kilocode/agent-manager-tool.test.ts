@@ -27,11 +27,11 @@ const providers = {
     },
   } as unknown as Provider.Info,
   kilo: {
-    id: "blitx",
+    id: "legion",
     name: "Kilo Gateway",
     models: {
-      "kilo/shared": { id: "kilo/shared", providerID: "blitx", name: "Shared", variants: { low: {} } },
-      "kilo/only": { id: "kilo/only", providerID: "blitx", name: "Gateway Only", variants: { low: {} } },
+      "kilo/shared": { id: "kilo/shared", providerID: "legion", name: "Shared", variants: { low: {} } },
+      "kilo/only": { id: "kilo/only", providerID: "legion", name: "Gateway Only", variants: { low: {} } },
     },
   } as unknown as Provider.Info,
   zeta: {
@@ -165,9 +165,9 @@ describe("agent_manager tool", () => {
   })
 
   test("uses the provider of a different default model when that is the user's choice", async () => {
-    const rt = makeRuntime("blitx")
+    const rt = makeRuntime("legion")
     const task = await publish(rt, { prompt: "Fix", model: "Shared", variant: "low" })
-    expect(String(task?.model?.providerID)).toBe("blitx")
+    expect(String(task?.model?.providerID)).toBe("legion")
     expect(String(task?.model?.modelID)).toBe("kilo/shared")
     await rt.dispose()
   })
@@ -209,15 +209,15 @@ describe("agent_manager tool", () => {
     expect(result.output).toContain("- Smoke: Shared (test) · high")
   })
 
-  test("falls back to the blitx gateway when the preferred provider lacks the model", async () => {
+  test("falls back to the Legion gateway when the preferred provider lacks the model", async () => {
     const task = await publish(runtime, { prompt: "Fix", model: "Gateway Only" })
-    // Default provider `test` does not offer it; blitx is preferred over zeta.
-    expect(String(task?.model?.providerID)).toBe("blitx")
+    // Default provider `test` does not offer it; Legion is preferred over zeta.
+    expect(String(task?.model?.providerID)).toBe("legion")
   })
 
   test("narrows to a provider that supports the requested variant", async () => {
-    const rt = makeRuntime("blitx")
-    // blitx is preferred, but only `test`'s Shared has the `high` variant.
+    const rt = makeRuntime("legion")
+    // Legion is preferred, but only `test`'s Shared has the `high` variant.
     const task = await publish(rt, { prompt: "Fix", model: "Shared", variant: "high" })
     expect(String(task?.model?.providerID)).toBe("test")
     expect(task?.variant).toBe("high")

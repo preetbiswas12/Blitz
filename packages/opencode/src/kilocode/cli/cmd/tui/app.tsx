@@ -31,13 +31,13 @@ export { useTuiConfigHotReload } from "@/kilocode/cli/cmd/tui/context/tui-config
 // ---------------------------------------------------------------------------
 
 /** Default terminal window title. */
-export const APP_TITLE = "Blitx CLI"
+export const APP_TITLE = "Legion CLI"
 
 /** Public docs URL shown in the command palette. */
-export const DOCS_URL = "https://blitx.ai/docs"
+export const DOCS_URL = "https://legion.ai/docs"
 
 /** Human-readable product name used in user-facing messages. */
-export const APP_NAME = "Blitx"
+export const APP_NAME = "legion"
 
 // ---------------------------------------------------------------------------
 // Utilities
@@ -200,7 +200,7 @@ export function init() {
         name: "background_process.list",
         title: "Background processes",
         desc: "List and manage tracked background processes",
-        category: "Blitx",
+        category: "legion",
         slashName: "process",
         slashAliases: ["processes"],
         run: () => {

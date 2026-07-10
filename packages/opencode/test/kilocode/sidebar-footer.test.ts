@@ -24,7 +24,7 @@ const message = {
   time: { created: 1, completed: 2 },
   parentID: "msg_0",
   modelID: "kilo-auto/balanced",
-  providerID: "blitx",
+  providerID: "legion",
   mode: "build",
   agent: "build",
   path: { cwd: "/tmp", root: "/tmp" },
@@ -32,7 +32,7 @@ const message = {
   tokens: { input: 1, output: 1, reasoning: 0, cache: { read: 0, write: 0 } },
 } satisfies Message
 
-describe("Blitx sidebar footer", () => {
+describe("Legion sidebar footer", () => {
   test("formats money", () => {
     expect(format(12.345)).toBe("$12.35")
     expect(format(0)).toBe("$0.00")
@@ -52,7 +52,7 @@ describe("Blitx sidebar footer", () => {
     expect(resetLabel("not-a-date")).toBeUndefined()
   })
 
-  test("refreshes only after completed billed Blitx turns", () => {
+  test("refreshes only after completed billed Legion turns", () => {
     expect(billable(message)).toBeTrue()
     expect(billable({ ...message, providerID: "anthropic" })).toBeFalse()
     expect(billable({ ...message, cost: 0 })).toBeFalse()

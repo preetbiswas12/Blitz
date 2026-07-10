@@ -21,7 +21,7 @@ export const CodeWithAiNav: NavSection[] = [
       },
       {
         href: "/code-with-ai/platforms/kilo-connect",
-        children: "Blitx Connect",
+        children: "Legion Connect",
         subLinks: [
           { href: "/code-with-ai/platforms/slack", children: "Slack" },
           { href: "/code-with-ai/platforms/github", children: "GitHub" },
@@ -33,7 +33,7 @@ export const CodeWithAiNav: NavSection[] = [
       { href: "/code-with-ai/app-builder", children: "App Builder" },
       {
         href: "/code-with-ai/gastown",
-        children: "Gas Town by Blitx",
+        children: "Gas Town by Legion",
         subLinks: [
           { href: "/code-with-ai/gastown/quick-start", children: "Quick Start" },
           { href: "/code-with-ai/gastown/concepts", children: "Concepts" },

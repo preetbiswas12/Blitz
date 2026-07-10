@@ -1,17 +1,17 @@
 export const dict = {
-  // Blitx Gateway provider translations
-  "provider.connect.blitxGateway.line1": "Blitx Gateway 为您提供一组精选的可靠优化模型，专为编码代理设计。",
-  "provider.connect.blitxGateway.line2": "只需一个 API 密钥，您就可以使用 Claude、GPT、Gemini、GLM 等模型。",
-  "provider.connect.blitxGateway.visit.prefix": "访问 ",
-  "provider.connect.blitxGateway.visit.link": "blitx.ai",
-  "provider.connect.blitxGateway.visit.suffix": " 获取您的 API 密钥。",
-  "provider.connect.blitxGateway.byok.prefix": "如需更多使用统计信息，请",
-  "provider.connect.blitxGateway.byok.link": "通过 Blitx's Gateway 进行 BYOK",
-  "provider.connect.blitxGateway.byok.suffix": "。",
+  // Legion Gateway provider translations
+  "provider.connect.LegionGateway.line1": "Legion Gateway 为您提供一组精选的可靠优化模型，专为编码代理设计。",
+  "provider.connect.LegionGateway.line2": "只需一个 API 密钥，您就可以使用 Claude、GPT、Gemini、GLM 等模型。",
+  "provider.connect.LegionGateway.visit.prefix": "访问 ",
+  "provider.connect.LegionGateway.visit.link": "legion.ai",
+  "provider.connect.LegionGateway.visit.suffix": " 获取您的 API 密钥。",
+  "provider.connect.LegionGateway.byok.prefix": "如需更多使用统计信息，请",
+  "provider.connect.LegionGateway.byok.link": "通过 Legion's Gateway 进行 BYOK",
+  "provider.connect.LegionGateway.byok.suffix": "。",
 
   // Provider settings translations
   "settings.providers.group.recommended": "推荐",
-  "settings.providers.note.blitx": "访问 500+ AI 模型",
+  "settings.providers.note.Legion": "访问 500+ AI 模型",
   "settings.providers.note.opencode": "精选模型，包括 Claude、GPT、Gemini 等",
   "settings.providers.note.anthropic": "直接访问 Claude 模型，包括 Pro 和 Max",
   "settings.providers.note.deepseek": "用于推理和编码任务的 DeepSeek 模型",
@@ -45,11 +45,11 @@ export const dict = {
   "marketplace.install.scope.global.description": "此计算机上的所有项目。存储在你的用户配置中。",
   "marketplace.install.destination": "安装位置",
   "marketplace.install.about.mcp":
-    "MCP 服务器为 Blitx 提供用于处理外部服务或本地程序的额外工具。",
+    "MCP 服务器为 Legion 提供用于处理外部服务或本地程序的额外工具。",
   "marketplace.install.about.agent": "智能体会添加一个具有专属指令和权限的可复用角色。",
-  "marketplace.install.about.skill": "技能会添加特定任务的指令和资源，Blitx 可在需要时加载它们。",
+  "marketplace.install.about.skill": "技能会添加特定任务的指令和资源，Legion 可在需要时加载它们。",
   "marketplace.install.mcp.warning":
-    "MCP 服务器可以运行本地命令或连接外部服务。除非你的权限允许自动使用，否则 Blitx 会在使用其工具前请求许可。",
+    "MCP 服务器可以运行本地命令或连接外部服务。除非你的权限允许自动使用，否则 Legion 会在使用其工具前请求许可。",
   "marketplace.install.project.warning":
     "项目文件可能会提交到版本控制。除非配置引用了环境变量，否则不要在此处存储密钥。",
   "marketplace.install.learnMore": "了解 Marketplace 安装的工作方式",
@@ -118,7 +118,7 @@ export const dict = {
   "snapshot.slowRepo.answer.continue.description": "等待快照完成。初始快照构建好之后，后续回合会很快。",
   "snapshot.slowRepo.answer.disable": "为此项目禁用",
   "snapshot.slowRepo.answer.disable.description":
-    "关闭本项目的 Blitx 快照。你将失去对 Blitx 更改的撤销/重做，但 git 仍会追踪所有内容。",
+    "关闭本项目的 Legion 快照。你将失去对 Legion 更改的撤销/重做，但 git 仍会追踪所有内容。",
 
   // Edit-tool header and shell-tool section labels
   "ui.messagePart.openInDiffViewer": "在差异查看器中打开",

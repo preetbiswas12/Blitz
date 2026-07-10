@@ -24,7 +24,7 @@ import { PluginCommand } from "../../src/cli/cmd/plug"
 import { DbCommand } from "../../src/cli/cmd/db"
 import { HelpCommand } from "../../src/kilocode/help-command"
 import { DaemonCommand } from "../../src/kilocode/cli/cmd/daemon"
-import { BlitxConsoleCommand } from "../../src/kilocode/cli/cmd/console"
+import { LegionConsoleCommand } from "../../src/kilocode/cli/cmd/console"
 
 // Stand-in for TuiThreadCommand — the real one imports @opentui/solid which
 // doesn't resolve in the test environment. Only command/describe matter here.
@@ -73,7 +73,7 @@ const commands = [
   ConfigCLICommand,
   PluginCommand,
   DaemonCommand,
-  BlitxConsoleCommand,
+  LegionConsoleCommand,
   HelpCommand,
   CompletionStub,
 ] as any[]
@@ -189,33 +189,33 @@ describe("generateCommandTable", () => {
   })
 })
 
-describe("Blitx CLI customizations are wired into index.ts", () => {
+describe("Legion CLI customizations are wired into index.ts", () => {
   const file = (rel: string) => Bun.file(path.resolve(import.meta.dir, rel)).text()
   const INDEX = "../../src/index.ts"
   const SETUP = "../../src/kilocode/cli/setup.ts"
   const BARREL = "../../src/kilocode/commands.ts"
 
-  test("CLI is branded `blitx`, not `opencode`", async () => {
+  test("CLI is branded `Legion`, not `opencode`", async () => {
     const index = await file(INDEX)
-    expect(index).toContain('.scriptName("blitx")')
+    expect(index).toContain('.scriptName("legion")')
     expect(index).not.toContain('.scriptName("opencode")')
   })
 
-  test("index.ts invokes the BlitxCli integration points", async () => {
+  test("index.ts invokes the LegionCli integration points", async () => {
     // These thin call-sites are the only wiring between upstream index.ts and the Kilo
     // customizations in setup.ts. If a future upstream merge drops them, every Kilo command
     // and the telemetry/lifecycle hooks silently disappear, exactly the regression this guards.
     const index = await file(INDEX)
-    expect(index).toContain("BlitxCli.register(")
-    expect(index).toContain("BlitxCli.bootstrap(")
-    expect(index).toContain("BlitxCli.shutdown(")
+    expect(index).toContain("LegionCli.register(")
+    expect(index).toContain("LegionCli.bootstrap(")
+    expect(index).toContain("LegionCli.shutdown(")
   })
 
   test("registers the local Kilo Console instead of the upstream account console", async () => {
     const index = await file(INDEX)
     const setup = await file(SETUP)
     const barrel = await file(BARREL)
-    expect(setup).toContain("BlitxConsoleCommand")
+    expect(setup).toContain("LegionConsoleCommand")
     expect(index).not.toContain(".command(ConsoleCommand)")
     expect(barrel).not.toContain('from "../cli/cmd/account"')
   })

@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { createMemo, onCleanup } from "solid-js" // kilocode_change
 import { createStore } from "solid-js/store"
-import type { Todo } from "@blitxcode/sdk/v2"
+import type { Todo } from "@Legioncode/sdk/v2"
 
 export default {
   title: "UI/Todo Panel Motion",

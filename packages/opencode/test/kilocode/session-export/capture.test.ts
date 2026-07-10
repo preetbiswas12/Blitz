@@ -84,7 +84,7 @@ describe("Capture", () => {
     expect(msg.envelope.type).toBe("llm_request_started")
     expect(msg.envelope.seq).toBe(7)
     expect(msg.envelope.agentVersion).toBe("v0")
-    expect(msg.envelope.model.providerId).toBe("blitx")
+    expect(msg.envelope.model.providerId).toBe("legion")
     expect(msg.envelope.model.modelId).toBe("free-1")
   })
 
@@ -487,7 +487,7 @@ function context(sessionId: string): MessageV2.WithParts[] {
         role: "user",
         time: { created: 0 },
         agent: "build",
-        model: { providerID: ProviderID.make("blitx"), modelID: ModelID.make("free-1") },
+        model: { providerID: ProviderID.make("legion"), modelID: ModelID.make("free-1") },
       },
       parts: [],
     },

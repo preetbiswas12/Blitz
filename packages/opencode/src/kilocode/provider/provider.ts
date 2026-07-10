@@ -21,13 +21,13 @@ export const REQUEST_TIMEOUT_MS = 300_000 // 5 minutes
 
 type BundledSDK = { languageModel(modelId: string): LanguageModelV3 }
 
-export const BLITX_BUNDLED_PROVIDERS: Record<string, () => Promise<(options: any) => BundledSDK>> = {}
+export const LEGION_BUNDLED_PROVIDERS: Record<string, () => Promise<(options: any) => BundledSDK>> = {}
 
 // ---------------------------------------------------------------------------
 // Model schema extensions  (spread into Provider.Model Schema.Struct)
 // ---------------------------------------------------------------------------
 
-export const BLITX_MODEL_SCHEMA_EXTENSIONS = {
+export const LEGION_MODEL_SCHEMA_EXTENSIONS = {
   recommendedIndex: optionalOmitUndefined(Schema.Finite),
   prompt: Schema.optional(Schema.String),
   isFree: Schema.optional(Schema.Boolean),
@@ -53,7 +53,7 @@ export const BLITX_MODEL_SCHEMA_EXTENSIONS = {
 
 export function patchModelsDevModel(providerID: string, source: any) {
   return {
-    variants: providerID === "blitx" ? (source.variants ?? {}) : {},
+    variants: providerID === "legion" ? (source.variants ?? {}) : {},
     recommendedIndex: source.recommendedIndex,
     prompt: source.prompt,
     isFree: source.isFree,
@@ -121,12 +121,12 @@ function useLanguageModel(sdk: any) {
   return sdk.responses === undefined && sdk.chat === undefined
 }
 
-export function patchBlitxProviderPrivacy(provider: { options?: Record<string, any> } | undefined, config: any) {
+export function patchLegionProviderPrivacy(provider: { options?: Record<string, any> } | undefined, config: any) {
   if (!provider || config.hide_prompt_training_models !== true) return
   provider.options = { ...provider.options, dataCollection: "deny" }
 }
 
-export function blitxCustomLoaders(dep: CustomDep): Record<string, CustomLoader> {
+export function LegionCustomLoaders(dep: CustomDep): Record<string, CustomLoader> {
   return {
     "github-copilot-enterprise": () =>
       Effect.succeed({
@@ -144,7 +144,7 @@ export function blitxCustomLoaders(dep: CustomDep): Record<string, CustomLoader>
       const hasKey = yield* Effect.gen(function* () {
         if (input.env.some((item: string) => env[item])) return true
         if (yield* dep.auth(input.id)) return true
-        if (config.provider?.["blitx"]?.options?.apiKey) return true
+        if (config.provider?.["legion"]?.options?.apiKey) return true
         return false
       })
 
@@ -205,7 +205,7 @@ export function patchCustomLoaderResult(
     case "cerebras":
       result.options.headers = {
         ...result.options.headers,
-        "X-Cerebras-3rd-Party-Integration": "blitx",
+        "X-Cerebras-3rd-Party-Integration": "legion",
       }
       break
     case "azure": {
@@ -234,8 +234,8 @@ export function patchCustomLoaderResult(
 // getSmallModel helpers
 // ---------------------------------------------------------------------------
 
-export function blitxSmallModelPriority(providerID: string): string[] | undefined {
-  if (providerID.startsWith("blitx")) return ["kilo-auto/small"]
+export function LegionSmallModelPriority(providerID: string): string[] | undefined {
+  if (providerID.startsWith("legion")) return ["kilo-auto/small"]
   return undefined
 }
 

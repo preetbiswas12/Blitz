@@ -18,7 +18,7 @@ export type ReviewTelemetry = {
   tool?: "suggest"
 }
 
-export namespace BlitxSessionProcessor {
+export namespace LegionSessionrocessor {
   const log = Log.create({ service: "session.processor.kilo" })
   export const OUTPUT_LENGTH_WARNING = "The model hit its output limit, so this response may be incomplete."
   export const REASONING_LENGTH_WARNING =
@@ -174,7 +174,7 @@ export namespace BlitxSessionProcessor {
     set: (sessionID: SessionID, status: SessionStatus.Info) => Effect.Effect<void>
   }) {
     return {
-      limit: Flag.BLITX_SESSION_RETRY_LIMIT,
+      limit: Flag.LEGION_SESSION_RETRY_LIMIT,
       offline: (info: { error: unknown; message: string }) =>
         handleOffline({
           error: info.error,

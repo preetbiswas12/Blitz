@@ -1,18 +1,18 @@
 export const dict = {
-  // Blitx Gateway provider translations
-  "provider.connect.blitxGateway.line1":
-    "Blitx Gateway는 코딩 에이전트를 위한 신뢰할 수 있는 최적화된 모델 세트를 제공합니다.",
-  "provider.connect.blitxGateway.line2": "하나의 API 키로 Claude, GPT, Gemini, GLM 등의 모델을 사용할 수 있습니다.",
-  "provider.connect.blitxGateway.visit.prefix": "",
-  "provider.connect.blitxGateway.visit.link": "blitx.ai",
-  "provider.connect.blitxGateway.visit.suffix": "를 방문하여 API 키를 받으세요.",
-  "provider.connect.blitxGateway.byok.prefix": "더 많은 사용 통계를 보려면 ",
-  "provider.connect.blitxGateway.byok.link": "Blitx's Gateway를 통해 BYOK",
-  "provider.connect.blitxGateway.byok.suffix": "를 사용하세요.",
+  // Legion Gateway provider translations
+  "provider.connect.LegionGateway.line1":
+    "Legion Gateway는 코딩 에이전트를 위한 신뢰할 수 있는 최적화된 모델 세트를 제공합니다.",
+  "provider.connect.LegionGateway.line2": "하나의 API 키로 Claude, GPT, Gemini, GLM 등의 모델을 사용할 수 있습니다.",
+  "provider.connect.LegionGateway.visit.prefix": "",
+  "provider.connect.LegionGateway.visit.link": "legion.ai",
+  "provider.connect.LegionGateway.visit.suffix": "를 방문하여 API 키를 받으세요.",
+  "provider.connect.LegionGateway.byok.prefix": "더 많은 사용 통계를 보려면 ",
+  "provider.connect.LegionGateway.byok.link": "Legion's Gateway를 통해 BYOK",
+  "provider.connect.LegionGateway.byok.suffix": "를 사용하세요.",
 
   // Provider settings translations
   "settings.providers.group.recommended": "추천",
-  "settings.providers.note.blitx": "500개 이상의 AI 모델 이용 가능",
+  "settings.providers.note.Legion": "500개 이상의 AI 모델 이용 가능",
   "settings.providers.note.opencode": "Claude, GPT, Gemini 등을 포함한 엄선된 모델",
   "settings.providers.note.anthropic": "Pro 및 Max를 포함한 Claude 모델에 직접 액세스",
   "settings.providers.note.deepseek": "추론 및 코딩 작업을 위한 DeepSeek 모델",
@@ -47,12 +47,12 @@ export const dict = {
     "이 컴퓨터의 모든 프로젝트에 적용됩니다. 사용자 구성에 저장됩니다.",
   "marketplace.install.destination": "설치 위치",
   "marketplace.install.about.mcp":
-    "MCP 서버는 외부 서비스나 로컬 프로그램과 작업할 수 있는 추가 도구를 Blitx에 제공합니다.",
+    "MCP 서버는 외부 서비스나 로컬 프로그램과 작업할 수 있는 추가 도구를 Legion에 제공합니다.",
   "marketplace.install.about.agent": "에이전트는 자체 지침과 권한을 가진 재사용 가능한 역할을 추가합니다.",
   "marketplace.install.about.skill":
-    "스킬은 필요할 때 Blitx가 불러올 수 있는 작업별 지침과 리소스를 추가합니다.",
+    "스킬은 필요할 때 Legion가 불러올 수 있는 작업별 지침과 리소스를 추가합니다.",
   "marketplace.install.mcp.warning":
-    "MCP 서버는 로컬 명령을 실행하거나 외부 서비스에 연결할 수 있습니다. 권한 설정에서 자동으로 허용하지 않는 한 Blitx는 도구를 사용하기 전에 권한을 요청합니다.",
+    "MCP 서버는 로컬 명령을 실행하거나 외부 서비스에 연결할 수 있습니다. 권한 설정에서 자동으로 허용하지 않는 한 Legion는 도구를 사용하기 전에 권한을 요청합니다.",
   "marketplace.install.project.warning":
     "프로젝트 파일이 버전 관리에 추가될 수 있습니다. 구성에서 환경 변수를 참조하는 경우가 아니면 여기에 비밀 정보를 저장하지 마세요.",
   "marketplace.install.learnMore": "Marketplace 설치 방식 알아보기",
@@ -124,7 +124,7 @@ export const dict = {
     "스냅샷이 완료될 때까지 기다리세요. 초기 스냅샷이 만들어지면 이후 턴은 빠릅니다.",
   "snapshot.slowRepo.answer.disable": "이 프로젝트에서 비활성화",
   "snapshot.slowRepo.answer.disable.description":
-    "이 프로젝트의 Blitx 스냅샷을 끕니다. Blitx 변경에 대한 실행 취소/다시 실행은 사용할 수 없지만 git은 여전히 모든 것을 추적합니다.",
+    "이 프로젝트의 Legion 스냅샷을 끕니다. Legion 변경에 대한 실행 취소/다시 실행은 사용할 수 없지만 git은 여전히 모든 것을 추적합니다.",
 
   // Edit-tool header and shell-tool section labels
   "ui.messagePart.openInDiffViewer": "차이점 뷰어에서 열기",

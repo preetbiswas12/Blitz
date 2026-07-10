@@ -1,5 +1,5 @@
-import { Button } from "@blitxcode/kilo-web-ui/button"
-import { Card } from "@blitxcode/kilo-web-ui/card"
+import { Button } from "@Legioncode/kilo-web-ui/button"
+import { Card } from "@Legioncode/kilo-web-ui/card"
 import { For, Show, createMemo, createSignal } from "solid-js"
 import { useConfig } from "../../context/config"
 import { ConfigPage, ConfigTag as Tag, ConfigToolbar } from "./ConfigPage"
@@ -26,7 +26,7 @@ export function ServersRoute() {
     if (!q) return items()
     const seed: Server = {
       id: q.url,
-      name: "Local Blitx",
+      name: "Local Legion",
       url: q.url,
       dir: q.dir || "Server default",
       status: health?.healthy ? "connected" : "pending",
@@ -38,7 +38,7 @@ export function ServersRoute() {
   function add() {
     const server: Server = {
       id: `${url()}-${Date.now()}`,
-      name: name().trim() || "Blitx Server",
+      name: name().trim() || "legion server",
       url: url().trim(),
       dir: "Server default",
       status: "pending",
@@ -64,7 +64,7 @@ export function ServersRoute() {
     >
       <ConfigToolbar
         title="Server Sync"
-        description="Register global Blitx server endpoints and choose which ones receive configuration updates."
+        description="Register global legion server endpoints and choose which ones receive configuration updates."
         meta={<Tag>{`${rows().filter((item) => item.apply).length} selected`}</Tag>}
       />
 
@@ -89,7 +89,7 @@ export function ServersRoute() {
           <strong>{rows().length} servers</strong>
           <span>{rows().filter((item) => item.apply).length} selected for config sync</span>
         </div>
-        <div class="server-table" role="table" aria-label="Connected Blitx servers">
+        <div class="server-table" role="table" aria-label="Connected legion servers">
           <div class="server-row server-head" role="row">
             <span>Apply</span>
             <span>Name</span>

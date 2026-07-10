@@ -1,17 +1,17 @@
 export const dict = {
-  // Blitx Gateway provider translations
-  "provider.connect.blitxGateway.line1": "Blitx Gateway 為您提供一組精選的可靠優化模型，專為編碼代理設計。",
-  "provider.connect.blitxGateway.line2": "只需一個 API 金鑰，您就可以使用 Claude、GPT、Gemini、GLM 等模型。",
-  "provider.connect.blitxGateway.visit.prefix": "訪問 ",
-  "provider.connect.blitxGateway.visit.link": "blitx.ai",
-  "provider.connect.blitxGateway.visit.suffix": " 獲取您的 API 金鑰。",
-  "provider.connect.blitxGateway.byok.prefix": "如需更多使用統計資訊，請",
-  "provider.connect.blitxGateway.byok.link": "透過 Blitx's Gateway 進行 BYOK",
-  "provider.connect.blitxGateway.byok.suffix": "。",
+  // Legion Gateway provider translations
+  "provider.connect.LegionGateway.line1": "Legion Gateway 為您提供一組精選的可靠優化模型，專為編碼代理設計。",
+  "provider.connect.LegionGateway.line2": "只需一個 API 金鑰，您就可以使用 Claude、GPT、Gemini、GLM 等模型。",
+  "provider.connect.LegionGateway.visit.prefix": "訪問 ",
+  "provider.connect.LegionGateway.visit.link": "legion.ai",
+  "provider.connect.LegionGateway.visit.suffix": " 獲取您的 API 金鑰。",
+  "provider.connect.LegionGateway.byok.prefix": "如需更多使用統計資訊，請",
+  "provider.connect.LegionGateway.byok.link": "透過 Legion's Gateway 進行 BYOK",
+  "provider.connect.LegionGateway.byok.suffix": "。",
 
   // Provider settings translations
   "settings.providers.group.recommended": "推薦",
-  "settings.providers.note.blitx": "存取 500+ AI 模型",
+  "settings.providers.note.Legion": "存取 500+ AI 模型",
   "settings.providers.note.opencode": "精選模型，包括 Claude、GPT、Gemini 等",
   "settings.providers.note.anthropic": "直接存取 Claude 模型，包括 Pro 和 Max",
   "settings.providers.note.deepseek": "用於推理和程式設計工作的 DeepSeek 模型",
@@ -45,11 +45,11 @@ export const dict = {
   "marketplace.install.scope.global.description": "此電腦上的所有專案。儲存在你的使用者設定中。",
   "marketplace.install.destination": "安裝位置",
   "marketplace.install.about.mcp":
-    "MCP 伺服器為 Blitx 提供用於處理外部服務或本機程式的額外工具。",
+    "MCP 伺服器為 Legion 提供用於處理外部服務或本機程式的額外工具。",
   "marketplace.install.about.agent": "智能體會新增一個具有專屬指示和權限的可重複使用角色。",
-  "marketplace.install.about.skill": "技能會新增特定任務的指示和資源，Blitx 可在需要時載入它們。",
+  "marketplace.install.about.skill": "技能會新增特定任務的指示和資源，Legion 可在需要時載入它們。",
   "marketplace.install.mcp.warning":
-    "MCP 伺服器可以執行本機命令或連線至外部服務。除非你的權限允許自動使用，否則 Blitx 會在使用其工具前請求許可。",
+    "MCP 伺服器可以執行本機命令或連線至外部服務。除非你的權限允許自動使用，否則 Legion 會在使用其工具前請求許可。",
   "marketplace.install.project.warning":
     "專案檔案可能會提交至版本控制。除非設定引用了環境變數，否則請勿在此儲存密鑰。",
   "marketplace.install.learnMore": "瞭解 Marketplace 安裝的運作方式",
@@ -118,7 +118,7 @@ export const dict = {
   "snapshot.slowRepo.answer.continue.description": "等待快照完成。初始快照建立後，後續回合會很快。",
   "snapshot.slowRepo.answer.disable": "為此專案停用",
   "snapshot.slowRepo.answer.disable.description":
-    "關閉本專案的 Blitx 快照。你將失去對 Blitx 變更的撤銷/重做，但 git 仍會追蹤所有內容。",
+    "關閉本專案的 Legion 快照。你將失去對 Legion 變更的撤銷/重做，但 git 仍會追蹤所有內容。",
 
   // Edit-tool header and shell-tool section labels
   "ui.messagePart.openInDiffViewer": "在差異檢視器中開啟",

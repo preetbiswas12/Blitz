@@ -1,19 +1,19 @@
 export const dict = {
-  // Blitx Gateway provider translations
-  "provider.connect.blitxGateway.line1":
-    "Blitx Gateway bietet Ihnen Zugang zu einer kuratierten Auswahl zuverlässiger, optimierter Modelle für Coding-Agenten.",
-  "provider.connect.blitxGateway.line2":
+  // Legion Gateway provider translations
+  "provider.connect.LegionGateway.line1":
+    "Legion Gateway bietet Ihnen Zugang zu einer kuratierten Auswahl zuverlässiger, optimierter Modelle für Coding-Agenten.",
+  "provider.connect.LegionGateway.line2":
     "Mit einem einzigen API-Schlüssel erhalten Sie Zugang zu Modellen wie Claude, GPT, Gemini, GLM und mehr.",
-  "provider.connect.blitxGateway.visit.prefix": "Besuchen Sie ",
-  "provider.connect.blitxGateway.visit.link": "blitx.ai",
-  "provider.connect.blitxGateway.visit.suffix": ", um Ihren API-Schlüssel zu erhalten.",
-  "provider.connect.blitxGateway.byok.prefix": "Für weitere Nutzungsstatistiken ",
-  "provider.connect.blitxGateway.byok.link": "BYOK via Blitx's Gateway",
-  "provider.connect.blitxGateway.byok.suffix": " nutzen.",
+  "provider.connect.LegionGateway.visit.prefix": "Besuchen Sie ",
+  "provider.connect.LegionGateway.visit.link": "legion.ai",
+  "provider.connect.LegionGateway.visit.suffix": ", um Ihren API-Schlüssel zu erhalten.",
+  "provider.connect.LegionGateway.byok.prefix": "Für weitere Nutzungsstatistiken ",
+  "provider.connect.LegionGateway.byok.link": "BYOK via Legion's Gateway",
+  "provider.connect.LegionGateway.byok.suffix": " nutzen.",
 
   // Provider settings translations
   "settings.providers.group.recommended": "Empfohlen",
-  "settings.providers.note.blitx": "Zugriff auf 500+ KI-Modelle",
+  "settings.providers.note.Legion": "Zugriff auf 500+ KI-Modelle",
   "settings.providers.note.opencode": "Kuratierte Modelle, darunter Claude, GPT, Gemini und mehr",
   "settings.providers.note.anthropic": "Direkter Zugriff auf Claude-Modelle, einschließlich Pro und Max",
   "settings.providers.note.deepseek": "DeepSeek-Modelle für Denk- und Programmieraufgaben",
@@ -48,13 +48,13 @@ export const dict = {
     "Alle Projekte auf diesem Computer. Wird in Ihrer Benutzerkonfiguration gespeichert.",
   "marketplace.install.destination": "Installationsziel",
   "marketplace.install.about.mcp":
-    "Ein MCP-Server stellt Blitx zusätzliche Werkzeuge für die Arbeit mit externen Diensten oder lokalen Programmen bereit.",
+    "Ein MCP-Server stellt Legion zusätzliche Werkzeuge für die Arbeit mit externen Diensten oder lokalen Programmen bereit.",
   "marketplace.install.about.agent":
     "Ein Agent fügt eine wiederverwendbare Rolle mit eigenen Anweisungen und Berechtigungen hinzu.",
   "marketplace.install.about.skill":
-    "Ein Skill fügt aufgabenspezifische Anweisungen und Ressourcen hinzu, die Blitx bei Bedarf laden kann.",
+    "Ein Skill fügt aufgabenspezifische Anweisungen und Ressourcen hinzu, die Legion bei Bedarf laden kann.",
   "marketplace.install.mcp.warning":
-    "MCP-Server können lokale Befehle ausführen oder eine Verbindung zu externen Diensten herstellen. Blitx fragt vor der Verwendung ihrer Werkzeuge um Erlaubnis, sofern Ihre Berechtigungen dies nicht automatisch erlauben.",
+    "MCP-Server können lokale Befehle ausführen oder eine Verbindung zu externen Diensten herstellen. Legion fragt vor der Verwendung ihrer Werkzeuge um Erlaubnis, sofern Ihre Berechtigungen dies nicht automatisch erlauben.",
   "marketplace.install.project.warning":
     "Projektdateien können in die Versionsverwaltung aufgenommen werden. Speichern Sie hier keine Geheimnisse, es sei denn, die Konfiguration verweist auf eine Umgebungsvariable.",
   "marketplace.install.learnMore": "Erfahren Sie, wie Installationen aus dem Marketplace funktionieren",
@@ -127,7 +127,7 @@ export const dict = {
     "Auf den Abschluss des Snapshots warten. Nachfolgende Runden sind schnell, sobald der initiale Snapshot erstellt ist.",
   "snapshot.slowRepo.answer.disable": "Für dieses Projekt deaktivieren",
   "snapshot.slowRepo.answer.disable.description":
-    "Blitx-Snapshots für dieses Projekt ausschalten. Rückgängig/Wiederherstellen für Blitx-Änderungen ist nicht mehr möglich, aber git verfolgt weiterhin alles.",
+    "Legion-Snapshots für dieses Projekt ausschalten. Rückgängig/Wiederherstellen für Legion-Änderungen ist nicht mehr möglich, aber git verfolgt weiterhin alles.",
 
   // Edit-tool header and shell-tool section labels
   "ui.messagePart.openInDiffViewer": "Im Diff-Viewer öffnen",

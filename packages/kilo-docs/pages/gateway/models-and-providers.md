@@ -129,7 +129,7 @@ With the mode header:
 
 ```bash
 curl -X POST "https://api.kilo.ai/api/gateway/chat/completions" \
-  -H "Authorization: Bearer $BLITX_API_KEY" \
+  -H "Authorization: Bearer $LEGION_API_KEY" \
   -H "x-kilocode-mode: plan" \
   -H "Content-Type: application/json" \
   -d '{"model": "kilo-auto/balanced", "messages": [{"role": "user", "content": "Design a database schema"}]}'

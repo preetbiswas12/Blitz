@@ -4,10 +4,10 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@blitzcode/cli"><img alt="npm" src="https://raster.shields.io/npm/v/@blitzcode/cli?style=flat" height="20" /></a>
-  <a href="https://x.com/blitzcode"><img src="https://raster.shields.io/badge/blitzcode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="20"></a>
-  <a href="https://blitz.ai/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
-  <a href="https://www.reddit.com/r/blitzcode/"><img src="https://raster.shields.io/badge/Join%20r%2Fblitzcode-D84315?style=flat&logo=reddit&logoColor=white" alt="Reddit" height="20"></a>
+  <a href="https://www.npmjs.com/package/@legioncode/cli"><img alt="npm" src="https://raster.shields.io/npm/v/@legioncode/cli?style=flat" height="20" /></a>
+  <a href="https://x.com/legioncode"><img src="https://raster.shields.io/badge/legioncode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="20"></a>
+  <a href="https://legion.ai/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
+  <a href="https://www.reddit.com/r/legioncode/"><img src="https://raster.shields.io/badge/Join%20r%2Flegioncode-D84315?style=flat&logo=reddit&logoColor=white" alt="Reddit" height="20"></a>
 </p>
 
 ---
@@ -18,38 +18,38 @@ Blitz is an open source AI coding agent. You pick from 500+ models, switch betwe
 
 ```bash
 # npm
-npm install -g @blitzcode/cli
+npm install -g @legioncode/cli
 
 # curl
-curl -fsSL https://blitz.ai/cli/install | bash
+curl -fsSL https://legion.ai/cli/install | bash
 
 # pnpm
-pnpm add -g @blitzcode/cli
+pnpm add -g @legioncode/cli
 
 # bun
-bun add -g @blitzcode/cli
+bun add -g @legioncode/cli
 
 # Homebrew (macOS / Linux)
-brew install Blitz-Org/tap/blitz
+brew install Legion-Org/tap/blitz
 
 # Arch Linux (AUR)
-paru -S blitz-bin
+paru -S legion-bin
 ```
 
-Then run `blitz` in any project directory to start.
+Then run `legion` in any project directory to start.
 
 <details>
 <summary>Install from GitHub Releases (binaries)</summary>
 
-Download the latest binary from the [Releases page](https://github.com/Blitz-Org/blitzcode/releases).
+Download the latest binary from the [Releases page](https://github.com/Legion-Org/legioncode/releases).
 
 | Platform | Asset |
 |---|---|
-| Windows (most PCs) | `blitz-windows-x64.zip` |
-| macOS (Apple Silicon) | `blitz-darwin-arm64.zip` |
-| macOS (Intel) | `blitz-darwin-x64.zip` |
-| Linux x64 | `blitz-linux-x64.tar.gz` |
-| Linux ARM | `blitz-linux-arm64.tar.gz` |
+| Windows (most PCs) | `legion-windows-x64.zip` |
+| macOS (Apple Silicon) | `legion-darwin-arm64.zip` |
+| macOS (Intel) | `legion-darwin-x64.zip` |
+| Linux x64 | `legion-linux-x64.tar.gz` |
+| Linux ARM | `legion-linux-arm64.tar.gz` |
 
 </details>
 
@@ -63,7 +63,7 @@ Blitz ships with specialized agents you switch between depending on the task. Yo
 - **Debug** - Troubleshoots and traces issues.
 - **Review** - Reviews your changes and surfaces issues across performance, security, style, and test coverage.
 
-Learn more about [agents and custom agents](https://blitz.ai/docs/code-with-ai/agents/using-agents).
+Learn more about [agents and custom agents](https://legion.ai/docs/code-with-ai/agents/using-agents).
 
 ### What it does
 
@@ -75,17 +75,17 @@ Learn more about [agents and custom agents](https://blitz.ai/docs/code-with-ai/a
 
 ### Autonomous Mode (CI/CD)
 
-Run `blitz run` with `--auto` for fully autonomous operation with no prompts, built for CI/CD pipelines:
+Run `legion run` with `--auto` for fully autonomous operation with no prompts, built for CI/CD pipelines:
 
 ```bash
-blitz run --auto "run tests and fix any failures"
+legion run --auto "run tests and fix any failures"
 ```
 
 `--auto` disables all permission prompts and lets the agent execute any action without confirmation. Only use it in trusted environments.
 
 ### Documentation
 
-For configuration and everything else, [head over to the docs](https://blitz.ai/docs).
+For configuration and everything else, [head over to the docs](https://legion.ai/docs).
 
 ### Contributing
 
@@ -108,4 +108,4 @@ Blitz is a fork of [OpenCode](https://github.com/anomalyco/opencode), enhanced t
 
 ---
 
-**Join the community** [Discord](https://blitz.ai/discord) | [X](https://x.com/blitzcode) | [Reddit](https://www.reddit.com/r/blitzcode/)
+**Join the community** [Discord](https://legion.ai/discord) | [X](https://x.com/legioncode) | [Reddit](https://www.reddit.com/r/legioncode/)

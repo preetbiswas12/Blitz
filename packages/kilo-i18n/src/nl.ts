@@ -1,21 +1,21 @@
 // Kilo-specific translations and overrides
 // Keys here will override any matching keys from upstream translations
 export const dict = {
-  // Blitx Gateway provider translations
-  "provider.connect.blitxGateway.line1":
-    "Blitx Gateway geeft je toegang tot een gecureerde set van betrouwbare, geoptimaliseerde modellen voor coding agents.",
-  "provider.connect.blitxGateway.line2":
+  // Legion Gateway provider translations
+  "provider.connect.LegionGateway.line1":
+    "Legion Gateway geeft je toegang tot een gecureerde set van betrouwbare, geoptimaliseerde modellen voor coding agents.",
+  "provider.connect.LegionGateway.line2":
     "Met één enkele API key krijg je toegang tot modellen zoals Claude, GPT, Gemini, GLM en meer.",
-  "provider.connect.blitxGateway.visit.prefix": "Bezoek ",
-  "provider.connect.blitxGateway.visit.link": "blitx.ai",
-  "provider.connect.blitxGateway.visit.suffix": " om je API key op te halen.",
-  "provider.connect.blitxGateway.byok.prefix": "Voor meer gebruiksstatistieken, gebruik ",
-  "provider.connect.blitxGateway.byok.link": "BYOK via Blitx's Gateway",
-  "provider.connect.blitxGateway.byok.suffix": ".",
+  "provider.connect.LegionGateway.visit.prefix": "Bezoek ",
+  "provider.connect.LegionGateway.visit.link": "legion.ai",
+  "provider.connect.LegionGateway.visit.suffix": " om je API key op te halen.",
+  "provider.connect.LegionGateway.byok.prefix": "Voor meer gebruiksstatistieken, gebruik ",
+  "provider.connect.LegionGateway.byok.link": "BYOK via Legion's Gateway",
+  "provider.connect.LegionGateway.byok.suffix": ".",
 
   // Provider settings translations
   "settings.providers.group.recommended": "Aanbevolen",
-  "settings.providers.note.blitx": "Toegang tot 500+ AI modellen",
+  "settings.providers.note.Legion": "Toegang tot 500+ AI modellen",
   "settings.providers.note.opencode": "Geselecteerde modellen, waaronder Claude, GPT, Gemini en meer",
   "settings.providers.note.anthropic": "Directe toegang tot Claude-modellen, inclusief Pro en Max",
   "settings.providers.note.deepseek": "DeepSeek-modellen voor redeneer- en codeertaken",
@@ -50,12 +50,12 @@ export const dict = {
     "Alle projecten op deze computer. Wordt opgeslagen in je gebruikersconfiguratie.",
   "marketplace.install.destination": "Installatielocatie",
   "marketplace.install.about.mcp":
-    "Een MCP-server geeft Blitx extra hulpmiddelen om met externe diensten of lokale programma's te werken.",
+    "Een MCP-server geeft Legion extra hulpmiddelen om met externe diensten of lokale programma's te werken.",
   "marketplace.install.about.agent": "Een agent voegt een herbruikbare rol toe met eigen instructies en machtigingen.",
   "marketplace.install.about.skill":
-    "Een vaardigheid voegt taakspecifieke instructies en bronnen toe die Blitx indien nodig kan laden.",
+    "Een vaardigheid voegt taakspecifieke instructies en bronnen toe die Legion indien nodig kan laden.",
   "marketplace.install.mcp.warning":
-    "MCP-servers kunnen lokale opdrachten uitvoeren of verbinding maken met externe diensten. Blitx vraagt toestemming voordat hun hulpmiddelen worden gebruikt, tenzij je machtigingen dit automatisch toestaan.",
+    "MCP-servers kunnen lokale opdrachten uitvoeren of verbinding maken met externe diensten. Legion vraagt toestemming voordat hun hulpmiddelen worden gebruikt, tenzij je machtigingen dit automatisch toestaan.",
   "marketplace.install.project.warning":
     "Projectbestanden kunnen aan versiebeheer worden toegevoegd. Sla hier geen geheimen op, tenzij de configuratie naar een omgevingsvariabele verwijst.",
   "marketplace.install.learnMore": "Lees hoe installaties vanuit Marketplace werken",
@@ -128,7 +128,7 @@ export const dict = {
     "Wacht tot de snapshot klaar is. Volgende beurten zijn snel zodra de eerste snapshot is gemaakt.",
   "snapshot.slowRepo.answer.disable": "Uitschakelen voor dit project",
   "snapshot.slowRepo.answer.disable.description":
-    "Zet Blitx-snapshots uit voor dit project. Je verliest ongedaan maken/opnieuw doen van Blitx-wijzigingen, maar git blijft alles volgen.",
+    "Zet Legion-snapshots uit voor dit project. Je verliest ongedaan maken/opnieuw doen van Legion-wijzigingen, maar git blijft alles volgen.",
 
   // Edit-tool header and shell-tool section labels
   "ui.messagePart.openInDiffViewer": "Openen in Diff-weergave",

@@ -15,7 +15,7 @@ type Target = {
   readonly extras: ReadonlySet<MessageID>
 }
 
-export namespace BlitxSessionPromptQueue {
+export namespace LegionSessionromptQueue {
   const tails = new Map<SessionID, Promise<void>>()
   const versions = new Map<SessionID, number>()
   const targets = new Map<SessionID, Target>()

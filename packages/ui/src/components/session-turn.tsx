@@ -3,8 +3,8 @@ import {
   type SnapshotFileDiff,
   Message as MessageType,
   Part as PartType,
-} from "@blitxcode/sdk/v2/client"
-import type { SessionStatus } from "@blitxcode/sdk/v2"
+} from "@Legioncode/sdk/v2/client"
+import type { SessionStatus } from "@Legioncode/sdk/v2"
 import { useData } from "../context"
 import { useFileComponent } from "../context/file"
 

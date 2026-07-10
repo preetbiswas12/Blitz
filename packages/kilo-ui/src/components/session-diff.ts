@@ -1,4 +1,4 @@
-// Hunk-anchored diff normalization for the Blitx extension. Pure upstream
+// Hunk-anchored diff normalization for the Legion extension. Pure upstream
 // `packages/ui/src/components/session-diff.ts` reconstructs full before/after
 // strings, which loses the source line numbers from the hunk header. Here we
 // instead let Pierre's `processFile` parse the patch directly so partial

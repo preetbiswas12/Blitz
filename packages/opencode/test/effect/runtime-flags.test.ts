@@ -24,7 +24,7 @@ describe("RuntimeFlags", () => {
           fromConfig({
             KILO_PURE: "true",
             KILO_DISABLE_DEFAULT_PLUGINS: "true",
-            BLITX_DISABLE_CHANNEL_DB: "true",
+            LEGION_DISABLE_CHANNEL_DB: "true",
             KILO_AUTO_SHARE: "true",
             KILO_DISABLE_EMBEDDED_WEB_UI: "true",
             KILO_DISABLE_EXTERNAL_SKILLS: "true",
@@ -35,7 +35,7 @@ describe("RuntimeFlags", () => {
             KILO_ENABLE_PARALLEL: "true",
             KILO_ENABLE_EXPERIMENTAL_MODELS: "true",
             KILO_ENABLE_QUESTION_TOOL: "true",
-            BLITX_CLIENT: "desktop",
+            LEGION_CLIENT: "desktop",
           }),
         ),
       )
@@ -192,17 +192,17 @@ describe("RuntimeFlags", () => {
     }),
   )
 
-  it.effect("disableClaudeCodePrompt reads BLITX_DISABLE_CLAUDE_CODE_PROMPT", () =>
+  it.effect("disableClaudeCodePrompt reads LEGION_DISABLE_CLAUDE_CODE_PROMPT", () =>
     Effect.gen(function* () {
-      const flags = yield* readFlags.pipe(Effect.provide(fromConfig({ BLITX_DISABLE_CLAUDE_CODE_PROMPT: "true" })))
+      const flags = yield* readFlags.pipe(Effect.provide(fromConfig({ LEGION_DISABLE_CLAUDE_CODE_PROMPT: "true" })))
 
       expect(flags.disableClaudeCodePrompt).toBe(true)
     }),
   )
 
-  it.effect("disableClaudeCodePrompt inherits BLITX_DISABLE_CLAUDE_CODE", () =>
+  it.effect("disableClaudeCodePrompt inherits LEGION_DISABLE_CLAUDE_CODE", () =>
     Effect.gen(function* () {
-      const flags = yield* readFlags.pipe(Effect.provide(fromConfig({ BLITX_DISABLE_CLAUDE_CODE: "true" })))
+      const flags = yield* readFlags.pipe(Effect.provide(fromConfig({ LEGION_DISABLE_CLAUDE_CODE: "true" })))
 
       expect(flags.disableClaudeCodePrompt).toBe(true)
     }),
@@ -348,7 +348,7 @@ describe("RuntimeFlags", () => {
               KILO_EXPERIMENTAL: "true",
               KILO_ENABLE_EXA: "true",
               KILO_EXPERIMENTAL_BASH_DEFAULT_TIMEOUT_MS: "1234",
-              BLITX_CLIENT: "desktop",
+              LEGION_CLIENT: "desktop",
             }),
           ),
         ),
@@ -380,17 +380,17 @@ describe("RuntimeFlags", () => {
     }),
   )
 
-  it.effect("disableClaudeCodeSkills reads BLITX_DISABLE_CLAUDE_CODE_SKILLS", () =>
+  it.effect("disableClaudeCodeSkills reads LEGION_DISABLE_CLAUDE_CODE_SKILLS", () =>
     Effect.gen(function* () {
-      const flags = yield* readFlags.pipe(Effect.provide(fromConfig({ BLITX_DISABLE_CLAUDE_CODE_SKILLS: "true" })))
+      const flags = yield* readFlags.pipe(Effect.provide(fromConfig({ LEGION_DISABLE_CLAUDE_CODE_SKILLS: "true" })))
 
       expect(flags.disableClaudeCodeSkills).toBe(true)
     }),
   )
 
-  it.effect("disableClaudeCodeSkills inherits BLITX_DISABLE_CLAUDE_CODE", () =>
+  it.effect("disableClaudeCodeSkills inherits LEGION_DISABLE_CLAUDE_CODE", () =>
     Effect.gen(function* () {
-      const flags = yield* readFlags.pipe(Effect.provide(fromConfig({ BLITX_DISABLE_CLAUDE_CODE: "true" })))
+      const flags = yield* readFlags.pipe(Effect.provide(fromConfig({ LEGION_DISABLE_CLAUDE_CODE: "true" })))
 
       expect(flags.disableClaudeCodeSkills).toBe(true)
     }),

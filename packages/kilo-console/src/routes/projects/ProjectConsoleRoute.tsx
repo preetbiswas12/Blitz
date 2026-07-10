@@ -1,14 +1,14 @@
 import { A, useLocation, useParams } from "@solidjs/router"
 import { createEffect, createMemo, createResource, createSignal, For, on, onCleanup, onMount, Show } from "solid-js"
-import { Badge } from "@blitxcode/kilo-web-ui/badge"
-import { Button } from "@blitxcode/kilo-web-ui/button"
-import { Card } from "@blitxcode/kilo-web-ui/card"
-import { Icon } from "@blitxcode/kilo-web-ui/icon"
-import { ResizeHandle } from "@blitxcode/kilo-web-ui/resize-handle"
-import { Spinner } from "@blitxcode/kilo-web-ui/spinner"
-import { File } from "@blitxcode/kilo-web-ui/file"
-import { FileComponentProvider } from "@blitxcode/kilo-web-ui/context/file"
-import { SessionReview, type SessionReviewDiffStyle } from "@blitxcode/kilo-web-ui/session-review"
+import { Badge } from "@Legioncode/kilo-web-ui/badge"
+import { Button } from "@Legioncode/kilo-web-ui/button"
+import { Card } from "@Legioncode/kilo-web-ui/card"
+import { Icon } from "@Legioncode/kilo-web-ui/icon"
+import { ResizeHandle } from "@Legioncode/kilo-web-ui/resize-handle"
+import { Spinner } from "@Legioncode/kilo-web-ui/spinner"
+import { File } from "@Legioncode/kilo-web-ui/file"
+import { FileComponentProvider } from "@Legioncode/kilo-web-ui/context/file"
+import { SessionReview, type SessionReviewDiffStyle } from "@Legioncode/kilo-web-ui/session-review"
 import { ConfirmDialog } from "../../components/ConfirmDialog"
 import { LoadingScreen } from "../../components/LoadingScreen"
 import { PromptDialog } from "../../components/PromptDialog"
@@ -456,7 +456,7 @@ export function ProjectConsoleRoute() {
     const base = query()
     if (!base || !item) return
     const input = { url: base.url, dir: item.dir, scope: "project" as const }
-    const label = `Blitx ${terminalsFor(item.dir).length + 1}`
+    const label = `Legion ${terminalsFor(item.dir).length + 1}`
     setSaving("Creating session")
     setFailure(undefined)
     void createProjectPty(input, item.dir, label)
@@ -931,7 +931,7 @@ export function ProjectConsoleRoute() {
         <Show when={!terminal() && !snap.loading && !snap.error && !failure()}>
           <div class="project-terminal-empty">
             <strong>No terminal session selected</strong>
-            <span>Use + next to a worktree to start Blitx CLI.</span>
+            <span>Use + next to a worktree to start Legion CLI.</span>
           </div>
         </Show>
       </main>

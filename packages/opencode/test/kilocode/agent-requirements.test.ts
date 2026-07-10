@@ -53,14 +53,14 @@ function status(name: string, input: Input) {
 }
 
 async function client(value: string | undefined, run: () => Promise<void>) {
-  const prev = process.env.BLITX_CLIENT
+  const prev = process.env.LEGION_CLIENT
   try {
-    if (value === undefined) delete process.env.BLITX_CLIENT
-    if (value !== undefined) process.env.BLITX_CLIENT = value
+    if (value === undefined) delete process.env.LEGION_CLIENT
+    if (value !== undefined) process.env.LEGION_CLIENT = value
     await run()
   } finally {
-    if (prev === undefined) delete process.env.BLITX_CLIENT
-    if (prev !== undefined) process.env.BLITX_CLIENT = prev
+    if (prev === undefined) delete process.env.LEGION_CLIENT
+    if (prev !== undefined) process.env.LEGION_CLIENT = prev
   }
 }
 

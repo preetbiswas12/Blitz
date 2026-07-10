@@ -11,8 +11,8 @@ test("rejects server credential environment substitutions", async () => {
   await expect(
     ConfigVariable.substitute({
       ...source,
-      text: "password={env:BLITX_SERVER_PASSWORD}",
-      env: { BLITX_SERVER_PASSWORD: "secret" },
+      text: "password={env:LEGION_SERVER_PASSWORD}",
+      env: { LEGION_SERVER_PASSWORD: "secret" },
     }),
   ).rejects.toBeInstanceOf(InvalidError)
 })

@@ -12,7 +12,7 @@ type Command = {
   cwd?: string
 }
 
-const names = new Set(["blitx", "blitxcode"])
+const names = new Set(["legion", "Legioncode"])
 const self = command()
 
 function clean(input: string[]) {

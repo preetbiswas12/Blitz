@@ -7,7 +7,7 @@ import { remove } from "../../src/kilocode/agent"
 import type { Info as AgentInfo } from "../../src/agent/agent"
 import { tmpdir } from "../fixture/fixture"
 
-describe("Blitx agent remove", () => {
+describe("Legion agent remove", () => {
   test("removes config-backed imported agents", async () => {
     await using tmp = await tmpdir()
     const dir = path.join(tmp.path, ".kilo")

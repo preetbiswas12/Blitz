@@ -24,7 +24,7 @@ function key(directory: string, sessionID: SessionID) {
 }
 
 function secure(snapshot: Snapshot): Snapshot {
-  if (Flag.BLITX_SERVER_PASSWORD) return snapshot
+  if (Flag.LEGION_SERVER_PASSWORD) return snapshot
   return { ...snapshot, enabled: true, mode: "deny" }
 }
 
@@ -108,7 +108,7 @@ export function profile(ctx: InstanceContext, mode: Profile["network"]["mode"] =
       allowedHosts: [],
     },
     environment: {
-      deny: ["BLITX_SERVER_PASSWORD", "KILO_SERVER_USERNAME"],
+      deny: ["LEGION_SERVER_PASSWORD", "KILO_SERVER_USERNAME"],
       set: {
         TMPDIR: Global.Path.tmp,
         TMP: Global.Path.tmp,

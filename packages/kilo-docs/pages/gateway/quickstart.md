@@ -9,7 +9,7 @@ This guide walks you through making your first AI model request with the Kilo AI
 
 ## Prerequisites
 
-You need a Kilo account with API credits. Sign up at [kilo.ai](https://blitx.ai) and add credits from your account dashboard.
+You need a Kilo account with API credits. Sign up at [kilo.ai](https://legion.ai) and add credits from your account dashboard.
 
 ## Using the Vercel AI SDK
 
@@ -32,7 +32,7 @@ npm install ai @ai-sdk/openai dotenv
 Create a `.env` file and add your Kilo API key:
 
 ```bash
-BLITX_API_KEY=your_api_key_here
+LEGION_API_KEY=your_api_key_here
 ```
 
 For step-by-step instructions on getting an API key, please see the [Kilo Gateway API Key instructions](/docs/getting-started/setup-authentication#kilo-gateway-api-key).
@@ -48,7 +48,7 @@ import "dotenv/config"
 
 const kilo = createOpenAI({
   baseURL: "https://api.kilo.ai/api/gateway",
-  apiKey: process.env.BLITX_API_KEY,
+  apiKey: process.env.LEGION_API_KEY,
 })
 
 async function main() {
@@ -88,7 +88,7 @@ The Kilo AI Gateway is fully OpenAI-compatible, so you can use the OpenAI SDK by
 import OpenAI from "openai"
 
 const client = new OpenAI({
-  apiKey: process.env.BLITX_API_KEY,
+  apiKey: process.env.LEGION_API_KEY,
   baseURL: "https://api.kilo.ai/api/gateway",
 })
 
@@ -108,7 +108,7 @@ import os
 from openai import OpenAI
 
 client = OpenAI(
-    api_key=os.getenv("BLITX_API_KEY"),
+    api_key=os.getenv("LEGION_API_KEY"),
     base_url="https://api.kilo.ai/api/gateway",
 )
 
@@ -129,7 +129,7 @@ print(response.choices[0].message.content)
 
 ```bash
 curl -X POST "https://api.kilo.ai/api/gateway/chat/completions" \
-  -H "Authorization: Bearer $BLITX_API_KEY" \
+  -H "Authorization: Bearer $LEGION_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "anthropic/claude-sonnet-4.5",

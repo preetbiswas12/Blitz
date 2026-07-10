@@ -2,9 +2,9 @@ import { Effect } from "effect"
 import type { ModelID, ProviderID } from "@/provider/schema"
 import type { MessageV2 } from "@/session/message-v2"
 import { MessageID, PartID, type SessionID } from "@/session/schema"
-import { BlitxSessionPromptQueue } from "./prompt-queue"
+import { LegionSessionromptQueue } from "./prompt-queue"
 
-export namespace BlitxSessionCompaction {
+export namespace LegionSessionompaction {
   type Store = {
     updateMessage: <T extends MessageV2.Info>(msg: T) => Effect.Effect<T>
     updatePart: <T extends MessageV2.Part>(part: T) => Effect.Effect<T>
@@ -35,7 +35,7 @@ export namespace BlitxSessionCompaction {
         auto: input.auto,
         overflow: input.overflow,
       })
-      BlitxSessionPromptQueue.retarget(input.sessionID, msg.id)
+      LegionSessionromptQueue.retarget(input.sessionID, msg.id)
       return msg
     })
   }

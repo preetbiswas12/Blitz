@@ -17,7 +17,7 @@ const env = {
 }
 
 const edit = {
-  provider: "blitx",
+  provider: "legion",
   model: "inception/mercury-next-edit",
   currentFilePath: "src/index.ts",
   currentFileContent: "export const value = 1\n",

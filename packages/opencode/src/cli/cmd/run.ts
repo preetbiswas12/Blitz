@@ -204,12 +204,12 @@ export const RunCommand = effectCmd({
       })
       .option("attach", {
         type: "string",
-        describe: "attach to a running blitx server (e.g., http://localhost:4096)",
+        describe: "attach to a running legion server (e.g., http://localhost:4096)",
       })
       .option("password", {
         alias: ["p"],
         type: "string",
-        describe: "basic auth password (defaults to BLITX_SERVER_PASSWORD)",
+        describe: "basic auth password (defaults to LEGION_SERVER_PASSWORD)",
       })
       .option("username", {
         alias: ["u"],

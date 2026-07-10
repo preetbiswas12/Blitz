@@ -38,7 +38,7 @@ async function launch(url: string) {
 
 const OpenCommand = cmd({
   command: "$0",
-  describe: "open the local Blitx Console",
+  describe: "open the local Legion Console",
   builder: (yargs) =>
     withNetworkOptions(yargs).option("foreground", {
       alias: "f",
@@ -51,9 +51,9 @@ const OpenCommand = cmd({
       warnPort(opts.port)
       const daemon = await Daemon.ensure(opts, explicitNetworkOptions())
       const state = daemon.result.state
-      if (!state) throw new Error("Blitx daemon did not provide connection state")
+      if (!state) throw new Error("Legion daemon did not provide connection state")
       if (signal?.aborted) return state
-      if (daemon.restarted) console.warn("Restarted the Blitx daemon to apply the requested network options")
+      if (daemon.restarted) console.warn("Restarted the Legion daemon to apply the requested network options")
 
       const urls = state.urls ?? serverUrls(state.hostname, state.port)
       const consoleLocal = `${urls.local}/console`
@@ -64,9 +64,9 @@ const OpenCommand = cmd({
           console.warn(`Could not open browser automatically: ${err instanceof Error ? err.message : String(err)}`)
         })
       } else {
-        console.warn("No display detected; open the Blitx Console URL manually")
+        console.warn("No display detected; open the Legion Console URL manually")
       }
-      console.log("Blitx Console:")
+      console.log("Legion Console:")
       console.log(`  Local:   ${consoleLocal}`)
       if (consoleNetwork) console.log(`  Network: ${consoleNetwork}`)
       return state
@@ -77,15 +77,15 @@ const OpenCommand = cmd({
     }
     await Daemon.foreground(async (signal) => {
       const state = await run(signal)
-      if (!signal.aborted) console.log("Press Ctrl+C to stop the Blitx daemon.")
+      if (!signal.aborted) console.log("Press Ctrl+C to stop the Legion daemon.")
       return state
     })
   },
 })
 
-export const BlitxConsoleCommand = cmd({
+export const LegionConsoleCommand = cmd({
   command: "console",
-  describe: "open or stop the local Blitx Console",
+  describe: "open or stop the local Legion Console",
   builder: (yargs: Argv) => yargs.command(OpenCommand).command(StopCommand).demandCommand(),
   handler: async () => {},
 })

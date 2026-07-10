@@ -226,7 +226,7 @@ export namespace InteractiveTerminal {
     env.TERM = "xterm-256color"
     env.KILO_TERMINAL = "1"
     env.KILO_INTERACTIVE_TERMINAL = "1"
-    delete env.BLITX_SERVER_PASSWORD
+    delete env.LEGION_SERVER_PASSWORD
     delete env.KILO_SERVER_USERNAME
     if (process.platform === "win32") {
       env.LC_ALL = "C.UTF-8"

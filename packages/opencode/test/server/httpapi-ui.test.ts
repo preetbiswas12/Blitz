@@ -24,17 +24,17 @@ void Log.init({ print: false })
 const testStateLayer = Layer.effectDiscard(
   Effect.gen(function* () {
     const original = {
-      BLITX_SERVER_PASSWORD: Flag.BLITX_SERVER_PASSWORD,
+      LEGION_SERVER_PASSWORD: Flag.LEGION_SERVER_PASSWORD,
       KILO_SERVER_USERNAME: Flag.KILO_SERVER_USERNAME,
-      envPassword: process.env.BLITX_SERVER_PASSWORD,
+      envPassword: process.env.LEGION_SERVER_PASSWORD,
       envUsername: process.env.KILO_SERVER_USERNAME,
     }
 
     yield* Effect.addFinalizer(() =>
       Effect.sync(() => {
-        Flag.BLITX_SERVER_PASSWORD = original.BLITX_SERVER_PASSWORD
+        Flag.LEGION_SERVER_PASSWORD = original.LEGION_SERVER_PASSWORD
         Flag.KILO_SERVER_USERNAME = original.KILO_SERVER_USERNAME
-        restoreEnv("BLITX_SERVER_PASSWORD", original.envPassword)
+        restoreEnv("LEGION_SERVER_PASSWORD", original.envPassword)
         restoreEnv("KILO_SERVER_USERNAME", original.envUsername)
       }),
     )
@@ -57,7 +57,7 @@ function app(input?: { password?: string; username?: string }) {
       Layer.provide(
         ConfigProvider.layer(
           ConfigProvider.fromUnknown({
-            BLITX_SERVER_PASSWORD: input?.password,
+            LEGION_SERVER_PASSWORD: input?.password,
             KILO_SERVER_USERNAME: input?.username,
           }),
         ),
@@ -105,7 +105,7 @@ function uiApp(input?: {
         HttpServer.layerServices,
         ConfigProvider.layer(
           ConfigProvider.fromUnknown({
-            BLITX_SERVER_PASSWORD: input?.password,
+            LEGION_SERVER_PASSWORD: input?.password,
             KILO_SERVER_USERNAME: input?.username,
           }),
         ),
@@ -274,7 +274,7 @@ describe("HttpApi UI fallback", () => {
     Effect.gen(function* () {
       const response = yield* uiApp({
         password: "secret",
-        username: "blitx", // kilocode_change
+        username: "legion", // kilocode_change
         disableEmbeddedWebUi: true,
       }).request("/")
 
@@ -288,7 +288,7 @@ describe("HttpApi UI fallback", () => {
       let proxied = false // kilocode_change
       const response = yield* uiApp({
         password: "secret",
-        username: "blitx", // kilocode_change
+        username: "legion", // kilocode_change
         disableEmbeddedWebUi: true,
         // kilocode_change start - authenticated requests still must not proxy when embedded UI is disabled
         client: httpClient(new Response("<html>kilo</html>", { headers: { "content-type": "text/html" } }), () => {
@@ -310,7 +310,7 @@ describe("HttpApi UI fallback", () => {
       let proxied = false // kilocode_change
       const response = yield* uiApp({
         password: "secret",
-        username: "blitx", // kilocode_change
+        username: "legion", // kilocode_change
         disableEmbeddedWebUi: true,
         // kilocode_change start
         client: httpClient(new Response("ui"), () => {
@@ -353,7 +353,7 @@ describe("HttpApi UI fallback", () => {
       for (const path of ["/site.webmanifest", "/web-app-manifest-192x192.png", "/web-app-manifest-512x512.png"]) {
         const response = yield* uiApp({
           password: "secret",
-          username: "blitx", // kilocode_change
+          username: "legion", // kilocode_change
           disableEmbeddedWebUi: true,
           client: httpClient(new Response("ok")),
         }).request(path)
@@ -364,7 +364,7 @@ describe("HttpApi UI fallback", () => {
 
   it.live("allows web UI preflight without auth", () =>
     Effect.gen(function* () {
-      const response = yield* app({ password: "secret", username: "blitx" }).request("/", {
+      const response = yield* app({ password: "secret", username: "legion" }).request("/", {
         // kilocode_change
         method: "OPTIONS",
         headers: {

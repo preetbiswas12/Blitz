@@ -22,7 +22,7 @@ it.effect("clears provider models before disposing instances after auth changes"
   Effect.gen(function* () {
     const events = yield* Ref.make<string[]>([])
 
-    yield* invalidateAfterProviderAuthChange("blitx").pipe(Effect.provide(layer(events)))
+    yield* invalidateAfterProviderAuthChange("legion").pipe(Effect.provide(layer(events)))
 
     expect(yield* Ref.get(events)).toEqual(["clear:kilo", "dispose"])
   }),

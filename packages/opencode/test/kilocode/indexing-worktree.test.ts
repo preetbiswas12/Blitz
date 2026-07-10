@@ -2,7 +2,7 @@ import { afterEach, describe, expect, test } from "bun:test"
 import { mkdir } from "node:fs/promises"
 import path from "node:path"
 import type { Config } from "../../src/config/config"
-import { BlitxIndexing as KiloIndexing } from "../../src/kilocode/indexing"
+import { LegionIndexing as KiloIndexing } from "../../src/kilocode/indexing"
 import { IndexingWorker } from "../../src/kilocode/indexing-worker-client"
 import { disposeAllInstances, provideTestInstance, tmpdir } from "../fixture/fixture"
 
@@ -18,7 +18,7 @@ const cfg: Partial<Config.Info> = {
   },
 }
 
-const configDir = process.env["BLITX_CONFIG_DIR"]
+const configDir = process.env["LEGION_CONFIG_DIR"]
 const indexed = {
   state: "Complete" as const,
   message: "Index up-to-date.",
@@ -29,15 +29,15 @@ const indexed = {
 
 afterEach(async () => {
   IndexingWorker.override()
-  if (configDir === undefined) delete process.env["BLITX_CONFIG_DIR"]
-  else process.env["BLITX_CONFIG_DIR"] = configDir
+  if (configDir === undefined) delete process.env["LEGION_CONFIG_DIR"]
+  else process.env["LEGION_CONFIG_DIR"] = configDir
   await disposeAllInstances()
 })
 
 describe("indexing worktrees", () => {
   test("shares the primary checkout index with a linked worktree", async () => {
     await using tmp = await tmpdir({ git: true, config: cfg })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
     await Bun.$`git -C ${tmp.path} add opencode.json && git -C ${tmp.path} commit -m config`.quiet()
     const worktree = path.join(tmp.path, ".kilo", "worktrees", "feature")
     await Bun.$`git -C ${tmp.path} worktree add -b feature ${worktree}`.quiet()
@@ -68,7 +68,7 @@ describe("indexing worktrees", () => {
 
   test("does not classify an ordinary directory from its pathname", async () => {
     await using tmp = await tmpdir({ git: true, config: cfg })
-    process.env["BLITX_CONFIG_DIR"] = tmp.path
+    process.env["LEGION_CONFIG_DIR"] = tmp.path
     const directory = path.join(tmp.path, ".kilocode", "worktrees", "feature")
     await mkdir(directory, { recursive: true })
     await Bun.write(path.join(directory, "file.ts"), "export const value = 1\n")

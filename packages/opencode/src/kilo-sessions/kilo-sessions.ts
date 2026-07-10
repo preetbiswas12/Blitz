@@ -3,7 +3,7 @@ import { BusEvent } from "@/bus/bus-event"
 import { Provider } from "@/provider/provider"
 import { Session } from "@/session/session"
 import { SessionSummary } from "@/session/summary"
-import { BlitxSession } from "@/kilocode/session"
+import { LegionSession} from "@/kilocode/session"
 import { SessionID } from "@/session/schema"
 import { ModelID, ProviderID } from "@/provider/schema"
 import { MessageV2 } from "@/session/message-v2"
@@ -37,7 +37,7 @@ async function provide<R>(input: { directory: string; fn: () => R }): Promise<R>
   return provide(input)
 }
 
-export namespace BlitxSessions {
+export namespace LegionSessions {
   export const Event = {
     RemoteStatusChanged: BusEvent.define(
       "kilo-sessions.remote-status-changed",
@@ -52,7 +52,7 @@ export namespace BlitxSessions {
     readonly init: () => Effect.Effect<void, unknown>
   }
 
-  export class Service extends Context.Service<Service, Interface>()("@legion/BlitxSessions") {}
+  export class Service extends Context.Service<Service, Interface>()("@legion/LegionSessions") {}
 
   const log = Log.create({ service: "kilo-sessions" })
   const runtime = makeRuntime(Auth.Service, Auth.defaultLayer)
@@ -60,13 +60,13 @@ export namespace BlitxSessions {
   const Uuid = z.uuid()
   type Uuid = z.infer<typeof Uuid>
 
-  const tokenValidKeyTemplate = "blitx-sessions:token-valid:"
+  const tokenValidKeyTemplate = "legion-sessions:token-valid:"
   let tokenValidKey = tokenValidKeyTemplate + "unknown"
 
-  const tokenKey = "blitx-sessions:token"
-  const orgKey = "blitx-sessions:org"
-  const clientKey = "blitx-sessions:client"
-  const gitUrlKeyPrefix = "blitx-sessions:git-url:"
+  const tokenKey = "legion-sessions:token"
+  const orgKey = "legion-sessions:org"
+  const clientKey = "legion-sessions:client"
+  const gitUrlKeyPrefix = "legion-sessions:git-url:"
 
   const ttlMs = 10_000
 
@@ -88,7 +88,7 @@ export namespace BlitxSessions {
     }
 
     return withInFlightCache(tokenValidKey, 15 * 60_000, async () => {
-      const response = await fetch(`https://api.blitx.ai/api/user`, {
+      const response = await fetch(`https://api.legion.ai/api/user`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -104,7 +104,7 @@ export namespace BlitxSessions {
 
   async function kilocodeToken() {
     return withInFlightCache(tokenKey, ttlMs, async () => {
-      const auth = await runtime.runPromise((svc) => svc.get("blitx"))
+      const auth = await runtime.runPromise((svc) => svc.get("legion"))
       if (auth?.type === "api" && auth.key.length > 0) return auth.key
       if (auth?.type === "oauth" && auth.access.length > 0) return auth.access
       if (auth?.type === "wellknown" && auth.token.length > 0) return auth.token
@@ -156,7 +156,7 @@ export namespace BlitxSessions {
       const valid = await authValid(token)
       if (!valid) return undefined
 
-      const base = process.env["BLITX_SESSION_INGEST_URL"] ?? "https://ingest.kilosessions.ai"
+      const base = process.env["LEGION_SESSION_INGEST_URL"] ?? "https://ingest.kilosessions.ai"
       const baseHeaders: Record<string, string> = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -178,11 +178,11 @@ export namespace BlitxSessions {
     })
   }
 
-  const shareDisabled = process.env["BLITX_DISABLE_SHARE"] === "true" || process.env["BLITX_DISABLE_SHARE"] === "1"
+  const shareDisabled = process.env["LEGION_DISABLE_SHARE"] === "true" || process.env["LEGION_DISABLE_SHARE"] === "1"
   const ingestDisabled =
-    process.env["BLITX_DISABLE_SESSION_INGEST"] === "true" || process.env["BLITX_DISABLE_SESSION_INGEST"] === "1"
+    process.env["LEGION_DISABLE_SESSION_INGEST"] === "true" || process.env["LEGION_DISABLE_SESSION_INGEST"] === "1"
   const debugIngest =
-    process.env["BLITX_DEBUG_SESSION_INGEST"] === "true" || process.env["BLITX_DEBUG_SESSION_INGEST"] === "1"
+    process.env["LEGION_DEBUG_SESSION_INGEST"] === "true" || process.env["LEGION_DEBUG_SESSION_INGEST"] === "1"
 
   const ingest = IngestQueue.create({
     getShare: async (sessionId) => get(sessionId).catch(() => undefined),
@@ -198,7 +198,7 @@ export namespace BlitxSessions {
     },
   })
 
-  const remoteEnabled = process.env["BLITX_REMOTE"] === "1"
+  const remoteEnabled = process.env["LEGION_REMOTE"] === "1"
   let remote: { conn: RemoteWS.Connection; sender: RemoteSender.Sender } | undefined
   let enabling: Promise<void> | undefined
   let remoteSeq = 0
@@ -243,7 +243,7 @@ export namespace BlitxSessions {
       const config = yield* Config.Service
       const sessions = yield* Session.Service
       const state = yield* InstanceState.make(
-        Effect.fn("BlitxSessions.state")(function* () {
+        Effect.fn("LegionSessions.state")(function* () {
           if (ingestDisabled) return
 
           const watch = <D extends { type: string }>(
@@ -352,7 +352,7 @@ export namespace BlitxSessions {
         }),
       )
 
-      const init = Effect.fn("BlitxSessions.init")(function* () {
+      const init = Effect.fn("LegionSessions.init")(function* () {
         yield* InstanceState.get(state)
       })
 
@@ -375,16 +375,16 @@ export namespace BlitxSessions {
     enabling = (async () => {
       const token = await kilocodeToken()
       if (!token) {
-        throw new Error("Unable to enable remote: no Kilo credentials found. Run `blitx auth login`.")
+        throw new Error("Unable to enable remote: no Kilo credentials found. Run `legion auth login`.")
       }
 
       const valid = await authValid(token)
       if (valid === false) {
-        throw new Error("Unable to enable remote: invalid or expired Kilo credentials. Run `blitx auth login`.")
+        throw new Error("Unable to enable remote: invalid or expired Kilo credentials. Run `legion auth login`.")
       }
       if (valid === undefined) throw new Error("Unable to enable remote: failed to verify Kilo credentials.")
 
-      const url = (process.env["BLITX_SESSION_INGEST_URL"] ?? "https://ingest.kilosessions.ai")
+      const url = (process.env["LEGION_SESSION_INGEST_URL"] ?? "https://ingest.kilosessions.ai")
         .replace(/^https:\/\//, "wss://")
         .replace(/^http:\/\//, "ws://")
 
@@ -554,16 +554,16 @@ export namespace BlitxSessions {
 
   export async function share(sessionId: string) {
     if (ingestDisabled) {
-      throw new Error("Session ingest is disabled (BLITX_DISABLE_SESSION_INGEST=1)")
+      throw new Error("Session ingest is disabled (LEGION_DISABLE_SESSION_INGEST=1)")
     }
 
     if (shareDisabled) {
-      throw new Error("Sharing is disabled (BLITX_DISABLE_SHARE=1)")
+      throw new Error("Sharing is disabled (LEGION_DISABLE_SHARE=1)")
     }
 
     const client = await getClient()
     if (!client) {
-      throw new Error("Unable to share session: no Kilo credentials found. Run `blitx auth login`.")
+      throw new Error("Unable to share session: no Kilo credentials found. Run `legion auth login`.")
     }
 
     const current = (await get(sessionId).catch(() => undefined)) ?? (await create(sessionId))
@@ -587,7 +587,7 @@ export namespace BlitxSessions {
       throw new Error(`Unable to share session ${sessionId}: server did not return a public id`)
     }
 
-    const url = `https://app.kilo.ai/s/${result.public_id}` // TODO: Replace with Blitx share URL
+    const url = `https://app.kilo.ai/s/${result.public_id}` // TODO: Replace with Legion share URL
 
     await save(sessionId, {
       ...current,
@@ -599,16 +599,16 @@ export namespace BlitxSessions {
 
   export async function unshare(sessionId: string) {
     if (ingestDisabled) {
-      throw new Error("Session ingest is disabled (BLITX_DISABLE_SESSION_INGEST=1)")
+      throw new Error("Session ingest is disabled (LEGION_DISABLE_SESSION_INGEST=1)")
     }
 
     if (shareDisabled) {
-      throw new Error("Unshare is disabled (BLITX_DISABLE_SHARE=1)")
+      throw new Error("Unshare is disabled (LEGION_DISABLE_SHARE=1)")
     }
 
     const client = await getClient()
     if (!client) {
-      throw new Error("Unable to unshare session: no Kilo credentials found. Run `blitx auth login`.")
+      throw new Error("Unable to unshare session: no Kilo credentials found. Run `legion auth login`.")
     }
 
     log.info("unsharing", { sessionId })
@@ -777,8 +777,8 @@ export namespace BlitxSessions {
   }
 
   async function meta(sessionId?: string) {
-    const override = sessionId ? BlitxSession.resolvePlatform(sessionId) : undefined
-    const platform = override || process.env["BLITX_PLATFORM"] || "cli"
+    const override = sessionId ? LegionSessionresolvePlatform(sessionId) : undefined
+    const platform = override || process.env["LEGION_PLATFORM"] || "cli"
     const orgId = await getOrgId()
     const gitBranch = await branch().catch(() => undefined)
     const gitUrl = await getGitUrl().catch(() => undefined)
@@ -796,7 +796,7 @@ export namespace BlitxSessions {
     if (isUuid(env)) return env
 
     return withInFlightCache(orgKey, ttlMs, async () => {
-      const auth = await runtime.runPromise((svc) => svc.get("blitx"))
+      const auth = await runtime.runPromise((svc) => svc.get("legion"))
       if (auth?.type === "oauth" && isUuid(auth.accountId)) return auth.accountId
       return undefined
     })

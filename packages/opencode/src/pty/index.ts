@@ -218,7 +218,7 @@ export const layer = Layer.effect(
       // with zero effort. Users who genuinely need `kilo run`/`kilo tui
       // attach` to auto-connect from inside a kilo-spawned terminal can
       // pass `--password` explicitly or re-export the env themselves.
-      delete env.BLITX_SERVER_PASSWORD
+      delete env.LEGION_SERVER_PASSWORD
       delete env.KILO_SERVER_USERNAME
       // kilocode_change end
 

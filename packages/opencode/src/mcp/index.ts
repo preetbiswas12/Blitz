@@ -316,7 +316,7 @@ export const layer = Layer.effect(
         (t) =>
           Effect.tryPromise({
             try: () => {
-              const client = new Client({ name: "blitx", version: InstallationVersion }) // kilocode_change
+              const client = new Client({ name: "legion", version: InstallationVersion }) // kilocode_change
               return withTimeout(client.connect(t), timeout).then(() => client)
             },
             catch: (e) => (e instanceof Error ? e : new Error(String(e))),
@@ -856,7 +856,7 @@ export const layer = Layer.effect(
 
       return yield* Effect.tryPromise({
         try: () => {
-          const client = new Client({ name: "blitx", version: InstallationVersion }) // kilocode_change
+          const client = new Client({ name: "legion", version: InstallationVersion }) // kilocode_change
           return client
             .connect(transport)
             .then(() => ({ authorizationUrl: "", oauthState, client }) satisfies AuthResult)

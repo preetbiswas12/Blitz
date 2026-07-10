@@ -65,8 +65,8 @@ export function FormatError(input: unknown): string | undefined {
       `Model not found: ${stringField(providerModelNotFound, "providerID")}/${stringField(providerModelNotFound, "modelID")}`,
       ...(suggestions.length ? ["Did you mean: " + suggestions.join(", ")] : []),
       ...(providerModelNotFound.modelsEmpty === true ? ["No models are currently available."] : []), // kilocode_change
-      `Try: \`blitx models\` to list available models`, // kilocode_change
-      `Or check your blitx.json provider/model names`, // kilocode_change
+      `Try: \`Legion models\` to list available models`, // kilocode_change
+      `Or check your legion.json provider/model names`, // kilocode_change
     ].join("\n")
   }
 

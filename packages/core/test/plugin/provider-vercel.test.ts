@@ -25,8 +25,8 @@ describe("VercelPlugin", () => {
       })
       expect((yield* catalog.provider.get(ProviderV2.ID.make("vercel"))).options.headers).toEqual({
         Existing: "1",
-        "http-referer": "https://blitx.ai/",
-        "x-title": "Blitx Code",
+        "http-referer": "https://legion.ai/",
+        "x-title": "Legion Code",
       })
     }),
   )

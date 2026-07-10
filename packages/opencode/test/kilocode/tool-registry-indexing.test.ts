@@ -2,9 +2,9 @@ import { afterEach, describe, expect, spyOn, test } from "bun:test"
 import { Effect, Layer, Schema } from "effect"
 import * as Log from "@opencode-ai/core/util/log"
 import { Agent } from "../../src/agent/agent"
-import { BlitxIndexing as KiloIndexing } from "../../src/kilocode/indexing"
+import { LegionIndexing as KiloIndexing } from "../../src/kilocode/indexing"
 import { KilocodeBootstrap } from "../../src/kilocode/bootstrap"
-import { BlitxSessions } from "../../src/kilo-sessions/kilo-sessions"
+import { LegionSessions } from "../../src/kilo-sessions/kilo-sessions"
 import { KiloToolRegistry } from "../../src/kilocode/tool/registry"
 import { ModelID, ProviderID } from "../../src/provider/schema"
 import { ToolRegistry } from "../../src/tool/registry"
@@ -178,8 +178,8 @@ describe("kilocode tool registry indexing", () => {
   it.live("omits interactive_terminal from subagent definitions", () =>
     Effect.acquireUseRelease(
       Effect.sync(() => {
-        const prev = process.env["BLITX_CLIENT"]
-        process.env["BLITX_CLIENT"] = "cli"
+        const prev = process.env["LEGION_CLIENT"]
+        process.env["LEGION_CLIENT"] = "cli"
         return prev
       }),
       () =>
@@ -203,8 +203,8 @@ describe("kilocode tool registry indexing", () => {
         ),
       (prev) =>
         Effect.sync(() => {
-          if (prev === undefined) delete process.env["BLITX_CLIENT"]
-          if (prev !== undefined) process.env["BLITX_CLIENT"] = prev
+          if (prev === undefined) delete process.env["LEGION_CLIENT"]
+          if (prev !== undefined) process.env["LEGION_CLIENT"] = prev
         }),
     ),
   )
@@ -224,7 +224,7 @@ describe("kilocode tool registry indexing", () => {
   })
 
   test("conditionally includes Kilo registry extras", () => {
-    const prev = process.env["BLITX_CLIENT"]
+    const prev = process.env["LEGION_CLIENT"]
     const def = (id: string): Tool.Def => ({
       id,
       description: id,
@@ -245,7 +245,7 @@ describe("kilocode tool registry indexing", () => {
     }
 
     try {
-      process.env["BLITX_CLIENT"] = "cli"
+      process.env["LEGION_CLIENT"] = "cli"
       expect(KiloToolRegistry.extra(tools, {}).map((tool) => tool.id)).toEqual([
         "semantic_search",
         "recall",
@@ -256,7 +256,7 @@ describe("kilocode tool registry indexing", () => {
         ["codebase_search", "semantic_search", "recall", "background_process", "interactive_terminal"],
       )
 
-      process.env["BLITX_CLIENT"] = "vscode"
+      process.env["LEGION_CLIENT"] = "vscode"
       expect(KiloToolRegistry.extra(tools, { experimental: { codebase_search: true } }).map((tool) => tool.id)).toEqual(
         ["codebase_search", "semantic_search", "recall", "background_process", "agent_manager_models", "agent_manager"],
       )
@@ -282,17 +282,17 @@ describe("kilocode tool registry indexing", () => {
         "agent_manager",
       ])
 
-      process.env["BLITX_CLIENT"] = "desktop"
+      process.env["LEGION_CLIENT"] = "desktop"
       expect(KiloToolRegistry.extra(tools, {}).map((tool) => tool.id)).toEqual(["semantic_search", "recall"])
 
-      process.env["BLITX_CLIENT"] = "run"
+      process.env["LEGION_CLIENT"] = "run"
       expect(KiloToolRegistry.extra(tools, {}).map((tool) => tool.id)).toEqual(["semantic_search", "recall"])
 
-      process.env["BLITX_CLIENT"] = "acp"
+      process.env["LEGION_CLIENT"] = "acp"
       expect(KiloToolRegistry.extra(tools, {}).map((tool) => tool.id)).toEqual(["semantic_search", "recall"])
     } finally {
-      if (prev === undefined) delete process.env["BLITX_CLIENT"]
-      if (prev !== undefined) process.env["BLITX_CLIENT"] = prev
+      if (prev === undefined) delete process.env["LEGION_CLIENT"]
+      if (prev !== undefined) process.env["LEGION_CLIENT"] = prev
     }
   })
 
@@ -301,8 +301,8 @@ describe("kilocode tool registry indexing", () => {
     const err = new Error("indexing init failed")
     const calls: string[] = []
     const sessions = Layer.succeed(
-      BlitxSessions.Service,
-      BlitxSessions.Service.of({ init: () => Effect.sync(() => calls.push("sessions")) }),
+      LegionSessions.Service,
+      LegionSessions.Service.of({ init: () => Effect.sync(() => calls.push("sessions")) }),
     )
     const indexing = spyOn(KiloIndexing, "init").mockRejectedValue(err)
     const warn = spyOn(logger, "warn").mockImplementation(() => {})

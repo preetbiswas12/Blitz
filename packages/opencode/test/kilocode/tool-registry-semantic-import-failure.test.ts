@@ -24,7 +24,7 @@ describe("kilocode tool registry semantic tool import failure", () => {
           Effect.runPromise(
             KiloToolRegistry.build(infos(), deps, {
               indexing: async () => ({
-                BlitxIndexing: {
+                LegionIndexing: {
                   ready: () => true,
                 },
               }),

@@ -1,9 +1,9 @@
 #!/usr/bin/env bun
 /**
- * Transform extension files (Zed, etc.) with Blitx branding
+ * Transform extension files (Zed, etc.) with Legion branding
  *
  * This script handles extension configuration files by transforming
- * OpenCode references to Blitx.
+ * OpenCode references to Legion.
  */
 
 import { $ } from "bun"
@@ -47,7 +47,7 @@ const EXTENSION_REPLACEMENTS: ExtensionReplacement[] = [
   },
   {
     pattern: /description\s*=\s*"OpenCode[^"]*"/g,
-    replacement: 'description = "Blitx - AI coding assistant"',
+    replacement: 'description = "Legion - AI coding assistant"',
     description: "Extension description",
     fileTypes: [".toml"],
   },
@@ -78,10 +78,10 @@ const EXTENSION_REPLACEMENTS: ExtensionReplacement[] = [
     fileTypes: [".toml"],
   },
 
-  // Generic OpenCode -> Blitx in strings
+  // Generic OpenCode -> Legion in strings
   {
     pattern: /"OpenCode"/g,
-    replacement: '"Blitx"',
+    replacement: '"legion"',
     description: "Product name",
   },
 
@@ -93,7 +93,7 @@ const EXTENSION_REPLACEMENTS: ExtensionReplacement[] = [
   },
   {
     pattern: /OpenCode\s+language\s+server/gi,
-    replacement: "Blitx language server",
+    replacement: "Legion language server",
     description: "Language server name",
   },
 ]

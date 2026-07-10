@@ -24,7 +24,7 @@ import fs from "fs/promises"
 import { provideTestInstance, tmpdir } from "../fixture/fixture"
 
 Log.init({ print: false })
-process.env.BLITX_CLIENT = "cli"
+process.env.LEGION_CLIENT = "cli"
 
 const runtime = makeRuntime(Question.Service, Question.defaultLayer)
 const question = {
@@ -350,9 +350,9 @@ describe("plan follow-up", () => {
 
   test("ask - hides custom answer row on VS Code where the main prompt input handles typed replies", () =>
     withInstance(async () => {
-      const prev = process.env.BLITX_CLIENT
+      const prev = process.env.LEGION_CLIENT
       try {
-        process.env.BLITX_CLIENT = "vscode"
+        process.env.LEGION_CLIENT = "vscode"
         const seeded = await seed({ text: "1. Build" })
         const pending = PlanFollowup.ask({
           question,
@@ -375,7 +375,7 @@ describe("plan follow-up", () => {
         await question.reject(item.id)
         await expect(pending).resolves.toBe("break")
       } finally {
-        process.env.BLITX_CLIENT = prev
+        process.env.LEGION_CLIENT = prev
       }
     }))
 
@@ -550,12 +550,12 @@ describe("plan follow-up", () => {
 
   test("ask - retargets prompt queue so injected message is visible in scope", () =>
     withInstance(async () => {
-      const { BlitxSessionPromptQueue } = await import("../../src/kilocode/session/prompt-queue")
+      const { LegionSessionromptQueue } = await import("../../src/kilocode/session/prompt-queue")
       const seeded = await seed({ text: "1. Refactor\n2. Ship" })
 
       // Simulate the prompt queue having a target set (like during a running loop)
       const original = seeded.messages.find((m) => m.info.role === "user")!.info.id
-      BlitxSessionPromptQueue.retarget(seeded.sessionID, original)
+      LegionSessionromptQueue.retarget(seeded.sessionID, original)
 
       const pending = PlanFollowup.ask({
         question,
@@ -576,7 +576,7 @@ describe("plan follow-up", () => {
 
       // The injected user message must be visible when scoped
       const all = await store.messages({ sessionID: seeded.sessionID })
-      const scoped = BlitxSessionPromptQueue.scope(seeded.sessionID, all)
+      const scoped = LegionSessionromptQueue.scope(seeded.sessionID, all)
       const injected = scoped.findLast((m) => m.info.role === "user")
       expect(injected).toBeDefined()
       const part = injected!.parts.find((p) => p.type === "text")

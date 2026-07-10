@@ -31,7 +31,7 @@ afterEach(async () => {
   await disposeAllInstances()
 })
 
-describe("Blitx experimental HttpApi", () => {
+describe("Legion experimental HttpApi", () => {
   it.instance(
     "uses model family metadata for experimental editing tools",
     () =>

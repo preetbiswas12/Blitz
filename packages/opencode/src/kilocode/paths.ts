@@ -6,45 +6,45 @@ export namespace KilocodePaths {
   const home = () => process.env.HOME || process.env.USERPROFILE || os.homedir()
 
   /**
-   * Get the platform-specific VSCode global storage path for Blitx extension.
-   * - macOS: ~/Library/Application Support/Code/User/globalStorage/blitxcode.blitx-code
-   * - Windows: %APPDATA%/Code/User/globalStorage/blitxcode.blitx-code
-   * - Linux: ~/.config/Code/User/globalStorage/blitxcode.blitx-code
+   * Get the platform-specific VSCode global storage path for Legion extension.
+   * - macOS: ~/Library/Application Support/Code/User/globalStorage/Legioncode.legion-code
+   * - Windows: %APPDATA%/Code/User/globalStorage/Legioncode.legion-code
+   * - Linux: ~/.config/Code/User/globalStorage/Legioncode.legion-code
    */
   export function vscodeGlobalStorage(): string {
     const home = os.homedir()
     switch (process.platform) {
       case "darwin":
-        return path.join(home, "Library", "Application Support", "Code", "User", "globalStorage", "blitxcode.blitx-code")
+        return path.join(home, "Library", "Application Support", "Code", "User", "globalStorage", "Legioncode.legion-code")
       case "win32":
         return path.join(
           process.env.APPDATA || path.join(home, "AppData", "Roaming"),
           "Code",
           "User",
           "globalStorage",
-          "blitxcode.blitx-code",
+          "Legioncode.legion-code",
         )
       default:
-        return path.join(home, ".config", "Code", "User", "globalStorage", "blitxcode.blitx-code")
+        return path.join(home, ".config", "Code", "User", "globalStorage", "Legioncode.legion-code")
     }
   }
 
-  /** Global Blitx directories in user home: ~/.blitxcode and ~/.blitx (legacy first, .blitx wins later) */
+  /** Global Legion directories in user home: ~/.Legioncode and ~/.legion (legacy first, .legion wins later) */
   export function globalDirs(): string[] {
-    return [path.join(home(), ".blitxcode"), path.join(home(), ".blitx")]
+    return [path.join(home(), ".Legioncode"), path.join(home(), ".legion")]
   }
 
   /**
-   * Discover Blitx directories containing skills.
-   * Returns parent directories (.blitxcode/ and .blitx/) for glob pattern "skills/[*]/SKILL.md".
+   * Discover Legion directories containing skills.
+   * Returns parent directories (.Legioncode/ and .legion/) for glob pattern "skills/[*]/SKILL.md".
    *
-   * - Walks up from projectDir to worktreeRoot for .blitxcode/ and .blitx/
-   * - Includes global ~/.blitxcode/ and ~/.blitx/
+   * - Walks up from projectDir to worktreeRoot for .Legioncode/ and .legion/
+   * - Includes global ~/.Legioncode/ and ~/.legion/
    * - Includes VSCode extension global storage
    *
    * Does NOT copy/migrate skills - just provides paths for discovery.
    * Skills remain in their original locations and can be managed independently
-   * by the Blitx VSCode extension.
+   * by the Legion VSCode extension.
    */
   export async function skillDirectories(opts: {
     projectDir: string
@@ -54,7 +54,7 @@ export namespace KilocodePaths {
     const directories: string[] = []
 
     if (!opts.skipGlobalPaths) {
-      // 1. Global ~/.blitxcode/ and ~/.blitx/ (loaded first so project-level overrides)
+      // 1. Global ~/.Legioncode/ and ~/.legion/ (loaded first so project-level overrides)
       for (const global of globalDirs()) {
         const globalSkills = path.join(global, "skills")
         if (!(await Filesystem.isDir(globalSkills))) continue
@@ -69,11 +69,11 @@ export namespace KilocodePaths {
       }
     }
 
-    // 3. Walk up from project dir to worktree root for .blitxcode/ and .blitx/
+    // 3. Walk up from project dir to worktree root for .Legioncode/ and .legion/
     // Returns parent directories (not skills/) because
     // the glob pattern "skills/[*]/SKILL.md" is applied from the parent
     // Loaded last so project-level skills take precedence over global
-    for (const target of [".blitxcode", ".blitx"] as const) {
+    for (const target of [".Legioncode", ".legion"] as const) {
       const projectDirs = await Array.fromAsync(
         Filesystem.up({
           targets: [target],

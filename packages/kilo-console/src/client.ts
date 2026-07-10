@@ -10,7 +10,7 @@ import type {
   FormatterStatusResponse,
   GlobalHealthResponse,
   GlobalEvent,
-  BlitxEmbeddingModelCatalog,
+  LegionEmbeddingModelCatalog,
   KiloProfileResponse,
   LspStatusResponse,
   McpStatusResponse,
@@ -411,43 +411,43 @@ export async function load(input: Query): Promise<Snapshot> {
   }
 }
 
-export async function loadEmbeddingModels(input: Query): Promise<BlitxEmbeddingModelCatalog> {
-  return demand("Blitx embedding models", await client(input).indexing.models())
+export async function loadEmbeddingModels(input: Query): Promise<LegionEmbeddingModelCatalog> {
+  return demand("Legion embedding models", await client(input).indexing.models())
 }
 
 export async function loadKiloProfile(input: ProjectQuery): Promise<KiloProfileData> {
   const sdk = client(input)
   const result = await sdk.kilo.profile(directory(input))
-  return demand("Blitx profile", result)
+  return demand("Legion profile", result)
 }
 
 export async function setKiloOrganization(input: ProjectQuery, organizationId: string | null) {
   const sdk = client(input)
   const result = await sdk.kilo.organization.set({ ...directory(input), organizationId })
-  demand("Switch Blitx account", result)
+  demand("Switch Legion account", result)
   await sdk.global.dispose()
 }
 
 export async function logoutKilo(input: ProjectQuery) {
   const sdk = client(input)
-  const result = await sdk.auth.remove({ providerID: "blitx" })
-  demand("Log out of Blitx", result)
+  const result = await sdk.auth.remove({ providerID: "legion" })
+  demand("Log out of Legion", result)
   await sdk.global.dispose()
 }
 
 export async function startKiloLogin(input: ProjectQuery): Promise<ProviderAuthAuthorization> {
   const sdk = client(input)
-  const result = await sdk.provider.oauth.authorize({ ...directory(input), providerID: "blitx", method: 0 })
-  return demand("Start Blitx login", result)
+  const result = await sdk.provider.oauth.authorize({ ...directory(input), providerID: "legion", method: 0 })
+  return demand("Start Legion login", result)
 }
 
 export async function completeKiloLogin(input: ProjectQuery, signal?: AbortSignal) {
   const sdk = client(input)
   const result = await sdk.provider.oauth.callback(
-    { ...directory(input), providerID: "blitx", method: 0 },
+    { ...directory(input), providerID: "legion", method: 0 },
     signal ? { signal } : undefined,
   )
-  demand("Complete Blitx login", result)
+  demand("Complete Legion login", result)
   await sdk.global.dispose()
 }
 
@@ -616,9 +616,9 @@ export async function loadProjectDiffFile(input: Query, dir: string, file: strin
   return demand("Worktree diff file", result)
 }
 
-export async function createProjectPty(input: Query, dir: string, title = "Blitx session"): Promise<ProjectPtyInfo> {
+export async function createProjectPty(input: Query, dir: string, title = "Legion session"): Promise<ProjectPtyInfo> {
   const sdk = client({ url: input.url, dir })
-  const result = await sdk.pty.create({ directory: dir, command: "blitx", cwd: dir, title })
+  const result = await sdk.pty.create({ directory: dir, command: "legion", cwd: dir, title })
   return demand("Create terminal", result)
 }
 

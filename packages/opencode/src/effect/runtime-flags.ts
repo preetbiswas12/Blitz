@@ -17,18 +17,18 @@ export class Service extends ConfigService.Service<Service>()("@opencode/Runtime
   autoShare: bool("KILO_AUTO_SHARE"),
   pure: bool("KILO_PURE"),
   disableDefaultPlugins: bool("KILO_DISABLE_DEFAULT_PLUGINS"),
-  disableChannelDb: bool("BLITX_DISABLE_CHANNEL_DB"),
+  disableChannelDb: bool("LEGION_DISABLE_CHANNEL_DB"),
   disableEmbeddedWebUi: bool("KILO_DISABLE_EMBEDDED_WEB_UI"),
   disableExternalSkills: bool("KILO_DISABLE_EXTERNAL_SKILLS"),
   disableLspDownload: bool("KILO_DISABLE_LSP_DOWNLOAD"),
   skipMigrations: bool("KILO_SKIP_MIGRATIONS"),
   disableClaudeCodePrompt: Config.all({
-    broad: bool("BLITX_DISABLE_CLAUDE_CODE"),
-    direct: bool("BLITX_DISABLE_CLAUDE_CODE_PROMPT"),
+    broad: bool("LEGION_DISABLE_CLAUDE_CODE"),
+    direct: bool("LEGION_DISABLE_CLAUDE_CODE_PROMPT"),
   }).pipe(Config.map((flags) => flags.broad || flags.direct)),
   disableClaudeCodeSkills: Config.all({
-    broad: bool("BLITX_DISABLE_CLAUDE_CODE"),
-    direct: bool("BLITX_DISABLE_CLAUDE_CODE_SKILLS"),
+    broad: bool("LEGION_DISABLE_CLAUDE_CODE"),
+    direct: bool("LEGION_DISABLE_CLAUDE_CODE_SKILLS"),
   }).pipe(Config.map((flags) => flags.broad || flags.direct)),
   enableExa: Config.all({
     experimental,
@@ -54,7 +54,7 @@ export class Service extends ConfigService.Service<Service>()("@opencode/Runtime
   bashDefaultTimeoutMs: positiveInteger("KILO_EXPERIMENTAL_BASH_DEFAULT_TIMEOUT_MS"),
   experimentalNativeLlm: bool("KILO_EXPERIMENTAL_NATIVE_LLM"),
   experimentalWebSockets: bool("KILO_EXPERIMENTAL_WEBSOCKETS"),
-  client: Config.string("BLITX_CLIENT").pipe(Config.withDefault("cli")),
+  client: Config.string("LEGION_CLIENT").pipe(Config.withDefault("cli")),
 }) {}
 
 export type Info = Context.Service.Shape<typeof Service>

@@ -143,7 +143,7 @@ describe("Anaconda Desktop platform adapters", () => {
       linux({
         PATH: "/usr/bin",
         DISPLAY: ":0",
-        BLITX_SERVER_PASSWORD: "secret",
+        LEGION_SERVER_PASSWORD: "secret",
         ANTHROPIC_API_KEY: "secret",
       }),
     )
@@ -151,7 +151,7 @@ describe("Anaconda Desktop platform adapters", () => {
       [
         process.execPath,
         "-e",
-        "process.stdout.write(JSON.stringify({ path: process.env.PATH, secret: process.env.BLITX_SERVER_PASSWORD }))",
+        "process.stdout.write(JSON.stringify({ path: process.env.PATH, secret: process.env.LEGION_SERVER_PASSWORD }))",
       ],
       { env },
     )

@@ -1,19 +1,19 @@
 export const dict = {
-  // Blitx Gateway provider translations
-  "provider.connect.blitxGateway.line1":
-    "Blitx Gateway gir deg tilgang til et utvalgt sett med pålitelige, optimaliserte modeller for kodingsagenter.",
-  "provider.connect.blitxGateway.line2":
+  // Legion Gateway provider translations
+  "provider.connect.LegionGateway.line1":
+    "Legion Gateway gir deg tilgang til et utvalgt sett med pålitelige, optimaliserte modeller for kodingsagenter.",
+  "provider.connect.LegionGateway.line2":
     "Med én enkelt API-nøkkel får du tilgang til modeller som Claude, GPT, Gemini, GLM og flere.",
-  "provider.connect.blitxGateway.visit.prefix": "Besøk ",
-  "provider.connect.blitxGateway.visit.link": "blitx.ai",
-  "provider.connect.blitxGateway.visit.suffix": " for å hente API-nøkkelen din.",
-  "provider.connect.blitxGateway.byok.prefix": "For mer bruksstatistikk, bruk ",
-  "provider.connect.blitxGateway.byok.link": "BYOK via Blitx's Gateway",
-  "provider.connect.blitxGateway.byok.suffix": ".",
+  "provider.connect.LegionGateway.visit.prefix": "Besøk ",
+  "provider.connect.LegionGateway.visit.link": "legion.ai",
+  "provider.connect.LegionGateway.visit.suffix": " for å hente API-nøkkelen din.",
+  "provider.connect.LegionGateway.byok.prefix": "For mer bruksstatistikk, bruk ",
+  "provider.connect.LegionGateway.byok.link": "BYOK via Legion's Gateway",
+  "provider.connect.LegionGateway.byok.suffix": ".",
 
   // Provider settings translations
   "settings.providers.group.recommended": "Anbefalt",
-  "settings.providers.note.blitx": "Tilgang til 500+ AI-modeller",
+  "settings.providers.note.Legion": "Tilgang til 500+ AI-modeller",
   "settings.providers.note.opencode": "Utvalgte modeller, inkludert Claude, GPT, Gemini og mer",
   "settings.providers.note.anthropic": "Direkte tilgang til Claude-modeller, inkludert Pro og Max",
   "settings.providers.note.deepseek": "DeepSeek-modeller for resonnering og kodeoppgaver",
@@ -48,12 +48,12 @@ export const dict = {
     "Alle prosjekter på denne maskinen. Lagres i brukerkonfigurasjonen din.",
   "marketplace.install.destination": "Installasjonssted",
   "marketplace.install.about.mcp":
-    "En MCP-server gir Blitx flere verktøy for å arbeide med eksterne tjenester eller lokale programmer.",
+    "En MCP-server gir Legion flere verktøy for å arbeide med eksterne tjenester eller lokale programmer.",
   "marketplace.install.about.agent": "En agent legger til en gjenbrukbar rolle med egne instruksjoner og tillatelser.",
   "marketplace.install.about.skill":
-    "En ferdighet legger til oppgavespesifikke instruksjoner og ressurser som Blitx kan laste inn ved behov.",
+    "En ferdighet legger til oppgavespesifikke instruksjoner og ressurser som Legion kan laste inn ved behov.",
   "marketplace.install.mcp.warning":
-    "MCP-servere kan kjøre lokale kommandoer eller koble til eksterne tjenester. Blitx ber om tillatelse før verktøyene brukes, med mindre tillatelsene dine automatisk tillater det.",
+    "MCP-servere kan kjøre lokale kommandoer eller koble til eksterne tjenester. Legion ber om tillatelse før verktøyene brukes, med mindre tillatelsene dine automatisk tillater det.",
   "marketplace.install.project.warning":
     "Prosjektfiler kan legges til i versjonskontroll. Ikke lagre hemmeligheter her med mindre konfigurasjonen viser til en miljøvariabel.",
   "marketplace.install.learnMore": "Finn ut hvordan installasjoner fra Marketplace fungerer",
@@ -125,7 +125,7 @@ export const dict = {
     "Vent til snapshotet er ferdig. Påfølgende runder er raske når det første snapshotet er bygget.",
   "snapshot.slowRepo.answer.disable": "Deaktiver for dette prosjektet",
   "snapshot.slowRepo.answer.disable.description":
-    "Slå av Blitx' snapshots for dette prosjektet. Du mister angre/gjør om for Blitx-endringer, men git fortsetter å spore alt.",
+    "Slå av Legion' snapshots for dette prosjektet. Du mister angre/gjør om for Legion-endringer, men git fortsetter å spore alt.",
 
   // Edit-tool header and shell-tool section labels
   "ui.messagePart.openInDiffViewer": "Åpne i diff-visning",

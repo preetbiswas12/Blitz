@@ -13,7 +13,7 @@ import { SessionRunState } from "@/session/run-state"
 import { SessionStatus } from "@/session/status"
 import { ModelID, ProviderID } from "../../src/provider/schema"
 import { Provider } from "../../src/provider/provider" // kilocode_change
-import { BlitxSession } from "../../src/kilocode/session" // kilocode_change
+import { LegionSession} from "../../src/kilocode/session" // kilocode_change
 import { TaskTool, type TaskPromptOps } from "../../src/tool/task"
 import { Truncate } from "@/tool/truncate"
 import { ToolRegistry } from "@/tool/registry"
@@ -260,9 +260,9 @@ describe("tool.task", () => {
     Effect.gen(function* () {
       const sessions = yield* Session.Service
       const { chat, assistant } = yield* seed()
-      BlitxSession.setPlatformOverride(chat.id, "agent-manager")
+      LegionSessionsetPlatformOverride(chat.id, "agent-manager")
       const child = yield* sessions.create({ parentID: chat.id, title: "Existing child" })
-      BlitxSession.clearPlatformOverride(child.id)
+      LegionSessionclearPlatformOverride(child.id)
       const tool = yield* TaskTool
       const def = yield* tool.init()
 
@@ -285,8 +285,8 @@ describe("tool.task", () => {
         },
       )
 
-      expect(BlitxSession.resolvePlatform(child.id)).toBe("agent-manager")
-      expect(BlitxSession.resolveRoot(child.id)).toBe(chat.id)
+      expect(LegionSessionresolvePlatform(child.id)).toBe("agent-manager")
+      expect(LegionSessionresolveRoot(child.id)).toBe(chat.id)
     }),
   )
   // kilocode_change end

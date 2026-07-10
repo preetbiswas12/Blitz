@@ -3,25 +3,25 @@
 </p>
 
 <p align="center">
-  <a href="https://blitz.ai"><img width="250" alt="Blitz logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
+  <a href="https://legion.ai"><img width="250" alt="Legion logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
 </p>
 
 <p align="center">VS Code, JetBrains veya CLI'de AI ile geliştirme yapmak için açık kaynak kodlama ajanı.</p>
 
 <p align="center">
-  <a href="https://marketplace.visualstudio.com/items?itemName=blitzcode.Blitz-Code"><img src="https://raster.shields.io/badge/VS_Code_Marketplace-007ACC?style=flat&logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace" height="20"></a>
-  <a href="https://www.npmjs.com/package/@blitzcode/cli"><img alt="npm" src="https://raster.shields.io/npm/v/@blitzcode/cli?style=flat" height="20" /></a>
-  <a href="https://x.com/blitzcode"><img src="https://raster.shields.io/badge/blitzcode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="20"></a>
-  <a href="https://blog.blitz.ai"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
-  <a href="https://blitz.ai/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
-  <a href="https://www.reddit.com/r/blitzcode/"><img src="https://raster.shields.io/badge/Join%20r%2Fblitzcode-D84315?style=flat&logo=reddit&logoColor=white" alt="Reddit" height="20"></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=legioncode.legion-code"><img src="https://raster.shields.io/badge/VS_Code_Marketplace-007ACC?style=flat&logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace" height="20"></a>
+  <a href="https://www.npmjs.com/package/@legioncode/cli"><img alt="npm" src="https://raster.shields.io/npm/v/@legioncode/cli?style=flat" height="20" /></a>
+  <a href="https://x.com/legioncode"><img src="https://raster.shields.io/badge/legioncode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="20"></a>
+  <a href="https://blog.legion.ai"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
+  <a href="https://legion.ai/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
+  <a href="https://www.reddit.com/r/legioncode/"><img src="https://raster.shields.io/badge/Join%20r%2Flegioncode-D84315?style=flat&logo=reddit&logoColor=white" alt="Reddit" height="20"></a>
 </p>
 
 ![Blitz-in-VS-Code-and-CLI](https://github.com/user-attachments/assets/0536ca59-ed81-4512-9e05-d186187a1b52)
 
 ---
 
-Blitz, çalıştığınız her yerde size eşlik eden bir AI kodlama ajanıdır: [VS Code](https://blitz.ai/landing/vs-code), [JetBrains](https://blitz.ai/features/jetbrains-native) ve [CLI](https://blitz.ai/cli). Açık kaynaktır ve açık fiyatlandırma sunar. 500'den fazla model arasından seçim yapabilir, görev sırasında model değiştirebilir ve hiçbir ek ücret olmadan model sağlayıcısının fiyatını ödersiniz. Başlamak için API anahtarı gerekmez.
+Blitz, çalıştığınız her yerde size eşlik eden bir AI kodlama ajanıdır: [VS Code](https://legion.ai/landing/vs-code), [JetBrains](https://legion.ai/features/jetbrains-native) ve [CLI](https://legion.ai/cli). Açık kaynaktır ve açık fiyatlandırma sunar. 500'den fazla model arasından seçim yapabilir, görev sırasında model değiştirebilir ve hiçbir ek ücret olmadan model sağlayıcısının fiyatını ödersiniz. Başlamak için API anahtarı gerekmez.
 
 ### Kurulum
 
@@ -32,7 +32,7 @@ Blitz'yu nerede çalıştırmak istediğinizi seçin.
 
 <br>
 
-[Blitz uzantısını](vscode:extension/Blitzcode.Blitz-code) doğrudan kurun veya [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=blitzcode.Blitz-Code) üzerinden edinin. Bir hesap oluşturduğunuzda GPT-5.5, Claude Opus 4.7, Claude Sonnet 4.6 ve Gemini 3.1 Pro Preview dahil 500'den fazla modele sağlayıcı fiyatıyla erişebilirsiniz.
+[Blitz uzantısını](vscode:extension/legioncode.legion-code) doğrudan kurun veya [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=legioncode.legion-code) üzerinden edinin. Bir hesap oluşturduğunuzda GPT-5.5, Claude Opus 4.7, Claude Sonnet 4.6 ve Gemini 3.1 Pro Preview dahil 500'den fazla modele sağlayıcı fiyatıyla erişebilirsiniz.
 
 </details>
 
@@ -43,19 +43,19 @@ Blitz'yu nerede çalıştırmak istediğinizi seçin.
 
 ```bash
 # npm
-npm install -g @blitzcode/cli
+npm install -g @legioncode/cli
 
 # curl
-curl -fsSL https://blitz.ai/cli/install | bash
+curl -fsSL https://legion.ai/cli/install | bash
 
 # pnpm
-pnpm add -g @blitzcode/cli
+pnpm add -g @legioncode/cli
 
 # bun
-bun add -g @blitzcode/cli
+bun add -g @legioncode/cli
 
 # Homebrew (macOS / Linux)
-brew install Blitz-Org/tap/kilo
+brew install Legion-Org/tap/kilo
 
 # Arch Linux (AUR)
 paru -S kilo-bin
@@ -70,7 +70,7 @@ Ardından başlamak için herhangi bir proje dizininde `Blitz` çalıştırın.
 
 <br>
 
-[Blitz eklentisini](https://plugins.jetbrains.com/plugin/28350-Blitz-code) JetBrains Marketplace'ten kurun veya herhangi bir JetBrains IDE içinde `Settings → Plugins` bölümünde "Blitz" arayın.
+[Blitz eklentisini](https://plugins.jetbrains.com/plugin/28350-legion-code) JetBrains Marketplace'ten kurun veya herhangi bir JetBrains IDE içinde `Settings → Plugins` bölümünde "Blitz" arayın.
 
 </details>
 
@@ -79,7 +79,7 @@ Ardından başlamak için herhangi bir proje dizininde `Blitz` çalıştırın.
 
 <br>
 
-Blitz'yu yerel makine gerekmeden web üzerinden [app.Blitz.ai/cloud](https://app.blitz.ai/cloud) adresinde çalıştırın.
+Blitz'yu yerel makine gerekmeden web üzerinden [app.legion.ai/cloud](https://app.legion.ai/cloud) adresinde çalıştırın.
 
 </details>
 
@@ -88,7 +88,7 @@ Blitz'yu yerel makine gerekmeden web üzerinden [app.Blitz.ai/cloud](https://app
 
 <br>
 
-Pull request'leriniz için otomatik AI kod incelemelerini [app.Blitz.ai/code-reviews](https://app.blitz.ai/code-reviews) adresinde ayarlayın.
+Pull request'leriniz için otomatik AI kod incelemelerini [app.legion.ai/code-reviews](https://app.legion.ai/code-reviews) adresinde ayarlayın.
 
 </details>
 
@@ -97,14 +97,14 @@ Pull request'leriniz için otomatik AI kod incelemelerini [app.Blitz.ai/code-rev
 
 <br>
 
-Her zaman açık AI ajanınızı [app.blitz.ai/claw](https://app.blitz.ai/claw) adresinde başlatın.
+Her zaman açık AI ajanınızı [app.legion.ai/claw](https://app.legion.ai/claw) adresinde başlatın.
 
 </details>
 
 <details>
 <summary>CLI'yi GitHub Releases üzerinden kurun (ikili dosyalar)</summary>
 
-En son ikili dosyayı [Releases sayfasından](https://github.com/Blitz-Org/Blitzcode/releases) indirin.
+En son ikili dosyayı [Releases sayfasından](https://github.com/Legion-Org/legioncode/releases) indirin.
 
 | Platform | Asset |
 |---|---|
@@ -128,7 +128,7 @@ Blitz, göreve göre aralarında geçiş yapabileceğiniz özelleşmiş agents i
 - **Debug** - Sorunları giderir ve izler.
 - **Review** - Değişikliklerinizi inceler ve performans, güvenlik, stil ve test kapsamı sorunlarını ortaya çıkarır.
 
-[Agents ve özel agents](https://blitz.ai/docs/code-with-ai/agents/using-agents) hakkında daha fazla bilgi edinin.
+[Agents ve özel agents](https://legion.ai/docs/code-with-ai/agents/using-agents) hakkında daha fazla bilgi edinin.
 
 ### Ne yapar
 
@@ -151,7 +151,7 @@ kilo run --auto "run tests and fix any failures"
 
 ### Dokümantasyon
 
-Yapılandırma ve diğer her şey için [dokümantasyona](https://blitz.ai/docs) bakın.
+Yapılandırma ve diğer her şey için [dokümantasyona](https://legion.ai/docs) bakın.
 
 ### Katkıda bulunma
 
@@ -174,4 +174,4 @@ Blitz CLI, Blitz agentic engineering platformunda çalışacak şekilde gelişti
 
 ---
 
-**Topluluğa katılın** [Discord](https://blitz.ai/discord) | [X](https://x.com/blitzcode) | [Reddit](https://www.reddit.com/r/blitzcode/)
+**Topluluğa katılın** [Discord](https://legion.ai/discord) | [X](https://x.com/legioncode) | [Reddit](https://www.reddit.com/r/legioncode/)

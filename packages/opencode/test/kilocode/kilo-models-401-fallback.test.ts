@@ -20,8 +20,8 @@ const auth = Layer.mock(Auth.Service)({
 })
 
 const models = Layer.succeed(
-  ModelCache.BlitxModelsService,
-  ModelCache.BlitxModelsService.of({
+  ModelCache.LegionModelsService,
+  ModelCache.LegionModelsService.of({
     fetch: () => Effect.succeed({ models: {}, error: "unauthorized" }),
   }),
 )
@@ -38,16 +38,16 @@ const it = testEffect(layer)
 it.live("401 from Kilo models sets provider as failed in ModelCache", () =>
   Effect.gen(function* () {
     const cache = yield* ModelCache.Service
-    yield* cache.fetch("blitx")
-    expect(yield* cache.failedProviders()).toContain("blitx")
-    expect(yield* cache.getFailure("blitx")).toBe("unauthorized")
+    yield* cache.fetch("legion")
+    expect(yield* cache.failedProviders()).toContain("legion")
+    expect(yield* cache.getFailure("legion")).toBe("unauthorized")
   }),
 )
 
 it.live("401 from Kilo models caches empty models (not undefined)", () =>
   Effect.gen(function* () {
     const cache = yield* ModelCache.Service
-    yield* cache.fetch("blitx")
-    expect(yield* cache.get("blitx")).toEqual({})
+    yield* cache.fetch("legion")
+    expect(yield* cache.get("legion")).toEqual({})
   }),
 )

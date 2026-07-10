@@ -343,7 +343,7 @@ Use a top-level `"mcp"` object. Each key is the server name. For a local server,
 
 # Kilo Notifications
 
-When connected to Blitx Gateway, the CLI fetches and displays notifications from the Blitx API. This allows Blitx to communicate important announcements, feature updates, and tips to users.
+When connected to Legion Gateway, the CLI fetches and displays notifications from the Legion API. This allows Legion to communicate important announcements, feature updates, and tips to users.
 
 ## How It Works
 
@@ -378,8 +378,8 @@ Action: Learn More -> https://docs.kilo.ai/skills
 
 | Condition | Notifications Shown |
 |---|---|
-| Connected to Blitx Gateway | Yes |
-| Not connected to Blitx | No |
+| Connected to Legion Gateway | Yes |
+| Not connected to Legion | No |
 | No notifications from API | No |
 
 ## Related Files

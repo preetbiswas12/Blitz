@@ -1,6 +1,6 @@
 // kilocode_change - new file
-type BlitxModelsResult = { readonly models: Record<string, unknown>; readonly error?: string }
-async function fetchBlitxModels(_options: Record<string, unknown>): Promise<BlitxModelsResult> {
+type LegionModelsResult = { readonly models: Record<string, unknown>; readonly error?: string }
+async function fetchLegionModels(_options: Record<string, unknown>): Promise<LegionModelsResult> {
   return { models: {} }
 }
 import { Context, Duration, Effect, Layer, Schema } from "effect"
@@ -11,23 +11,23 @@ import type { Provider } from "@opencode-ai/core/models-dev"
 import * as Log from "@opencode-ai/core/util/log"
 
 type Models = Provider["models"]
-type KiloOptions = NonNullable<Parameters<typeof fetchBlitxModels>[0]>
+type KiloOptions = NonNullable<Parameters<typeof fetchLegionModels>[0]>
 type Options = { -readonly [K in keyof KiloOptions]?: KiloOptions[K] } & { apiKey?: string }
-type Failure = NonNullable<BlitxModelsResult["error"]>
+type Failure = NonNullable<LegionModelsResult["error"]>
 type Result = { readonly models: Models; readonly error?: Failure }
 type View = { models?: Models; timestamp?: number }
 
 export interface KiloModels {
-  readonly fetch: (options: KiloOptions) => Effect.Effect<BlitxModelsResult, unknown>
+  readonly fetch: (options: KiloOptions) => Effect.Effect<LegionModelsResult, unknown>
 }
 
-export class BlitxModelsService extends Context.Service<BlitxModelsService, KiloModels>()(
+export class LegionModelsService extends Context.Service<LegionModelsService, KiloModels>()(
   "@legion/ModelCache/KiloModels",
 ) {}
 
-export const blitxModelsLayer = Layer.succeed(
-  BlitxModelsService,
-  BlitxModelsService.of({ fetch: (options) => Effect.tryPromise(() => fetchBlitxModels(options)) }),
+export const LegionModelsLayer = Layer.succeed(
+  LegionModelsService,
+  LegionModelsService.of({ fetch: (options) => Effect.tryPromise(() => fetchLegionModels(options)) }),
 )
 type Cell = {
   readonly providerID: string
@@ -57,13 +57,13 @@ type ApertisItem = Schema.Schema.Type<typeof ApertisItem>
 export const layer: Layer.Layer<
   Service,
   never,
-  Auth.Service | Config.Service | BlitxModelsService | HttpClient.HttpClient
+  Auth.Service | Config.Service | LegionModelsService | HttpClient.HttpClient
 > = Layer.effect(
   Service,
   Effect.gen(function* () {
     const auth = yield* Auth.Service
     const cfg = yield* Config.Service
-    const kilo = yield* BlitxModelsService
+    const kilo = yield* LegionModelsService
     const http = yield* HttpClient.HttpClient
     const cells = new Map<string, Cell>()
     const active = new Map<string, Cell>()
@@ -116,11 +116,11 @@ export const layer: Layer.Layer<
     })
 
     const authOptions = Effect.fn("ModelCache.authOptions")(function* (providerID: string) {
-      if (providerID !== "blitx" && providerID !== "apertis") return {}
+      if (providerID !== "legion" && providerID !== "apertis") return {}
       const config = yield* cfg.get()
       const options: Options = {}
 
-      if (providerID === "blitx") {
+      if (providerID === "legion") {
         const item = config.provider?.[providerID]
         if (item?.options?.apiKey) options.kilocodeToken = item.options.apiKey
         if (item?.options?.kilocodeOrganizationId) options.kilocodeOrganizationId = item.options.kilocodeOrganizationId
@@ -161,7 +161,7 @@ export const layer: Layer.Layer<
     })
 
     const fetchModels = (providerID: string, options: Options): Effect.Effect<Result, unknown> => {
-      if (providerID === "blitx") return kilo.fetch(options) as Effect.Effect<Result, unknown>
+      if (providerID === "legion") return kilo.fetch(options) as Effect.Effect<Result, unknown>
       if (providerID === "apertis") return fetchApertisModels(options).pipe(Effect.map((models) => ({ models })))
       log.debug("provider not implemented", { providerID })
       return Effect.succeed({ models: {} })
@@ -180,7 +180,7 @@ export const layer: Layer.Layer<
     })
 
     const key = (providerID: string, options?: Options) => {
-      if (providerID === "blitx") {
+      if (providerID === "legion") {
         return JSON.stringify([providerID, options?.baseURL, options?.kilocodeOrganizationId, options?.kilocodeToken])
       }
       if (providerID === "apertis") return JSON.stringify([providerID, options?.baseURL, options?.apiKey])
@@ -282,7 +282,7 @@ export const defaultLayer = layer.pipe(
   Layer.provide(FetchHttpClient.layer),
   Layer.provide(Auth.defaultLayer),
   Layer.provide(Config.defaultLayer),
-  Layer.provide(blitxModelsLayer),
+  Layer.provide(LegionModelsLayer),
 )
 
 export * as ModelCache from "./model-cache"

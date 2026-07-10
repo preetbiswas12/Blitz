@@ -104,7 +104,7 @@ const SUBCOMMANDS = [
 const SNAPSHOT_ENV = { COLUMNS: "120" }
 
 // kilocode_change start - name snapshots after the shipped CLI
-describe("Blitx CLI help-text snapshots", () => {
+describe("Legion CLI help-text snapshots", () => {
   // kilocode_change end
   // Single test, parallel spawns. Each command's help fires under
   // `concurrency: 8` — wall-clock stays under ~10s even for ~35 commands,

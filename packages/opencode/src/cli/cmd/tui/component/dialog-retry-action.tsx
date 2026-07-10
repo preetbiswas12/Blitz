@@ -7,7 +7,7 @@ import { Link } from "@tui/ui/link"
 import { BgPulse } from "./bg-pulse"
 import { useBindings } from "../keymap"
 
-const KILO_PRICING_URL = "https://blitx.ai/pricing" // kilocode_change
+const KILO_PRICING_URL = "https://legion.ai/pricing" // kilocode_change
 const PAD_X = 3
 const PAD_TOP_OUTER = 1
 const FOREGROUND_ALPHA = 186

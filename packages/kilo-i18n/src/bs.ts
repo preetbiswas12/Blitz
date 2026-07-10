@@ -1,19 +1,19 @@
 export const dict = {
-  // Blitx Gateway provider translations
-  "provider.connect.blitxGateway.line1":
-    "Blitx Gateway omogućava pristup pažljivo odabranom skupu pouzdanih modela optimizovanih za rad sa agentima za kodiranje.",
-  "provider.connect.blitxGateway.line2":
+  // Legion Gateway provider translations
+  "provider.connect.LegionGateway.line1":
+    "Legion Gateway omogućava pristup pažljivo odabranom skupu pouzdanih modela optimizovanih za rad sa agentima za kodiranje.",
+  "provider.connect.LegionGateway.line2":
     "Sa jednim API ključem dobijate pristup modelima kao što su Claude, GPT, Gemini, GLM i drugi.",
-  "provider.connect.blitxGateway.visit.prefix": "Posjetite ",
-  "provider.connect.blitxGateway.visit.link": "blitx.ai",
-  "provider.connect.blitxGateway.visit.suffix": " da preuzmete svoj API ključ.",
-  "provider.connect.blitxGateway.byok.prefix": "Za više statistika korištenja, koristite ",
-  "provider.connect.blitxGateway.byok.link": "BYOK putem Blitx's Gateway",
-  "provider.connect.blitxGateway.byok.suffix": ".",
+  "provider.connect.LegionGateway.visit.prefix": "Posjetite ",
+  "provider.connect.LegionGateway.visit.link": "legion.ai",
+  "provider.connect.LegionGateway.visit.suffix": " da preuzmete svoj API ključ.",
+  "provider.connect.LegionGateway.byok.prefix": "Za više statistika korištenja, koristite ",
+  "provider.connect.LegionGateway.byok.link": "BYOK putem Legion's Gateway",
+  "provider.connect.LegionGateway.byok.suffix": ".",
 
   // Provider settings translations
   "settings.providers.group.recommended": "Preporučeno",
-  "settings.providers.note.blitx": "Pristup za 500+ AI modela",
+  "settings.providers.note.Legion": "Pristup za 500+ AI modela",
   "settings.providers.note.opencode": "Odabrani modeli uključujući Claude, GPT, Gemini i još mnogo toga",
   "settings.providers.note.anthropic": "Direktan pristup Claude modelima, uključujući Pro i Max",
   "settings.providers.note.deepseek": "DeepSeek modeli za zadatke rezonovanja i programiranja",
@@ -53,12 +53,12 @@ export const dict = {
     "Svi projekti na ovom računaru. Čuva se u vašoj korisničkoj konfiguraciji.",
   "marketplace.install.destination": "Odredište instalacije",
   "marketplace.install.about.mcp":
-    "MCP server pruža Blitxu dodatne alate za rad s vanjskim servisima ili lokalnim programima.",
+    "MCP server pruža Legionu dodatne alate za rad s vanjskim servisima ili lokalnim programima.",
   "marketplace.install.about.agent": "Agent dodaje višekratnu ulogu s vlastitim uputama i dozvolama.",
   "marketplace.install.about.skill":
-    "Vještina dodaje upute i resurse za određene zadatke koje Blitx može učitati kada su potrebni.",
+    "Vještina dodaje upute i resurse za određene zadatke koje Legion može učitati kada su potrebni.",
   "marketplace.install.mcp.warning":
-    "MCP serveri mogu pokretati lokalne naredbe ili se povezivati s vanjskim servisima. Blitx će zatražiti dozvolu prije korištenja njihovih alata, osim ako vaše dozvole to automatski dopuštaju.",
+    "MCP serveri mogu pokretati lokalne naredbe ili se povezivati s vanjskim servisima. Legion će zatražiti dozvolu prije korištenja njihovih alata, osim ako vaše dozvole to automatski dopuštaju.",
   "marketplace.install.project.warning":
     "Datoteke projekta mogu se dodati u kontrolu verzija. Ne čuvajte tajne ovdje osim ako konfiguracija upućuje na varijablu okruženja.",
   "marketplace.install.learnMore": "Saznajte kako funkcionišu instalacije s Marketplacea",
@@ -130,7 +130,7 @@ export const dict = {
     "Sačekaj da se snapshot završi. Naredni potezi su brzi kada se početni snapshot jednom napravi.",
   "snapshot.slowRepo.answer.disable": "Onemogući za ovaj projekat",
   "snapshot.slowRepo.answer.disable.description":
-    "Isključi Blitx snapshotove za ovaj projekat. Izgubićete poništi/vrati za izmjene koje napravi Blitx, ali git i dalje prati sve.",
+    "Isključi Legion snapshotove za ovaj projekat. Izgubićete poništi/vrati za izmjene koje napravi Legion, ali git i dalje prati sve.",
 
   // Edit-tool header and shell-tool section labels
   "ui.messagePart.openInDiffViewer": "Otvori u pregledniku razlika",

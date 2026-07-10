@@ -27,13 +27,13 @@ import { testEffect } from "../lib/effect"
 const state = path.join(Global.Path.state, "model.json")
 
 afterEach(async () => {
-  process.env.BLITX_CLIENT = "cli"
+  process.env.LEGION_CLIENT = "cli"
   await fs.rm(state, { force: true }).catch(() => undefined)
   await disposeAllInstances()
 })
 
 beforeAll(async () => {
-  process.env.BLITX_CLIENT = "cli"
+  process.env.LEGION_CLIENT = "cli"
   await fs.rm(state, { force: true }).catch(() => undefined)
 })
 
@@ -203,7 +203,7 @@ function run(input: {
   return provideTmpdirInstance(
     () =>
       Effect.gen(function* () {
-        process.env.BLITX_CLIENT = input.client ?? "cli"
+        process.env.LEGION_CLIENT = input.client ?? "cli"
         if (input.state) yield* writeState(input.state)
 
         const { chat, assistant } = yield* seed(input.agent, input.variant)
@@ -508,7 +508,7 @@ describe("tool.task model resolution", () => {
     provideTmpdirInstance(
       () =>
         Effect.gen(function* () {
-          process.env.BLITX_CLIENT = "cli"
+          process.env.LEGION_CLIENT = "cli"
           yield* Effect.promise(async () => {
             await fs.mkdir(Global.Path.state, { recursive: true })
             await fs.writeFile(state, "{bad json")

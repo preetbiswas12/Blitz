@@ -17,7 +17,7 @@ export default function Custom404() {
   return (
     <>
       <Head>
-        <title>404 - Page Not Found | Blitx Code Documentation</title>
+        <title>404 - Page Not Found | Legion Code Documentation</title>
         <meta name="description" content="The requested page could not be found." />
       </Head>
       <div className="not-found-page">

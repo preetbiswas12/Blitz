@@ -21,16 +21,16 @@ import { Event as IndexingEvent, Warning as IndexingWarningEvent } from "./index
 import { indexingWarningKey, type IndexingWarning } from "./indexing-warning"
 import { IndexingWorker } from "./indexing-worker-client"
 import { LanceDBRuntime } from "./lancedb" // kilocode_change
-import { indexingWithBlitxDefault, resolveBlitxIndexingAuth, type BlitxIndexingAuth } from "./indexing-auth" // kilocode_change
+import { indexingWithLegionDefault, resolveLegionIndexingAuth, type LegionIndexingAuth } from "./indexing-auth" // kilocode_change
 import { primaryWorktree } from "./primary-worktree"
 
-const log = Log.create({ service: "blitx-indexing" })
+const log = Log.create({ service: "Legion-indexing" })
 const auth = makeRuntime(Auth.Service, Auth.defaultLayer)
 const missing = () => disabledIndexingStatus("Indexing plugin is not enabled for this workspace.")
 const noWorkspace = () =>
   disabledIndexingStatus("Codebase indexing is disabled because no workspace folder is open in VS Code.")
 
-const baselineDirectory = Effect.fn("BlitxIndexing.baselineDirectory")(function* (dir: string) {
+const baselineDirectory = Effect.fn("LegionIndexing.baselineDirectory")(function* (dir: string) {
   if (Instance.project.vcs !== "git") return undefined
   const checkout = path.resolve(Instance.worktree)
   const main = yield* primaryWorktree(checkout)
@@ -67,13 +67,13 @@ function pending(): z.infer<typeof IndexingStatus> {
   }
 }
 
-async function blitxAuth(cfg: Config.Info): Promise<BlitxIndexingAuth> {
-  const info = await auth.runPromise((svc) => svc.get("blitx"))
-  return resolveBlitxIndexingAuth({ config: cfg, auth: info })
+async function legionAuth(cfg: Config.Info): Promise<LegionIndexingAuth> {
+  const info = await auth.runPromise((svc) => svc.get("legion"))
+  return resolveLegionIndexingAuth({ config: cfg, auth: info })
 }
 
-function enrichBlitx(input: ReturnType<typeof toIndexingConfigInput>, auth: BlitxIndexingAuth) {
-  if (input.embedderProvider !== "blitx") return input
+function enrichLegion(input: ReturnType<typeof toIndexingConfigInput>, auth: LegionIndexingAuth) {
+  if (input.embedderProvider !== "legion") return input
 
   return {
     ...input,
@@ -91,14 +91,14 @@ type EmbeddingModelCatalog = {
 
 const EMPTY_CATALOG: EmbeddingModelCatalog = { models: [], aliases: {}, defaultModel: "" } // kilocode_change - updated type with name/scoreThreshold
 
-async function fetchBlitxEmbeddingModelCatalog(_opts?: { baseURL?: string; token?: string }): Promise<EmbeddingModelCatalog> {
+async function fetchLegionEmbeddingModelCatalog(_opts?: { baseURL?: string; token?: string }): Promise<EmbeddingModelCatalog> {
   return EMPTY_CATALOG
 }
 
-async function model(input: ReturnType<typeof toIndexingConfigInput>, auth: BlitxIndexingAuth) {
-  if (input.embedderProvider !== "blitx") return input
+async function model(input: ReturnType<typeof toIndexingConfigInput>, auth: LegionIndexingAuth) {
+  if (input.embedderProvider !== "legion") return input
 
-  const catalog = await fetchBlitxEmbeddingModelCatalog({ baseURL: auth.baseUrl, token: auth.apiKey })
+  const catalog = await fetchLegionEmbeddingModelCatalog({ baseURL: auth.baseUrl, token: auth.apiKey })
   const id = input.modelId ? (catalog.aliases[input.modelId] ?? input.modelId) : catalog.defaultModel
   const chosen = catalog.models.find((item) => item.id === id)
   const fallback = catalog.aliases[catalog.defaultModel] ?? catalog.defaultModel
@@ -197,7 +197,7 @@ function trackTelemetry(event: IndexingTelemetryEvent): void {
   })
 }
 
-export namespace BlitxIndexing {
+export namespace LegionIndexing {
   export const Status = IndexingStatus
   export type Status = z.infer<typeof Status>
 
@@ -264,7 +264,7 @@ export namespace BlitxIndexing {
     )
     const baseline = startup.baseline
     const cfg = startup.cfg
-    if (process.env["BLITX_DISABLE_CODEBASE_INDEXING"] === "vscode-no-workspace") {
+    if (process.env["LEGION_DISABLE_CODEBASE_INDEXING"] === "vscode-no-workspace") {
       return track(hit, await inert(() => noWorkspace()))
     }
     if (!hasIndexingPlugin(cfg.plugin)) {
@@ -273,11 +273,11 @@ export namespace BlitxIndexing {
 
     log.info("initializing project indexing", { workspacePath: dir, baselineDirectory: baseline })
     const root = path.join(Global.Path.state, "indexing")
-    const auth = await blitxAuth(cfg)
+    const auth = await legionAuth(cfg)
     const globalConfig = await AppRuntime.runPromise(Config.Service.use((svc) => svc.getGlobal()))
     const global = globalConfig.indexing
-    const merged = indexingWithBlitxDefault({ ...global, ...cfg.indexing }, auth)
-    const cfgInput = await model(enrichBlitx(input(merged, global), auth), auth)
+    const merged = indexingWithLegionDefault({ ...global, ...cfg.indexing }, auth)
+    const cfgInput = await model(enrichLegion(input(merged, global), auth), auth)
     const workspaces = new Set<WorkspaceID | undefined>([WorkspaceContext.workspaceID])
     const box = { status: pending() }
     const warnings = new Map<string, IndexingWarning>()
@@ -491,14 +491,14 @@ export namespace BlitxIndexing {
   export async function models() {
     try {
       const cfg = await AppRuntime.runPromise(Config.Service.use((svc) => svc.getGlobal()))
-      const auth = await blitxAuth(cfg)
-      const catalog = await fetchBlitxEmbeddingModelCatalog({ baseURL: auth.baseUrl, token: auth.apiKey })
+      const auth = await legionAuth(cfg)
+      const catalog = await fetchLegionEmbeddingModelCatalog({ baseURL: auth.baseUrl, token: auth.apiKey })
       if (catalog.models.length > 0 || (!auth.baseUrl && !auth.apiKey)) return catalog
-      const fallback = await fetchBlitxEmbeddingModelCatalog()
+      const fallback = await fetchLegionEmbeddingModelCatalog()
       return fallback.models.length > 0 ? fallback : catalog
     } catch (err) {
       log.warn("falling back to public Kilo embedding model catalog", { err })
-      return fetchBlitxEmbeddingModelCatalog()
+      return fetchLegionEmbeddingModelCatalog()
     }
   }
 

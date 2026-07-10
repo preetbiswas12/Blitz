@@ -26,17 +26,17 @@ export const directories = Effect.fn("ConfigPaths.directories")(function* (direc
     Global.Path.config,
     ...(!Flag.KILO_DISABLE_PROJECT_CONFIG
       ? yield* afs.up({
-          targets: [".kilocode", ".blitx"], // kilocode_change
+          targets: [".kilocode", ".legion"], // kilocode_change
           start: directory,
           stop: worktree,
         })
       : []),
     ...(yield* afs.up({
-      targets: [".kilocode", ".blitx"], // kilocode_change
+      targets: [".kilocode", ".legion"], // kilocode_change
       start: Global.Path.home,
       stop: Global.Path.home,
     })),
-    ...(Flag.BLITX_CONFIG_DIR ? [Flag.BLITX_CONFIG_DIR] : []),
+    ...(Flag.LEGION_CONFIG_DIR ? [Flag.LEGION_CONFIG_DIR] : []),
   ])
 })
 

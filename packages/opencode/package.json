@@ -19,7 +19,7 @@
     "db": "bun drizzle-kit"
   },
   "bin": {
-    "blitz": "./bin/blitz"
+    "legion": "./bin/legion"
   },
   "exports": {
     "./*": "./src/*.ts"
@@ -189,8 +189,8 @@
     "agent",
     "assistant",
     "coding-agent",
-    "blitz-code",
-    "blitz",
+    "legion-code",
+    "legion",
     "opencode",
     "ink",
     "react",

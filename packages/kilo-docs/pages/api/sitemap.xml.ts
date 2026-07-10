@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import { Nav } from "../../lib/nav"
 import type { NavLink, NavSection } from "../../lib/types"
 
-const origin = "https://blitx.ai"
+const origin = "https://legion.ai"
 const base = "/docs"
 
 function links(sections: NavSection[]): string[] {

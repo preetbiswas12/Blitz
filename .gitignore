@@ -50,9 +50,10 @@ logs/
 telemetry-id
 tsconfig.tsbuildinfo
 
-# ECC / Ponytail temp clones
+# ECC / Ponytail / CCPI temp clones
 .tmp-ecc
 .tmp-ponytail
+.tmp-ccpi
 
 # Kilo
 .kilo/.gitignore

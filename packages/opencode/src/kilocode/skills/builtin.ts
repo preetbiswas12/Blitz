@@ -6,6 +6,7 @@
 import LEGION_CONFIG from "./kilo-config.md"
 import { ELC_SKILLS } from "../elc/skills"
 import { CONTEXT_SKILLS } from "../context/skills"
+import { CCPI_SKILLS } from "../ccpi/skills"
 
 export interface BuiltinSkill {
   name: string
@@ -31,6 +32,11 @@ export const BUILTIN_SKILLS: BuiltinSkill[] = [
   })),
   ...CONTEXT_SKILLS.map((s) => ({
     name: s.name,
+    description: s.description,
+    content: s.content,
+  })),
+  ...CCPI_SKILLS.map((s) => ({
+    name: `ccpi-${s.name}`,
     description: s.description,
     content: s.content,
   })),

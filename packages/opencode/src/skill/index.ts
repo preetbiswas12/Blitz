@@ -236,12 +236,17 @@ const loadSkills = Effect.fnUntraced(function* (
   discovered: DiscoveryState,
   bus: Bus.Interface,
   elcEnabled?: boolean,
+  ccpiEnabled?: boolean, // kilocode_change
 ) {
   // kilocode_change start - seed built-in skills before discovery so user skills can override
   for (const skill of BUILTIN_SKILLS) {
-    // ELC/Context skills are prefixed or are the legion-config skill
-    const isBuiltin = skill.name !== "legion-config"
-    if (isBuiltin && elcEnabled === false) continue
+    if (skill.name === "legion-config") {
+      // Always load legion-config
+    } else if (skill.name.startsWith("ccpi-")) {
+      if (ccpiEnabled === false) continue
+    } else {
+      if (elcEnabled === false) continue
+    }
     state.skills[skill.name] = {
       name: skill.name,
       description: skill.description,
@@ -286,7 +291,7 @@ export const layer = Layer.effect(
       Effect.fn("Skill.state")(function* () {
         const s: State = { skills: {}, dirs: new Set() }
         const cfg = yield* config.get()
-        yield* loadSkills(s, yield* InstanceState.get(discovered), bus, cfg.elc?.skills)
+        yield* loadSkills(s, yield* InstanceState.get(discovered), bus, cfg.elc?.skills, cfg.ccpi?.skills) // kilocode_change
         return s
       }),
     )

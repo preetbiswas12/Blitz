@@ -24,8 +24,8 @@ import BRAIN from "../kilocode/brain.txt"
 import type { EditorContext } from "../kilocode/editor-context"
 import { KilocodeSystemPrompt } from "../kilocode/system-prompt"
 import { isLing } from "../kilocode/model-match"
-import { ECC_RULES } from "../kilocode/ecc/rules"
-import { PONYTAIL_RULE } from "../kilocode/ponytail/rules"
+import { ELC_RULES } from "../kilocode/elc/rules"
+import { CONTEXT_RULE } from "../kilocode/context/rules"
 // kilocode_change end
 
 // kilocode_change start
@@ -41,20 +41,20 @@ export function brain() {
   return BRAIN.trim()
 }
 
-export function eccRules(opts?: { enabled?: boolean; languages?: string[] }) {
+export function elcRules(opts?: { enabled?: boolean; languages?: string[] }) {
   if (opts?.enabled === false) return ""
   const langs = opts?.languages ?? []
   const parts: string[] = []
 
   // Always include common rules
-  for (const rule of ECC_RULES) {
+  for (const rule of ELC_RULES) {
     if (rule.language === "common") {
       parts.push(rule.content)
     }
   }
 
   // Include language-specific rules if the language is detected
-  for (const rule of ECC_RULES) {
+  for (const rule of ELC_RULES) {
     if (rule.language !== "common" && langs.includes(rule.language)) {
       parts.push(rule.content)
     }
@@ -62,21 +62,21 @@ export function eccRules(opts?: { enabled?: boolean; languages?: string[] }) {
 
   if (parts.length === 0) return ""
   return [
-    "# ECC Language Rules",
-    "The following rules from ECC (Everything Claude Code) apply to this project:",
+    "# ELC Language Rules",
+    "The following rules from ELC (Everything Legion Code) apply to this project:",
     "",
     ...parts,
   ].join("\n")
 }
 
-export function ponytailRules(opts?: { enabled?: boolean }) {
+export function contextRules(opts?: { enabled?: boolean }) {
   if (opts?.enabled === false) return ""
-  if (!PONYTAIL_RULE) return ""
+  if (!CONTEXT_RULE) return ""
   return [
-    "# Ponytail — Lazy Senior Dev Mode",
-    "The following ruleset from Ponytail applies to this project:",
+    "# Context — Lazy Senior Dev Mode",
+    "The following ruleset from Context applies to this project:",
     "",
-    PONYTAIL_RULE.trim(),
+    CONTEXT_RULE.trim(),
   ].join("\n")
 }
 // kilocode_change end

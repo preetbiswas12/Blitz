@@ -1,13 +1,13 @@
 // kilocode_change - new file
-// Ponytail (lazy senior dev) commands bundled as built-in slash commands.
+// ELC (Everything Legion Code) commands bundled as built-in slash commands.
 
-import { PONYTAIL_COMMANDS } from "../ponytail/commands"
+import { ELC_COMMANDS } from "../elc/commands"
 import type { Info as CommandInfo } from "@/command"
 
-export function ponytailCommands(opts?: { enabled?: boolean }): Record<string, CommandInfo> {
+export function elcCommands(opts?: { enabled?: boolean }): Record<string, CommandInfo> {
   if (opts?.enabled === false) return {}
   const result: Record<string, CommandInfo> = {}
-  for (const cmd of PONYTAIL_COMMANDS) {
+  for (const cmd of ELC_COMMANDS) {
     result[cmd.name] = {
       name: cmd.name,
       description: cmd.description,

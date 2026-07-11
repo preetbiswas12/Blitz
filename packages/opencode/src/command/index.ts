@@ -8,9 +8,8 @@ import { Config } from "@/config/config"
 import { MCP } from "../mcp"
 import { Skill } from "../skill"
 import { legacyReviewCommand, reviewCommand } from "@/kilocode/review/command" // kilocode_change
-import { eccCommands } from "@/kilocode/ecc" // kilocode_change
-import { ponytailCommands } from "@/kilocode/ponytail" // kilocode_change
-import { ponytailCommands } from "@/kilocode/ponytail" // kilocode_change
+import { elcCommands } from "@/kilocode/elc" // kilocode_change
+import { contextCommands } from "@/kilocode/context" // kilocode_change
 import PROMPT_INITIALIZE from "./template/initialize.txt"
 
 type State = {
@@ -114,14 +113,14 @@ export const layer = Layer.effect(
       commands["local-review-uncommitted"] = legacyReviewCommand("local-review-uncommitted")!
       // kilocode_change end
 
-      // kilocode_change start - ECC bundled commands
-      for (const [name, command] of Object.entries(eccCommands({ enabled: cfg.ecc?.commands }))) {
+      // kilocode_change start - ELC bundled commands
+      for (const [name, command] of Object.entries(elcCommands({ enabled: cfg.elc?.commands }))) {
         if (!commands[name]) commands[name] = command
       }
       // kilocode_change end
 
-      // kilocode_change start - Ponytail bundled commands
-      for (const [name, command] of Object.entries(ponytailCommands({ enabled: cfg.ponytail?.commands }))) {
+      // kilocode_change start - Context bundled commands
+      for (const [name, command] of Object.entries(contextCommands({ enabled: cfg.context?.commands }))) {
         if (!commands[name]) commands[name] = command
       }
       // kilocode_change end

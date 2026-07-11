@@ -1,0 +1,10 @@
+{
+  "id": "legion-brain",
+  "name": "Legion Brain",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.5",
+  "description": "Legion Brain - AI coding assistant for Obsidian. Supports Legion CLI, OpenCode, and Claude backends.",
+  "author": "Legion CLI",
+  "authorUrl": "https://github.com/preetbiswas12/Blitz",
+  "isDesktopOnly": true
+}

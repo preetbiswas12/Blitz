@@ -1,7 +1,7 @@
 {
-  "name": "@legion/obsidian-plugin",
+  "name": "@legion/brain",
   "version": "1.0.0",
-  "description": "Legion Code Integration for Obsidian. Supports Claude Code, OpenCode, and Legion backends.",
+  "description": "Legion Brain - AI coding assistant for Obsidian. Supports Legion CLI, OpenCode, and Claude backends.",
   "main": "main.js",
   "scripts": {
     "dev": "node esbuild.config.mjs",
@@ -9,7 +9,7 @@
     "lint": "eslint src/",
     "version": "1.0.0"
   },
-  "keywords": ["obsidian", "legion", "ai", "coding", "claude", "opencode"],
+  "keywords": ["obsidian", "legion", "brain", "ai", "coding", "opencode"],
   "author": "Legion CLI",
   "license": "MIT",
   "devDependencies": {

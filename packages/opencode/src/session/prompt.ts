@@ -1722,21 +1722,21 @@ export const layer = Layer.effect(
           // kilocode_change end
           const system = [...env, ...instructions, ...(skills ? [skills] : [])]
 
-          // kilocode_change start - inject ECC language rules
+          // kilocode_change start - inject ELC language rules
           const cfg = yield* config.get()
-          if (cfg.ecc?.rules !== false) {
-            const eccRulesContent = SystemPrompt.eccRules({
-              enabled: cfg.ecc?.rules,
+          if (cfg.elc?.rules !== false) {
+            const elcRulesContent = SystemPrompt.elcRules({
+              enabled: cfg.elc?.rules,
               languages: detectProjectLanguages(ctx.worktree),
             })
-            if (eccRulesContent) system.push(eccRulesContent)
+            if (elcRulesContent) system.push(elcRulesContent)
           }
           // kilocode_change end
 
-          // kilocode_change start - inject Ponytail ruleset
-          if (cfg.ponytail?.rules !== false) {
-            const ponytailContent = SystemPrompt.ponytailRules({ enabled: cfg.ponytail?.rules })
-            if (ponytailContent) system.push(ponytailContent)
+          // kilocode_change start - inject Context ruleset
+          if (cfg.context?.rules !== false) {
+            const contextContent = SystemPrompt.contextRules({ enabled: cfg.context?.rules })
+            if (contextContent) system.push(contextContent)
           }
           // kilocode_change end
 

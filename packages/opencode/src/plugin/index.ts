@@ -20,7 +20,7 @@ import { CloudflareAIGatewayAuthPlugin, CloudflareWorkersAuthPlugin } from "./cl
 import { AzureAuthPlugin } from "./azure"
 import { DigitalOceanAuthPlugin } from "./digitalocean"
 import { XaiAuthPlugin } from "./xai"
-import { eccHooks } from "@/kilocode/plugins/ecc-hooks" // kilocode_change
+import { elcHooks } from "@/kilocode/plugins/elc-hooks" // kilocode_change
 import { Effect, Layer, Context, Stream } from "effect"
 import { EffectBridge } from "@/effect/bridge"
 import { InstanceState } from "@/effect/instance-state"
@@ -86,8 +86,8 @@ function internalPlugins(flags: RuntimeFlags.Info, cfg?: Config.Info): PluginIns
     AzureAuthPlugin,
     DigitalOceanAuthPlugin,
     XaiAuthPlugin,
-    // kilocode_change start - ECC hooks plugin
-    (input) => eccHooks({ enabled: cfg?.ecc?.hooks !== false }),
+    // kilocode_change start - ELC hooks plugin
+    (input) => elcHooks({ enabled: cfg?.elc?.hooks !== false }),
     // kilocode_change end
   ]
 }

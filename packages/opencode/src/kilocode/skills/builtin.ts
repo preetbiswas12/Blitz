@@ -4,8 +4,8 @@
 // Registered before all discovery phases so user skills with the same name override.
 
 import LEGION_CONFIG from "./kilo-config.md"
-import { ECC_SKILLS } from "../ecc/skills"
-import { PONYTAIL_SKILLS } from "../ponytail/skills"
+import { ELC_SKILLS } from "../elc/skills"
+import { CONTEXT_SKILLS } from "../context/skills"
 
 export interface BuiltinSkill {
   name: string
@@ -24,12 +24,12 @@ const LEGION_SKILLS: BuiltinSkill[] = [
 
 export const BUILTIN_SKILLS: BuiltinSkill[] = [
   ...LEGION_SKILLS,
-  ...ECC_SKILLS.map((s) => ({
+  ...ELC_SKILLS.map((s) => ({
     name: s.name,
     description: s.description,
     content: s.content,
   })),
-  ...PONYTAIL_SKILLS.map((s) => ({
+  ...CONTEXT_SKILLS.map((s) => ({
     name: s.name,
     description: s.description,
     content: s.content,

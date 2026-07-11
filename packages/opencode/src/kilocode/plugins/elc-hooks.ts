@@ -1,5 +1,5 @@
 // kilocode_change - new file
-// ECC (Everything Claude Code) hooks ported to Legion's plugin system.
+// ELC (Everything Legion Code) hooks ported to Legion's plugin system.
 // Provides config protection, doc file warnings, and quality gates.
 
 import type { Hooks } from "@legion/plugin"
@@ -61,7 +61,7 @@ const DOC_WARNING_NAMES = [
 
 const ALLOWED_DIRS = [
   "docs",
-  ".claude",
+  ".legion",
   ".github",
   "commands",
   "skills",
@@ -92,7 +92,7 @@ function isDocWarningFile(filePath: string): boolean {
   return true
 }
 
-export function eccHooks(opts?: { enabled?: boolean }): Hooks {
+export function elcHooks(opts?: { enabled?: boolean }): Hooks {
   if (opts?.enabled === false) return {}
 
   return {
@@ -107,7 +107,7 @@ export function eccHooks(opts?: { enabled?: boolean }): Hooks {
             output.args.__blockReason =
               `Blocked: ${path.basename(filePath)} is a linter/formatter config file. ` +
               `Fix the source code instead of weakening the config. ` +
-              `If you truly need to modify this config, remove it from the ECC protection list first.`
+              `If you truly need to modify this config, remove it from the ELC protection list first.`
           }
         }
       }

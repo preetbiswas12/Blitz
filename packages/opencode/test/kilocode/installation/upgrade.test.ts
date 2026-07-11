@@ -89,7 +89,7 @@ describe("Kilo installation upgrade", () => {
 
   testEffect(
     layer((cmd, args) => {
-      if (cmd === "npm" && args.includes("list")) return "@legion/cli@7.3.45"
+      if (cmd === "npm" && args.includes("list")) return "@legioncli@7.3.45"
       return ""
     }),
   ).effect("detects npm installs from the Kilo package", () =>
@@ -144,28 +144,28 @@ describe("Kilo installation upgrade", () => {
   testEffect(upgrade).effect("installs the Kilo npm package", () =>
     Effect.gen(function* () {
       yield* Installation.Service.use((svc) => svc.upgrade("npm", "9.9.9"))
-      expect(calls).toContain("npm install -g @legion/cli@9.9.9")
+      expect(calls).toContain("npm install -g @legioncli@9.9.9")
     }),
   )
 
   testEffect(upgrade).effect("installs the Kilo yarn package", () =>
     Effect.gen(function* () {
       yield* Installation.Service.use((svc) => svc.upgrade("yarn", "9.9.9"))
-      expect(calls).toContain("yarn global add @legion/cli@9.9.9")
+      expect(calls).toContain("yarn global add @legioncli@9.9.9")
     }),
   )
 
   testEffect(upgrade).effect("installs the Kilo pnpm package", () =>
     Effect.gen(function* () {
       yield* Installation.Service.use((svc) => svc.upgrade("pnpm", "9.9.9"))
-      expect(calls).toContain("pnpm install -g @legion/cli@9.9.9")
+      expect(calls).toContain("pnpm install -g @legioncli@9.9.9")
     }),
   )
 
   testEffect(upgrade).effect("installs the Kilo bun package", () =>
     Effect.gen(function* () {
       yield* Installation.Service.use((svc) => svc.upgrade("bun", "9.9.9"))
-      expect(calls).toContain("bun install -g @legion/cli@9.9.9")
+      expect(calls).toContain("bun install -g @legioncli@9.9.9")
     }),
   )
 

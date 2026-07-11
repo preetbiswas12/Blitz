@@ -58,7 +58,7 @@ function compareVersion(
 }
 
 async function fetchLatest() {
-  const data: any = await fetch("https://registry.npmjs.org/@legion/cli/latest").then((res) => {
+  const data: any = await fetch("https://registry.npmjs.org/@legioncli/latest").then((res) => {
     if (!res.ok) throw new Error(res.statusText)
     return res.json()
   })

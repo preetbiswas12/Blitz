@@ -57,8 +57,8 @@ export interface MergeConfig {
 
 export const defaultConfig: MergeConfig = {
   packageMappings: [
-    { from: "opencode-ai", to: "@legion/cli" },
-    { from: "@opencode-ai/cli", to: "@legion/cli" },
+    { from: "opencode-ai", to: "@legioncli" },
+    { from: "@opencode-ai/cli", to: "@legioncli" },
     { from: "@opencode-ai/sdk", to: "@legion/sdk" },
     { from: "@opencode-ai/plugin", to: "@legion/plugin" },
   ],

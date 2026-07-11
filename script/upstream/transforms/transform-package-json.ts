@@ -232,8 +232,8 @@ export interface ReconcileOptions extends PackageJsonOptions {
 
 // Package name mappings
 const PACKAGE_NAME_MAP: Record<string, string> = {
-  "opencode-ai": "@legion/cli",
-  "@opencode-ai/cli": "@legion/cli",
+  "opencode-ai": "@legioncli",
+  "@opencode-ai/cli": "@legioncli",
   "@opencode-ai/sdk": "@legion/sdk",
   "@opencode-ai/plugin": "@legion/plugin",
 }
@@ -259,7 +259,7 @@ const KILO_BIN: Record<string, Record<string, string>> = {
 // Packages that should have their name transformed
 const TRANSFORM_PACKAGE_NAMES: Record<string, string> = {
   "package.json": "@legion/kilo",
-  "packages/opencode/package.json": "@legion/cli",
+  "packages/opencode/package.json": "@legioncli",
   "packages/plugin/package.json": "@legion/plugin",
   "packages/sdk/js/package.json": "@legion/sdk",
 }

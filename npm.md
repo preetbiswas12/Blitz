@@ -1,4 +1,4 @@
-# Publishing @legion/cli to npm
+# Publishing @legioncli to npm
 
 ## Prerequisites
 
@@ -8,7 +8,7 @@
 - Enable 2FA (recommended, required for `--provenance` flag)
 
 ### 2. npm Organization
-Since the package is scoped (`@legion/cli`), you need to create an npm org:
+Since the package is scoped (`@legioncli`), you need to create an npm org:
 ```bash
 npm org create legion
 ```
@@ -80,7 +80,7 @@ The build script (`script/build.ts`) reads this version and bakes it into the bi
 
 The CLI checks for updates at:
 - **Registry**: `https://registry.npmjs.org`
-- **Package**: `@legion/cli`
+- **Package**: `@legioncli`
 - **URL**: `https://registry.npmjs.org/@legion%2fcli/latest`
 
 If users have a custom npm registry (e.g., enterprise), the CLI reads their `.npmrc` to resolve the correct registry URL.
@@ -89,17 +89,17 @@ If users have a custom npm registry (e.g., enterprise), the CLI reads their `.np
 
 ### Install globally
 ```bash
-npm install -g @legion/cli
+npm install -g @legioncli
 ```
 
 ### Install specific version
 ```bash
-npm install -g @legion/cli@1.0.0
+npm install -g @legioncli@1.0.0
 ```
 
 ### Update manually
 ```bash
-npm update -g @legion/cli
+npm update -g @legioncli
 ```
 
 Or use the built-in command:

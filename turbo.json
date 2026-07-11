@@ -10,11 +10,11 @@
       "dependsOn": [],
       "outputs": ["dist/**"]
     },
-    "@legion/cli#build": {
+    "@legioncli#build": {
       "dependsOn": ["@legion/sdk#build"],
       "outputs": ["dist/**"]
     },
-    "@legion/cli#test": {
+    "@legioncli#test": {
       "dependsOn": ["^build"],
       "outputs": [],
       "passThroughEnv": ["*"]
@@ -23,7 +23,7 @@
       "outputs": [".artifacts/unit/junit.xml"],
       "passThroughEnv": ["*"]
     },
-    "@legion/cli#test:ci": {
+    "@legioncli#test:ci": {
       "dependsOn": ["^build"],
       "env": ["LEGION_TEST_PROFILE"],
       "outputs": [".artifacts/unit/junit.xml"],

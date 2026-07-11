@@ -3,8 +3,8 @@
  * jscodeshift codemod: Transform import statements
  *
  * Transforms imports from opencode packages to kilo packages:
- * - opencode-ai -> @legion/cli
- * - @opencode-ai/cli -> @legion/cli
+ * - opencode-ai -> @legioncli
+ * - @opencode-ai/cli -> @legioncli
  * - @opencode-ai/sdk -> @legion/sdk
  * - @opencode-ai/plugin -> @legion/plugin
  *
@@ -21,8 +21,8 @@ import { info, success, warn } from "../utils/logger"
 import { defaultConfig } from "../utils/config"
 
 const IMPORT_MAPPINGS: Record<string, string> = {
-  "opencode-ai": "@legion/cli",
-  "@opencode-ai/cli": "@legion/cli",
+  "opencode-ai": "@legioncli",
+  "@opencode-ai/cli": "@legioncli",
   "@opencode-ai/sdk": "@legion/sdk",
   "@opencode-ai/plugin": "@legion/plugin",
 }

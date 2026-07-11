@@ -468,7 +468,7 @@ async function main() {
     logger.success(`Removed ${count} skipped file(s) from opencode branch`)
   }
 
-  // 6a. Transform package names (opencode-ai -> @legion/cli)
+  // 6a. Transform package names (opencode-ai -> @legioncli)
   logger.info("Transforming package names...")
   const nameResults = await transformPackageNames({ dryRun: false, verbose: options.verbose })
   logger.success(`Transformed ${nameResults.length} files`)

@@ -271,6 +271,42 @@ export const Info = Schema.Struct({
     description:
       "Default agent to use when none is specified. Must be a primary agent. Falls back to 'code' if not set or if the specified agent is invalid.",
   }),
+  ecc: Schema.optional(
+    Schema.Struct({
+      skills: Schema.optional(Schema.Boolean).annotate({
+        description: "Enable ECC (Everything Claude Code) built-in skills (default: true)",
+      }),
+      commands: Schema.optional(Schema.Boolean).annotate({
+        description: "Enable ECC built-in slash commands (default: true)",
+      }),
+      agents: Schema.optional(Schema.Boolean).annotate({
+        description: "Enable ECC built-in agents (default: true)",
+      }),
+      rules: Schema.optional(Schema.Boolean).annotate({
+        description: "Enable ECC language rules in system prompt (default: true)",
+      }),
+      hooks: Schema.optional(Schema.Boolean).annotate({
+        description: "Enable ECC hooks for memory persistence, quality gates, and continuous learning (default: true)",
+      }),
+    }),
+  ).annotate({
+    description: "ECC (Everything Claude Code) integration settings. Controls bundled skills, commands, agents, rules, and hooks.",
+  }),
+  ponytail: Schema.optional(
+    Schema.Struct({
+      skills: Schema.optional(Schema.Boolean).annotate({
+        description: "Enable Ponytail built-in skills (default: true)",
+      }),
+      commands: Schema.optional(Schema.Boolean).annotate({
+        description: "Enable Ponytail built-in slash commands (default: true)",
+      }),
+      rules: Schema.optional(Schema.Boolean).annotate({
+        description: "Enable Ponytail lazy senior dev ruleset in system prompt (default: true)",
+      }),
+    }),
+  ).annotate({
+    description: "Ponytail (lazy senior dev mode) integration settings. Controls bundled skills, commands, and ruleset.",
+  }),
   // kilocode_change end
   username: Schema.optional(Schema.String).annotate({
     description: "Custom username to display in conversations instead of system username",

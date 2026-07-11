@@ -21,6 +21,8 @@ node_modules
 *~
 playground
 tmp
+.tmp-ecc
+.tmp-ponytail
 dist
 ts-dist
 storybook-static
@@ -47,6 +49,10 @@ logs/
 # Telemetry ID
 telemetry-id
 tsconfig.tsbuildinfo
+
+# ECC / Ponytail temp clones
+.tmp-ecc
+.tmp-ponytail
 
 # Kilo
 .kilo/.gitignore

@@ -1,0 +1,19 @@
+# build output
+main.js
+*.js.map
+
+# dependencies
+node_modules/
+
+# misc
+.DS_Store
+
+# development
+.vscode/
+*.log
+
+# temp files
+*.tmp
+.temp/
+.idea
+/build

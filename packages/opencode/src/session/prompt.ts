@@ -102,6 +102,58 @@ const REQUEST_PRUNE_BYTES = 1_250_000
 const log = Log.create({ service: "session.prompt" })
 const elog = EffectLogger.create({ service: "session.prompt" })
 
+// kilocode_change start - detect project languages for ECC rules
+const EXT_TO_LANG: Record<string, string> = {
+  ".ts": "typescript",
+  ".tsx": "typescript",
+  ".js": "typescript",
+  ".jsx": "typescript",
+  ".py": "python",
+  ".pyw": "python",
+  ".go": "golang",
+  ".rs": "rust",
+  ".java": "java",
+  ".kt": "kotlin",
+  ".kts": "kotlin",
+  ".rb": "ruby",
+  ".php": "php",
+  ".cs": "csharp",
+  ".cpp": "cpp",
+  ".cc": "cpp",
+  ".cxx": "cpp",
+  ".c": "cpp",
+  ".h": "cpp",
+  ".hpp": "cpp",
+  ".swift": "swift",
+  ".dart": "dart",
+  ".vue": "vue",
+  ".svelte": "react",
+  ".jsx": "react",
+  ".tsx": "react",
+  ".fs": "fsharp",
+  ".fsx": "fsharp",
+  ".pl": "perl",
+  ".pm": "perl",
+}
+
+function detectProjectLanguages(worktree: string): string[] {
+  const langs = new Set<string>()
+  try {
+    const { readdirSync, statSync } = require("fs") as typeof import("fs")
+    const entries = readdirSync(worktree, { withFileTypes: true })
+    for (const entry of entries) {
+      if (!entry.isFile()) continue
+      const ext = path.extname(entry.name).toLowerCase()
+      const lang = EXT_TO_LANG[ext]
+      if (lang) langs.add(lang)
+    }
+  } catch {
+    // ignore filesystem errors
+  }
+  return Array.from(langs)
+}
+// kilocode_change end
+
 function isOrphanedInterruptedTool(part: MessageV2.ToolPart) {
   // cleanup() marks abandoned tool_use blocks this way after retries/aborts.
   // They are not pending work and must not trigger an assistant-prefill request.
@@ -1669,6 +1721,25 @@ export const layer = Layer.effect(
           }
           // kilocode_change end
           const system = [...env, ...instructions, ...(skills ? [skills] : [])]
+
+          // kilocode_change start - inject ECC language rules
+          const cfg = yield* config.get()
+          if (cfg.ecc?.rules !== false) {
+            const eccRulesContent = SystemPrompt.eccRules({
+              enabled: cfg.ecc?.rules,
+              languages: detectProjectLanguages(ctx.worktree),
+            })
+            if (eccRulesContent) system.push(eccRulesContent)
+          }
+          // kilocode_change end
+
+          // kilocode_change start - inject Ponytail ruleset
+          if (cfg.ponytail?.rules !== false) {
+            const ponytailContent = SystemPrompt.ponytailRules({ enabled: cfg.ponytail?.rules })
+            if (ponytailContent) system.push(ponytailContent)
+          }
+          // kilocode_change end
+
           const format = lastUser.format ?? { type: "text" as const }
           if (format.type === "json_schema") system.push(STRUCTURED_OUTPUT_SYSTEM_PROMPT)
           const result = yield* handle.process({

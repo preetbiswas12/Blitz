@@ -231,9 +231,17 @@ const discoverSkills = Effect.fnUntraced(function* (
   }
 })
 
-const loadSkills = Effect.fnUntraced(function* (state: State, discovered: DiscoveryState, bus: Bus.Interface) {
+const loadSkills = Effect.fnUntraced(function* (
+  state: State,
+  discovered: DiscoveryState,
+  bus: Bus.Interface,
+  eccEnabled?: boolean,
+) {
   // kilocode_change start - seed built-in skills before discovery so user skills can override
   for (const skill of BUILTIN_SKILLS) {
+    // ECC skills are prefixed with ecc- or are the legion-config skill
+    const isEcc = skill.name !== "legion-config"
+    if (isEcc && eccEnabled === false) continue
     state.skills[skill.name] = {
       name: skill.name,
       description: skill.description,
@@ -277,7 +285,8 @@ export const layer = Layer.effect(
     const state = yield* InstanceState.make(
       Effect.fn("Skill.state")(function* () {
         const s: State = { skills: {}, dirs: new Set() }
-        yield* loadSkills(s, yield* InstanceState.get(discovered), bus)
+        const cfg = yield* config.get()
+        yield* loadSkills(s, yield* InstanceState.get(discovered), bus, cfg.ecc?.skills)
         return s
       }),
     )

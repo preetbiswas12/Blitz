@@ -1,0 +1,10 @@
+{
+  "id": "legion-code-integration",
+  "name": "Legion Code Integration",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.5",
+  "description": "Integrate Legion AI coding assistant for intelligent note editing. Supports Claude Code, OpenCode, and Legion backends.",
+  "author": "Legion CLI",
+  "authorUrl": "https://github.com/preetbiswas12/Blitz",
+  "isDesktopOnly": true
+}

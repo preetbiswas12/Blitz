@@ -8,6 +8,9 @@ import { Config } from "@/config/config"
 import { MCP } from "../mcp"
 import { Skill } from "../skill"
 import { legacyReviewCommand, reviewCommand } from "@/kilocode/review/command" // kilocode_change
+import { eccCommands } from "@/kilocode/ecc" // kilocode_change
+import { ponytailCommands } from "@/kilocode/ponytail" // kilocode_change
+import { ponytailCommands } from "@/kilocode/ponytail" // kilocode_change
 import PROMPT_INITIALIZE from "./template/initialize.txt"
 
 type State = {
@@ -109,6 +112,18 @@ export const layer = Layer.effect(
       commands[Default.REVIEW] = reviewCommand()
       commands["local-review"] = legacyReviewCommand("local-review")!
       commands["local-review-uncommitted"] = legacyReviewCommand("local-review-uncommitted")!
+      // kilocode_change end
+
+      // kilocode_change start - ECC bundled commands
+      for (const [name, command] of Object.entries(eccCommands({ enabled: cfg.ecc?.commands }))) {
+        if (!commands[name]) commands[name] = command
+      }
+      // kilocode_change end
+
+      // kilocode_change start - Ponytail bundled commands
+      for (const [name, command] of Object.entries(ponytailCommands({ enabled: cfg.ponytail?.commands }))) {
+        if (!commands[name]) commands[name] = command
+      }
       // kilocode_change end
 
       for (const [name, command] of Object.entries(cfg.command ?? {})) {

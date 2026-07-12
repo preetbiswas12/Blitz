@@ -11,10 +11,6 @@ const dir = path.resolve(__dirname, "..")
 const ccpiRoot = path.resolve(dir, "../../.tmp-ccpi")
 const outDir = path.resolve(dir, "src/kilocode/ccpi")
 
-function escapeString(content: string): string {
-  return content.replace(/\\/g, "\\\\").replace(/`/g, "\\`").replace(/\$/g, "\\$")
-}
-
 function rebrand(content: string): string {
   return content
     .replace(/Jeremy Longshore <jeremy@intentsolutions\.io>/g, "Legion CLI")
@@ -73,65 +69,60 @@ function parseSkillFile(raw: string): { name: string; description: string } {
 }
 
 async function collectStandaloneSkills(): Promise<SkillEntry[]> {
-  const skillsDir = path.join(ccpiRoot, "skills")
-  if (!fs.existsSync(skillsDir)) return []
+  const dir = path.join(ccpiRoot, "skills")
+  if (!fs.existsSync(dir)) return []
   const entries: SkillEntry[] = []
+  const categories = await fs.promises.readdir(dir, { withFileTypes: true })
 
-  const categories = await fs.promises.readdir(skillsDir, { withFileTypes: true })
   for (const cat of categories) {
     if (!cat.isDirectory()) continue
-    const catDir = path.join(skillsDir, cat.name)
+    const catDir = path.join(dir, cat.name)
     const skills = await fs.promises.readdir(catDir, { withFileTypes: true })
+    const category = cat.name.replace(/^\d+-/, "")
 
     for (const skill of skills) {
       if (!skill.isDirectory()) continue
       const skillFile = path.join(catDir, skill.name, "SKILL.md")
       if (!fs.existsSync(skillFile)) continue
-
       const raw = await fs.promises.readFile(skillFile, "utf-8")
-      const { name: parsedName, description } = parseSkillFile(raw)
-      const name = parsedName || skill.name
-      const category = cat.name.replace(/^\d+-/, "")
-      entries.push({ name, description: description || `${name} skill`, content: rebrand(raw), category })
+      const { name, description } = parseSkillFile(raw)
+      entries.push({ name: name || skill.name, description: description || `${name || skill.name} skill`, content: rebrand(raw), category })
     }
   }
-
   return entries
 }
 
 async function collectPluginSkills(): Promise<SkillEntry[]> {
-  const pluginsDir = path.join(ccpiRoot, "plugins")
-  if (!fs.existsSync(pluginsDir)) return []
+  const dir = path.join(ccpiRoot, "plugins")
+  if (!fs.existsSync(dir)) return []
   const entries: SkillEntry[] = []
+  const categories = await fs.promises.readdir(dir, { withFileTypes: true })
+  const usedNames = new Set<string>()
 
-  const categories = await fs.promises.readdir(pluginsDir, { withFileTypes: true })
   for (const cat of categories) {
     if (!cat.isDirectory()) continue
-    const catDir = path.join(pluginsDir, cat.name)
+    const catDir = path.join(dir, cat.name)
     const plugins = await fs.promises.readdir(catDir, { withFileTypes: true })
 
     for (const plugin of plugins) {
       if (!plugin.isDirectory()) continue
       const pluginDir = path.join(catDir, plugin.name)
 
-      const findSkills = async (dir: string): Promise<void> => {
-        if (!fs.existsSync(dir)) return
-        const items = await fs.promises.readdir(dir, { withFileTypes: true })
+      const findSkills = async (d: string): Promise<void> => {
+        if (!fs.existsSync(d)) return
+        const items = await fs.promises.readdir(d, { withFileTypes: true })
         for (const item of items) {
-          const fullPath = path.join(dir, item.name)
+          const fp = path.join(d, item.name)
           if (item.isDirectory()) {
-            await findSkills(fullPath)
+            await findSkills(fp)
           } else if (item.name === "SKILL.md") {
-            const raw = await fs.promises.readFile(fullPath, "utf-8")
+            const raw = await fs.promises.readFile(fp, "utf-8")
             const { name: parsedName, description } = parseSkillFile(raw)
-            const skillDirName = path.basename(path.dirname(fullPath))
-            const name = parsedName || `${plugin.name}-${skillDirName}`
-            entries.push({
-              name,
-              description: description || `${name} plugin skill`,
-              content: rebrand(raw),
-              category: cat.name,
-            })
+            const skillDirName = path.basename(path.dirname(fp))
+            let skillName = parsedName || `${plugin.name}-${skillDirName}`
+            if (usedNames.has(skillName)) skillName = `${skillName}-${usedNames.size}`
+            usedNames.add(skillName)
+            entries.push({ name: skillName, description: description || `${skillName} plugin skill`, content: rebrand(raw), category: cat.name })
           }
         }
       }
@@ -139,7 +130,6 @@ async function collectPluginSkills(): Promise<SkillEntry[]> {
       await findSkills(path.join(pluginDir, "skills"))
     }
   }
-
   return entries
 }
 
@@ -148,12 +138,16 @@ function toVarName(name: string, index: number): string {
   return `SKILL_${index}_${clean}`
 }
 
-async function generateSkills(entries: SkillEntry[]): Promise<string> {
+function escapeString(content: string): string {
+  return content.replace(/\\/g, "\\\\").replace(/`/g, "\\`").replace(/\$/g, "\\$")
+}
+
+async function generateSkillsBundle(entries: SkillEntry[]): Promise<string> {
   const lines: string[] = [
     `// Auto-generated by script/generate-ccpi.ts — DO NOT EDIT`,
     `// CCPI (Claude Code Plugins Plus Skills) bundled as built-in defaults`,
     `// Source: https://github.com/jeremylongshore/claude-code-plugins-plus-skills`,
-    `// Includes ${entries.length} skills from standalone + plugin sources`,
+    `// ${entries.length} skills — lazy loaded from memory`,
     ``,
     `export interface CcpiSkill {`,
     `  name: string`,
@@ -188,6 +182,8 @@ async function generateSkills(entries: SkillEntry[]): Promise<string> {
 async function main() {
   await ensureRepo()
 
+  if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true })
+
   const standalone = await collectStandaloneSkills()
   console.log(`Standalone skills: ${standalone.length}`)
 
@@ -197,11 +193,7 @@ async function main() {
   const all = [...standalone, ...plugin]
   console.log(`Total skills: ${all.length}`)
 
-  if (!fs.existsSync(outDir)) {
-    fs.mkdirSync(outDir, { recursive: true })
-  }
-
-  const skillsContent = await generateSkills(all)
+  const skillsContent = await generateSkillsBundle(all)
   fs.writeFileSync(path.join(outDir, "skills.ts"), skillsContent)
   console.log(`Wrote skills.ts`)
 }

@@ -6,7 +6,6 @@
 import LEGION_CONFIG from "./kilo-config.md"
 import { ELC_SKILLS } from "../elc/skills"
 import { CONTEXT_SKILLS } from "../context/skills"
-import { getCcpiSkillMetas, getCcpiSkillContent } from "../ccpi"
 
 export interface BuiltinSkill {
   name: string
@@ -36,9 +35,3 @@ export const BUILTIN_SKILLS: BuiltinSkill[] = [
     content: s.content,
   })),
 ]
-
-export const CCPI_BUILTIN_METAS = getCcpiSkillMetas()
-
-export function loadCcpiContent(name: string): string | null {
-  return getCcpiSkillContent(name)
-}

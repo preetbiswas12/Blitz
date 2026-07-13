@@ -1,9 +1,7 @@
 // kilocode_change - new file
 // Lazy accessor for CCPI skill content.
-// skills.ts is a large generated file (~22MB). We only import the array reference
-// here and resolve content on demand to avoid bloating the BUILTIN_SKILLS array.
-
-import { CCPI_SKILLS } from "./skills"
+// skills.ts is a large generated file (~22MB / 649K lines).
+// Dynamic import() defers loading until a CCPI skill is actually accessed.
 
 export interface CcpiSkillMeta {
   name: string
@@ -12,23 +10,23 @@ export interface CcpiSkillMeta {
   index: number
 }
 
-let indexByName: Map<string, number> | null = null
+let _skills: { name: string; description: string; content: string; category: string }[] | null = null
 
-function ensureIndex() {
-  if (indexByName) return
-  indexByName = new Map()
-  for (let i = 0; i < CCPI_SKILLS.length; i++) {
-    indexByName.set(CCPI_SKILLS[i].name, i)
+async function loadSkills() {
+  if (!_skills) {
+    const mod = await import("./skills")
+    _skills = mod.CCPI_SKILLS
   }
+  return _skills
 }
 
-export function getCcpiSkillMetas(): CcpiSkillMeta[] {
-  return CCPI_SKILLS.map((s, i) => ({ name: s.name, description: s.description, category: s.category, index: i }))
+export async function getCcpiSkillMetas(): Promise<CcpiSkillMeta[]> {
+  const skills = await loadSkills()
+  return skills.map((s, i) => ({ name: s.name, description: s.description, category: s.category, index: i }))
 }
 
-export function getCcpiSkillContent(name: string): string | null {
-  ensureIndex()
-  const idx = indexByName!.get(name)
-  if (idx === undefined) return null
-  return CCPI_SKILLS[idx].content
+export async function getCcpiSkillContent(name: string): Promise<string | null> {
+  const skills = await loadSkills()
+  const skill = skills.find((s) => s.name === name)
+  return skill?.content ?? null
 }

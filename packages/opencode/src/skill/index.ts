@@ -14,7 +14,8 @@ import { RuntimeFlags } from "@/effect/runtime-flags"
 import { Glob } from "@opencode-ai/core/util/glob"
 import * as Log from "@opencode-ai/core/util/log"
 import { Discovery } from "./discovery"
-import { BUILTIN_SKILLS, CCPI_BUILTIN_METAS, loadCcpiContent } from "../kilocode/skills/builtin" // kilocode_change
+import { BUILTIN_SKILLS } from "../kilocode/skills/builtin" // kilocode_change
+import { getCcpiSkillMetas, getCcpiSkillContent } from "../kilocode/ccpi" // kilocode_change - dynamic import
 import { primaryPaths } from "../kilocode/primary-worktree" // kilocode_change
 import { Git } from "@/git" // kilocode_change
 import { isRecord } from "@/util/record"
@@ -247,16 +248,17 @@ const loadSkills = Effect.fnUntraced(function* (
       content: skill.content,
     }
   }
-  // Register CCPI skills lazily — content loaded on first access
+  // Register CCPI skills lazily — content loaded on first access via dynamic import()
   if (ccpiEnabled !== false) {
-    for (const meta of CCPI_BUILTIN_METAS) {
+    const metas = yield* Effect.tryPromise({ try: () => getCcpiSkillMetas(), catch: (e) => e })
+    for (const meta of metas) {
       const name = `ccpi-${meta.name}`
       state.skills[name] = {
         name,
         description: meta.description,
         location: BUILTIN_LOCATION,
         content: "",
-        _ccpiMeta: meta,
+        _ccpiName: meta.name,
       } as any
     }
   }
@@ -305,9 +307,12 @@ export const layer = Layer.effect(
     const get = Effect.fn("Skill.get")(function* (name: string) {
       const s = yield* InstanceState.get(state)
       const skill = s.skills[name]
-      if (skill && !skill.content && (skill as any)._ccpiMeta) {
-        const meta = (skill as any)._ccpiMeta
-        skill.content = loadCcpiContent(meta.name) || ""
+      if (skill && !skill.content && (skill as any)._ccpiName) {
+        const content = yield* Effect.tryPromise({
+          try: () => getCcpiSkillContent((skill as any)._ccpiName),
+          catch: (e) => e,
+        })
+        skill.content = content || ""
       }
       return skill
     })
@@ -316,9 +321,12 @@ export const layer = Layer.effect(
       const s = yield* InstanceState.get(state)
       const info = s.skills[name]
       if (info) {
-        if (!info.content && (info as any)._ccpiMeta) {
-          const meta = (info as any)._ccpiMeta
-          info.content = loadCcpiContent(meta.name) || ""
+        if (!info.content && (info as any)._ccpiName) {
+          const content = yield* Effect.tryPromise({
+            try: () => getCcpiSkillContent((info as any)._ccpiName),
+            catch: (e) => e,
+          })
+          info.content = content || ""
         }
         return info
       }

@@ -248,9 +248,9 @@ const loadSkills = Effect.fnUntraced(function* (
       content: skill.content,
     }
   }
-  // Register CCPI skills lazily — content loaded on first access via dynamic import()
+  // Register CCPI skills lazily — content loaded on first access from skills.json
   if (ccpiEnabled !== false) {
-    const metas = yield* Effect.tryPromise({ try: () => getCcpiSkillMetas(), catch: (e) => e })
+    const metas = getCcpiSkillMetas()
     for (const meta of metas) {
       const name = `ccpi-${meta.name}`
       state.skills[name] = {
@@ -308,11 +308,7 @@ export const layer = Layer.effect(
       const s = yield* InstanceState.get(state)
       const skill = s.skills[name]
       if (skill && !skill.content && (skill as any)._ccpiName) {
-        const content = yield* Effect.tryPromise({
-          try: () => getCcpiSkillContent((skill as any)._ccpiName),
-          catch: (e) => e,
-        })
-        skill.content = content || ""
+        skill.content = getCcpiSkillContent((skill as any)._ccpiName) || ""
       }
       return skill
     })
@@ -322,11 +318,7 @@ export const layer = Layer.effect(
       const info = s.skills[name]
       if (info) {
         if (!info.content && (info as any)._ccpiName) {
-          const content = yield* Effect.tryPromise({
-            try: () => getCcpiSkillContent((info as any)._ccpiName),
-            catch: (e) => e,
-          })
-          info.content = content || ""
+          info.content = getCcpiSkillContent((info as any)._ccpiName) || ""
         }
         return info
       }

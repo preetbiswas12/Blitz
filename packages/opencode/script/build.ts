@@ -350,13 +350,6 @@ for (const item of targets) {
   await copyTreeSitterWasms(path.resolve(dir, `dist/${name}/bin`))
   await copyKiloConsole(kiloConsoleDist, path.resolve(dir, `dist/${name}/bin`))
   await KiloSandboxWorker.copy(kiloSandboxWorker, path.resolve(dir, `dist/${name}/bin`))
-  // Copy CCPI skills directory for lazy loading
-  const ccpiSkillsDir = path.resolve(dir, "src/kilocode/ccpi/skills")
-  if (fs.existsSync(ccpiSkillsDir)) {
-    const destDir = path.resolve(dir, `dist/${name}/bin/skills`)
-    await fs.promises.cp(ccpiSkillsDir, destDir, { recursive: true })
-    console.log(`Copied CCPI skills to dist/${name}/bin/skills`)
-  }
 
   if (item.os === "linux") {
     const interpreters: Record<string, string> = {

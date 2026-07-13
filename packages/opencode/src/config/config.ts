@@ -307,15 +307,6 @@ export const Info = Schema.Struct({
   ).annotate({
     description: "Context (lazy senior dev mode) integration settings. Controls bundled skills, commands, and ruleset.",
   }),
-  ccpi: Schema.optional(
-    Schema.Struct({
-      skills: Schema.optional(Schema.Boolean).annotate({
-        description: "Enable CCPI (Claude Code Plugins Plus Skills) built-in skills (default: true)",
-      }),
-    }),
-  ).annotate({
-    description: "CCPI integration settings. Controls bundled skills from claude-code-plugins-plus-skills.",
-  }),
   // kilocode_change end
   username: Schema.optional(Schema.String).annotate({
     description: "Custom username to display in conversations instead of system username",

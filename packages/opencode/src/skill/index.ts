@@ -15,7 +15,6 @@ import { Glob } from "@opencode-ai/core/util/glob"
 import * as Log from "@opencode-ai/core/util/log"
 import { Discovery } from "./discovery"
 import { BUILTIN_SKILLS } from "../kilocode/skills/builtin" // kilocode_change
-import { getCcpiSkillMetas, getCcpiSkillContent } from "../kilocode/ccpi" // kilocode_change - dynamic import
 import { primaryPaths } from "../kilocode/primary-worktree" // kilocode_change
 import { Git } from "@/git" // kilocode_change
 import { isRecord } from "@/util/record"
@@ -237,7 +236,6 @@ const loadSkills = Effect.fnUntraced(function* (
   discovered: DiscoveryState,
   bus: Bus.Interface,
   elcEnabled?: boolean,
-  ccpiEnabled?: boolean, // kilocode_change
 ) {
   // kilocode_change start - seed built-in skills before discovery so user skills can override
   for (const skill of BUILTIN_SKILLS) {
@@ -246,20 +244,6 @@ const loadSkills = Effect.fnUntraced(function* (
       description: skill.description,
       location: BUILTIN_LOCATION,
       content: skill.content,
-    }
-  }
-  // Register CCPI skills lazily — content loaded on first access from skills.json
-  if (ccpiEnabled !== false) {
-    const metas = getCcpiSkillMetas()
-    for (const meta of metas) {
-      const name = `ccpi-${meta.name}`
-      state.skills[name] = {
-        name,
-        description: meta.description,
-        location: BUILTIN_LOCATION,
-        content: "",
-        _ccpiName: meta.name,
-      } as any
     }
   }
   // kilocode_change end
@@ -299,29 +283,20 @@ export const layer = Layer.effect(
       Effect.fn("Skill.state")(function* () {
         const s: State = { skills: {}, dirs: new Set() }
         const cfg = yield* config.get()
-        yield* loadSkills(s, yield* InstanceState.get(discovered), bus, cfg.elc?.skills, cfg.ccpi?.skills) // kilocode_change
+        yield* loadSkills(s, yield* InstanceState.get(discovered), bus, cfg.elc?.skills) // kilocode_change
         return s
       }),
     )
 
     const get = Effect.fn("Skill.get")(function* (name: string) {
       const s = yield* InstanceState.get(state)
-      const skill = s.skills[name]
-      if (skill && !skill.content && (skill as any)._ccpiName) {
-        skill.content = getCcpiSkillContent((skill as any)._ccpiName) || ""
-      }
-      return skill
+      return s.skills[name]
     })
 
     const require = Effect.fn("Skill.require")(function* (name: string) {
       const s = yield* InstanceState.get(state)
       const info = s.skills[name]
-      if (info) {
-        if (!info.content && (info as any)._ccpiName) {
-          info.content = getCcpiSkillContent((info as any)._ccpiName) || ""
-        }
-        return info
-      }
+      if (info) return info
       return yield* new NotFoundError({ name, available: Object.keys(s.skills).toSorted() })
     })
 

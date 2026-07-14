@@ -1,7 +1,6 @@
 // kilocode_change - new file
 import * as Tool from "../../tool/tool"
 import { Effect, Schema } from "effect"
-import { zod } from "@opencode-ai/core/effect-zod"
 import * as Log from "@opencode-ai/core/util/log"
 import { execSync } from "child_process"
 
@@ -49,12 +48,12 @@ export const GitPRCreateTool = Tool.define(
   Effect.succeed({
     description:
       "Create a GitHub PR from the current branch. Pushes the branch and creates a PR with title and optional body.",
-    parameters: zod(Schema.Struct({
+    parameters: Schema.Struct({
       title: Schema.String.annotate({ description: "PR title" }),
       body: Schema.optional(Schema.String).annotate({ description: "PR description/body" }),
       base: Schema.optional(Schema.String).annotate({ description: "Base branch (default: main)" }),
       draft: Schema.optional(Schema.Boolean).annotate({ description: "Create as draft PR" }),
-    })),
+    }),
     execute: async (args, ctx) => {
       const cwd = process.cwd()
 
@@ -109,10 +108,10 @@ export const GitPRListTool = Tool.define(
   "git_pr_list",
   Effect.succeed({
     description: "List open GitHub PRs for the current repository",
-    parameters: zod(Schema.Struct({
+    parameters: Schema.Struct({
       state: Schema.optional(Schema.String).annotate({ description: "PR state filter (default: open)" }),
       limit: Schema.optional(Schema.Number).annotate({ description: "Maximum number of PRs to show (default: 10)" }),
-    })),
+    }),
     execute: async (args, ctx) => {
       const cwd = process.cwd()
 

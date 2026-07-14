@@ -1,7 +1,6 @@
 // kilocode_change - new file
 import * as Tool from "../../tool/tool"
 import { Effect, Schema } from "effect"
-import { zod } from "@opencode-ai/core/effect-zod"
 import * as Log from "@opencode-ai/core/util/log"
 import * as fs from "fs/promises"
 import * as path from "path"
@@ -95,10 +94,10 @@ export const GitConflictResolveTool = Tool.define(
   Effect.succeed({
     description:
       "Resolve merge conflicts in a file using a specified strategy (ours, theirs, or manual)",
-    parameters: zod(Schema.Struct({
+    parameters: Schema.Struct({
       file: Schema.String.annotate({ description: "Path to the file with conflicts" }),
       strategy: Schema.optional(Schema.String).annotate({ description: "Resolution strategy (default: ours)" }),
-    })),
+    }),
     execute: async (args, ctx) => {
       const cwd = process.cwd()
       const filePath = path.resolve(cwd, args.file)
@@ -146,7 +145,7 @@ export const GitConflictListTool = Tool.define(
   "git_conflict_list",
   Effect.succeed({
     description: "List all files with merge conflicts in the current repository",
-    parameters: zod(Schema.Struct({})),
+    parameters: Schema.Struct({}),
     execute: async (args, ctx) => {
       const cwd = process.cwd()
 

@@ -1,7 +1,6 @@
 // kilocode_change - new file
 import * as Tool from "../../tool/tool"
 import { Effect, Schema } from "effect"
-import { zod } from "@opencode-ai/core/effect-zod"
 import * as Log from "@opencode-ai/core/util/log"
 import { execSync } from "child_process"
 
@@ -39,11 +38,11 @@ export const GitBlameTool = Tool.define(
   "git_blame",
   Effect.succeed({
     description: "Show git blame for a file, displaying who last modified each line",
-    parameters: zod(Schema.Struct({
+    parameters: Schema.Struct({
       file: Schema.String.annotate({ description: "Path to the file to blame" }),
       line: Schema.optional(Schema.Number).annotate({ description: "Show blame for a specific line number" }),
       range: Schema.optional(Schema.String).annotate({ description: "Line range (e.g., '10-20')" }),
-    })),
+    }),
     execute: async (args, ctx) => {
       const cwd = process.cwd()
 

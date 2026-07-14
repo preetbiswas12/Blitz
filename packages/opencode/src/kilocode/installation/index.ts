@@ -1,6 +1,6 @@
 export const Npm = {
-  name: "@legioncli",
-  path: "@legioncli",
+  name: "@legioncli/cli",
+  path: "@legioncli/cli",
 }
 
 export const Brew = {

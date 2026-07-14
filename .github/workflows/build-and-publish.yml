@@ -59,17 +59,17 @@ jobs:
       - name: Create main package
         working-directory: packages/opencode
         run: |
-          mkdir -p dist/@legioncli
-          cp -r bin dist/@legioncli/bin
-          cp script/postinstall.mjs dist/@legioncli/postinstall.mjs
-          cp ../../LICENSE dist/@legioncli/LICENSE
-          cp README.md dist/@legioncli/README.md
+          mkdir -p dist/@legioncli/cli
+          cp -r bin dist/@legioncli/cli/bin
+          cp script/postinstall.mjs dist/@legioncli/cli/postinstall.mjs
+          cp ../../LICENSE dist/@legioncli/cli/LICENSE
+          cp README.md dist/@legioncli/cli/README.md
 
-          VERSION=$(cat dist/@legioncli-linux-x64/package.json | grep '"version"' | head -1 | sed 's/.*: *"//;s/".*//')
+          VERSION=$(cat dist/@legioncli/cli-linux-x64/package.json | grep '"version"' | head -1 | sed 's/.*: *"//;s/".*//')
 
-          cat > dist/@legioncli/package.json << EOF
+          cat > dist/@legioncli/cli/package.json << EOF
           {
-            "name": "@legioncli",
+            "name": "@legioncli/cli",
             "version": "$VERSION",
             "bin": {
               "legion": "./bin/legion",
@@ -88,7 +88,7 @@ jobs:
       - name: Publish platform packages
         working-directory: packages/opencode
         run: |
-          for dir in dist/@legioncli-*/; do
+          for dir in dist/@legioncli/cli-*/; do
             if [ -d "$dir" ]; then
               echo "Publishing $dir"
               cd "$dir"
@@ -100,7 +100,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish main package
-        working-directory: packages/opencode/dist/@legioncli
+        working-directory: packages/opencode/dist/@legioncli/cli
         run: npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

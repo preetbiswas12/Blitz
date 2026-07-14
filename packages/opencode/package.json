@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "version": "1.0.0",
-  "name": "@legioncli",
+  "name": "@legioncli/cli",
   "type": "module",
   "license": "MIT",
   "private": false,

@@ -57,7 +57,8 @@ const mergeOptions = (target: Record<string, any>, source: Record<string, any> |
 export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: PrepareInput) {
   const isOpenaiOauth = input.provider.id === "openai" && input.auth?.type === "oauth"
   // kilocode_change start - load memory from LEGION.md and session memory
-  const memoryContent = yield* SystemPrompt.memory()
+  const sys = yield* SystemPrompt.Service
+  const memoryContent = yield* sys.memory()
   // kilocode_change end
   const system = [
     [

@@ -16,6 +16,7 @@ import { DEFAULT_HEADERS } from "@/kilocode/const" // kilocode_change
 // kilocode_change start
 import { LegionSession} from "@/kilocode/session"
 import { stripInternalOptions } from "@/kilocode/agent/options"
+import { Memory } from "@/kilocode/memory"
 // kilocode_change end
 
 type PrepareInput = {
@@ -57,8 +58,9 @@ const mergeOptions = (target: Record<string, any>, source: Record<string, any> |
 export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: PrepareInput) {
   const isOpenaiOauth = input.provider.id === "openai" && input.auth?.type === "oauth"
   // kilocode_change start - load memory from LEGION.md and session memory
-  const sys = yield* SystemPrompt.Service
-  const memoryContent = yield* sys.memory
+  const memoryService = yield* Memory.Service
+  const instCtx = yield* InstanceState.context
+  const memoryContent = yield* memoryService.formatContext(instCtx.directory)
   // kilocode_change end
   const system = [
     [

@@ -53,6 +53,7 @@ import { ShellID } from "@/tool/shell/id"
 import { AppFileSystem } from "@opencode-ai/core/filesystem"
 import { Truncate } from "@/tool/truncate"
 import { Image } from "@/image/image"
+import { Memory } from "@/kilocode/memory" // kilocode_change
 import { decodeDataUrl } from "@/util/data-url"
 import { Cause, Effect, Exit, Latch, Layer, Option, Scope, Context, Schema, Types } from "effect"
 import * as EffectLogger from "@opencode-ai/core/effect/logger"
@@ -2119,6 +2120,7 @@ export const defaultLayer = Layer.suspend(() =>
           EventV2Bridge.defaultLayer,
           Agent.defaultLayer,
           SystemPrompt.defaultLayer,
+          Memory.defaultLayer, // kilocode_change
           LLM.defaultLayer,
           Reference.defaultLayer,
           Bus.layer,

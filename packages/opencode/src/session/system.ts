@@ -19,8 +19,6 @@ import { Permission } from "@/permission"
 import { Skill } from "@/skill"
 
 // kilocode_change start
-import { Memory } from "../kilocode/memory"
-import type { Memory as MemoryService } from "../kilocode/memory"
 import SOUL from "../kilocode/soul.txt"
 import BRAIN from "../kilocode/brain.txt"
 import type { EditorContext } from "../kilocode/editor-context"
@@ -130,7 +128,6 @@ export function provider(model: Provider.Model) {
 export interface Interface {
   readonly environment: (model: Provider.Model, editorContext?: EditorContext) => Effect.Effect<string[]> // kilocode_change
   readonly skills: (agent: Agent.Info) => Effect.Effect<string | undefined>
-  readonly memory: Effect.Effect<string> // kilocode_change
 }
 
 export class Service extends Context.Service<Service, Interface>()("@opencode/SystemPrompt") {}
@@ -164,26 +161,10 @@ export const layer = Layer.effect(
           Skill.fmt(list, { verbose: true }),
         ].join("\n")
       }),
-
-      // kilocode_change start
-      memory: Effect.fn("SystemPrompt.memory")(function* () {
-        const mem = yield* Memory.Service
-        const ctx = yield* InstanceState.context
-        const content = yield* mem.formatContext(ctx.directory)
-        if (!content) return ""
-        return [
-          "# Project Memory",
-          "The following memory has been loaded from LEGION.md and session memory.",
-          "Use this context to inform your responses about project conventions, decisions, and learnings.",
-          "",
-          content,
-        ].join("\n")
-      }),
-      // kilocode_change end
     })
   }),
 )
 
-export const defaultLayer = layer.pipe(Layer.provide(Skill.defaultLayer), Layer.provide(Memory.defaultLayer)) // kilocode_change - add Memory layer
+export const defaultLayer = layer.pipe(Layer.provide(Skill.defaultLayer))
 
 export * as SystemPrompt from "./system"

@@ -78,3 +78,6 @@ opus-4-8.txt
 # Test Artifacts
 packages/app/.artifacts/
 packages/opencode/.artifacts/
+
+# Legion local config
+.legion/

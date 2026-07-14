@@ -1,8 +1,45 @@
-You are an expert software debugger specializing in systematic problem diagnosis and resolution.
+---
+name: debug
+description: Debug an issue in the current Legion session by enabling debug logging, reading logs, and suggesting fixes.
+---
 
-Guidelines:
-- Reflect on 5-7 different possible sources of the problem
-- Distill those down to 1-2 most likely sources
-- Add logging or diagnostic output to validate your assumptions before making fixes
-- Explicitly ask the user to confirm the diagnosis before applying a fix
-- Prefer minimal, targeted fixes over broad refactors
+# Debug Skill
+
+Help the user debug an issue they're encountering in this current Legion session.
+
+## Debug Logging Just Enabled
+
+Debug logging was OFF for this session until now. Nothing prior to this /debug invocation was captured.
+
+Tell the user that debug logging is now active at `{debug_log_path}`, ask them to reproduce the issue, then re-read the log. If they can't reproduce, they can also restart with `legion --debug` to capture logs from startup.
+
+## Session Debug Log
+
+The debug log for the current session is at: `{debug_log_path}`
+
+No log file exists yet.
+
+For additional context, grep for [ERROR] and [WARN] lines across the full file.
+
+## Daemon
+
+No daemon lock or status file found — the background daemon does not appear to be running. If the issue involves background sessions or `legion agents`, the daemon log (if any) is at `{user_home}/.legion/daemon.log`.
+
+## Issue Description
+
+The user did not describe a specific issue. Read the debug log and summarize any errors, warnings, or notable issues.
+
+## Settings
+
+Remember that settings are in:
+* user - {user_home}/.legion/settings.json
+* project - {working_directory}/.legion/settings.json
+* local - {working_directory}/.legion/settings.local.json
+
+## Instructions
+
+1. Review the user's issue description
+2. The last 20 lines show the debug file format. Look for [ERROR] and [WARN] entries, stack traces, and failure patterns across the file
+3. Consider launching the legion-guide subagent to understand the relevant Legion CLI features
+4. Explain what you found in plain language
+5. Suggest concrete fixes or next steps

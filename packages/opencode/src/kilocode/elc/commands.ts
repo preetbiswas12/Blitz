@@ -17,10 +17,10 @@ Ask a question mid-task and get an immediate, focused answer — then continue r
 
 ## When to Use
 
-- You're curious about something while Claude is working and don't want to lose momentum
-- You need a quick explanation of code Claude is currently editing
+- You're curious about something while Legion is working and don't want to lose momentum
+- You need a quick explanation of code Legion is currently editing
 - You want a second opinion or clarification on a decision without derailing the task
-- You need to understand an error, concept, or pattern before Claude proceeds
+- You need to understand an error, concept, or pattern before Legion proceeds
 - You want to ask something unrelated to the current task without starting a new session
 
 ## Usage
@@ -186,7 +186,7 @@ Update ECC from its upstream repo and regenerate the current context's managed i
 
 \`\`\`bash
 # Preview the update without mutating anything
-ECC_ROOT="\${CLAUDE_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.CLAUDE_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.claude');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
+ECC_ROOT="\${LEGION_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
 node "\$ECC_ROOT/scripts/auto-update.js" --dry-run
 
 # Update only Cursor-managed files in the current project
@@ -289,10 +289,10 @@ When creating a checkpoint:
 
 1. Run \`/verify quick\` to ensure current state is clean
 2. Create a git stash or commit with checkpoint name
-3. Log checkpoint to \`.claude/checkpoints.log\`:
+3. Log checkpoint to \`.legion/checkpoints.log\`:
 
 \`\`\`bash
-echo "\$(date +%Y-%m-%d-%H:%M) | \$CHECKPOINT_NAME | \$(git rev-parse --short HEAD)" >> .claude/checkpoints.log
+echo "\$(date +%Y-%m-%d-%H:%M) | \$CHECKPOINT_NAME | \$(git rev-parse --short HEAD)" >> .legion/checkpoints.log
 \`\`\`
 
 4. Report checkpoint created
@@ -451,8 +451,8 @@ If PR not found, stop with error. Store PR metadata for later phases.
 
 Build review context:
 
-1. **Project rules** — Read \`LEGION.md\`, \`.claude/docs/\`, and any contributing guidelines
-2. **Planning artifacts** — Check \`.claude/prds/\`, \`.claude/plans/\`, \`.claude/reviews/\`, and legacy \`.claude/PRPs/{prds,plans,reports,reviews}/\` for context related to this PR
+1. **Project rules** — Read \`LEGION.md\`, \`.legion/docs/\`, and any contributing guidelines
+2. **Planning artifacts** — Check \`.legion/prds/\`, \`.legion/plans/\`, \`.legion/reviews/\`, and legacy \`.legion/PRPs/{prds,plans,reports,reviews}/\` for context related to this PR
 3. **PR intent** — Parse PR description for goals, linked issues, test plans
 4. **Changed files** — List all modified files and categorize by type (source, test, config, docs)
 
@@ -541,7 +541,7 @@ Special cases:
 
 ### Phase 6 — REPORT
 
-Create review artifact at \`.claude/reviews/pr-<NUMBER>-review.md\` unless the repo already uses legacy \`.claude/PRPs/reviews/\` for this workstream:
+Create review artifact at \`.legion/reviews/pr-<NUMBER>-review.md\` unless the repo already uses legacy \`.legion/PRPs/reviews/\` for this workstream:
 
 \`\`\`markdown
 # PR Review: #<NUMBER> — <TITLE>
@@ -626,7 +626,7 @@ Issues: <critical_count> critical, <high_count> high, <medium_count> medium, <lo
 Validation: <pass_count>/<total_count> checks passed
 
 Artifacts:
-  Review: .claude/reviews/pr-<NUMBER>-review.md
+  Review: .legion/reviews/pr-<NUMBER>-review.md
   GitHub: <PR URL>
 
 Next steps:
@@ -678,7 +678,7 @@ Linux, and Windows.
 \`\`\`bash
 node -e '
 const fs=require("fs"),os=require("os"),path=require("path");
-const f=path.join(os.homedir(),".claude","metrics","costs.jsonl");
+const f=path.join(os.homedir(),".legion","metrics","costs.jsonl");
 if(!fs.existsSync(f)){console.log("Cost tracker not set up: "+f+" not found. Enable the stop:cost-tracker hook and finish a session first.");process.exit(0);}
 const rows=fs.readFileSync(f,"utf8").split(/\\r?\\n/).filter(Boolean).map(l=>{try{return JSON.parse(l)}catch{return null}}).filter(Boolean);
 const bySession=new Map();
@@ -707,7 +707,7 @@ const days=new Map();for(const r of latest){const k=day(r);days.set(k,(days.get(
 \`\`\`bash
 node -e '
 const fs=require("fs"),os=require("os"),path=require("path");
-const f=path.join(os.homedir(),".claude","metrics","costs.jsonl");
+const f=path.join(os.homedir(),".legion","metrics","costs.jsonl");
 if(!fs.existsSync(f)){console.error("no data");process.exit(0);}
 const rows=fs.readFileSync(f,"utf8").split(/\\r?\\n/).filter(Boolean).map(l=>{try{return JSON.parse(l)}catch{return null}}).filter(Boolean).slice(-100);
 console.log("timestamp,session_id,model,input_tokens,output_tokens,cache_write_tokens,cache_read_tokens,estimated_cost_usd");
@@ -1379,7 +1379,7 @@ For a specific feature name:
 - \`/harness-audit\` for deterministic repo readiness scoring
 - \`/skill-health\` for skill quality checks
 - \`/skill-create\` for extracting a new skill from local git history
-- \`/security-scan\` for Claude/OpenCode configuration security review
+- \`/security-scan\` for Legion/OpenCode configuration security review
 `
 
 const CMD_epic_claim = `---
@@ -1571,10 +1571,10 @@ command: true
 Run the instinct CLI using the plugin root path:
 
 \`\`\`bash
-python3 "\${CLAUDE_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" evolve [--generate]
+python3 "\${LEGION_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" evolve [--generate]
 \`\`\`
 
-Or if \`CLAUDE_PLUGIN_ROOT\` is not set (manual installation):
+Or if \`LEGION_PLUGIN_ROOT\` is not set (manual installation):
 
 \`\`\`bash
 python3 ~/.legion/skills/continuous-learning-v2/scripts/instinct-cli.py evolve [--generate]
@@ -3203,7 +3203,7 @@ Show the user:
 
 ### Step 3: Generate Rule Files
 
-For each approved rule, create a file at \`.claude/hookify.{name}.local.md\`:
+For each approved rule, create a file at \`.legion/hookify.{name}.local.md\`:
 
 \`\`\`yaml
 ---
@@ -3229,7 +3229,7 @@ Interactively enable or disable existing hookify rules.
 
 ## Steps
 
-1. Find all \`.claude/hookify.*.local.md\` files
+1. Find all \`.legion/hookify.*.local.md\` files
 2. Read the current state of each rule
 3. Present the list with current enabled / disabled status
 4. Ask which rules to toggle
@@ -3257,7 +3257,7 @@ Hookify creates rule files that integrate with Legion CLI's hook system to preve
 
 ### Rule File Format
 
-Files are stored as \`.claude/hookify.{name}.local.md\`:
+Files are stored as \`.legion/hookify.{name}.local.md\`:
 
 \`\`\`yaml
 ---
@@ -3293,7 +3293,7 @@ Find and display all hookify rules in a formatted table.
 
 ## Steps
 
-1. Find all \`.claude/hookify.*.local.md\` files
+1. Find all \`.legion/hookify.*.local.md\` files
 2. Read each file's frontmatter:
    - \`name\`
    - \`enabled\`
@@ -3389,10 +3389,10 @@ command: true
 Run the instinct CLI using the plugin root path:
 
 \`\`\`bash
-python3 "\${CLAUDE_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" import <file-or-url> [--dry-run] [--force] [--min-confidence 0.7] [--scope project|global]
+python3 "\${LEGION_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" import <file-or-url> [--dry-run] [--force] [--min-confidence 0.7] [--scope project|global]
 \`\`\`
 
-Or if \`CLAUDE_PLUGIN_ROOT\` is not set (manual installation):
+Or if \`LEGION_PLUGIN_ROOT\` is not set (manual installation):
 
 \`\`\`bash
 python3 ~/.legion/skills/continuous-learning-v2/scripts/instinct-cli.py import <file-or-url>
@@ -3507,12 +3507,12 @@ Shows learned instincts for the current project plus global instincts, grouped b
 Run the instinct CLI, resolving the active ECC plugin root the same way
 \`hooks/hooks.json\` and the other slash commands (\`/sessions\`, \`/skill-health\`)
 do — env var → standard install → known plugin roots → plugin cache → fallback.
-This avoids the divergence that happens when \`CLAUDE_PLUGIN_ROOT\` is unset
+This avoids the divergence that happens when \`LEGION_PLUGIN_ROOT\` is unset
 while a legacy \`~/.legion/skills/continuous-learning-v2/\` directory still
 exists (#2037).
 
 \`\`\`bash
-ECC_ROOT="\${CLAUDE_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.CLAUDE_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.claude');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
+ECC_ROOT="\${LEGION_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
 python3 "\$ECC_ROOT/skills/continuous-learning-v2/scripts/instinct-cli.py" status
 \`\`\`
 
@@ -4394,7 +4394,7 @@ Look for:
 3. **Determine save location:**
    - Ask: "Would this pattern be useful in a different project?"
    - **Global** (\`~/.legion/skills/learned/\`): Generic patterns usable across 2+ projects (bash compatibility, LLM API behavior, debugging techniques, etc.)
-   - **Project** (\`.claude/skills/learned/\` in current project): Project-specific knowledge (quirks of a particular config file, project-specific architecture decisions, etc.)
+   - **Project** (\`.legion/skills/learned/\` in current project): Project-specific knowledge (quirks of a particular config file, project-specific architecture decisions, etc.)
    - When in doubt, choose Global (moving Global → Project is easier than the reverse)
 
 4. Draft the skill file using this format:
@@ -4428,7 +4428,7 @@ origin: auto-extracted
 
    Execute **all** of the following before evaluating the draft:
 
-   - [ ] Grep \`~/.legion/skills/\` and relevant project \`.claude/skills/\` files by keyword to check for content overlap
+   - [ ] Grep \`~/.legion/skills/\` and relevant project \`.legion/skills/\` files by keyword to check for content overlap
    - [ ] Check MEMORY.md (both project and global) for overlap
    - [ ] Consider whether appending to an existing skill would suffice
    - [ ] Confirm this is a reusable pattern, not a one-off fix
@@ -4509,7 +4509,7 @@ Start a managed autonomous loop pattern with safety defaults.
 1. Confirm repository state and branch strategy.
 2. Select loop pattern and model tier strategy.
 3. Enable required hooks/profile for the chosen mode.
-4. Create loop plan and write runbook under \`.claude/plans/\`.
+4. Create loop plan and write runbook under \`.legion/plans/\`.
 5. Print commands to start and monitor the loop.
 
 ## Required Safety Checks
@@ -4541,7 +4541,7 @@ terminal:
 npx --package ecc-universal ecc loop-status --json
 \`\`\`
 
-The CLI scans local Claude transcript JSONL files under
+The CLI scans local Legion transcript JSONL files under
 \`~/.legion/projects/**\` and reports stale \`ScheduleWakeup\` calls or \`Bash\`
 tool calls that have no matching \`tool_result\`.
 
@@ -4560,7 +4560,7 @@ tool calls that have no matching \`tool_result\`.
 ## Cross-Session CLI
 
 - \`ecc loop-status --json\` emits machine-readable status for recent local
-  Claude transcripts.
+  Legion transcripts.
 - \`ecc loop-status --home <dir>\` scans a different home directory when
   inspecting another local profile or mounted workspace.
 - \`ecc loop-status --transcript <session.jsonl>\` inspects one transcript
@@ -4589,7 +4589,7 @@ consume the stream.
 ## Snapshot Files
 
 Use \`--write-dir <dir>\` when a separate process needs to inspect loop state
-without waiting for the current Claude session to dequeue \`/loop-status\`. The
+without waiting for the current Legion session to dequeue \`/loop-status\`. The
 CLI writes:
 
 - \`index.json\` with one row per inspected session.
@@ -4686,10 +4686,10 @@ Goal: [launch, waitlist, signups, awareness — and timeline]
 
 ## Output Location
 
-When saving campaign assets, the convention is \`.claude/campaigns/{campaign-name}/\`:
+When saving campaign assets, the convention is \`.legion/campaigns/{campaign-name}/\`:
 
 \`\`\`
-.claude/campaigns/product-launch/
+.legion/campaigns/product-launch/
 ├── positioning.md
 ├── landing-page.md
 ├── email-sequence.md
@@ -4712,7 +4712,7 @@ Confirm the save location before writing files.
 \`\`\`
 
 \`\`\`
-/marketing-campaign review .claude/campaigns/the-key/landing-page.md
+/marketing-campaign review .legion/campaigns/the-key/landing-page.md
 \`\`\`
 
 ## Agent Delegation
@@ -4796,7 +4796,7 @@ You are the **Backend Orchestrator**, coordinating multi-model collaboration for
 **Collaborative Models**:
 - **Codex** – Backend logic, algorithms (**Backend authority, trustworthy**)
 - **Gemini** – Frontend perspective (**Backend opinions for reference only**)
-- **Claude (self)** – Orchestration, planning, execution, delivery
+- **Legion (self)** – Orchestration, planning, execution, delivery
 
 ---
 
@@ -4893,7 +4893,7 @@ Output solutions (at least 2), wait for user selection.
 - Context: Analysis results from Phase 2
 - OUTPUT: File structure, function/class design, dependency relationships
 
-Claude synthesizes plan, save to \`.claude/plan/task-name.md\` after user approval.
+Legion synthesizes plan, save to \`.legion/plan/task-name.md\` after user approval.
 
 ### Phase 4: Implementation
 
@@ -4930,16 +4930,16 @@ Integrate review feedback, execute optimization after user confirmation.
 1. **Codex backend opinions are trustworthy**
 2. **Gemini backend opinions for reference only**
 3. External models have **zero filesystem write access**
-4. Claude handles all code writes and file operations
+4. Legion handles all code writes and file operations
 `
 
 const CMD_multi_execute = `---
-description: Execute a multi-model implementation plan while preserving Claude as the only filesystem writer.
+description: Execute a multi-model implementation plan while preserving Legion as the only filesystem writer.
 ---
 
 # Execute - Multi-Model Collaborative Execution
 
-Multi-model collaborative execution - Get prototype from plan → Claude refactors and implements → Multi-model audit and delivery.
+Multi-model collaborative execution - Get prototype from plan → Legion refactors and implements → Multi-model audit and delivery.
 
 > **Prerequisite:** Requires the external \`ccg-workflow\` runtime, which is **not** part of the base ECC install. Initialize it with \`npx ccg-workflow\` to provision \`~/.legion/bin/codeagent-wrapper\` and the \`~/.legion/.ccg/prompts/*\` role files this command depends on. Without that runtime, this command will not run correctly.
 
@@ -4950,7 +4950,7 @@ Multi-model collaborative execution - Get prototype from plan → Claude refacto
 ## Core Protocols
 
 - **Language Protocol**: Use **English** when interacting with tools/models, communicate with user in their language
-- **Code Sovereignty**: External models have **zero filesystem write access**, all modifications by Claude
+- **Code Sovereignty**: External models have **zero filesystem write access**, all modifications by Legion
 - **Dirty Prototype Refactoring**: Treat Codex/Gemini Unified Diff as "dirty prototype", must refactor to production-grade code
 - **Stop-Loss Mechanism**: Do not proceed to next phase until current phase output is validated
 - **Prerequisite**: Only execute after user explicitly replies "Y" to \`/ccg:plan\` output (if missing, must confirm first)
@@ -5052,7 +5052,7 @@ TaskOutput({ task_id: "<task_id>", block: true, timeout: 600000 })
 \`[Mode: Prepare]\`
 
 1. **Identify Input Type**:
-   - Plan file path (e.g., \`.claude/plan/xxx.md\`)
+   - Plan file path (e.g., \`.legion/plan/xxx.md\`)
    - Direct task description
 
 2. **Read Plan Content**:
@@ -5147,7 +5147,7 @@ mcp__ace-tool__search_context({
 
 \`[Mode: Implement]\`
 
-**Claude as Code Sovereign executes the following steps**:
+**Legion as Code Sovereign executes the following steps**:
 
 1. **Read Diff**: Parse Unified Diff Patch returned by Codex/Gemini
 
@@ -5229,7 +5229,7 @@ After audit passes, report to user:
 
 ## Key Rules
 
-1. **Code Sovereignty** – All file modifications by Claude, external models have zero write access
+1. **Code Sovereignty** – All file modifications by Legion, external models have zero write access
 2. **Dirty Prototype Refactoring** – Codex/Gemini output treated as draft, must refactor
 3. **Trust Rules** – Backend follows Codex, Frontend follows Gemini
 4. **Minimal Changes** – Only modify necessary code, no side effects
@@ -5241,7 +5241,7 @@ After audit passes, report to user:
 
 \`\`\`bash
 # Execute plan file
-/ccg:execute .claude/plan/feature-name.md
+/ccg:execute .legion/plan/feature-name.md
 
 # Execute task directly (for plans already discussed in context)
 /ccg:execute implement user authentication based on previous plan
@@ -5285,7 +5285,7 @@ You are the **Frontend Orchestrator**, coordinating multi-model collaboration fo
 **Collaborative Models**:
 - **Gemini** – Frontend UI/UX (**Frontend authority, trustworthy**)
 - **Codex** – Backend perspective (**Frontend opinions for reference only**)
-- **Claude (self)** – Orchestration, planning, execution, delivery
+- **Legion (self)** – Orchestration, planning, execution, delivery
 
 ---
 
@@ -5382,7 +5382,7 @@ Output solutions (at least 2), wait for user selection.
 - Context: Analysis results from Phase 2
 - OUTPUT: Component structure, UI flow, styling approach
 
-Claude synthesizes plan, save to \`.claude/plan/task-name.md\` after user approval.
+Legion synthesizes plan, save to \`.legion/plan/task-name.md\` after user approval.
 
 ### Phase 4: Implementation
 
@@ -5419,7 +5419,7 @@ Integrate review feedback, execute optimization after user confirmation.
 1. **Gemini frontend opinions are trustworthy**
 2. **Codex frontend opinions for reference only**
 3. External models have **zero filesystem write access**
-4. Claude handles all code writes and file operations
+4. Legion handles all code writes and file operations
 `
 
 const CMD_multi_plan = `---
@@ -5440,9 +5440,9 @@ Multi-model collaborative planning - Context retrieval + Dual-model analysis →
 
 - **Language Protocol**: Use **English** when interacting with tools/models, communicate with user in their language
 - **Mandatory Parallel**: Codex/Gemini calls MUST use \`run_in_background: true\` (including single model calls, to avoid blocking main thread)
-- **Code Sovereignty**: External models have **zero filesystem write access**, all modifications by Claude
+- **Code Sovereignty**: External models have **zero filesystem write access**, all modifications by Legion
 - **Stop-Loss Mechanism**: Do not proceed to next phase until current phase output is validated
-- **Planning Only**: This command allows reading context and writing to \`.claude/plan/*\` plan files, but **NEVER modify production code**
+- **Planning Only**: This command allows reading context and writing to \`.legion/plan/*\` plan files, but **NEVER modify production code**
 
 ---
 
@@ -5591,7 +5591,7 @@ To reduce risk of omissions in Legion's synthesized plan, can parallel have both
 
 Wait for both models' complete results with \`TaskOutput\`, record key differences in their suggestions.
 
-#### 2.4 Generate Implementation Plan (Claude Final Version)
+#### 2.4 Generate Implementation Plan (Legion Final Version)
 
 Synthesize both analyses, generate **Step-by-step Implementation Plan**:
 
@@ -5630,18 +5630,18 @@ Synthesize both analyses, generate **Step-by-step Implementation Plan**:
 **\`/ccg:plan\` responsibilities end here, MUST execute the following actions**:
 
 1. Present complete implementation plan to user (including pseudo-code)
-2. Save plan to \`.claude/plan/<feature-name>.md\` (extract feature name from requirement, e.g., \`user-auth\`, \`payment-module\`)
+2. Save plan to \`.legion/plan/<feature-name>.md\` (extract feature name from requirement, e.g., \`user-auth\`, \`payment-module\`)
 3. Output prompt in **bold text** (MUST use actual saved file path):
 
 ---
-**Plan generated and saved to \`.claude/plan/actual-feature-name.md\`**
+**Plan generated and saved to \`.legion/plan/actual-feature-name.md\`**
 
 **Please review the plan above. You can:**
 - **Modify plan**: Tell me what needs adjustment, I'll update the plan
 - **Execute plan**: Copy the following command to a new session
 
 \`\`\`
-/ccg:execute .claude/plan/actual-feature-name.md
+/ccg:execute .legion/plan/actual-feature-name.md
 \`\`\`
 ---
 
@@ -5661,8 +5661,8 @@ Synthesize both analyses, generate **Step-by-step Implementation Plan**:
 
 After planning completes, save plan to:
 
-- **First planning**: \`.claude/plan/<feature-name>.md\`
-- **Iteration versions**: \`.claude/plan/<feature-name>-v2.md\`, \`.claude/plan/<feature-name>-v3.md\`...
+- **First planning**: \`.legion/plan/<feature-name>.md\`
+- **Iteration versions**: \`.legion/plan/<feature-name>-v2.md\`, \`.legion/plan/<feature-name>-v3.md\`...
 
 Plan file write should complete before presenting plan to user.
 
@@ -5673,7 +5673,7 @@ Plan file write should complete before presenting plan to user.
 If user requests plan modifications:
 
 1. Adjust plan content based on user feedback
-2. Update \`.claude/plan/<feature-name>.md\` file
+2. Update \`.legion/plan/<feature-name>.md\` file
 3. Re-present modified plan
 4. Prompt user to review or execute again
 
@@ -5684,7 +5684,7 @@ If user requests plan modifications:
 After user approves, **manually** execute:
 
 \`\`\`bash
-/ccg:execute .claude/plan/<feature-name>.md
+/ccg:execute .legion/plan/<feature-name>.md
 \`\`\`
 
 ---
@@ -5720,7 +5720,7 @@ Structured development workflow with quality gates, MCP services, and multi-mode
 
 - Task to develop: \$ARGUMENTS
 - Structured 6-phase workflow with quality gates
-- Multi-model collaboration: Codex (backend) + Gemini (frontend) + Claude (orchestration)
+- Multi-model collaboration: Codex (backend) + Gemini (frontend) + Legion (orchestration)
 - MCP service integration (ace-tool, optional) for enhanced capabilities
 
 ## Your Role
@@ -5731,7 +5731,7 @@ You are the **Orchestrator**, coordinating a multi-model collaborative system (R
 - **ace-tool MCP** (optional) – Code retrieval + Prompt enhancement
 - **Codex** – Backend logic, algorithms, debugging (**Backend authority, trustworthy**)
 - **Gemini** – Frontend UI/UX, visual design (**Frontend expert, backend opinions for reference only**)
-- **Claude (self)** – Orchestration, planning, execution, delivery
+- **Legion (self)** – Orchestration, planning, execution, delivery
 
 ---
 
@@ -5812,7 +5812,7 @@ TaskOutput({ task_id: "<task_id>", block: true, timeout: 600000 })
 Use external tmux/worktree orchestration when the work must be split across parallel workers that need isolated git state, independent terminals, or separate build/test execution. Use in-process subagents for lightweight analysis, planning, or review where the main session remains the only writer.
 
 \`\`\`bash
-node scripts/orchestrate-worktrees.js .claude/plan/workflow-e2e-test.json --execute
+node scripts/orchestrate-worktrees.js .legion/plan/workflow-e2e-test.json --execute
 \`\`\`
 
 ---
@@ -5857,7 +5857,7 @@ Wait for results with \`TaskOutput\`.
 
 **Follow the \`IMPORTANT\` instructions in \`Multi-Model Call Specification\` above**
 
-**Claude Synthesis**: Adopt Codex backend plan + Gemini frontend plan, save to \`.claude/plan/task-name.md\` after user approval.
+**Legion Synthesis**: Adopt Codex backend plan + Gemini frontend plan, save to \`.legion/plan/task-name.md\` after user approval.
 
 ### Phase 4: Implementation
 
@@ -5893,7 +5893,7 @@ Wait for results with \`TaskOutput\`. Integrate review feedback, execute optimiz
 ## Key Rules
 
 1. Phase sequence cannot be skipped (unless user explicitly instructs)
-2. External models have **zero filesystem write access**, all modifications by Claude
+2. External models have **zero filesystem write access**, all modifications by Legion
 3. **Force stop** when score < 7 or user does not approve
 `
 
@@ -6258,12 +6258,12 @@ The assistant will:
 
 | Input | Mode | Behavior |
 |---|---|---|
-| \`path/to/name.prd.md\` | PRD artifact mode | Read the PRD, pick the next pending delivery milestone or implementation phase, and write \`.claude/plans/{name}.plan.md\` |
+| \`path/to/name.prd.md\` | PRD artifact mode | Read the PRD, pick the next pending delivery milestone or implementation phase, and write \`.legion/plans/{name}.plan.md\` |
 | Any other markdown path | Reference mode | Read the file as context and produce an inline plan |
 | Free-form text | Conversational mode | Produce an inline plan |
 | Empty input | Clarification mode | Ask what should be planned |
 
-In PRD artifact mode, create \`.claude/plans/\` if needed. If the PRD contains a \`Delivery Milestones\` table, update only the selected row from \`pending\` to \`in-progress\` and set its \`Plan\` cell to the generated plan path. If the PRD uses the legacy \`.claude/PRPs/prds/\` format with \`Implementation Phases\`, read it without migrating paths.
+In PRD artifact mode, create \`.legion/plans/\` if needed. If the PRD contains a \`Delivery Milestones\` table, update only the selected row from \`pending\` to \`in-progress\` and set its \`Plan\` cell to the generated plan path. If the PRD uses the legacy \`.legion/PRPs/prds/\` format with \`Implementation Phases\`, read it without migrating paths.
 
 ## Pattern Grounding
 
@@ -6281,7 +6281,7 @@ If no similar code exists, state that explicitly. Do not invent a pattern.
 
 ## PRD Artifact Output
 
-When called with a \`.prd.md\` file, write the plan to \`.claude/plans/{kebab-case-name}.plan.md\` using this structure:
+When called with a \`.prd.md\` file, write the plan to \`.legion/plans/{kebab-case-name}.plan.md\` using this structure:
 
 \`\`\`\`markdown
 # Plan: {Feature Name}
@@ -6409,9 +6409,9 @@ After planning:
 - Use \`/code-review\` to review completed implementation
 - Use \`/pr\` or \`/prp-pr\` to open a pull request
 
-> **Need requirements first?** Use \`/plan-prd\` for a lean PRD at \`.claude/prds/{name}.prd.md\`.
+> **Need requirements first?** Use \`/plan-prd\` for a lean PRD at \`.legion/prds/{name}.prd.md\`.
 >
-> **Need the legacy PRP flow?** Use \`/prp-plan\` for deep PRP planning with \`.claude/PRPs/\` artifacts. Use \`/prp-implement\` to execute those plans with rigorous validation loops.
+> **Need the legacy PRP flow?** Use \`/prp-plan\` for deep PRP planning with \`.legion/PRPs/\` artifacts. Use \`/prp-implement\` to execute those plans with rigorous validation loops.
 
 ## Optional Planner Agent
 
@@ -6440,7 +6440,7 @@ skill for the full workflow and rules.
 ## What This Command Does
 
 1. Resolve the artifact: the given path, else the most recently modified
-   \`.claude/plans/*.plan.md\`, else ask what to review.
+   \`.legion/plans/*.plan.md\`, else ask what to review.
 2. \`ecc-plan-canvas open <artifact>\` — opens the user's browser.
 3. \`ecc-plan-canvas await <artifact>\` — block until feedback,
    verdict, or session end; leave it running.
@@ -6454,7 +6454,7 @@ stop polling, \`end\` the session, and begin implementation.
 ## Example
 
 \`\`\`
-User: /plan-canvas .claude/plans/notifications.plan.md
+User: /plan-canvas .legion/plans/notifications.plan.md
 
 Assistant: (runs open + await, browser opens)
 ...user clicks "Request changes" with two annotations...
@@ -6488,7 +6488,7 @@ Produces a **Product Requirements Document** — the requirements-phase artifact
 | Frame the problem and users | Design the architecture |
 | Capture success criteria and scope | Pick files or write patterns |
 | List open questions and risks | Enumerate implementation tasks |
-| Write \`.claude/prds/{name}.prd.md\` | Produce an implementation plan — that's \`/plan\` |
+| Write \`.legion/prds/{name}.prd.md\` | Produce an implementation plan — that's \`/plan\` |
 
 If you find yourself writing implementation detail, stop and cut it. It belongs in \`/plan\`.
 
@@ -6541,10 +6541,10 @@ Wait for responses.
 Create the directory if needed, write the PRD, and report.
 
 \`\`\`bash
-mkdir -p .claude/prds
+mkdir -p .legion/prds
 \`\`\`
 
-**Output path**: \`.claude/prds/{kebab-case-name}.prd.md\`
+**Output path**: \`.legion/prds/{kebab-case-name}.prd.md\`
 
 #### PRD Template
 
@@ -6600,7 +6600,7 @@ We'll know we're right when **{measurable outcome}**.
 #### Report to user
 
 \`\`\`
-PRD created: .claude/prds/{name}.prd.md
+PRD created: .legion/prds/{name}.prd.md
 
 Problem:    {one line}
 Hypothesis: {one line}
@@ -6613,7 +6613,7 @@ Validation status:
 
 Open questions: {count}
 
-Next step: /plan .claude/prds/{name}.prd.md
+Next step: /plan .legion/prds/{name}.prd.md
   → /plan will pick the next pending milestone and produce an implementation plan.
 \`\`\`
 
@@ -6674,7 +6674,7 @@ Auto-analyze project and generate PM2 service commands.
 project/
 ├── ecosystem.config.cjs              # PM2 config
 ├── {backend}/start.cjs               # Python wrapper (if applicable)
-└── .claude/
+└── .legion/
     ├── commands/
     │   ├── pm2-all.md                # Start all + monit
     │   ├── pm2-all-stop.md           # Stop all
@@ -6840,8 +6840,8 @@ Based on \`\$ARGUMENTS\`, execute init:
 1. Scan project for services
 2. Generate \`ecosystem.config.cjs\`
 3. Generate \`{backend}/start.cjs\` for Python services (if applicable)
-4. Generate command files in \`.claude/commands/\`
-5. Generate script files in \`.claude/scripts/\`
+4. Generate command files in \`.legion/commands/\`
+5. Generate script files in \`.legion/scripts/\`
 6. **Update project LEGION.md** with PM2 info (see below)
 7. **Display completion summary** with terminal commands
 
@@ -6890,7 +6890,7 @@ After all files generated, output:
 |------|------|------|
 | {port} | {name} | {type} |
 
-**Claude Commands:** /pm2-all, /pm2-all-stop, /pm2-{port}, /pm2-{port}-stop, /pm2-logs, /pm2-status
+**Legion Commands:** /pm2-all, /pm2-all-stop, /pm2-{port}, /pm2-{port}-stop, /pm2-logs, /pm2-status
 
 **Terminal Commands:**
 ## First time (with config file)
@@ -6984,11 +6984,11 @@ Categorize changed files: source, tests, docs, config, migrations.
 ### Planning Artifacts
 
 Check for related artifacts produced by \`/plan-prd\`, \`/plan\`, or the legacy PRP workflow:
-- \`.claude/prds/\` — PRDs this PR implements a milestone of
-- \`.claude/plans/\` — Plans executed by this PR
-- \`.claude/PRPs/prds/\` — legacy PRP PRDs
-- \`.claude/PRPs/plans/\` — legacy PRP implementation plans
-- \`.claude/PRPs/reports/\` — legacy PRP implementation reports
+- \`.legion/prds/\` — PRDs this PR implements a milestone of
+- \`.legion/plans/\` — Plans executed by this PR
+- \`.legion/PRPs/prds/\` — legacy PRP PRDs
+- \`.legion/PRPs/plans/\` — legacy PRP implementation plans
+- \`.legion/PRPs/reports/\` — legacy PRP implementation reports
 
 Reference these in the PR body if they exist.
 
@@ -7109,7 +7109,7 @@ Create a safe, reviewable ECC onboarding plan for the current project. This comm
 \`\`\`text
 /project-init
 /project-init --dry-run
-/project-init --target claude
+/project-init --target legion
 /project-init --target cursor
 /project-init --skills continuous-learning-v2,security-review
 /project-init --config ecc-install.json
@@ -7118,7 +7118,7 @@ Create a safe, reviewable ECC onboarding plan for the current project. This comm
 ## Safety Rules
 
 1. Default to dry-run. Do not modify \`LEGION.md\`, settings files, rules, skills, or install state until the user approves the concrete plan.
-2. Preserve existing project guidance. If \`LEGION.md\`, \`.claude/settings.local.json\`, \`.cursor/\`, \`.codex/\`, \`.gemini/\`, \`.opencode/\`, \`.codebuddy/\`, \`.joycode/\`, or \`.qwen/\` already exists, inspect it and propose a merge/append plan instead of overwriting.
+2. Preserve existing project guidance. If \`LEGION.md\`, \`.legion/settings.local.json\`, \`.cursor/\`, \`.codex/\`, \`.gemini/\`, \`.opencode/\`, \`.codebuddy/\`, \`.joycode/\`, or \`.qwen/\` already exists, inspect it and propose a merge/append plan instead of overwriting.
 3. Use ECC's installer and manifest tooling. Do not hand-copy files or clone arbitrary remotes as an install shortcut.
 4. Keep permissions narrow. Any generated settings should match detected build/test/lint tools and avoid broad shell access.
 5. Report exactly what would change before applying anything.
@@ -7137,7 +7137,7 @@ When the ECC checkout is available, use \`config/project-stack-mappings.json\` a
 
 ## Planning Flow
 
-1. Identify the target harness. Default to \`claude\` unless the user asks for \`cursor\`, \`codex\`, \`gemini\`, \`opencode\`, \`codebuddy\`, \`joycode\`, or \`qwen\`.
+1. Identify the target harness. Default to \`legion\` unless the user asks for \`cursor\`, \`codex\`, \`gemini\`, \`opencode\`, \`codebuddy\`, \`joycode\`, or \`qwen\`.
 2. Detect stacks from project files and show the evidence for each match.
 3. Resolve the smallest useful ECC plan:
    - project has an \`ecc-install.json\`: \`node scripts/install-plan.js --config ecc-install.json --json\`
@@ -7199,10 +7199,10 @@ List project registry entries and per-project instinct/observation counts for co
 Run the instinct CLI using the plugin root path:
 
 \`\`\`bash
-python3 "\${CLAUDE_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" projects
+python3 "\${LEGION_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" projects
 \`\`\`
 
-Or if \`CLAUDE_PLUGIN_ROOT\` is not set (manual installation):
+Or if \`LEGION_PLUGIN_ROOT\` is not set (manual installation):
 
 \`\`\`bash
 python3 ~/.legion/skills/continuous-learning-v2/scripts/instinct-cli.py projects
@@ -7240,10 +7240,10 @@ Promote instincts from project scope to global scope in continuous-learning-v2.
 Run the instinct CLI using the plugin root path:
 
 \`\`\`bash
-python3 "\${CLAUDE_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" promote [instinct-id] [--force] [--dry-run]
+python3 "\${LEGION_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" promote [instinct-id] [--force] [--dry-run]
 \`\`\`
 
-Or if \`CLAUDE_PLUGIN_ROOT\` is not set (manual installation):
+Or if \`LEGION_PLUGIN_ROOT\` is not set (manual installation):
 
 \`\`\`bash
 python3 ~/.legion/skills/continuous-learning-v2/scripts/instinct-cli.py promote [instinct-id] [--force] [--dry-run]
@@ -7595,10 +7595,10 @@ Run through edge cases from the plan's Testing Strategy checklist.
 ### Create Implementation Report
 
 \`\`\`bash
-mkdir -p .claude/PRPs/reports
+mkdir -p .legion/PRPs/reports
 \`\`\`
 
-Write report to \`.claude/PRPs/reports/{plan-name}-report.md\`:
+Write report to \`.legion/PRPs/reports/{plan-name}-report.md\`:
 
 \`\`\`markdown
 # Implementation Report: [Feature Name]
@@ -7664,8 +7664,8 @@ If this implementation was for a PRD phase:
 ### Archive Plan
 
 \`\`\`bash
-mkdir -p .claude/PRPs/plans/completed
-mv "\$ARGUMENTS" .claude/PRPs/plans/completed/
+mkdir -p .legion/PRPs/plans/completed
+mv "\$ARGUMENTS" .legion/PRPs/plans/completed/
 \`\`\`
 
 **CHECKPOINT**: Report created. PRD updated. Plan archived.
@@ -7700,8 +7700,8 @@ Report to user:
 [Summary or "None — implemented exactly as planned"]
 
 ### Artifacts
-- Report: \`.claude/PRPs/reports/{name}-report.md\`
-- Archived Plan: \`.claude/PRPs/plans/completed/{name}.plan.md\`
+- Report: \`.legion/PRPs/reports/{name}-report.md\`
+- Archived Plan: \`.legion/PRPs/plans/completed/{name}.plan.md\`
 
 ### PRD Progress (if applicable)
 | Phase | Status |
@@ -7976,11 +7976,11 @@ Define the implementation approach:
 
 ## Phase 6 — GENERATE
 
-Write the full plan document using the template below. Save to \`.claude/PRPs/plans/{kebab-case-feature-name}.plan.md\`.
+Write the full plan document using the template below. Save to \`.legion/PRPs/plans/{kebab-case-feature-name}.plan.md\`.
 
 Create the directory if it doesn't exist:
 \`\`\`bash
-mkdir -p .claude/PRPs/plans
+mkdir -p .legion/PRPs/plans
 \`\`\`
 
 ### Plan Template
@@ -8198,7 +8198,7 @@ EXPECT: Feature works as designed
 
 Write the generated plan to:
 \`\`\`
-.claude/PRPs/plans/{kebab-case-feature-name}.plan.md
+.legion/PRPs/plans/{kebab-case-feature-name}.plan.md
 \`\`\`
 
 ### Update PRD (if input was a PRD)
@@ -8212,7 +8212,7 @@ If this plan was generated from a PRD phase:
 \`\`\`
 ## Plan Created
 
-- **File**: .claude/PRPs/plans/{kebab-case-feature-name}.plan.md
+- **File**: .legion/PRPs/plans/{kebab-case-feature-name}.plan.md
 - **Source PRD**: [path or "N/A"]
 - **Phase**: [phase name or "standalone"]
 - **Complexity**: [level]
@@ -8222,7 +8222,7 @@ If this plan was generated from a PRD phase:
 - **Risks**: [top risk or "none identified"]
 - **Confidence Score**: [1-10] — likelihood of single-pass implementation
 
-> Next step: Run \`/prp-implement .claude/PRPs/plans/{name}.plan.md\` to execute this plan.
+> Next step: Run \`/prp-implement .legion/PRPs/plans/{name}.plan.md\` to execute this plan.
 \`\`\`
 
 ---
@@ -8349,9 +8349,9 @@ Categorize changed files: source, tests, docs, config, migrations.
 ### PRP Artifacts
 
 Check for related PRP artifacts:
-- \`.claude/PRPs/reports/\` — Implementation reports
-- \`.claude/PRPs/plans/\` — Plans that were executed
-- \`.claude/PRPs/prds/\` — Related PRDs
+- \`.legion/PRPs/reports/\` — Implementation reports
+- \`.legion/PRPs/plans/\` — Plans that were executed
+- \`.legion/PRPs/prds/\` — Related PRDs
 
 Reference these in the PR body if they exist.
 
@@ -8648,9 +8648,9 @@ Ask final clarifying questions:
 
 ## Phase 7: GENERATE - Write PRD
 
-**Output path**: \`.claude/PRPs/prds/{kebab-case-name}.prd.md\`
+**Output path**: \`.legion/PRPs/prds/{kebab-case-name}.prd.md\`
 
-Create directory if needed: \`mkdir -p .claude/PRPs/prds\`
+Create directory if needed: \`mkdir -p .legion/PRPs/prds\`
 
 ### PRD Template
 
@@ -8817,7 +8817,7 @@ After generating, report:
 \`\`\`markdown
 ## PRD Created
 
-**File**: \`.claude/PRPs/prds/{name}.prd.md\`
+**File**: \`.legion/PRPs/prds/{name}.prd.md\`
 
 ### Summary
 
@@ -8850,7 +8850,7 @@ After generating, report:
 
 ### To Start Implementation
 
-Run: \`/prp-plan .claude/PRPs/prds/{name}.prd.md\`
+Run: \`/prp-plan .legion/PRPs/prds/{name}.prd.md\`
 
 This will automatically select the next pending phase and create an implementation plan.
 \`\`\`
@@ -8885,7 +8885,7 @@ This will automatically select the next pending phase and create an implementati
 └─────────────────────────────────────────────────────────┘
                           ↓
 ┌─────────────────────────────────────────────────────────┐
-│  GENERATE: Write PRD to .claude/PRPs/prds/              │
+│  GENERATE: Write PRD to .legion/PRPs/prds/              │
 └─────────────────────────────────────────────────────────┘
 \`\`\`
 
@@ -8923,10 +8923,10 @@ Remove expired pending instincts that were auto-generated but never reviewed or 
 Run the instinct CLI using the plugin root path:
 
 \`\`\`bash
-python3 "\${CLAUDE_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" prune
+python3 "\${LEGION_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" prune
 \`\`\`
 
-Or if \`CLAUDE_PLUGIN_ROOT\` is not set (manual installation):
+Or if \`LEGION_PLUGIN_ROOT\` is not set (manual installation):
 
 \`\`\`bash
 python3 ~/.legion/skills/continuous-learning-v2/scripts/instinct-cli.py prune
@@ -10021,7 +10021,7 @@ This command is the counterpart to \`/save-session\`.
 - Starting a new session to continue work from a previous day
 - After starting a fresh session due to context limits
 - When handing off a session file from another source (just provide the file path)
-- Any time you have a session file and want Claude to fully absorb it before proceeding
+- Any time you have a session file and want Legion to fully absorb it before proceeding
 
 ## Usage
 
@@ -10124,7 +10124,7 @@ Report: "Session file found but appears empty or unreadable. You may need to cre
 ## Example Output
 
 \`\`\`
-SESSION LOADED: /Users/you/.claude/session-data/2024-01-15-abc123de-session.tmp
+SESSION LOADED: /Users/you/.legion/session-data/2024-01-15-abc123de-session.tmp
 ════════════════════════════════════════════════
 
 PROJECT: my-app — JWT Authentication
@@ -10857,7 +10857,7 @@ Adversarial dual-review convergence loop using the santa-method skill. Two indep
 
 ## Purpose
 
-Run two independent reviewers (Claude Opus + an external model) against the current task output. Both must return NICE before the code is pushed. If either returns NAUGHTY, fix all flagged issues, commit, and re-run fresh reviewers — up to 3 rounds.
+Run two independent reviewers (Legion Opus + an external model) against the current task output. Both must return NICE before the code is pushed. If either returns NAUGHTY, fix all flagged issues, commit, and re-run fresh reviewers — up to 3 rounds.
 
 ## Usage
 
@@ -10911,7 +10911,7 @@ Each reviewer evaluates every rubric criterion as PASS or FAIL, then returns str
 
 The verdict gate (Step 4) maps these to NICE/NAUGHTY: both PASS → NICE, either FAIL → NAUGHTY.
 
-#### Reviewer A: Claude Agent (always runs)
+#### Reviewer A: Legion Agent (always runs)
 
 Launch an Agent (subagent_type: \`code-reviewer\`, model: \`opus\`) with the full rubric + all files under review. The prompt must include:
 - The complete rubric
@@ -10919,7 +10919,7 @@ Launch an Agent (subagent_type: \`code-reviewer\`, model: \`opus\`) with the ful
 - "You are an independent quality reviewer. You have NOT seen any other review. Your job is to find problems, not to approve."
 - Return the structured JSON verdict above
 
-#### Reviewer B: External Model (Claude fallback only if no external CLI installed)
+#### Reviewer B: External Model (Legion fallback only if no external CLI installed)
 
 First, detect which CLIs are available:
 \`\`\`bash
@@ -10949,8 +10949,8 @@ gemini -p "\$(cat "\$PROMPT_FILE")" -m gemini-2.5-pro
 rm -f "\$PROMPT_FILE"
 \`\`\`
 
-**Claude Agent fallback** (only if neither \`codex\` nor \`gemini\` is installed)
-Launch a second Claude Agent (subagent_type: \`code-reviewer\`, model: \`opus\`). Log a warning that both reviewers share the same model family — true model diversity was not achieved but context isolation is still enforced.
+**Legion Agent fallback** (only if neither \`codex\` nor \`gemini\` is installed)
+Launch a second Legion Agent (subagent_type: \`code-reviewer\`, model: \`opus\`). Log a warning that both reviewers share the same model family — true model diversity was not achieved but context isolation is still enforced.
 
 In all cases, the reviewer must return the same structured JSON verdict as Reviewer A.
 
@@ -11000,7 +11000,7 @@ Print the output report (see Output section below).
 \`\`\`
 SANTA VERDICT: [NICE / NAUGHTY (escalated)]
 
-Reviewer A (Claude Opus):   [PASS/FAIL]
+Reviewer A (Legion Opus):   [PASS/FAIL]
 Reviewer B ([model used]):  [PASS/FAIL]
 
 Agreement:
@@ -11014,8 +11014,8 @@ Result:     [PUSHED / ESCALATED TO USER]
 
 ## Notes
 
-- Reviewer A (Claude Opus) always runs — guarantees at least one strong reviewer regardless of tooling.
-- Model diversity is the goal for Reviewer B. GPT-5.4 or Gemini 2.5 Pro gives true independence — different training data, different biases, different blind spots. The Claude-only fallback still provides value via context isolation but loses model diversity.
+- Reviewer A (Legion Opus) always runs — guarantees at least one strong reviewer regardless of tooling.
+- Model diversity is the goal for Reviewer B. GPT-5.4 or Gemini 2.5 Pro gives true independence — different training data, different biases, different blind spots. The Legion-only fallback still provides value via context isolation but loses model diversity.
 - Strongest available models are used: Opus for Reviewer A, GPT-5.4 or Gemini 2.5 Pro for Reviewer B.
 - External reviewers run with \`--sandbox read-only\` (Codex) to prevent repo mutation during review.
 - Fresh reviewers each round prevents anchoring bias from prior findings.
@@ -11052,7 +11052,7 @@ Before writing the file, collect:
 
 ### Step 2: Create the sessions folder if it doesn't exist
 
-Create the canonical sessions folder in the user's Claude home directory:
+Create the canonical sessions folder in the user's Legion home directory:
 
 \`\`\`bash
 mkdir -p ~/.legion/session-data
@@ -11296,7 +11296,7 @@ Then test with Postman — the response should include a \`Set-Cookie\` header.
 - Each session gets its own file — never append to a previous session's file
 - The "What Did NOT Work" section is the most critical — future sessions will blindly retry failed approaches without it
 - If the user asks to save mid-session (not just at the end), save what's known so far and mark in-progress items clearly
-- The file is meant to be read by Claude at the start of the next session via \`/resume-session\`
+- The file is meant to be read by Legion at the start of the next session via \`/resume-session\`
 - Use the canonical global session store: \`~/.legion/session-data/\`
 - Prefer the short-id filename form (\`YYYY-MM-DD-<short-id>-session.tmp\`) for any new session file
 `
@@ -11315,7 +11315,7 @@ Run AgentShield against the current project or a target path, then turn the find
 
 \`/security-scan [path] [--format text|json|markdown|html] [--min-severity low|medium|high|critical] [--fix]\`
 
-- \`path\` (optional): defaults to the current project. Use a \`.claude/\` path, a repo root, or a checked-in template directory.
+- \`path\` (optional): defaults to the current project. Use a \`.legion/\` path, a repo root, or a checked-in template directory.
 - \`--format\`: output format. Use \`json\` for CI, \`markdown\` for handoffs, and \`html\` for standalone review reports.
 - \`--min-severity\`: filters lower-priority findings.
 - \`--fix\`: applies only AgentShield fixes explicitly marked as safe and auto-fixable.
@@ -11426,7 +11426,7 @@ Use \`/sessions info\` when you need operator-surface context for a swarm: branc
 **Script:**
 \`\`\`bash
 node -e "
-const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.CLAUDE_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.claude');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
+const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
 const sm = require(_r + '/scripts/lib/session-manager');
 const aa = require(_r + '/scripts/lib/session-aliases');
 const path = require('path');
@@ -11468,7 +11468,7 @@ Load and display a session's content (by ID or alias).
 **Script:**
 \`\`\`bash
 node -e "
-const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.CLAUDE_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.claude');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
+const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
 const sm = require(_r + '/scripts/lib/session-manager');
 const aa = require(_r + '/scripts/lib/session-aliases');
 const id = process.argv[1];
@@ -11542,7 +11542,7 @@ Create a memorable alias for a session.
 **Script:**
 \`\`\`bash
 node -e "
-const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.CLAUDE_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.claude');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
+const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
 const sm = require(_r + '/scripts/lib/session-manager');
 const aa = require(_r + '/scripts/lib/session-aliases');
 
@@ -11583,7 +11583,7 @@ Delete an existing alias.
 **Script:**
 \`\`\`bash
 node -e "
-const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.CLAUDE_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.claude');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
+const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
 const aa = require(_r + '/scripts/lib/session-aliases');
 
 const aliasName = process.argv[1];
@@ -11613,7 +11613,7 @@ Show detailed information about a session.
 **Script:**
 \`\`\`bash
 node -e "
-const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.CLAUDE_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.claude');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
+const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
 const sm = require(_r + '/scripts/lib/session-manager');
 const aa = require(_r + '/scripts/lib/session-aliases');
 
@@ -11664,7 +11664,7 @@ Show all session aliases.
 **Script:**
 \`\`\`bash
 node -e "
-const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.CLAUDE_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.claude');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
+const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
 const aa = require(_r + '/scripts/lib/session-aliases');
 
 const aliases = aa.listAliases();
@@ -11766,7 +11766,7 @@ node scripts/setup-package-manager.js --list
 When determining which package manager to use, the following order is checked:
 
 1. **Environment variable**: \`CLAUDE_PACKAGE_MANAGER\`
-2. **Project config**: \`.claude/package-manager.json\`
+2. **Project config**: \`.legion/package-manager.json\`
 3. **package.json**: \`packageManager\` field
 4. **Lock file**: Presence of package-lock.json, yarn.lock, pnpm-lock.yaml, or bun.lockb
 5. **Global config**: \`~/.legion/package-manager.json\`
@@ -11784,7 +11784,7 @@ When determining which package manager to use, the following order is checked:
 
 ### Project Configuration
 \`\`\`json
-// .claude/package-manager.json
+// .legion/package-manager.json
 {
   "packageManager": "bun"
 }
@@ -11826,7 +11826,7 @@ allowed_tools: ["Bash", "Read", "Write", "Grep", "Glob"]
 
 # /skill-create - Local Skill Generation
 
-Analyze your repository's git history to extract coding patterns and generate SKILL.md files that teach Claude your team's practices.
+Analyze your repository's git history to extract coding patterns and generate SKILL.md files that teach Legion your team's practices.
 
 ## Usage
 
@@ -11956,21 +11956,21 @@ Shows a comprehensive health dashboard for all skills in the portfolio with succ
 Run the skill health CLI in dashboard mode:
 
 \`\`\`bash
-ECC_ROOT="\${CLAUDE_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.CLAUDE_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.claude');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
+ECC_ROOT="\${LEGION_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
 node "\$ECC_ROOT/scripts/skills-health.js" --dashboard
 \`\`\`
 
 For a specific panel only:
 
 \`\`\`bash
-ECC_ROOT="\${CLAUDE_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.CLAUDE_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.claude');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
+ECC_ROOT="\${LEGION_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
 node "\$ECC_ROOT/scripts/skills-health.js" --dashboard --panel failures
 \`\`\`
 
 For machine-readable output:
 
 \`\`\`bash
-ECC_ROOT="\${CLAUDE_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.CLAUDE_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.claude');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
+ECC_ROOT="\${LEGION_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
 node "\$ECC_ROOT/scripts/skills-health.js" --dashboard --json
 \`\`\`
 
@@ -12422,7 +12422,7 @@ export const ELC_COMMANDS: ElcCommand[] = [
   { name: "build-fix", description: "Detect the project build system and incrementally fix build/type errors with minimal safe changes.", content: CMD_build_fix },
   { name: "checkpoint", description: "Create, verify, or list workflow checkpoints after running verification checks.", content: CMD_checkpoint },
   { name: "code-review", description: "Code review — local uncommitted changes or GitHub PR (pass PR number/URL for PR mode)", content: CMD_code_review },
-  { name: "cost-report", description: "Generate a local Claude Code cost report from the ECC cost-tracker metrics log.", content: CMD_cost_report },
+  { name: "cost-report", description: "Generate a local Legion CLI cost report from the ECC cost-tracker metrics log.", content: CMD_cost_report },
   { name: "cpp-build", description: "Fix C++ build errors, CMake issues, and linker problems incrementally. Invokes the cpp-build-resolver agent for minimal, surgical fixes.", content: CMD_cpp_build },
   { name: "cpp-review", description: "Comprehensive C++ code review for memory safety, modern C++ idioms, concurrency, and security. Invokes the cpp-reviewer agent.", content: CMD_cpp_review },
   { name: "cpp-test", description: "Enforce TDD workflow for C++. Write GoogleTest tests first, then implement. Verify coverage with gcov/lcov.", content: CMD_cpp_test },
@@ -12465,7 +12465,7 @@ export const ELC_COMMANDS: ElcCommand[] = [
   { name: "marketing-campaign", description: "Plan and execute a full marketing campaign. Accepts a product brief and returns positioning, landing page copy, email sequence, social posts, ad variants, video scripts, and a content calendar. Can also review existing copy for conversion quality.", content: CMD_marketing_campaign },
   { name: "model-route", description: "Recommend the best model tier for the current task based on complexity, risk, and budget.", content: CMD_model_route },
   { name: "multi-backend", description: "Run a backend-focused multi-model workflow for APIs, algorithms, data, and business logic.", content: CMD_multi_backend },
-  { name: "multi-execute", description: "Execute a multi-model implementation plan while preserving Claude as the only filesystem writer.", content: CMD_multi_execute },
+  { name: "multi-execute", description: "Execute a multi-model implementation plan while preserving Legion as the only filesystem writer.", content: CMD_multi_execute },
   { name: "multi-frontend", description: "Run a frontend-focused multi-model workflow for components, layouts, animation, and UI polish.", content: CMD_multi_frontend },
   { name: "multi-plan", description: "Create a multi-model implementation plan without modifying production code.", content: CMD_multi_plan },
   { name: "multi-workflow", description: "Run a full multi-model development workflow with research, planning, execution, optimization, and review.", content: CMD_multi_workflow },
@@ -12495,15 +12495,15 @@ export const ELC_COMMANDS: ElcCommand[] = [
   { name: "react-review", description: "Comprehensive React/JSX code review for hook correctness, render performance, server/client component boundaries, accessibility, and React-specific security. Invokes the react-reviewer agent (and typescript-reviewer alongside on TSX/JSX changes).", content: CMD_react_review },
   { name: "react-test", description: "Enforce TDD workflow for React. Write React Testing Library tests first (behavior-focused, accessibility-first), then implement components. Detects Vitest or Jest and verifies coverage targets.", content: CMD_react_test },
   { name: "refactor-clean", description: "Safely identify and remove dead code with verification after each change.", content: CMD_refactor_clean },
-  { name: "resume-session", description: "Load the most recent session file from ~/.claude/session-data/ and resume work with full context from where the last session ended.", content: CMD_resume_session },
+  { name: "resume-session", description: "Load the most recent session file from ~/.legion/session-data/ and resume work with full context from where the last session ended.", content: CMD_resume_session },
   { name: "review-pr", description: "Comprehensive PR review using specialized agents", content: CMD_review_pr },
   { name: "rust-build", description: "Fix Rust build errors, borrow checker issues, and dependency problems incrementally. Invokes the rust-build-resolver agent for minimal, surgical fixes.", content: CMD_rust_build },
   { name: "rust-review", description: "Comprehensive Rust code review for ownership, lifetimes, error handling, unsafe usage, and idiomatic patterns. Invokes the rust-reviewer agent.", content: CMD_rust_review },
   { name: "rust-test", description: "Enforce TDD workflow for Rust. Write tests first, then implement. Verify 80%+ coverage with cargo-llvm-cov.", content: CMD_rust_test },
   { name: "santa-loop", description: "Adversarial dual-review convergence loop — two independent model reviewers must both approve before code ships.", content: CMD_santa_loop },
-  { name: "save-session", description: "Save current session state to a dated file in ~/.claude/session-data/ so work can be resumed in a future session with full context.", content: CMD_save_session },
+  { name: "save-session", description: "Save current session state to a dated file in ~/.legion/session-data/ so work can be resumed in a future session with full context.", content: CMD_save_session },
   { name: "security-scan", description: "Run AgentShield against agent, hook, MCP, permission, and secret surfaces.", content: CMD_security_scan },
-  { name: "sessions", description: "Manage Claude Code session history, aliases, and session metadata.", content: CMD_sessions },
+  { name: "sessions", description: "Manage Legion CLI session history, aliases, and session metadata.", content: CMD_sessions },
   { name: "setup-pm", description: "Configure your preferred package manager (npm/pnpm/yarn/bun)", content: CMD_setup_pm },
   { name: "skill-create", description: "Analyze local git history to extract coding patterns and generate SKILL.md files. Local version of the Skill Creator GitHub App.", content: CMD_skill_create },
   { name: "skill-health", description: "Show skill portfolio health dashboard with charts and analytics", content: CMD_skill_health },

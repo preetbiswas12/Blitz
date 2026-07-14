@@ -1350,7 +1350,7 @@ Demote to \`LIBRARY\` when:
 
 Translate the classification into action:
 
-- DAILY skills -> install or keep in \`.claude/skills/\`
+- DAILY skills -> install or keep in \`.legion/skills/\`
 - DAILY commands -> keep as explicit shims only if still useful
 - DAILY rules -> install only matching language sets
 - DAILY hooks/scripts -> keep only compatible ones
@@ -1362,7 +1362,7 @@ If the repo already uses selective installs, update that plan instead of creatin
 
 If the project wants a searchable library surface, create:
 
-- \`.claude/skills/skill-library/SKILL.md\`
+- \`.legion/skills/skill-library/SKILL.md\`
 
 That router should contain:
 
@@ -1517,7 +1517,7 @@ The Agentic OS has four layers. Each layer is a directory in your project root.
 project-root/
 ├── LEGION.md          # Kernel: identity, routing rules, agent registry
 ├── agents/            # Specialist agent definitions (markdown prompts)
-├── .claude/commands/  # Slash commands: user-facing CLI
+├── .legion/commands/  # Slash commands: user-facing CLI
 ├── scripts/           # Daemon scripts: scheduled or event-driven tasks
 └── data/              # State: JSON/markdown filesystem, no external DB
 \`\`\`
@@ -1528,13 +1528,13 @@ project-root/
 |---|---|---|
 | Kernel (\`LEGION.md\`) | Identity, routing, model policies, agent registry | Git-tracked |
 | Agents (\`agents/\`) | Specialist identities with scoped tools and memory | Git-tracked |
-| Commands (\`.claude/commands/\`) | User-facing slash commands (\`/daily-sync\`, \`/outreach\`) | Git-tracked |
+| Commands (\`.legion/commands/\`) | User-facing slash commands (\`/daily-sync\`, \`/outreach\`) | Git-tracked |
 | Scripts (\`scripts/\`) | Python/JS daemons triggered by cron or webhooks | Git-tracked |
 | State (\`data/\`) | Append-only logs, project state, decision records | Git-ignored or tracked |
 
 ## The Kernel
 
-\`LEGION.md\` is the kernel. It acts as the COO / orchestrator. Claude reads it at session start and uses it to route work.
+\`LEGION.md\` is the kernel. It acts as the COO / orchestrator. Legion reads it at session start and uses it to route work.
 
 ### Kernel Structure
 
@@ -1574,7 +1574,7 @@ The kernel should be **small and declarative**. Routing logic lives in plain mar
 
 ## Specialist Agents
 
-Each agent is a standalone markdown file in \`agents/\`. Claude loads the relevant agent file when routing a task.
+Each agent is a standalone markdown file in \`agents/\`. Legion loads the relevant agent file when routing a task.
 
 ### Agent Definition Format
 
@@ -1594,7 +1594,7 @@ You prefer simple solutions. You ask clarifying questions when requirements are 
 - Full filesystem access within project root
 - Git operations (status, diff, commit, branch)
 - Test runner access
-- MCP servers as configured in \`.claude/mcp.json\`
+- MCP servers as configured in \`.legion/mcp.json\`
 
 ## Constraints
 - Always write tests for new features
@@ -1620,7 +1620,7 @@ For parallel execution, use Legion CLI's background task capability or shell scr
 
 ## Commands and Daily Workflows
 
-Slash commands are markdown files in \`.claude/commands/\`. They define reusable workflows.
+Slash commands are markdown files in \`.legion/commands/\`. They define reusable workflows.
 
 ### Command Structure
 
@@ -1650,7 +1650,7 @@ Run the morning briefing:
 
 ### Activating Commands
 
-Place command files in \`.claude/commands/<command-name>.md\`. Legion CLI auto-discovers them. Users invoke them with \`/<command-name>\`.
+Place command files in \`.legion/commands/<command-name>.md\`. Legion CLI auto-discovers them. Users invoke them with \`/<command-name>\`.
 
 ## Persistent Memory
 
@@ -1717,7 +1717,7 @@ Agentic OS tasks run on a schedule using external cron, not Legion CLI's built-i
     <string>com.agentic.daily-sync</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/claude</string>
+        <string>/legion</string>
         <string>--cwd</string>
         <string>/path/to/project</string>
         <string>--command</string>
@@ -1745,7 +1745,7 @@ Description=Agentic OS Daily Sync
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/claude --cwd /path/to/project --command /daily-sync
+ExecStart=/usr/local/bin/legion --cwd /path/to/project --command /daily-sync
 \`\`\`
 
 \`\`\`ini
@@ -1768,7 +1768,7 @@ WantedBy=timers.target
 module.exports = {
   apps: [{
     name: 'agentic-daily-sync',
-    script: 'claude',
+    script: 'legion',
     args: '--cwd /path/to/project --command /daily-sync',
     cron_restart: '0 8 * * *',
     autorestart: false
@@ -2134,7 +2134,7 @@ describe("GET /api/user/messages (conversation list)", () => {
 ### Custom Command Definition
 
 \`\`\`markdown
-<!-- .claude/commands/bug-check.md -->
+<!-- .legion/commands/bug-check.md -->
 # Bug Check
 
 ## Step 1: Automated Tests (mandatory, cannot skip)
@@ -4001,12 +4001,12 @@ Trigger Legion CLI agents remotely for event-driven workflows.
 
 \`\`\`bash
 # Trigger from CI/CD
-curl -X POST "https://api.anthropic.com/dispatch" \\
+curl -X POST "https://api.legion.com/dispatch" \\
   -H "Authorization: Bearer \$ANTHROPIC_API_KEY" \\
   -d '{"prompt": "Build failed on main. Diagnose and fix.", "project": "/repo"}'
 
 # Trigger from webhook
-# GitHub webhook → dispatch → Claude agent → fix → PR
+# GitHub webhook → dispatch → Legion agent → fix → PR
 
 # Trigger from another agent
 legion -p "Analyze the output of the security scan and create issues for findings"
@@ -4058,7 +4058,7 @@ description: Persistent task queue for autonomous operation
 | Hermes Component | ECC Equivalent | How |
 |------------------|---------------|-----|
 | Gateway/Router | Legion CLI dispatch + crons | Scheduled tasks trigger agent sessions |
-| Memory System | Claude memory + MCP memory server | Built-in persistence + knowledge graph |
+| Memory System | Legion memory + MCP memory server | Built-in persistence + knowledge graph |
 | Tool Registry | MCP servers | Dynamically loaded tool providers |
 | Orchestration | ECC skills + agents | Skill definitions direct agent behavior |
 | Computer Use | computer-use MCP | Native browser and desktop control |
@@ -4076,15 +4076,15 @@ Ensure these are in \`~/.legion.json\`:
   "mcpServers": {
     "memory": {
       "command": "npx",
-      "args": ["-y", "@anthropic/memory-mcp-server"]
+      "args": ["-y", "@legion/memory-mcp-server"]
     },
     "scheduled-tasks": {
       "command": "npx",
-      "args": ["-y", "@anthropic/scheduled-tasks-mcp-server"]
+      "args": ["-y", "@legion/scheduled-tasks-mcp-server"]
     },
     "computer-use": {
       "command": "npx",
-      "args": ["-y", "@anthropic/computer-use-mcp-server"]
+      "args": ["-y", "@legion/computer-use-mcp-server"]
     }
   }
 }
@@ -4186,10 +4186,10 @@ From simplest to most sophisticated:
 
 | Pattern | Complexity | Best For |
 |---------|-----------|----------|
-| [Sequential Pipeline](#1-sequential-pipeline-claude--p) | Low | Daily dev steps, scripted workflows |
+| [Sequential Pipeline](#1-sequential-pipeline-legion--p) | Low | Daily dev steps, scripted workflows |
 | [NanoClaw REPL](#2-nanoclaw-repl) | Low | Interactive persistent sessions |
 | [Infinite Agentic Loop](#3-infinite-agentic-loop) | Medium | Parallel content generation, spec-driven work |
-| [Continuous Claude PR Loop](#4-continuous-claude-pr-loop) | Medium | Multi-day iterative projects with CI gates |
+| [Continuous Legion PR Loop](#4-continuous-legion-pr-loop) | Medium | Multi-day iterative projects with CI gates |
 | [De-Sloppify Pattern](#5-the-de-sloppify-pattern) | Add-on | Quality cleanup after any Implementer step |
 | [Ralphinho / RFC-Driven DAG](#6-ralphinho--rfc-driven-dag-orchestration) | High | Large features, multi-unit parallel work with merge queue |
 
@@ -4248,9 +4248,9 @@ legion -p --model opus "Review all changes for security issues, race conditions,
 **With environment context:**
 \`\`\`bash
 # Pass context via files, not prompt length
-echo "Focus areas: auth module, API rate limiting" > .claude-context.md
-legion -p "Read .claude-context.md for priorities. Work through them in order."
-rm .claude-context.md
+echo "Focus areas: auth module, API rate limiting" > .legion-context.md
+legion -p "Read .legion-context.md for priorities. Work through them in order."
+rm .legion-context.md
 \`\`\`
 
 **With \`--allowedTools\` restrictions:**
@@ -4327,7 +4327,7 @@ PROMPT 1 (Orchestrator)              PROMPT 2 (Sub-Agents)
 
 ### Implementation via Legion CLI Commands
 
-Create \`.claude/commands/infinite.md\`:
+Create \`.legion/commands/infinite.md\`:
 
 \`\`\`markdown
 Parse the following arguments from \$ARGUMENTS:
@@ -4366,7 +4366,7 @@ Don't rely on agents to self-differentiate. The orchestrator **assigns** each ag
 
 ---
 
-## 4. Continuous Claude PR Loop
+## 4. Continuous Legion PR Loop
 
 **A production-grade shell script** that runs Legion CLI in a continuous loop, creating PRs, waiting for CI, and merging automatically. Created by AnandChowdhary (credit: @AnandChowdhary).
 
@@ -4376,10 +4376,10 @@ Don't rely on agents to self-differentiate. The orchestrator **assigns** each ag
 ┌─────────────────────────────────────────────────────┐
 │  CONTINUOUS CLAUDE ITERATION                        │
 │                                                     │
-│  1. Create branch (continuous-claude/iteration-N)   │
+│  1. Create branch (continuous-legion/iteration-N)   │
 │  2. Run legion -p with enhanced prompt              │
 │  3. (Optional) Reviewer pass — separate legion -p   │
-│  4. Commit changes (claude generates message)       │
+│  4. Commit changes (legion generates message)       │
 │  5. Push + create PR (gh pr create)                 │
 │  6. Wait for CI checks (poll gh pr checks)          │
 │  7. CI failure? → Auto-fix pass (legion -p)         │
@@ -4393,29 +4393,29 @@ Don't rely on agents to self-differentiate. The orchestrator **assigns** each ag
 
 ### Installation
 
-> **Warning:** Install continuous-claude from its repository after reviewing the code. Do not pipe external scripts directly to bash.
+> **Warning:** Install continuous-legion from its repository after reviewing the code. Do not pipe external scripts directly to bash.
 
 ### Usage
 
 \`\`\`bash
 # Basic: 10 iterations
-continuous-claude --prompt "Add unit tests for all untested functions" --max-runs 10
+continuous-legion --prompt "Add unit tests for all untested functions" --max-runs 10
 
 # Cost-limited
-continuous-claude --prompt "Fix all linter errors" --max-cost 5.00
+continuous-legion --prompt "Fix all linter errors" --max-cost 5.00
 
 # Time-boxed
-continuous-claude --prompt "Improve test coverage" --max-duration 8h
+continuous-legion --prompt "Improve test coverage" --max-duration 8h
 
 # With code review pass
-continuous-claude \\
+continuous-legion \\
   --prompt "Add authentication feature" \\
   --max-runs 10 \\
   --review-prompt "Run npm test && npm run lint, fix any failures"
 
 # Parallel via worktrees
-continuous-claude --prompt "Add tests" --max-runs 5 --worktree tests-worker &
-continuous-claude --prompt "Refactor code" --max-runs 5 --worktree refactor-worker &
+continuous-legion --prompt "Add tests" --max-runs 5 --worktree tests-worker &
+continuous-legion --prompt "Refactor code" --max-runs 5 --worktree refactor-worker &
 wait
 \`\`\`
 
@@ -4434,22 +4434,22 @@ The critical innovation: a \`SHARED_TASK_NOTES.md\` file persists across iterati
 - The mock setup in tests/helpers.ts can be reused
 \`\`\`
 
-Claude reads this file at iteration start and updates it at iteration end. This bridges the context gap between independent \`legion -p\` invocations.
+Legion reads this file at iteration start and updates it at iteration end. This bridges the context gap between independent \`legion -p\` invocations.
 
 ### CI Failure Recovery
 
-When PR checks fail, Continuous Claude automatically:
+When PR checks fail, Continuous Legion automatically:
 1. Fetches the failed run ID via \`gh run list\`
 2. Spawns a new \`legion -p\` with CI fix context
-3. Claude inspects logs via \`gh run view\`, fixes code, commits, pushes
+3. Legion inspects logs via \`gh run view\`, fixes code, commits, pushes
 4. Re-waits for checks (up to \`--ci-retry-max\` attempts)
 
 ### Completion Signal
 
-Claude can signal "I'm done" by outputting a magic phrase:
+Legion can signal "I'm done" by outputting a magic phrase:
 
 \`\`\`bash
-continuous-claude \\
+continuous-legion \\
   --prompt "Fix all bugs in the issue tracker" \\
   --completion-signal "CONTINUOUS_CLAUDE_PROJECT_COMPLETE" \\
   --completion-threshold 3  # Stops after 3 consecutive signals
@@ -4696,7 +4696,7 @@ Pipeline stages for the same unit **share** a worktree, preserving state (contex
 | Need parallel implementation | Yes | No |
 | Merge conflicts likely | Yes | No (sequential is fine) |
 | Single-file change | No | Yes (sequential pipeline) |
-| Multi-day project | Yes | Maybe (continuous-claude) |
+| Multi-day project | Yes | Maybe (continuous-legion) |
 | Spec/RFC already written | Yes | Maybe |
 | Quick iteration on one thing | No | Yes (NanoClaw or pipeline) |
 
@@ -4712,7 +4712,7 @@ Is the task a single focused change?
 └─ No → Is there a written spec/RFC?
          ├─ Yes → Do you need parallel implementation?
          │        ├─ Yes → Ralphinho (DAG orchestration)
-         │        └─ No → Continuous Claude (iterative PR loop)
+         │        └─ No → Continuous Legion (iterative PR loop)
          └─ No → Do you need many variations of the same thing?
                   ├─ Yes → Infinite Agentic Loop (spec-driven generation)
                   └─ No → Sequential Pipeline with de-sloppify
@@ -4724,7 +4724,7 @@ These patterns compose well:
 
 1. **Sequential Pipeline + De-Sloppify** — The most common combination. Every implement step gets a cleanup pass.
 
-2. **Continuous Claude + De-Sloppify** — Add \`--review-prompt\` with a de-sloppify directive to each iteration.
+2. **Continuous Legion + De-Sloppify** — Add \`--review-prompt\` with a de-sloppify directive to each iteration.
 
 3. **Any loop + Verification** — Use ECC's \`/verify\` command or \`verification-loop\` skill as a gate before commits.
 
@@ -4763,7 +4763,7 @@ These patterns compose well:
 |---------|--------|------|
 | Ralphinho | enitrat | credit: @enitrat |
 | Infinite Agentic Loop | disler | credit: @disler |
-| Continuous Claude | AnandChowdhary | credit: @AnandChowdhary |
+| Continuous Legion | AnandChowdhary | credit: @AnandChowdhary |
 | NanoClaw | ECC | \`/claw\` command in this repo |
 | Verification Loop | ECC | \`skills/verification-loop/\` in this repo |
 `
@@ -6233,7 +6233,7 @@ metadata:
 
 ## How It Works
 
-Uses the browser automation MCP (claude-in-chrome, Playwright, or Puppeteer) to interact with live pages like a real user.
+Uses the browser automation MCP (legion-in-chrome, Playwright, or Puppeteer) to interact with live pages like a real user.
 
 ### Safety first — blast radius (run read-only by default)
 
@@ -6932,7 +6932,7 @@ Scripts live at: \`~/.legion/skills/ck/commands/\` (expand \`~\` with \`\$HOME\`
 
 ### \`/ck:init\` — Register a Project
 \`\`\`bash
-node "\$HOME/.claude/skills/ck/commands/init.mjs"
+node "\$HOME/.legion/skills/ck/commands/init.mjs"
 \`\`\`
 The script outputs JSON with auto-detected info. Present it as a confirmation draft:
 \`\`\`
@@ -6946,7 +6946,7 @@ Repo:        <repo or "none">
 \`\`\`
 Wait for user approval. Apply any edits. Then pipe confirmed JSON to save.mjs --init:
 \`\`\`bash
-echo '<confirmed-json>' | node "\$HOME/.claude/skills/ck/commands/save.mjs" --init
+echo '<confirmed-json>' | node "\$HOME/.legion/skills/ck/commands/save.mjs" --init
 \`\`\`
 Confirmed JSON schema: \`{"name":"...","path":"...","description":"...","stack":["..."],"goal":"...","constraints":["..."],"repo":"..." }\`
 
@@ -6964,7 +6964,7 @@ Confirmed JSON schema: \`{"name":"...","path":"...","description":"...","stack":
 Show a draft summary to the user: \`"Session: '<summary>' — save this? (yes / edit)"\`
 Wait for confirmation. Then pipe to save.mjs:
 \`\`\`bash
-echo '<json>' | node "\$HOME/.claude/skills/ck/commands/save.mjs"
+echo '<json>' | node "\$HOME/.legion/skills/ck/commands/save.mjs"
 \`\`\`
 JSON schema (exact): \`{"summary":"...","leftOff":"...","nextSteps":["..."],"decisions":[{"what":"...","why":"..."}],"blockers":["..."]}\`
 Display the script's stdout confirmation verbatim.
@@ -6973,7 +6973,7 @@ Display the script's stdout confirmation verbatim.
 
 ### \`/ck:resume [name|number]\` — Full Briefing
 \`\`\`bash
-node "\$HOME/.claude/skills/ck/commands/resume.mjs" [arg]
+node "\$HOME/.legion/skills/ck/commands/resume.mjs" [arg]
 \`\`\`
 Display output verbatim. Then ask: "Continue from here? Or has anything changed?"
 If user reports changes → run \`/ck:save\` immediately.
@@ -6982,7 +6982,7 @@ If user reports changes → run \`/ck:save\` immediately.
 
 ### \`/ck:info [name|number]\` — Quick Snapshot
 \`\`\`bash
-node "\$HOME/.claude/skills/ck/commands/info.mjs" [arg]
+node "\$HOME/.legion/skills/ck/commands/info.mjs" [arg]
 \`\`\`
 Display output verbatim. No follow-up question.
 
@@ -6990,7 +6990,7 @@ Display output verbatim. No follow-up question.
 
 ### \`/ck:list\` — Portfolio View
 \`\`\`bash
-node "\$HOME/.claude/skills/ck/commands/list.mjs"
+node "\$HOME/.legion/skills/ck/commands/list.mjs"
 \`\`\`
 Display output verbatim. If user replies with a number or name → run \`/ck:resume\`.
 
@@ -7001,7 +7001,7 @@ First resolve the project name (run \`/ck:list\` if needed).
 Ask: \`"This will permanently delete context for '<name>'. Are you sure? (yes/no)"\`
 If yes:
 \`\`\`bash
-node "\$HOME/.claude/skills/ck/commands/forget.mjs" [name]
+node "\$HOME/.legion/skills/ck/commands/forget.mjs" [name]
 \`\`\`
 Display confirmation verbatim.
 
@@ -7009,11 +7009,11 @@ Display confirmation verbatim.
 
 ### \`/ck:migrate\` — Convert v1 Data to v2
 \`\`\`bash
-node "\$HOME/.claude/skills/ck/commands/migrate.mjs"
+node "\$HOME/.legion/skills/ck/commands/migrate.mjs"
 \`\`\`
 For a dry run first:
 \`\`\`bash
-node "\$HOME/.claude/skills/ck/commands/migrate.mjs" --dry-run
+node "\$HOME/.legion/skills/ck/commands/migrate.mjs" --dry-run
 \`\`\`
 Display output verbatim. Migrates all v1 CONTEXT.md + meta.json files to v2 context.json.
 Originals are backed up as \`meta.json.v1-backup\` — nothing is deleted.
@@ -7046,120 +7046,6 @@ unsaved sessions, git activity since last save, and goal mismatches vs LEGION.md
 - If a script exits with code 1, display its stdout as an error message.
 - Never edit \`context.json\` or \`CONTEXT.md\` directly — always use the scripts.
 - If \`projects.json\` is malformed, tell the user and offer to reset it to \`{}\`.
-`
-
-const SKILL_claude_devfleet = `---
-name: claude-devfleet
-description: Orchestrate multi-agent coding tasks via Claude DevFleet — plan projects, dispatch parallel agents in isolated worktrees, monitor progress, and read structured reports.
-metadata:
-  origin: community
----
-
-# Claude DevFleet Multi-Agent Orchestration
-
-## When to Use
-
-Use this skill when you need to dispatch multiple Legion CLI agents to work on coding tasks in parallel. Each agent runs in an isolated git worktree with full tooling.
-
-## Setup
-
-The DevFleet server is a separate project, not bundled with ECC. Install and
-run it from its repository first: <https://github.com/LEC-AI/claude-devfleet>
-
-Then connect the running instance via MCP:
-\`\`\`bash
-claude mcp add devfleet --transport http http://localhost:18801/mcp
-\`\`\`
-
-Before first use, verify the process listening on port 18801 is the DevFleet
-binary you installed (see SECURITY.md on localhost MCP servers).
-
-## How It Works
-
-\`\`\`
-User → "Build a REST API with auth and tests"
-  ↓
-plan_project(prompt) → project_id + mission DAG
-  ↓
-Show plan to user → get approval
-  ↓
-dispatch_mission(M1) → Agent 1 spawns in worktree
-  ↓
-M1 completes → auto-merge → auto-dispatch M2 (depends_on M1)
-  ↓
-M2 completes → auto-merge
-  ↓
-get_report(M2) → files_changed, what_done, errors, next_steps
-  ↓
-Report back to user
-\`\`\`
-
-### Tools
-
-| Tool | Purpose |
-|------|---------|
-| \`plan_project(prompt)\` | AI breaks a description into a project with chained missions |
-| \`create_project(name, path?, description?)\` | Create a project manually, returns \`project_id\` |
-| \`create_mission(project_id, title, prompt, depends_on?, auto_dispatch?)\` | Add a mission. \`depends_on\` is a list of mission ID strings (e.g., \`["abc-123"]\`). Set \`auto_dispatch=true\` to auto-start when deps are met. |
-| \`dispatch_mission(mission_id, model?, max_turns?)\` | Start an agent on a mission |
-| \`cancel_mission(mission_id)\` | Stop a running agent |
-| \`wait_for_mission(mission_id, timeout_seconds?)\` | Block until a mission completes (see note below) |
-| \`get_mission_status(mission_id)\` | Check mission progress without blocking |
-| \`get_report(mission_id)\` | Read structured report (files changed, tested, errors, next steps) |
-| \`get_dashboard()\` | System overview: running agents, stats, recent activity |
-| \`list_projects()\` | Browse all projects |
-| \`list_missions(project_id, status?)\` | List missions in a project |
-
-> **Note on \`wait_for_mission\`:** This blocks the conversation for up to \`timeout_seconds\` (default 600). For long-running missions, prefer polling with \`get_mission_status\` every 30–60 seconds instead, so the user sees progress updates.
-
-### Workflow: Plan → Dispatch → Monitor → Report
-
-1. **Plan**: Call \`plan_project(prompt="...")\` → returns \`project_id\` + list of missions with \`depends_on\` chains and \`auto_dispatch=true\`.
-2. **Show plan**: Present mission titles, types, and dependency chain to the user.
-3. **Dispatch**: Call \`dispatch_mission(mission_id=<first_mission_id>)\` on the root mission (empty \`depends_on\`). Remaining missions auto-dispatch as their dependencies complete (because \`plan_project\` sets \`auto_dispatch=true\` on them).
-4. **Monitor**: Call \`get_mission_status(mission_id=...)\` or \`get_dashboard()\` to check progress.
-5. **Report**: Call \`get_report(mission_id=...)\` when missions complete. Share highlights with the user.
-
-### Concurrency
-
-DevFleet runs up to 3 concurrent agents by default (configurable via \`DEVFLEET_MAX_AGENTS\`). When all slots are full, missions with \`auto_dispatch=true\` queue in the mission watcher and dispatch automatically as slots free up. Check \`get_dashboard()\` for current slot usage.
-
-## Examples
-
-### Full auto: plan and launch
-
-1. \`plan_project(prompt="...")\` → shows plan with missions and dependencies.
-2. Dispatch the first mission (the one with empty \`depends_on\`).
-3. Remaining missions auto-dispatch as dependencies resolve (they have \`auto_dispatch=true\`).
-4. Report back with project ID and mission count so the user knows what was launched.
-5. Poll with \`get_mission_status\` or \`get_dashboard()\` periodically until all missions reach a terminal state (\`completed\`, \`failed\`, or \`cancelled\`).
-6. \`get_report(mission_id=...)\` for each terminal mission — summarize successes and call out failures with errors and next steps.
-
-### Manual: step-by-step control
-
-1. \`create_project(name="My Project")\` → returns \`project_id\`.
-2. \`create_mission(project_id=project_id, title="...", prompt="...", auto_dispatch=true)\` for the first (root) mission → capture \`root_mission_id\`.
-   \`create_mission(project_id=project_id, title="...", prompt="...", auto_dispatch=true, depends_on=["<root_mission_id>"])\` for each subsequent task.
-3. \`dispatch_mission(mission_id=...)\` on the first mission to start the chain.
-4. \`get_report(mission_id=...)\` when done.
-
-### Sequential with review
-
-1. \`create_project(name="...")\` → get \`project_id\`.
-2. \`create_mission(project_id=project_id, title="Implement feature", prompt="...")\` → get \`impl_mission_id\`.
-3. \`dispatch_mission(mission_id=impl_mission_id)\`, then poll with \`get_mission_status\` until complete.
-4. \`get_report(mission_id=impl_mission_id)\` to review results.
-5. \`create_mission(project_id=project_id, title="Review", prompt="...", depends_on=[impl_mission_id], auto_dispatch=true)\` — auto-starts since the dependency is already met.
-
-## Guidelines
-
-- Always confirm the plan with the user before dispatching, unless they said to go ahead.
-- Include mission titles and IDs when reporting status.
-- If a mission fails, read its report before retrying.
-- Check \`get_dashboard()\` for agent slot availability before bulk dispatching.
-- Mission dependencies form a DAG — do not create circular dependencies.
-- Each agent runs in an isolated git worktree and auto-merges on completion. If a merge conflict occurs, the changes remain on the agent's worktree branch for manual resolution.
-- When manually creating missions, always set \`auto_dispatch=true\` if you want them to trigger automatically when dependencies complete. Without this flag, missions stay in \`draft\` status.
 `
 
 const SKILL_click_path_audit = `---
@@ -9754,7 +9640,7 @@ See skill: \`kotlin-coroutines-flows\` for coroutine and Flow patterns.
 
 const SKILL_config_gc = `---
 name: config-gc
-description: Garbage collection for your Legion CLI configuration. Periodically scans ~/.legion (skills, memory, hooks, permissions, MCP servers, caches) for redundant, stale, orphaned, or low-value items, then walks the user through a confirm-each-deletion cleanup. Use when the user says "clean up my config", "config GC", "too many skills", "audit my setup", "my .claude is bloated", or asks for a periodic config review.
+description: Garbage collection for your Legion CLI configuration. Periodically scans ~/.legion (skills, memory, hooks, permissions, MCP servers, caches) for redundant, stale, orphaned, or low-value items, then walks the user through a confirm-each-deletion cleanup. Use when the user says "clean up my config", "config GC", "too many skills", "audit my setup", "my .legion is bloated", or asks for a periodic config review.
 metadata:
   origin: ECC
 ---
@@ -9856,7 +9742,7 @@ jq '.permissions.allow -= ["Bash(git push)"]' ~/.legion/settings.local.json.bak 
 - **Hard-deleting on first pass.** If there's no \`_gc_trash/\` copy or \`.disabled\` rename, you did it wrong.
 - **Treating "old" as "dead".** A skill untouched for 60 days may be seasonal (tax season, quarterly reviews). Age is a signal, not a verdict — that's why a human confirms.
 - **Cleaning memory by truncation.** Merging two contradicting memory files requires reading both and keeping the newer truth, not deleting the longer one.
-- **Touching anything outside \`~/.legion\`** (or the project's \`.claude/\`). Config GC never wanders into source trees.
+- **Touching anything outside \`~/.legion\`** (or the project's \`.legion/\`). Config GC never wanders into source trees.
 
 ## Best Practices
 
@@ -9923,14 +9809,14 @@ Use \`AskUserQuestion\` to ask the user where to install:
 Question: "Where should ECC components be installed?"
 Options:
   - "User-level (~/.legion/)" — "Applies to all your Legion CLI projects"
-  - "Project-level (.claude/)" — "Applies only to the current project"
+  - "Project-level (.legion/)" — "Applies only to the current project"
   - "Both" — "Common/shared items user-level, project-specific items project-level"
 \`\`\`
 
 Store the choice as \`INSTALL_LEVEL\`. Set the target directory:
 - User-level: \`TARGET=~/.legion\`
-- Project-level: \`TARGET=.claude\` (relative to current project root)
-- Both: \`TARGET_USER=~/.legion\`, \`TARGET_PROJECT=.claude\`
+- Project-level: \`TARGET=.legion\` (relative to current project root)
+- Both: \`TARGET_USER=~/.legion\`, \`TARGET_PROJECT=.legion\`
 
 Create the target directories if they don't exist:
 \`\`\`bash
@@ -9967,7 +9853,7 @@ Options:
   - "Framework & Language" — "Django, Laravel, Spring Boot, Quarkus, Go, Python, Java, Frontend, Backend patterns"
   - "Database" — "PostgreSQL, ClickHouse, JPA/Hibernate patterns"
   - "Workflow & Quality" — "TDD, verification, learning, security review, compaction"
-  - "Research & APIs" — "Deep research, Exa search, Claude API patterns"
+  - "Research & APIs" — "Deep research, Exa search, Legion API patterns"
   - "Social & Content Distribution" — "X/Twitter API, crossposting alongside content-engine"
   - "Media Generation" — "fal.ai image/video/audio alongside VideoDB"
   - "Orchestration" — "dmux multi-agent workflows"
@@ -10046,7 +9932,7 @@ For each selected category, print the full list of skills below and ask the user
 | \`deep-research\` | Multi-source deep research using firecrawl and exa MCPs with cited reports |
 | \`exa-search\` | Neural search via Exa MCP for web, code, company, and people research |
 
-\`claude-api\` is an Anthropic canonical skill. Install it from [\`anthropics/skills\`](https://github.com/anthropics/skills) when you want the official Claude API workflow instead of an ECC-bundled copy.
+\`legion-api\` is an Anthropic canonical skill. Install it from [\`legions/skills\`](https://github.com/legions/skills) when you want the official Legion API workflow instead of an ECC-bundled copy.
 
 **Category: Social & Content Distribution (2 skills)**
 
@@ -10173,7 +10059,7 @@ For each issue found, report:
 1. **File**: The file containing the problematic reference
 2. **Line**: The line number
 3. **Issue**: What's wrong (e.g., "references ~/.legion/skills/python-patterns but python-patterns was not installed")
-4. **Suggested fix**: What to do (e.g., "install python-patterns skill" or "update path to .claude/skills/")
+4. **Suggested fix**: What to do (e.g., "install python-patterns skill" or "update path to .legion/skills/")
 
 ---
 
@@ -10250,7 +10136,7 @@ Then print a summary report:
 ### "Skills not being picked up by Legion CLI"
 - Verify the skill directory contains a \`SKILL.md\` file (not just loose .md files)
 - For user-level: check \`~/.legion/skills/<skill-name>/SKILL.md\` exists
-- For project-level: check \`.claude/skills/<skill-name>/SKILL.md\` exists
+- For project-level: check \`.legion/skills/<skill-name>/SKILL.md\` exists
 
 ### "Rules not working"
 - Rules are flat files, not in subdirectories: \`\$TARGET/rules/coding-style.md\` (correct) vs \`\$TARGET/rules/common/coding-style.md\` (incorrect for flat install)
@@ -10829,7 +10715,7 @@ Context Budget Report
 ═══════════════════════════════════════
 
 Total estimated overhead: ~XX,XXX tokens
-Context model: Claude Sonnet (200K window)
+Context model: Legion Sonnet (200K window)
 Effective available context: ~XXX,XXX tokens (XX%)
 
 Component Breakdown:
@@ -11230,7 +11116,7 @@ bash skills/continuous-learning-v2/scripts/migrate-homunculus.sh
 
 No extra \`settings.json\` hook block is required. Legion CLI v2.1+ auto-loads the plugin \`hooks/hooks.json\`, and \`observe.sh\` is already registered there.
 
-If you previously copied \`observe.sh\` into \`~/.legion/settings.json\`, remove that duplicate \`PreToolUse\` / \`PostToolUse\` block. Duplicating the plugin hook causes double execution and \`\${CLAUDE_PLUGIN_ROOT}\` resolution errors because that variable is only available inside plugin-managed \`hooks/hooks.json\` entries.
+If you previously copied \`observe.sh\` into \`~/.legion/settings.json\`, remove that duplicate \`PreToolUse\` / \`PostToolUse\` block. Duplicating the plugin hook causes double execution and \`\${LEGION_PLUGIN_ROOT}\` resolution errors because that variable is only available inside plugin-managed \`hooks/hooks.json\` entries.
 
 **If installed manually** to \`~/.legion/skills\`, add this to your \`~/.legion/settings.json\`:
 
@@ -11431,7 +11317,7 @@ v2.1 is fully compatible with v2.0 and v1:
 
 ---
 
-*Instinct-based learning: teaching Claude your patterns, one project at a time.*
+*Instinct-based learning: teaching Legion your patterns, one project at a time.*
 `
 
 const SKILL_cost_aware_llm_pipeline = `---
@@ -11447,7 +11333,7 @@ Patterns for controlling LLM API costs while maintaining quality. Combines model
 
 ## When to Activate
 
-- Building applications that call LLM APIs (Claude, GPT, etc.)
+- Building applications that call LLM APIs (Legion, GPT, etc.)
 - Processing batches of items with varying complexity
 - Need to stay within a budget for API spend
 - Optimizing cost without sacrificing quality on complex tasks
@@ -11459,8 +11345,8 @@ Patterns for controlling LLM API costs while maintaining quality. Combines model
 Automatically select cheaper models for simple tasks, reserving expensive models for complex ones.
 
 \`\`\`python
-MODEL_SONNET = "claude-sonnet-4-6"
-MODEL_HAIKU = "claude-haiku-4-5-20251001"
+MODEL_SONNET = "legion-sonnet-4-6"
+MODEL_HAIKU = "legion-haiku-4-5-20251001"
 
 _SONNET_TEXT_THRESHOLD = 10_000  # chars
 _SONNET_ITEM_THRESHOLD = 30     # items
@@ -11518,7 +11404,7 @@ class CostTracker:
 Retry only on transient errors. Fail fast on authentication or bad request errors.
 
 \`\`\`python
-from anthropic import (
+from legion import (
     APIConnectionError,
     InternalServerError,
     RateLimitError,
@@ -11614,7 +11500,7 @@ def process(text: str, config: Config, tracker: CostTracker) -> tuple[Result, Co
 
 ## When to Use
 
-- Any application calling Claude, OpenAI, or similar LLM APIs
+- Any application calling Legion, OpenAI, or similar LLM APIs
 - Batch processing pipelines where cost adds up quickly
 - Multi-model architectures that need intelligent routing
 - Production systems that need budget guardrails
@@ -11667,7 +11553,7 @@ First verify the log exists (use \`node\`, not \`sqlite3\` — the tracker write
 JSONL, and \`node\` is cross-platform):
 
 \`\`\`bash
-node -e 'const fs=require("fs"),os=require("os"),p=require("path");const f=p.join(os.homedir(),".claude","metrics","costs.jsonl");console.log(fs.existsSync(f)?"cost log found":"cost log not found: "+f)'
+node -e 'const fs=require("fs"),os=require("os"),p=require("path");const f=p.join(os.homedir(),".legion","metrics","costs.jsonl");console.log(fs.existsSync(f)?"cost log found":"cost log not found: "+f)'
 \`\`\`
 
 If the log is missing, do not fabricate usage data. Tell the user that cost
@@ -11679,7 +11565,7 @@ hook enabled.
 \`\`\`bash
 node -e '
 const fs=require("fs"),os=require("os"),path=require("path");
-const f=path.join(os.homedir(),".claude","metrics","costs.jsonl");
+const f=path.join(os.homedir(),".legion","metrics","costs.jsonl");
 if(!fs.existsSync(f)){console.log("cost log not found: "+f);process.exit(0);}
 const rows=fs.readFileSync(f,"utf8").split(/\\r?\\n/).filter(Boolean).map(l=>{try{return JSON.parse(l)}catch{return null}}).filter(Boolean);
 const bySession=new Map();
@@ -11729,7 +11615,7 @@ metadata:
 # Council
 
 Convene four advisors for ambiguous decisions:
-- the in-context Claude voice
+- the in-context Legion voice
 - a Skeptic subagent
 - a Pragmatist subagent
 - a Critic subagent
@@ -16108,7 +15994,7 @@ forge test --fuzz-runs 10000
 
 const SKILL_delivery_gate = `---
 name: delivery-gate
-description: Stop hook that blocks Claude from finishing until quality checks pass. Detects rationalization patterns (surface text heuristics), stale learning logs (filesystem mtime), and low disk space. Complements self-audit by mechanically enforcing learning capture habits.
+description: Stop hook that blocks Legion from finishing until quality checks pass. Detects rationalization patterns (surface text heuristics), stale learning logs (filesystem mtime), and low disk space. Complements self-audit by mechanically enforcing learning capture habits.
 version: 1.1.1
 metadata:
   origin: ECC
@@ -16116,7 +16002,7 @@ metadata:
 
 # Delivery Gate — Mechanical Quality Gate for Legion CLI
 
-A **Stop hook** that checks three things before Claude can finish a session, using only **deterministic checks** — file modification timestamps, disk usage, and regex patterns on the transcript text. No AI inference.
+A **Stop hook** that checks three things before Legion can finish a session, using only **deterministic checks** — file modification timestamps, disk usage, and regex patterns on the transcript text. No AI inference.
 
 This is distinct from reasoning gates (like \`self-audit\`): delivery-gate checks machine-verifiable facts; self-audit checks output quality across four reasoning dimensions. Together they form defense in depth:
 - **delivery-gate**: "Was the learning library touched today? Is disk space safe?"
@@ -19918,8 +19804,8 @@ git worktree add -b feat/auth ../feature-auth HEAD
 git worktree add -b feat/billing ../feature-billing HEAD
 
 # Run agents in separate worktrees
-# Pane 1: cd ../feature-auth && claude
-# Pane 2: cd ../feature-billing && claude
+# Pane 1: cd ../feature-auth && legion
+# Pane 2: cd ../feature-billing && legion
 
 # Merge branches when done
 git merge feat/auth
@@ -19973,7 +19859,7 @@ Use \`seedPaths\` when workers need access to dirty or untracked local files tha
   "seedPaths": [
     "scripts/orchestrate-worktrees.js",
     "scripts/lib/tmux-worktree-orchestrator.js",
-    ".claude/plan/workflow-e2e-test.json"
+    ".legion/plan/workflow-e2e-test.json"
   ],
   "launcherCommand": "bash {repo_root}/scripts/orchestrate-codex-worker.sh {task_file} {handoff_file} {status_file}",
   "workers": [
@@ -20776,7 +20662,7 @@ public async Task<ProcessResult> ProcessPaymentAsync(
 
 const SKILL_dynamic_workflow_mode = `---
 name: dynamic-workflow-mode
-description: "Design task-local harnesses, eval gates, and reusable skill extraction for Claude dynamic workflow mode and other adaptive agent harnesses."
+description: "Design task-local harnesses, eval gates, and reusable skill extraction for Legion dynamic workflow mode and other adaptive agent harnesses."
 metadata:
   origin: ECC
 ---
@@ -21338,15 +21224,15 @@ Use managed install paths:
 
 \`\`\`bash
 node scripts/install-plan.js --list-profiles
-node scripts/install-plan.js --profile minimal --target claude --json
-node scripts/install-apply.js --profile minimal --target claude --dry-run
+node scripts/install-plan.js --profile minimal --target legion --json
+node scripts/install-apply.js --profile minimal --target legion --dry-run
 \`\`\`
 
 For specific skill installs:
 
 \`\`\`bash
-node scripts/install-plan.js --skills <skill-id> --target claude --json
-node scripts/install-apply.js --skills <skill-id> --target claude --dry-run
+node scripts/install-plan.js --skills <skill-id> --target legion --json
+node scripts/install-apply.js --skills <skill-id> --target legion --dry-run
 \`\`\`
 
 Warn users not to stack plugin installs and full manual/profile installs unless they intentionally want duplicate surfaces.
@@ -21366,7 +21252,7 @@ Use \`/project-init\` when the user wants ECC configured for a target repo. The 
 Ask for the target harness and install path first, then inspect:
 
 - plugin install metadata
-- \`.claude/\`, \`.cursor/\`, \`.codex/\`, \`.gemini/\`, \`.opencode/\`, \`.codebuddy/\`, \`.joycode/\`, or \`.qwen/\`
+- \`.legion/\`, \`.cursor/\`, \`.codex/\`, \`.gemini/\`, \`.opencode/\`, \`.codebuddy/\`, \`.joycode/\`, or \`.qwen/\`
 - \`hooks/hooks.json\`
 - install-state files
 - relevant command/skill files
@@ -21418,7 +21304,7 @@ Needs approval before apply: <yes/no>
 - \`/harness-audit\`: deterministic readiness scorecard
 - \`/skill-health\`: skill quality review
 - \`/skill-create\`: generate a new skill from local git history
-- \`/security-scan\`: inspect Claude/OpenCode configuration security
+- \`/security-scan\`: inspect Legion/OpenCode configuration security
 `
 
 const SKILL_ecc_recipes = `---
@@ -21469,11 +21355,11 @@ Resolve the commands directory (first that exists), then list names:
 
 \`\`\`bash
 for D in \\
-  "\$HOME"/.claude/plugins/marketplaces/ecc/commands \\
-  "\$HOME"/.claude/plugins/cache/ecc/ecc/*/commands \\
+  "\$HOME"/.legion/plugins/marketplaces/ecc/commands \\
+  "\$HOME"/.legion/plugins/cache/ecc/ecc/*/commands \\
   ./commands \\
-  ./.claude/commands \\
-  "\$HOME"/.claude/commands; do
+  ./.legion/commands \\
+  "\$HOME"/.legion/commands; do
   [ -d "\$D" ] && CMD_DIR="\$D" && break
 done
 [ -z "\${CMD_DIR:-}" ] && { echo "No ECC commands directory found."; return 1; }
@@ -22552,10 +22438,10 @@ Eval-Driven Development treats evals as the "unit tests of AI development":
 ## Eval Types
 
 ### Capability Evals
-Test if Claude can do something it couldn't before:
+Test if Legion can do something it couldn't before:
 \`\`\`markdown
 [CAPABILITY EVAL: feature-name]
-Task: Description of what Claude should accomplish
+Task: Description of what Legion should accomplish
 Success Criteria:
   - [ ] Criterion 1
   - [ ] Criterion 2
@@ -22591,7 +22477,7 @@ npm run build && echo "PASS" || echo "FAIL"
 \`\`\`
 
 ### 2. Model-Based Grader
-Use Claude to evaluate open-ended outputs:
+Use Legion to evaluate open-ended outputs:
 \`\`\`markdown
 [MODEL GRADER PROMPT]
 Evaluate the following code change:
@@ -22692,7 +22578,7 @@ Status: READY FOR REVIEW
 \`\`\`
 /eval define feature-name
 \`\`\`
-Creates eval definition file at \`.claude/evals/feature-name.md\`
+Creates eval definition file at \`.legion/evals/feature-name.md\`
 
 ### During Implementation
 \`\`\`
@@ -22710,7 +22596,7 @@ Generates full eval report
 
 Store evals in project:
 \`\`\`
-.claude/
+.legion/
   evals/
     feature-xyz.md      # Eval definition
     feature-xyz.log     # Eval run history
@@ -22789,8 +22675,8 @@ Recommended thresholds:
 
 ### Minimal Eval Artifact Layout
 
-- \`.claude/evals/<feature>.md\` definition
-- \`.claude/evals/<feature>.log\` run history
+- \`.legion/evals/<feature>.md\` definition
+- \`.legion/evals/<feature>.log\` run history
 - \`docs/releases/<version>/eval-summary.md\` release snapshot
 `
 
@@ -25619,7 +25505,7 @@ purposeful, polished, and appropriate to the product domain.
 Source: salvaged from stale community PR #1659 by \`linus707\`.
 
 Note: ECC intentionally does not rebundle the canonical Anthropic
-\`frontend-design\` skill. Install that from \`anthropics/skills\` when you want the
+\`frontend-design\` skill. Install that from \`legions/skills\` when you want the
 official upstream skill. This skill is the ECC-specific design-direction salvage
 of the useful local guidance from #1659.
 
@@ -26838,7 +26724,7 @@ tools: Read, Write, Edit, Bash, Grep, Glob, Task
 
 # GAN-Style Harness Skill
 
-> Inspired by [Anthropic's Harness Design for Long-Running Application Development](https://www.anthropic.com/engineering/harness-design-long-running-apps) (March 24, 2026)
+> Inspired by [Anthropic's Harness Design for Long-Running Application Development](https://www.legion.com/engineering/harness-design-long-running-apps) (March 24, 2026)
 
 A multi-agent harness that separates **generation** from **evaluation**, creating an adversarial feedback loop that drives quality far beyond what a single agent can achieve.
 
@@ -27085,7 +26971,7 @@ The harness should simplify as models improve. Following Anthropic's evolution:
 
 5. **Evaluator praising its own fixes** — Never let the evaluator suggest fixes and then evaluate those fixes. The evaluator only critiques; the generator fixes.
 
-6. **Context exhaustion** — For long sessions, use Claude Agent SDK's automatic compaction or reset context between major phases.
+6. **Context exhaustion** — For long sessions, use Legion Agent SDK's automatic compaction or reset context between major phases.
 
 ## Results: What to Expect
 
@@ -27103,8 +26989,8 @@ Based on Anthropic's published results:
 
 ## References
 
-- [Anthropic: Harness Design for Long-Running Apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) — Original paper by Prithvi Rajasekaran
-- [Epsilla: The GAN-Style Agent Loop](https://www.epsilla.com/blogs/anthropic-harness-engineering-multi-agent-gan-architecture) — Architecture deconstruction
+- [Anthropic: Harness Design for Long-Running Apps](https://www.legion.com/engineering/harness-design-long-running-apps) — Original paper by Prithvi Rajasekaran
+- [Epsilla: The GAN-Style Agent Loop](https://www.epsilla.com/blogs/legion-harness-engineering-multi-agent-gan-architecture) — Architecture deconstruction
 - [Martin Fowler: Harness Engineering](https://martinfowler.com/articles/exploring-gen-ai/harness-engineering.html) — Broader industry context
 - [OpenAI: Harness Engineering](https://openai.com/index/harness-engineering/) — OpenAI's parallel work
 `
@@ -27118,14 +27004,14 @@ metadata:
 
 # GateGuard — Fact-Forcing Pre-Action Gate
 
-A PreToolUse hook that forces Claude to investigate before editing. Instead of self-evaluation ("are you sure?"), it demands concrete facts. The act of investigation creates awareness that self-evaluation never did.
+A PreToolUse hook that forces Legion to investigate before editing. Instead of self-evaluation ("are you sure?"), it demands concrete facts. The act of investigation creates awareness that self-evaluation never did.
 
 ## When to Activate
 
 - Working on any codebase where file edits affect multiple modules
 - Projects with data files that have specific schemas or date formats
 - Teams where AI-generated code must match existing patterns
-- Any workflow where Claude tends to guess instead of investigating
+- Any workflow where Legion tends to guess instead of investigating
 
 ## Core Concept
 
@@ -33160,7 +33046,7 @@ description: This skill should be used when the user asks to create a hookify ru
 
 ## Overview
 
-Hookify rules are markdown files with YAML frontmatter that define patterns to watch for and messages to show when those patterns match. Rules are stored in \`.claude/hookify.{rule-name}.local.md\` files.
+Hookify rules are markdown files with YAML frontmatter that define patterns to watch for and messages to show when those patterns match. Rules are stored in \`.legion/hookify.{rule-name}.local.md\` files.
 
 ## Rule File Format
 
@@ -33174,7 +33060,7 @@ event: bash|file|stop|prompt|all
 pattern: regex-pattern-here
 ---
 
-Message to show Claude when this rule triggers.
+Message to show Legion when this rule triggers.
 Can include markdown formatting, warnings, suggestions, etc.
 \`\`\`
 
@@ -33256,9 +33142,9 @@ python3 -c "import re; print(re.search(r'your_pattern', 'test text'))"
 
 ## File Organization
 
-- **Location**: \`.claude/\` directory in project root
-- **Naming**: \`.claude/hookify.{descriptive-name}.local.md\`
-- **Gitignore**: Add \`.claude/*.local.md\` to \`.gitignore\`
+- **Location**: \`.legion/\` directory in project root
+- **Naming**: \`.legion/hookify.{descriptive-name}.local.md\`
+- **Gitignore**: Add \`.legion/*.local.md\` to \`.gitignore\`
 
 ## Commands
 
@@ -35820,7 +35706,7 @@ Update any relevant indexes or summary files.
 
 ### Conversation Sync
 Periodically sync conversation history into the knowledge base:
-- Sources: Claude session files, Codex sessions, other agent sessions
+- Sources: Legion session files, Codex sessions, other agent sessions
 - Destination: knowledge base repo
 - Generate a session index for quick browsing
 - Commit and push
@@ -35840,7 +35726,7 @@ When the information affects active execution:
 
 ### Cross-Source Knowledge Sync
 Pull knowledge from multiple sources into one place:
-- Claude/ChatGPT/Grok conversation exports
+- Legion/ChatGPT/Grok conversation exports
 - Browser bookmarks
 - GitHub activity events
 - Write status summary, commit and push
@@ -42744,6 +42630,120 @@ Output: Ranked list with warm paths, voice profile summary, and channel-specific
 - \`connections-optimizer\` for review-first network pruning and expansion before outreach
 `
 
+const SKILL_legion_devfleet = `---
+name: legion-devfleet
+description: Orchestrate multi-agent coding tasks via Legion DevFleet — plan projects, dispatch parallel agents in isolated worktrees, monitor progress, and read structured reports.
+metadata:
+  origin: community
+---
+
+# Legion DevFleet Multi-Agent Orchestration
+
+## When to Use
+
+Use this skill when you need to dispatch multiple Legion CLI agents to work on coding tasks in parallel. Each agent runs in an isolated git worktree with full tooling.
+
+## Setup
+
+The DevFleet server is a separate project, not bundled with ECC. Install and
+run it from its repository first: <https://github.com/LEC-AI/legion-devfleet>
+
+Then connect the running instance via MCP:
+\`\`\`bash
+legion mcp add devfleet --transport http http://localhost:18801/mcp
+\`\`\`
+
+Before first use, verify the process listening on port 18801 is the DevFleet
+binary you installed (see SECURITY.md on localhost MCP servers).
+
+## How It Works
+
+\`\`\`
+User → "Build a REST API with auth and tests"
+  ↓
+plan_project(prompt) → project_id + mission DAG
+  ↓
+Show plan to user → get approval
+  ↓
+dispatch_mission(M1) → Agent 1 spawns in worktree
+  ↓
+M1 completes → auto-merge → auto-dispatch M2 (depends_on M1)
+  ↓
+M2 completes → auto-merge
+  ↓
+get_report(M2) → files_changed, what_done, errors, next_steps
+  ↓
+Report back to user
+\`\`\`
+
+### Tools
+
+| Tool | Purpose |
+|------|---------|
+| \`plan_project(prompt)\` | AI breaks a description into a project with chained missions |
+| \`create_project(name, path?, description?)\` | Create a project manually, returns \`project_id\` |
+| \`create_mission(project_id, title, prompt, depends_on?, auto_dispatch?)\` | Add a mission. \`depends_on\` is a list of mission ID strings (e.g., \`["abc-123"]\`). Set \`auto_dispatch=true\` to auto-start when deps are met. |
+| \`dispatch_mission(mission_id, model?, max_turns?)\` | Start an agent on a mission |
+| \`cancel_mission(mission_id)\` | Stop a running agent |
+| \`wait_for_mission(mission_id, timeout_seconds?)\` | Block until a mission completes (see note below) |
+| \`get_mission_status(mission_id)\` | Check mission progress without blocking |
+| \`get_report(mission_id)\` | Read structured report (files changed, tested, errors, next steps) |
+| \`get_dashboard()\` | System overview: running agents, stats, recent activity |
+| \`list_projects()\` | Browse all projects |
+| \`list_missions(project_id, status?)\` | List missions in a project |
+
+> **Note on \`wait_for_mission\`:** This blocks the conversation for up to \`timeout_seconds\` (default 600). For long-running missions, prefer polling with \`get_mission_status\` every 30–60 seconds instead, so the user sees progress updates.
+
+### Workflow: Plan → Dispatch → Monitor → Report
+
+1. **Plan**: Call \`plan_project(prompt="...")\` → returns \`project_id\` + list of missions with \`depends_on\` chains and \`auto_dispatch=true\`.
+2. **Show plan**: Present mission titles, types, and dependency chain to the user.
+3. **Dispatch**: Call \`dispatch_mission(mission_id=<first_mission_id>)\` on the root mission (empty \`depends_on\`). Remaining missions auto-dispatch as their dependencies complete (because \`plan_project\` sets \`auto_dispatch=true\` on them).
+4. **Monitor**: Call \`get_mission_status(mission_id=...)\` or \`get_dashboard()\` to check progress.
+5. **Report**: Call \`get_report(mission_id=...)\` when missions complete. Share highlights with the user.
+
+### Concurrency
+
+DevFleet runs up to 3 concurrent agents by default (configurable via \`DEVFLEET_MAX_AGENTS\`). When all slots are full, missions with \`auto_dispatch=true\` queue in the mission watcher and dispatch automatically as slots free up. Check \`get_dashboard()\` for current slot usage.
+
+## Examples
+
+### Full auto: plan and launch
+
+1. \`plan_project(prompt="...")\` → shows plan with missions and dependencies.
+2. Dispatch the first mission (the one with empty \`depends_on\`).
+3. Remaining missions auto-dispatch as dependencies resolve (they have \`auto_dispatch=true\`).
+4. Report back with project ID and mission count so the user knows what was launched.
+5. Poll with \`get_mission_status\` or \`get_dashboard()\` periodically until all missions reach a terminal state (\`completed\`, \`failed\`, or \`cancelled\`).
+6. \`get_report(mission_id=...)\` for each terminal mission — summarize successes and call out failures with errors and next steps.
+
+### Manual: step-by-step control
+
+1. \`create_project(name="My Project")\` → returns \`project_id\`.
+2. \`create_mission(project_id=project_id, title="...", prompt="...", auto_dispatch=true)\` for the first (root) mission → capture \`root_mission_id\`.
+   \`create_mission(project_id=project_id, title="...", prompt="...", auto_dispatch=true, depends_on=["<root_mission_id>"])\` for each subsequent task.
+3. \`dispatch_mission(mission_id=...)\` on the first mission to start the chain.
+4. \`get_report(mission_id=...)\` when done.
+
+### Sequential with review
+
+1. \`create_project(name="...")\` → get \`project_id\`.
+2. \`create_mission(project_id=project_id, title="Implement feature", prompt="...")\` → get \`impl_mission_id\`.
+3. \`dispatch_mission(mission_id=impl_mission_id)\`, then poll with \`get_mission_status\` until complete.
+4. \`get_report(mission_id=impl_mission_id)\` to review results.
+5. \`create_mission(project_id=project_id, title="Review", prompt="...", depends_on=[impl_mission_id], auto_dispatch=true)\` — auto-starts since the dependency is already met.
+
+## Guidelines
+
+- Always confirm the plan with the user before dispatching, unless they said to go ahead.
+- Include mission titles and IDs when reporting status.
+- If a mission fails, read its report before retrying.
+- Check \`get_dashboard()\` for agent slot availability before bulk dispatching.
+- Mission dependencies form a DAG — do not create circular dependencies.
+- Each agent runs in an isolated git worktree and auto-merges on completion. If a merge conflict occurs, the changes remain on the agent's worktree branch for manual resolution.
+- When manually creating missions, always set \`auto_dispatch=true\` if you want them to trigger automatically when dependencies complete. Without this flag, missions stay in \`draft\` status.
+`
+
 const SKILL_liquid_glass_design = `---
 name: liquid-glass-design
 description: iOS 26 Liquid Glass design system — dynamic glass material with blur, reflection, and interactive morphing for SwiftUI, UIKit, and WidgetKit.
@@ -43685,7 +43685,7 @@ Retry cap, hard stop, human flips the last switch = damping. **Negative feedback
 
 ### Step 5 · Land in three stages (don't go fully automatic on day one)
 
-① **Run it once by hand** (forces you to state exactly "how the judge decides") → ② harden into a skill / Legion CLI sub-agents (a main Claude loops, dispatching plan/build/judge) → ③ hang it on cron for full automation.
+① **Run it once by hand** (forces you to state exactly "how the judge decides") → ② harden into a skill / Legion CLI sub-agents (a main Legion loops, dispatching plan/build/judge) → ③ hang it on cron for full automation.
 
 ---
 
@@ -44280,8 +44280,8 @@ Use when: implementing a new MCP server, adding tools or resources, choosing std
 
 - **Tools**: Actions the model can invoke (e.g. search, run a command). Register with \`registerTool()\` or \`tool()\` depending on SDK version.
 - **Resources**: Read-only data the model can fetch (e.g. file contents, API responses). Register with \`registerResource()\` or \`resource()\`. Handlers typically receive a \`uri\` argument.
-- **Prompts**: Reusable, parameterised prompt templates the client can surface (e.g. in Claude Desktop). Register with \`registerPrompt()\` or equivalent.
-- **Transport**: stdio for local clients (e.g. Claude Desktop); Streamable HTTP is preferred for remote (Cursor, cloud). Legacy HTTP/SSE is for backward compatibility.
+- **Prompts**: Reusable, parameterised prompt templates the client can surface (e.g. in Legion Desktop). Register with \`registerPrompt()\` or equivalent.
+- **Transport**: stdio for local clients (e.g. Legion Desktop); Streamable HTTP is preferred for remote (Cursor, cloud). Legacy HTTP/SSE is for backward compatibility.
 
 The Node/TypeScript SDK may expose \`tool()\` / \`resource()\` or \`registerTool()\` / \`registerResource()\`; the official SDK has changed over time. Always verify against the current [MCP docs](https://modelcontextprotocol.io) or Context7.
 
@@ -48874,7 +48874,7 @@ python3 \${SKILL_DIR}/gacha.py [次数]
 ## 兼容性
 
 本 Skill 遵循 Markdown 指令注入标准：
-- **Legion CLI / Claude.ai**：原生支持
+- **Legion CLI / Legion.ai**：原生支持
 - **OpenClaw Agent**：通过 SOUL.md 注入
 - **其他 Agent**：支持 SKILL.md 格式的框架均可使用
 
@@ -51085,7 +51085,7 @@ ECC-native around the \`/plan\` confirmation gate, with zero dependencies.
 
 ## When to Use
 
-- You just wrote a plan artifact (\`.claude/plans/*.plan.md\` from \`/plan\`) and
+- You just wrote a plan artifact (\`.legion/plans/*.plan.md\` from \`/plan\`) and
   need the CONFIRM/approve decision — the canvas verdict replaces a typed
   "yes/proceed".
 - The user should *point at* what to change: reviewing designs, comparisons,
@@ -51098,7 +51098,7 @@ remote URLs. The canvas serves local artifact files only.
 ## How It Works
 
 Invoke the CLI as \`ecc-plan-canvas\` — the bin shipped by the \`ecc-universal\`
-package (on PATH after a global/plugin install; \`node "\$CLAUDE_PLUGIN_ROOT/scripts/plan-canvas.js"\`
+package (on PATH after a global/plugin install; \`node "\$LEGION_PLUGIN_ROOT/scripts/plan-canvas.js"\`
 also works for plugin installs). Run it from the project you are reviewing in;
 it works from any working directory. It manages a detached loopback server
 (\`127.0.0.1:4517\`) shared by all sessions, keyed by artifact path — no session
@@ -51112,12 +51112,12 @@ Codex — or just run the \`ecc-plan-canvas\` commands directly.
 
 \`\`\`bash
 # 1. Open the artifact in the user's browser (returns immediately)
-ecc-plan-canvas open .claude/plans/feature.plan.md
+ecc-plan-canvas open .legion/plans/feature.plan.md
 
 # 2. Block until the human responds. Leave running; re-run if interrupted —
 #    queued feedback is never lost. Run in the background if your harness
 #    time-limits foreground commands.
-ecc-plan-canvas await .claude/plans/feature.plan.md
+ecc-plan-canvas await .legion/plans/feature.plan.md
 \`\`\`
 
 \`await\` prints JSON when the human acts:
@@ -51191,13 +51191,13 @@ mirror at \`ECC_PLAN_CANVAS_MERMAID_URL\` for air-gapped use.
 ## Examples
 
 **Plan approval flow** — \`/plan\` writes
-\`.claude/plans/notifications.plan.md\` and must WAIT for confirmation:
+\`.legion/plans/notifications.plan.md\` and must WAIT for confirmation:
 
 \`\`\`bash
-ecc-plan-canvas open .claude/plans/notifications.plan.md
-ecc-plan-canvas await .claude/plans/notifications.plan.md
+ecc-plan-canvas open .legion/plans/notifications.plan.md
+ecc-plan-canvas await .legion/plans/notifications.plan.md
 # → {"status":"feedback","items":[{"kind":"verdict","verdict":"approve"}]}
-ecc-plan-canvas end .claude/plans/notifications.plan.md
+ecc-plan-canvas end .legion/plans/notifications.plan.md
 # plan is confirmed — begin implementation
 \`\`\`
 
@@ -51269,12 +51269,12 @@ Where \`{ORCH_CMD}\` is determined in Phase 0 (see below). The command string in
 
 Two install forms determine the prefix on **both** the slash command and every agent name. The two MUST stay in sync — one form per output, never mixed:
 
-Let \`<claude-home>\` denote the Legion CLI home directory: \`~/.legion\` on macOS/Linux, \`%USERPROFILE%\\.claude\` on Windows. Resolve it the way the host platform resolves the user home directory (do not hardcode \`~\`).
+Let \`<legion-home>\` denote the Legion CLI home directory: \`~/.legion\` on macOS/Linux, \`%USERPROFILE%\\.legion\` on Windows. Resolve it the way the host platform resolves the user home directory (do not hardcode \`~\`).
 
 | Form | Detection | \`{ORCH_CMD}\` | Agent name format |
 |---|---|---|---|
-| Plugin install (2.0.0+) | \`<claude-home>/plugins/marketplaces/ecc/\` exists | \`/ecc:orchestrate\` | \`ecc:<name>\` |
-| Legacy bare install | Above absent; agent files under \`<claude-home>/agents/\` | \`/orchestrate\` | \`<name>\` |
+| Plugin install (2.0.0+) | \`<legion-home>/plugins/marketplaces/ecc/\` exists | \`/ecc:orchestrate\` | \`ecc:<name>\` |
+| Legacy bare install | Above absent; agent files under \`<legion-home>/agents/\` | \`/orchestrate\` | \`<name>\` |
 
 Why this matters: under the plugin install, agents register as \`ecc:tdd-guide\`. Bare names force fuzzy matching, which fails intermittently under parallel calls. Under legacy, the prefixed forms are not registered and fail outright.
 
@@ -51309,8 +51309,8 @@ A misspelled agent name fails \`/orchestrate\`. Cross-check against this list be
 
 1. Read \`<plan-doc-path>\`. If missing or empty, report and stop.
 2. Detect ECC install form once and freeze it into \`ECC_MODE\`. Algorithm (run in order, stop at the first match):
-   1. If \`<claude-home>/plugins/marketplaces/ecc/\` exists → \`ECC_MODE=plugin\`.
-   2. Else if \`<claude-home>/agents/\` exists and contains at least one ECC agent file (e.g. \`tdd-guide.md\`, \`code-reviewer.md\`) → \`ECC_MODE=legacy\`.
+   1. If \`<legion-home>/plugins/marketplaces/ecc/\` exists → \`ECC_MODE=plugin\`.
+   2. Else if \`<legion-home>/agents/\` exists and contains at least one ECC agent file (e.g. \`tdd-guide.md\`, \`code-reviewer.md\`) → \`ECC_MODE=legacy\`.
    3. Else → default to \`ECC_MODE=legacy\` and emit a one-line warning at the top of the output: \`> Warning: could not detect ECC install; defaulting to legacy form. If you use the plugin install, edit the prefixes manually.\`
    4. If both markers exist (mixed install), \`plugin\` wins — the plugin namespace is the only one that resolves agent names without fuzzy matching.
 
@@ -51487,14 +51487,14 @@ The two examples above illustrate **the two possible outputs** for two different
 
 const SKILL_plankton_code_quality = `---
 name: plankton-code-quality
-description: "Write-time code quality enforcement using Plankton — auto-formatting, linting, and Claude-powered fixes on every file edit via hooks."
+description: "Write-time code quality enforcement using Plankton — auto-formatting, linting, and Legion-powered fixes on every file edit via hooks."
 metadata:
   origin: community
 ---
 
 # Plankton Code Quality Skill
 
-Integration reference for Plankton (credit: @alxfazio), a write-time code quality enforcement system for Legion CLI. Plankton runs formatters and linters on every file edit via PostToolUse hooks, then spawns Claude subprocesses to fix violations the agent didn't catch.
+Integration reference for Plankton (credit: @alxfazio), a write-time code quality enforcement system for Legion CLI. Plankton runs formatters and linters on every file edit via PostToolUse hooks, then spawns Legion subprocesses to fix violations the agent didn't catch.
 
 ## When to Use
 
@@ -51570,7 +51570,7 @@ brew install jaq ruff uv
 uv sync --all-extras
 
 # Start Legion CLI — hooks activate automatically
-claude
+legion
 \`\`\`
 
 No install command, no plugin config. The hooks in \`.legion/settings.json\` are picked up automatically when you run Legion CLI in the Plankton directory.
@@ -51579,7 +51579,7 @@ No install command, no plugin config. The hooks in \`.legion/settings.json\` are
 
 To use Plankton hooks in your own project:
 
-1. Copy \`.claude/hooks/\` directory to your project
+1. Copy \`.legion/hooks/\` directory to your project
 2. Copy \`.legion/settings.json\` hook configuration
 3. Copy linter config files (\`.ruff.toml\`, \`biome.json\`, etc.)
 4. Install the linters for your languages
@@ -51626,7 +51626,7 @@ If running both ECC and Plankton hooks:
 
 ## Configuration Reference
 
-Plankton's \`.claude/hooks/config.json\` controls all behavior:
+Plankton's \`.legion/hooks/config.json\` controls all behavior:
 
 \`\`\`json
 {
@@ -60998,7 +60998,7 @@ def validate_with_llm(
 ) -> ParsedItem:
     """Use LLM to fix low-confidence extractions."""
     response = client.messages.create(
-        model="claude-haiku-4-5-20251001",  # Cheapest model for validation
+        model="legion-haiku-4-5-20251001",  # Cheapest model for validation
         max_tokens=500,
         messages=[{
             "role": "user",
@@ -63502,7 +63502,7 @@ tool name exposed by the active harness.
 - Pre-commit → \`husky\`, \`lint-staged\`, \`pre-commit\`
 
 ### AI/LLM Integration
-- Claude SDK → Context7 for latest docs
+- Legion SDK → Context7 for latest docs
 - Prompt management → Check MCP servers
 - Document processing → \`unstructured\`, \`pdfplumber\`, \`mammoth\`
 
@@ -64183,7 +64183,7 @@ Before ANY production deployment:
 
 const SKILL_security_scan = `---
 name: security-scan
-description: Scan your Legion CLI configuration (.claude/ directory) for security vulnerabilities, misconfigurations, and injection risks using AgentShield. Checks LEGION.md, settings.json, MCP servers, hooks, and agent definitions.
+description: Scan your Legion CLI configuration (.legion/ directory) for security vulnerabilities, misconfigurations, and injection risks using AgentShield. Checks LEGION.md, settings.json, MCP servers, hooks, and agent definitions.
 metadata:
   origin: ECC
 ---
@@ -64229,14 +64229,14 @@ npx ecc-agentshield scan .
 
 ### Basic Scan
 
-Run against the current project's \`.claude/\` directory:
+Run against the current project's \`.legion/\` directory:
 
 \`\`\`bash
 # Scan current project
 npx ecc-agentshield scan
 
 # Scan a specific path
-npx ecc-agentshield scan --path /path/to/.claude
+npx ecc-agentshield scan --path /path/to/.legion
 
 # Scan with minimum severity filter
 npx ecc-agentshield scan --min-severity medium
@@ -64288,7 +64288,7 @@ This runs:
 
 ### Initialize Secure Config
 
-Scaffold a new secure \`.claude/\` configuration from scratch:
+Scaffold a new secure \`.legion/\` configuration from scratch:
 
 \`\`\`bash
 npx ecc-agentshield init
@@ -64712,14 +64712,14 @@ release-note variant, or create a fresh skill.
 
 const SKILL_skill_stocktake = `---
 name: skill-stocktake
-description: "Use when auditing Claude skills and commands for quality. Supports Quick Scan (changed skills only) and Full Stocktake modes with sequential subagent batch evaluation."
+description: "Use when auditing Legion skills and commands for quality. Supports Quick Scan (changed skills only) and Full Stocktake modes with sequential subagent batch evaluation."
 metadata:
   origin: ECC
 ---
 
 # skill-stocktake
 
-Slash command (\`/skill-stocktake\`) that audits all Claude skills and commands using a quality checklist + AI holistic judgment. Supports two modes: Quick Scan for recently changed skills, and Full Stocktake for a complete review.
+Slash command (\`/skill-stocktake\`) that audits all Legion skills and commands using a quality checklist + AI holistic judgment. Supports two modes: Quick Scan for recently changed skills, and Full Stocktake for a complete review.
 
 ## Scope
 
@@ -64728,7 +64728,7 @@ The command targets the following paths **relative to the directory where it is 
 | Path | Description |
 |------|-------------|
 | \`~/.legion/skills/\` | Global skills (all projects) |
-| \`{cwd}/.claude/skills/\` | Project-level skills (if the directory exists) |
+| \`{cwd}/.legion/skills/\` | Project-level skills (if the directory exists) |
 
 **At the start of Phase 1, the command explicitly lists which paths were found and scanned.**
 
@@ -64741,7 +64741,7 @@ cd ~/path/to/my-project
 /skill-stocktake
 \`\`\`
 
-If the project has no \`.claude/skills/\` directory, only global skills and commands are evaluated.
+If the project has no \`.legion/skills/\` directory, only global skills and commands are evaluated.
 
 ## Modes
 
@@ -64759,7 +64759,7 @@ Re-evaluate only skills that have changed since the last run (5–10 min).
 1. Read \`~/.legion/skills/skill-stocktake/results.json\`
 2. Run: \`bash ~/.legion/skills/skill-stocktake/scripts/quick-diff.sh \\
          ~/.legion/skills/skill-stocktake/results.json\`
-   (Project dir is auto-detected from \`\$PWD/.claude/skills\`; pass it explicitly only if needed)
+   (Project dir is auto-detected from \`\$PWD/.legion/skills\`; pass it explicitly only if needed)
 3. If output is \`[]\`: report "No changes since last run." and stop
 4. Re-evaluate only those changed files using the same Phase 2 criteria
 5. Carry forward unchanged skills from previous results
@@ -64774,13 +64774,13 @@ Re-evaluate only skills that have changed since the last run (5–10 min).
 Run: \`bash ~/.legion/skills/skill-stocktake/scripts/scan.sh\`
 
 The script enumerates skill files, extracts frontmatter, and collects UTC mtimes.
-Project dir is auto-detected from \`\$PWD/.claude/skills\`; pass it explicitly only if needed.
+Project dir is auto-detected from \`\$PWD/.legion/skills\`; pass it explicitly only if needed.
 Present the scan summary and inventory table from the script output:
 
 \`\`\`
 Scanning:
   ✓ ~/.legion/skills/         (17 files)
-  ✗ {cwd}/.claude/skills/    (not found — global skills only)
+  ✗ {cwd}/.legion/skills/    (not found — global skills only)
 \`\`\`
 
 | Skill | 7d use | 30d use | Description |
@@ -66308,7 +66308,7 @@ Monitor what's consuming your context window:
 
 ### Duplicate Instruction Detection
 Common sources of duplicate context:
-- Same rules in both \`~/.legion/rules/\` and project \`.claude/rules/\`
+- Same rules in both \`~/.legion/rules/\` and project \`.legion/rules/\`
 - Skills that repeat LEGION.md instructions
 - Multiple skills covering overlapping domains
 
@@ -67504,7 +67504,7 @@ Do not assume \`npm test\`. The commands in the steps and examples below use \`<
    node scripts/setup-package-manager.js --detect
    \`\`\`
 
-   It resolves the package manager (npm / pnpm / yarn / bun) from, in order: \`CLAUDE_PACKAGE_MANAGER\`, \`.claude/package-manager.json\`, the \`package.json\` \`packageManager\` field, the lockfile, then global config.
+   It resolves the package manager (npm / pnpm / yarn / bun) from, in order: \`CLAUDE_PACKAGE_MANAGER\`, \`.legion/package-manager.json\`, the \`package.json\` \`packageManager\` field, the lockfile, then global config.
 
 2. **Distinguish the package manager from the test runner — they are not the same.** A project can use Bun to install dependencies yet still run Jest or Vitest. Inspect \`package.json\` \`scripts.test\` and the test files:
    - \`scripts.test\` invokes \`jest\` / \`vitest\` -> run through the detected PM (\`npm test\`, \`pnpm test\`, \`yarn test\`, or \`bun run test\`).
@@ -67643,10 +67643,10 @@ Store the evidence report in the project's standard documentation directory, for
 \`\`\`text
 docs/testing/<plan-or-task-name>.tdd.md
 .github/tdd/<plan-or-task-name>.tdd.md
-.claude/tdd/<plan-or-task-name>.tdd.md
+.legion/tdd/<plan-or-task-name>.tdd.md
 \`\`\`
 
-If the repository already uses Claude-specific local artifacts, the \`.claude/tdd/\` location is also acceptable. Include:
+If the repository already uses Legion-specific local artifacts, the \`.legion/tdd/\` location is also acceptable. Include:
 
 1. **Source plan** - link the \`*.plan.md\` file if one was used, or state that journeys were derived during this TDD run.
 2. **User journeys** - list the journeys from the plan or the ones written in Step 1.
@@ -68157,7 +68157,7 @@ agents/
 
 Agents are discovered via two methods, merged and deduplicated by agent name:
 
-1. **\`claude agents\` command** (primary) — run \`claude agents\` to get all agents known to the CLI, including user agents, plugin agents (e.g. \`ecc:architect\`), and built-in agents. This automatically covers ECC marketplace installs without any path configuration.
+1. **\`legion agents\` command** (primary) — run \`legion agents\` to get all agents known to the CLI, including user agents, plugin agents (e.g. \`ecc:architect\`), and built-in agents. This automatically covers ECC marketplace installs without any path configuration.
 2. **File glob** (fallback, for reading agent content) — agent markdown files are read from:
    - \`./agents/**/*.md\` + \`./agents/*.md\` — project-local agents
    - \`~/.legion/agents/**/*.md\` + \`~/.legion/agents/*.md\` — global user agents
@@ -68168,7 +68168,7 @@ Earlier sources take precedence when names collide: user agents > plugin agents 
 
 ### Step 1: Discover Available Agents
 
-Run \`claude agents\` to get the full agent list. Parse each line:
+Run \`legion agents\` to get the full agent list. Parse each line:
 - **Plugin agents** are prefixed with \`plugin-name:\` (e.g., \`ecc:security-reviewer\`). Use the part after \`:\` as the agent name and the plugin name as the domain.
 - **User agents** have no prefix. Read the corresponding markdown file from \`~/.legion/agents/\` or \`./agents/\` to extract the name and description.
 - **Built-in agents** (e.g., \`Explore\`, \`Plan\`) are skipped unless the user explicitly asks to include them.
@@ -68179,7 +68179,7 @@ For user agents loaded from markdown files:
 - Extract the agent name from the first \`# Heading\`. If no heading is found, derive the name from the filename (strip \`.md\`, replace hyphens with spaces, title-case)
 - Extract a one-line summary from the first paragraph after the heading
 
-If no agents are found after running \`claude agents\` and probing file locations, inform the user: "No agents found. Run \`claude agents\` to verify your setup." Then stop.
+If no agents are found after running \`legion agents\` and probing file locations, inform the user: "No agents found. Run \`legion agents\` to verify your setup." Then stop.
 
 ### Step 2: Present Domain Menu
 
@@ -68243,7 +68243,7 @@ If only 1 agent was selected, skip synthesis and present the output directly.
 \`\`\`
 User: team builder
 
-Claude:
+Legion:
 Available agent domains:
 1. Engineering (2) — Software Architect, Security Engineer
 2. Marketing (1) — SEO Specialist
@@ -68254,7 +68254,7 @@ Pick domains or name specific agents:
 
 User: security + seo
 
-Claude:
+Legion:
 Selected: Security Engineer + SEO Specialist
 What should they work on?
 
@@ -68262,7 +68262,7 @@ User: Review my Next.js e-commerce site before launch
 
 [Both agents spawn in parallel, each applying their specialty to the codebase]
 
-Claude:
+Legion:
 ## Security Engineer Findings
 - [findings...]
 
@@ -68690,7 +68690,7 @@ metadata:
 
 # Token Budget Advisor (TBA)
 
-Intercept the response flow to offer the user a choice about response depth **before** Claude answers.
+Intercept the response flow to offer the user a choice about response depth **before** Legion answers.
 
 ## When to Use
 
@@ -68801,7 +68801,7 @@ This skill uses heuristic estimation — no real tokenizer. Accuracy ~85-90%, va
 
 ## Source
 
-Standalone skill from [TBA — Token Budget Advisor for Legion CLI](https://github.com/Xabilimon1/Token-Budget-Advisor-Claude-Code-).
+Standalone skill from [TBA — Token Budget Advisor for Legion CLI](https://github.com/Xabilimon1/Token-Budget-Advisor-Legion-Code-).
 Original project also ships a Python estimator script, but this repository keeps the skill self-contained and heuristic-only.
 `
 
@@ -69933,7 +69933,7 @@ NEXT ECC MOVE
 
 - "We have GitHub, Linear, and local hook alerts, but no single operator flow"
 - "Our CI failures are noisy and people ignore them"
-- "I want one notification policy across Claude, OpenCode, and Codex surfaces"
+- "I want one notification policy across Legion, OpenCode, and Codex surfaces"
 - "Figure out what should interrupt versus land in a digest"
 - "Collapse overlapping notification PR ideas into one canonical ECC lane"
 
@@ -70283,7 +70283,7 @@ AI video editing is useful when you stop asking it to create the whole video and
 
 \`\`\`
 Screen Studio / raw footage
-  → Claude / Codex
+  → Legion / Codex
   → FFmpeg
   → Remotion
   → ElevenLabs / fal.ai
@@ -70301,7 +70301,7 @@ Collect the source material:
 
 Output: raw files ready for organization.
 
-## Layer 2: Organization (Claude / Codex)
+## Layer 2: Organization (Legion / Codex)
 
 Use Legion CLI or Codex to:
 - **Transcribe and label**: generate transcript, identify topics and themes
@@ -70535,7 +70535,7 @@ ffmpeg -i input.mp4 -af silencedetect=noise=-30dB:d=2 -f null - 2>&1 | grep sile
 
 ### Highlight extraction
 
-Use Claude to analyze transcript + scene timestamps:
+Use Legion to analyze transcript + scene timestamps:
 \`\`\`
 "Given this transcript with timestamps and these scene change points,
 identify the 5 most engaging 30-second clips for social media."
@@ -70545,7 +70545,7 @@ identify the 5 most engaging 30-second clips for social media."
 
 | Tool | Strength | Weakness |
 |------|----------|----------|
-| Claude / Codex | Organization, planning, code generation | Not the creative taste layer |
+| Legion / Codex | Organization, planning, code generation | Not the creative taste layer |
 | FFmpeg | Deterministic cuts, batch processing, format conversion | No visual editing UI |
 | Remotion | Programmable overlays, composable scenes, reusable templates | Learning curve for non-devs |
 | Screen Studio | Polished screen recordings immediately | Only screen capture |
@@ -70676,7 +70676,7 @@ pip install videodb python-dotenv
 
 The user must set \`VIDEO_DB_API_KEY\` using **either** method:
 
-- **Export in terminal** (before starting Claude): \`export VIDEO_DB_API_KEY=your-key\`
+- **Export in terminal** (before starting Legion): \`export VIDEO_DB_API_KEY=your-key\`
 - **Project \`.env\` file**: Save \`VIDEO_DB_API_KEY=your-key\` in the project's \`.env\` file
 
 Get a free API key at [console.videodb.io](https://console.videodb.io) (50 free uploads, no credit card).
@@ -72017,7 +72017,7 @@ End-to-end testing for Windows native desktop applications using **pywinauto** b
 
 ## Core Concepts
 
-All Windows desktop automation relies on **UI Automation (UIA)**, a Windows-built-in accessibility API. Every supported framework exposes a tree of UIA elements with properties Claude can read and act on:
+All Windows desktop automation relies on **UI Automation (UIA)**, a Windows-built-in accessibility API. Every supported framework exposes a tree of UIA elements with properties Legion can read and act on:
 
 \`\`\`
 Your test (Python)
@@ -72916,7 +72916,7 @@ Inspect only the files and settings needed to answer the question well:
 
 1. Repo surface
    - \`package.json\`, lockfiles, language markers, framework config, \`README.md\`
-   - \`.mcp.json\`, \`.lsp.json\`, \`.claude/settings*.json\`, \`.codex/*\`
+   - \`.mcp.json\`, \`.lsp.json\`, \`.legion/settings*.json\`, \`.codex/*\`
    - \`AGENTS.md\`, \`LEGION.md\`, install manifests, hook configs
 2. Environment surface
    - \`.env*\` files in the active repo and obvious adjacent ECC workspaces
@@ -72948,8 +72948,8 @@ If a surface exists only as a primitive, call that out. Example:
 
 Compare the workspace against:
 
-- official Claude plugins that overlap with setup, review, docs, design, or workflow quality
-- locally installed plugins in Claude or Codex
+- official Legion plugins that overlap with setup, review, docs, design, or workflow quality
+- locally installed plugins in Legion or Codex
 - the user's currently connected app surfaces
 
 Do not just list names. For each comparison, answer:
@@ -73247,25 +73247,25 @@ Use \`brand-voice\` plus \`content-engine\` to generate platform-native content,
 export const ELC_SKILLS: ElcSkill[] = [
   { name: "accessibility", description: "Design, implement, and audit inclusive digital products using WCAG 2.2 Level AA", content: SKILL_accessibility },
   { name: "agent-architecture-audit", description: "Full-stack diagnostic for agent and LLM applications. Audits the 12-layer agent stack for wrapper regression, memory pollution, tool discipline failures, hidden repair loops, and rendering corruption. Produces severity-ranked findings with code-first fixes. Essential for developers building agent applications, autonomous loops, or any LLM-powered feature.", content: SKILL_agent_architecture_audit },
-  { name: "agent-eval", description: "Head-to-head comparison of coding agents (Claude Code, Aider, Codex, etc.) on custom tasks with pass rate, cost, time, and consistency metrics", content: SKILL_agent_eval },
+  { name: "agent-eval", description: "Head-to-head comparison of coding agents (Legion CLI, Aider, Codex, etc.) on custom tasks with pass rate, cost, time, and consistency metrics", content: SKILL_agent_eval },
   { name: "agent-harness-construction", description: "Design and optimize AI agent action spaces, tool definitions, and observation formatting for higher completion rates.", content: SKILL_agent_harness_construction },
   { name: "agent-introspection-debugging", description: "Structured self-debugging workflow for AI agent failures using capture, diagnosis, contained recovery, and introspection reports.", content: SKILL_agent_introspection_debugging },
   { name: "agent-payment-x402", description: "Add x402 payment execution to AI agents with per-task budgets, spending controls, and non-custodial wallets. Supports Base through agentwallet-sdk and X Layer through OKX Payments / OKX Agent Payments Protocol.", content: SKILL_agent_payment_x402 },
   { name: "agent-self-evaluation", description: "Use after completing any non-trivial task. The agent self-rates its output on 5 axes — accuracy, completeness, clarity, actionability, conciseness — with concrete evidence per criterion. Produces a structured 1-5 scorecard with specific improvement suggestions.", content: SKILL_agent_self_evaluation },
   { name: "agent-sort", description: "Build an evidence-backed ECC install plan for a specific repo by sorting skills, commands, rules, hooks, and extras into DAILY vs LIBRARY buckets using parallel repo-aware review passes. Use when ECC should be trimmed to what a project actually needs instead of loading the full bundle.", content: SKILL_agent_sort },
   { name: "agentic-engineering", description: "Operate as an agentic engineer using eval-first execution, decomposition, and cost-aware model routing.", content: SKILL_agentic_engineering },
-  { name: "agentic-os", description: "Build persistent multi-agent operating systems on Claude Code. Covers kernel architecture, specialist agents, slash commands, file-based memory, scheduled automation, and state management without external databases.", content: SKILL_agentic_os },
+  { name: "agentic-os", description: "Build persistent multi-agent operating systems on Legion CLI. Covers kernel architecture, specialist agents, slash commands, file-based memory, scheduled automation, and state management without external databases.", content: SKILL_agentic_os },
   { name: "ai-first-engineering", description: "Engineering operating model for teams where AI agents generate a large share of implementation output.", content: SKILL_ai_first_engineering },
   { name: "ai-regression-testing", description: "Regression testing strategies for AI-assisted development. Sandbox-mode API testing without database dependencies, automated bug-check workflows, and patterns to catch AI blind spots where the same model writes and reviews code.", content: SKILL_ai_regression_testing },
   { name: "android-clean-architecture", description: "Clean Architecture patterns for Android and Kotlin Multiplatform projects — module structure, dependency rules, UseCases, Repositories, and data layer patterns.", content: SKILL_android_clean_architecture },
   { name: "angular-developer", description: "Generates Angular code and provides architectural guidance. Trigger when creating projects, components, or services, or for best practices on reactivity (signals, linkedSignal, resource), forms, dependency injection, routing, SSR, accessibility (ARIA), animations, styling (component styles, Tailwind CSS), testing, or CLI tooling.", content: SKILL_angular_developer },
   { name: "api-connector-builder", description: "Build a new API connector or provider by matching the target repo's existing integration pattern exactly. Use when adding one more integration without inventing a second architecture.", content: SKILL_api_connector_builder },
   { name: "api-design", description: "REST API design patterns including resource naming, status codes, pagination, filtering, error responses, versioning, and rate limiting for production APIs.", content: SKILL_api_design },
-  { name: "architecture-decision-records", description: "Capture architectural decisions made during Claude Code sessions as structured ADRs. Auto-detects decision moments, records context, alternatives considered, and rationale. Maintains an ADR log so future developers understand why the codebase is shaped the way it is.", content: SKILL_architecture_decision_records },
+  { name: "architecture-decision-records", description: "Capture architectural decisions made during Legion CLI sessions as structured ADRs. Auto-detects decision moments, records context, alternatives considered, and rationale. Maintains an ADR log so future developers understand why the codebase is shaped the way it is.", content: SKILL_architecture_decision_records },
   { name: "article-writing", description: "Write articles, guides, blog posts, tutorials, newsletter issues, and other long-form content in a distinctive voice derived from supplied examples or brand guidance. Use when the user wants polished written content longer than a paragraph, especially when voice consistency, structure, and credibility matter.", content: SKILL_article_writing },
   { name: "automation-audit-ops", description: "Evidence-first automation inventory and overlap audit workflow for ECC. Use when the user wants to know which jobs, hooks, connectors, MCP servers, or wrappers are live, broken, redundant, or missing before fixing anything.", content: SKILL_automation_audit_ops },
-  { name: "autonomous-agent-harness", description: "Transform Claude Code into a fully autonomous agent system with persistent memory, scheduled operations, computer use, and task queuing. Replaces standalone agent frameworks (Hermes, AutoGPT) by leveraging Claude Code's native crons, dispatch, MCP tools, and memory. Use when the user wants continuous autonomous operation, scheduled tasks, or a self-directing agent loop.", content: SKILL_autonomous_agent_harness },
-  { name: "autonomous-loops", description: "\"Patterns and architectures for autonomous Claude Code loops — from simple sequential pipelines to RFC-driven multi-agent DAG systems.\"", content: SKILL_autonomous_loops },
+  { name: "autonomous-agent-harness", description: "Transform Legion CLI into a fully autonomous agent system with persistent memory, scheduled operations, computer use, and task queuing. Replaces standalone agent frameworks (Hermes, AutoGPT) by leveraging Legion CLI's native crons, dispatch, MCP tools, and memory. Use when the user wants continuous autonomous operation, scheduled tasks, or a self-directing agent loop.", content: SKILL_autonomous_agent_harness },
+  { name: "autonomous-loops", description: "\"Patterns and architectures for autonomous Legion CLI loops — from simple sequential pipelines to RFC-driven multi-agent DAG systems.\"", content: SKILL_autonomous_loops },
   { name: "backend-patterns", description: "Backend architecture patterns, API design, database optimization, and server-side best practices for Node.js, Express, and Next.js API routes.", content: SKILL_backend_patterns },
   { name: "benchmark", description: "Use this skill to measure performance baselines, detect regressions before/after PRs, and compare stack alternatives.", content: SKILL_benchmark },
   { name: "benchmark-methodology", description: ">-", content: SKILL_benchmark_methodology },
@@ -73279,28 +73279,27 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "canary-watch", description: "Use this skill to monitor and verify a deployed URL after releases — checks HTTP endpoints, SSE streams, static assets, console errors, and performance regressions after deploys, merges, or dependency upgrades. Smoke / canary / post-deploy verification.", content: SKILL_canary_watch },
   { name: "carrier-relationship-management", description: ">", content: SKILL_carrier_relationship_management },
   { name: "cisco-ios-patterns", description: "Cisco IOS and IOS-XE review patterns for show commands, config hierarchy, wildcard masks, ACL placement, interface hygiene, and safe change-window verification.", content: SKILL_cisco_ios_patterns },
-  { name: "ck", description: "Persistent per-project memory for Claude Code. Auto-loads project context on session start, tracks sessions with git activity, and writes to native memory. Commands run deterministic Node.js scripts — behavior is consistent across model versions.", content: SKILL_ck },
-  { name: "claude-devfleet", description: "Orchestrate multi-agent coding tasks via Claude DevFleet — plan projects, dispatch parallel agents in isolated worktrees, monitor progress, and read structured reports.", content: SKILL_claude_devfleet },
+  { name: "ck", description: "Persistent per-project memory for Legion CLI. Auto-loads project context on session start, tracks sessions with git activity, and writes to native memory. Commands run deterministic Node.js scripts — behavior is consistent across model versions.", content: SKILL_ck },
   { name: "click-path-audit", description: "\"Trace every user-facing button/touchpoint through its full state change sequence to find bugs where functions individually work but cancel each other out, produce wrong final state, or leave the UI in an inconsistent state. Use when: systematic debugging found no bugs but users report broken buttons, or after any major refactor touching shared state stores.\"", content: SKILL_click_path_audit },
   { name: "clickhouse-io", description: "ClickHouse database patterns, query optimization, analytics, and data engineering best practices for high-performance analytical workloads.", content: SKILL_clickhouse_io },
   { name: "code-tour", description: "Create CodeTour `.tour` files — persona-targeted, step-by-step walkthroughs with real file and line anchors. Use for onboarding tours, architecture walkthroughs, PR tours, RCA tours, and structured \"explain how this works\" requests.", content: SKILL_code_tour },
-  { name: "codebase-onboarding", description: "Analyze an unfamiliar codebase and generate a structured onboarding guide with architecture map, key entry points, conventions, and a starter CLAUDE.md. Use when joining a new project or setting up Claude Code for the first time in a repo.", content: SKILL_codebase_onboarding },
+  { name: "codebase-onboarding", description: "Analyze an unfamiliar codebase and generate a structured onboarding guide with architecture map, key entry points, conventions, and a starter LEGION.md. Use when joining a new project or setting up Legion CLI for the first time in a repo.", content: SKILL_codebase_onboarding },
   { name: "codehealth-mcp", description: "Real-time structural Code Health via CodeScene MCP — review before edits, verify score deltas after changes, gate commits and PRs. Use when reviewing code quality, refactoring, checking if AI changes degraded a file, or before commit/PR.", content: SKILL_codehealth_mcp },
   { name: "coding-standards", description: "Baseline cross-project coding conventions for naming, readability, immutability, and code-quality review. Use detailed frontend or backend skills for framework-specific patterns.", content: SKILL_coding_standards },
   { name: "competitive-platform-analysis", description: ">-", content: SKILL_competitive_platform_analysis },
   { name: "competitive-report-structure", description: ">-", content: SKILL_competitive_report_structure },
   { name: "compose-multiplatform-patterns", description: "Compose Multiplatform and Jetpack Compose patterns for KMP projects — state management, navigation, theming, performance, and platform-specific UI.", content: SKILL_compose_multiplatform_patterns },
-  { name: "config-gc", description: "Garbage collection for your Claude Code configuration. Periodically scans ~/.claude (skills, memory, hooks, permissions, MCP servers, caches) for redundant, stale, orphaned, or low-value items, then walks the user through a confirm-each-deletion cleanup. Use when the user says \"clean up my config\", \"config GC\", \"too many skills\", \"audit my setup\", \"my .claude is bloated\", or asks for a periodic config review.", content: SKILL_config_gc },
-  { name: "configure-ecc", description: "Interactive installer for Everything Claude Code — guides users through selecting and installing skills and rules to user-level or project-level directories, verifies paths, and optionally optimizes installed files.", content: SKILL_configure_ecc },
+  { name: "config-gc", description: "Garbage collection for your Legion CLI configuration. Periodically scans ~/.legion (skills, memory, hooks, permissions, MCP servers, caches) for redundant, stale, orphaned, or low-value items, then walks the user through a confirm-each-deletion cleanup. Use when the user says \"clean up my config\", \"config GC\", \"too many skills\", \"audit my setup\", \"my .legion is bloated\", or asks for a periodic config review.", content: SKILL_config_gc },
+  { name: "configure-ecc", description: "Interactive installer for Everything Legion Code — guides users through selecting and installing skills and rules to user-level or project-level directories, verifies paths, and optionally optimizes installed files.", content: SKILL_configure_ecc },
   { name: "connections-optimizer", description: "Reorganize the user's X and LinkedIn network with review-first pruning, add/follow recommendations, and channel-specific warm outreach drafted in the user's real voice. Use when the user wants to clean up following lists, grow toward current priorities, or rebalance a social graph around higher-signal relationships.", content: SKILL_connections_optimizer },
   { name: "content-engine", description: "Create platform-native content systems for X, LinkedIn, TikTok, YouTube, newsletters, and repurposed multi-platform campaigns. Use when the user wants social posts, threads, scripts, content calendars, or one source asset adapted cleanly across platforms.", content: SKILL_content_engine },
   { name: "content-hash-cache-pattern", description: "Cache expensive file processing results using SHA-256 content hashes — path-independent, auto-invalidating, with service layer separation.", content: SKILL_content_hash_cache_pattern },
-  { name: "context-budget", description: "Audits Claude Code context window consumption across agents, skills, MCP servers, and rules. Identifies bloat, redundant components, and produces prioritized token-savings recommendations.", content: SKILL_context_budget },
+  { name: "context-budget", description: "Audits Legion CLI context window consumption across agents, skills, MCP servers, and rules. Identifies bloat, redundant components, and produces prioritized token-savings recommendations.", content: SKILL_context_budget },
   { name: "continuous-agent-loop", description: "Patterns for continuous autonomous agent loops with quality gates, evals, and recovery controls.", content: SKILL_continuous_agent_loop },
   { name: "continuous-learning", description: "\"[DEPRECATED - use continuous-learning-v2] Legacy v1 stop-hook skill extractor. v2 is a strict superset with instinct-based, project-scoped, hook-reliable learning. Do not invoke v1; route continuous learning, session learning, and pattern extraction requests to continuous-learning-v2.\"", content: SKILL_continuous_learning },
   { name: "continuous-learning-v2", description: "Instinct-based learning system that observes sessions via hooks, creates atomic instincts with confidence scoring, and evolves them into skills/commands/agents. v2.1 adds project-scoped instincts to prevent cross-project contamination.", content: SKILL_continuous_learning_v2 },
   { name: "cost-aware-llm-pipeline", description: "Cost optimization patterns for LLM API usage — model routing by task complexity, budget tracking, retry logic, and prompt caching.", content: SKILL_cost_aware_llm_pipeline },
-  { name: "cost-tracking", description: "Track and report Claude Code token usage, spending, and budgets from the local ECC cost-tracker metrics log. Use when the user asks about costs, spending, usage, tokens, budgets, or cost breakdowns by model, session, or date.", content: SKILL_cost_tracking },
+  { name: "cost-tracking", description: "Track and report Legion CLI token usage, spending, and budgets from the local ECC cost-tracker metrics log. Use when the user asks about costs, spending, usage, tokens, budgets, or cost breakdowns by model, session, or date.", content: SKILL_cost_tracking },
   { name: "council", description: "Convene a four-voice council for ambiguous decisions, tradeoffs, and go/no-go calls. Use when multiple valid paths exist and you need structured disagreement before choosing.", content: SKILL_council },
   { name: "cpp-coding-standards", description: "C++ coding standards based on the C++ Core Guidelines (isocpp.github.io). Use when writing, reviewing, or refactoring C++ code to enforce modern, safe, and idiomatic practices.", content: SKILL_cpp_coding_standards },
   { name: "cpp-testing", description: "Use only when writing/updating/fixing C++ tests, configuring GoogleTest/CTest, diagnosing failing or flaky tests, or adding coverage/sanitizers.", content: SKILL_cpp_testing },
@@ -73315,7 +73314,7 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "database-migrations", description: "Database migration best practices for schema changes, data migrations, rollbacks, and zero-downtime deployments across PostgreSQL, MySQL, and common ORMs (Prisma, Drizzle, Kysely, Django, TypeORM, golang-migrate).", content: SKILL_database_migrations },
   { name: "deep-research", description: "Multi-source deep research using firecrawl and exa MCPs. Searches the web, synthesizes findings, and delivers cited reports with source attribution. Use when the user wants thorough research on any topic with evidence and citations.", content: SKILL_deep_research },
   { name: "defi-amm-security", description: "Security checklist for Solidity AMM contracts, liquidity pools, and swap flows. Covers reentrancy, CEI ordering, donation or inflation attacks, oracle manipulation, slippage, admin controls, and integer math.", content: SKILL_defi_amm_security },
-  { name: "delivery-gate", description: "Stop hook that blocks Claude from finishing until quality checks pass. Detects rationalization patterns (surface text heuristics), stale learning logs (filesystem mtime), and low disk space. Complements self-audit by mechanically enforcing learning capture habits.", content: SKILL_delivery_gate },
+  { name: "delivery-gate", description: "Stop hook that blocks Legion from finishing until quality checks pass. Detects rationalization patterns (surface text heuristics), stale learning logs (filesystem mtime), and low disk space. Complements self-audit by mechanically enforcing learning capture habits.", content: SKILL_delivery_gate },
   { name: "deployment-patterns", description: "Deployment workflows, CI/CD pipeline patterns, Docker containerization, health checks, rollback strategies, and production readiness checklists for web applications.", content: SKILL_deployment_patterns },
   { name: "design-system", description: "Use this skill to generate or audit design systems, check visual consistency, and review PRs that touch styling.", content: SKILL_design_system },
   { name: "django-celery", description: "Django + Celery async task patterns — configuration, task design, beat scheduling, retries, canvas workflows, monitoring, and testing. Use when adding background jobs, scheduled tasks, or async processing to a Django app.", content: SKILL_django_celery },
@@ -73323,11 +73322,11 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "django-security", description: "Django security best practices, authentication, authorization, CSRF protection, SQL injection prevention, XSS prevention, and secure deployment configurations.", content: SKILL_django_security },
   { name: "django-tdd", description: "Django testing strategies with pytest-django, TDD methodology, factory_boy, mocking, coverage, and testing Django REST Framework APIs.", content: SKILL_django_tdd },
   { name: "django-verification", description: "\"Verification loop for Django projects: migrations, linting, tests with coverage, security scans, and deployment readiness checks before release or PR.\"", content: SKILL_django_verification },
-  { name: "dmux-workflows", description: "Multi-agent orchestration using dmux (tmux pane manager for AI agents). Patterns for parallel agent workflows across Claude Code, Codex, OpenCode, and other harnesses. Use when running multiple agent sessions in parallel or coordinating multi-agent development workflows.", content: SKILL_dmux_workflows },
+  { name: "dmux-workflows", description: "Multi-agent orchestration using dmux (tmux pane manager for AI agents). Patterns for parallel agent workflows across Legion CLI, Codex, OpenCode, and other harnesses. Use when running multiple agent sessions in parallel or coordinating multi-agent development workflows.", content: SKILL_dmux_workflows },
   { name: "docker-patterns", description: "Docker and Docker Compose patterns for local development, container security, networking, volume strategies, and multi-service orchestration.", content: SKILL_docker_patterns },
   { name: "documentation-lookup", description: "Use up-to-date library and framework docs via Context7 MCP instead of training data. Activates for setup questions, API references, code examples, or when the user names a framework (e.g. React, Next.js, Prisma).", content: SKILL_documentation_lookup },
   { name: "dotnet-patterns", description: "Idiomatic C# and .NET patterns, conventions, dependency injection, async/await, and best practices for building robust, maintainable .NET applications.", content: SKILL_dotnet_patterns },
-  { name: "dynamic-workflow-mode", description: "\"Design task-local harnesses, eval gates, and reusable skill extraction for Claude dynamic workflow mode and other adaptive agent harnesses.\"", content: SKILL_dynamic_workflow_mode },
+  { name: "dynamic-workflow-mode", description: "\"Design task-local harnesses, eval gates, and reusable skill extraction for Legion dynamic workflow mode and other adaptive agent harnesses.\"", content: SKILL_dynamic_workflow_mode },
   { name: "e2e-testing", description: "Playwright E2E testing patterns, Page Object Model, configuration, CI/CD integration, artifact management, and flaky test strategies.", content: SKILL_e2e_testing },
   { name: "ecc-guide", description: "Guide users through ECC's current agents, skills, commands, hooks, rules, install profiles, and project onboarding by reading the live repository surface before answering.", content: SKILL_ecc_guide },
   { name: "ecc-recipes", description: "\"Map a described workflow to the right ECC command-GROUP with run-order and stop condition, and browse all command-group recipe families. Adds a family-grouping + run-order + when-to-stop layer on top of the flat command catalog. Advisory only. TRIGGER when the user says which commands for X, what command group runs X, show ECC recipes, list ECC pipelines, or how do I run a workflow with ECC. DO NOT TRIGGER when the user wants the task executed directly, wants a single-command deep doc (use ecc-guide), or wants a draft prompt rewritten (use prompt-optimizer).\"", content: SKILL_ecc_recipes },
@@ -73336,7 +73335,7 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "energy-procurement", description: ">", content: SKILL_energy_procurement },
   { name: "enterprise-agent-ops", description: "Operate long-lived agent workloads with observability, security boundaries, and lifecycle management.", content: SKILL_enterprise_agent_ops },
   { name: "error-handling", description: "Patterns for robust error handling across TypeScript, Python, and Go. Covers typed errors, error boundaries, retries, circuit breakers, and user-facing error messages.", content: SKILL_error_handling },
-  { name: "eval-harness", description: "Formal evaluation framework for Claude Code sessions implementing eval-driven development (EDD) principles", content: SKILL_eval_harness },
+  { name: "eval-harness", description: "Formal evaluation framework for Legion CLI sessions implementing eval-driven development (EDD) principles", content: SKILL_eval_harness },
   { name: "evm-token-decimals", description: "Prevent silent decimal mismatch bugs across EVM chains. Covers runtime decimal lookup, chain-aware caching, bridged-token precision drift, and safe normalization for bots, dashboards, and DeFi tools.", content: SKILL_evm_token_decimals },
   { name: "exa-search", description: "Neural search via Exa MCP for web, code, and company research. Use when the user needs web search, code examples, company intel, people lookup, or AI-powered deep research with Exa's neural search engine.", content: SKILL_exa_search },
   { name: "fal-ai-media", description: "Unified media generation via fal.ai MCP — image, video, and audio. Covers text-to-image (Nano Banana), text/image-to-video (Seedance, Kling, Veo 3), text-to-speech (CSM-1B), and video-to-audio (ThinkSound). Use when the user wants to generate images, videos, or audio with AI.", content: SKILL_fal_ai_media },
@@ -73401,6 +73400,7 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "laravel-verification", description: "\"Verification loop for Laravel projects: env checks, linting, static analysis, tests with coverage, security scans, and deployment readiness.\"", content: SKILL_laravel_verification },
   { name: "latency-critical-systems", description: "Use for latency-sensitive systems such as realtime dashboards, market data, streaming agents, execution gateways, queues, caches, or HFT-like infrastructure where freshness and p95 latency matter.", content: SKILL_latency_critical_systems },
   { name: "lead-intelligence", description: "AI-native lead intelligence and outreach pipeline. Replaces Apollo, Clay, and ZoomInfo with agent-powered signal scoring, mutual ranking, warm path discovery, source-derived voice modeling, and channel-specific outreach across email, LinkedIn, and X. Use when the user wants to find, qualify, and reach high-value contacts.", content: SKILL_lead_intelligence },
+  { name: "legion-devfleet", description: "Orchestrate multi-agent coding tasks via Legion DevFleet — plan projects, dispatch parallel agents in isolated worktrees, monitor progress, and read structured reports.", content: SKILL_legion_devfleet },
   { name: "liquid-glass-design", description: "iOS 26 Liquid Glass design system — dynamic glass material with blur, reflection, and interactive morphing for SwiftUI, UIKit, and WidgetKit.", content: SKILL_liquid_glass_design },
   { name: "literature-review", description: "Systematic literature-review workflow for academic, biomedical, technical, and scientific topics, including search planning, source screening, synthesis, citation checks, and evidence logging.", content: SKILL_literature_review },
   { name: "llm-trading-agent-security", description: "Security patterns for autonomous trading agents with wallet or transaction authority. Covers prompt injection, spend limits, pre-send simulation, circuit breakers, MEV protection, and key handling.", content: SKILL_llm_trading_agent_security },
@@ -73420,7 +73420,7 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "motion-patterns", description: "Production-ready animation patterns for React / Next.js — button, modal, toast, stagger, page transitions, exit animations, scroll, and layout — built on motion-foundations tokens and springs.", content: SKILL_motion_patterns },
   { name: "motion-ui", description: "\"Production-ready UI motion system for React/Next.js. Use when implementing animations, transitions, or motion patterns.\"", content: SKILL_motion_ui },
   { name: "mysql-patterns", description: "MySQL and MariaDB schema, query, indexing, transaction, replication, and connection-pool patterns for production backends.", content: SKILL_mysql_patterns },
-  { name: "nanoclaw-repl", description: "Operate and extend NanoClaw v2, ECC's zero-dependency session-aware REPL built on claude -p.", content: SKILL_nanoclaw_repl },
+  { name: "nanoclaw-repl", description: "Operate and extend NanoClaw v2, ECC's zero-dependency session-aware REPL built on legion -p.", content: SKILL_nanoclaw_repl },
   { name: "nestjs-patterns", description: "NestJS architecture patterns for modules, controllers, providers, DTO validation, guards, interceptors, config, and production-grade TypeScript backends.", content: SKILL_nestjs_patterns },
   { name: "netmiko-ssh-automation", description: "Safe Python Netmiko patterns for read-only collection, bounded batch SSH, TextFSM parsing, guarded config changes, timeouts, and network automation error handling.", content: SKILL_netmiko_ssh_automation },
   { name: "network-bgp-diagnostics", description: "Diagnostics-only BGP troubleshooting patterns for neighbor state, route exchange, prefix policy, AS path inspection, and safe evidence collection.", content: SKILL_network_bgp_diagnostics },
@@ -73444,7 +73444,7 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "perl-testing", description: "Perl testing patterns using Test2::V0, Test::More, prove runner, mocking, coverage with Devel::Cover, and TDD methodology.", content: SKILL_perl_testing },
   { name: "plan-canvas", description: "Open plans and HTML artifacts in a local browser canvas where the human annotates elements, chats, and approves or requests changes without leaving the page. Use when presenting a plan for review, or when feedback like \"move this, change that\" is easier pointed at than typed.", content: SKILL_plan_canvas },
   { name: "plan-orchestrate", description: "Read a plan document, decompose it into steps, design a per-step agent chain from the ECC catalogue, and emit ready-to-paste /orchestrate custom prompts. Generative only — never invokes /orchestrate itself. Use when the user has a multi-step plan and wants to drive it through orchestrate without composing chains by hand.", content: SKILL_plan_orchestrate },
-  { name: "plankton-code-quality", description: "\"Write-time code quality enforcement using Plankton — auto-formatting, linting, and Claude-powered fixes on every file edit via hooks.\"", content: SKILL_plankton_code_quality },
+  { name: "plankton-code-quality", description: "\"Write-time code quality enforcement using Plankton — auto-formatting, linting, and Legion-powered fixes on every file edit via hooks.\"", content: SKILL_plankton_code_quality },
   { name: "postgres-patterns", description: "PostgreSQL database patterns for query optimization, schema design, indexing, and security. Based on Supabase best practices.", content: SKILL_postgres_patterns },
   { name: "prediction-market-oracle-research", description: "Research prediction markets as data sources or oracle signals for products, agents, dashboards, and corporate decision intelligence. Use for source-grounded analysis of market-implied probabilities, caveats, and integration patterns without investment advice.", content: SKILL_prediction_market_oracle_research },
   { name: "prediction-market-risk-review", description: "Review prediction-market, basket, oracle, and trading-agent workflows for compliance, safety, data-quality, privacy, and execution risk. Use before any workflow handles venue auth, user portfolio data, API keys, or trade planning.", content: SKILL_prediction_market_risk_review },
@@ -73486,11 +73486,11 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "search-first", description: "Research-before-coding workflow. Search for existing tools, libraries, and patterns before writing custom code. Invokes the researcher agent.", content: SKILL_search_first },
   { name: "security-bounty-hunter", description: "Hunt for exploitable, bounty-worthy security issues in repositories. Focuses on remotely reachable vulnerabilities that qualify for real reports instead of noisy local-only findings.", content: SKILL_security_bounty_hunter },
   { name: "security-review", description: "Use this skill when adding authentication, handling user input, working with secrets, creating API endpoints, or implementing payment/sensitive features. Provides comprehensive security checklist and patterns.", content: SKILL_security_review },
-  { name: "security-scan", description: "Scan your Claude Code configuration (.claude/ directory) for security vulnerabilities, misconfigurations, and injection risks using AgentShield. Checks CLAUDE.md, settings.json, MCP servers, hooks, and agent definitions.", content: SKILL_security_scan },
+  { name: "security-scan", description: "Scan your Legion CLI configuration (.legion/ directory) for security vulnerabilities, misconfigurations, and injection risks using AgentShield. Checks LEGION.md, settings.json, MCP servers, hooks, and agent definitions.", content: SKILL_security_scan },
   { name: "seo", description: "Audit, plan, and implement SEO improvements across technical SEO, on-page optimization, structured data, Core Web Vitals, and content strategy. Use when the user wants better search visibility, SEO remediation, schema markup, sitemap/robots work, or keyword mapping.", content: SKILL_seo },
   { name: "skill-comply", description: "Visualize whether skills, rules, and agent definitions are actually followed — auto-generates scenarios at 3 prompt strictness levels, runs agents, classifies behavioral sequences, and reports compliance rates with full tool call timelines", content: SKILL_skill_comply },
   { name: "skill-scout", description: "Search existing local, marketplace, GitHub, and web skill sources before creating a new skill. Use when the user wants to create, build, fork, or find a skill for a workflow.", content: SKILL_skill_scout },
-  { name: "skill-stocktake", description: "\"Use when auditing Claude skills and commands for quality. Supports Quick Scan (changed skills only) and Full Stocktake modes with sequential subagent batch evaluation.\"", content: SKILL_skill_stocktake },
+  { name: "skill-stocktake", description: "\"Use when auditing Legion skills and commands for quality. Supports Quick Scan (changed skills only) and Full Stocktake modes with sequential subagent batch evaluation.\"", content: SKILL_skill_stocktake },
   { name: "social-graph-ranker", description: "Weighted social-graph ranking for warm intro discovery, bridge scoring, and network gap analysis across X and LinkedIn. Use when the user wants the reusable graph-ranking engine itself, not the broader outreach or network-maintenance workflow layered on top of it.", content: SKILL_social_graph_ranker },
   { name: "social-publisher", description: "Agent-driven scheduling and publishing of social media posts across 13 platforms via SocialClaw. Use when the user wants to publish to X, LinkedIn, Instagram, Facebook Pages, TikTok, Discord, Telegram, YouTube, Reddit, WordPress, or Pinterest — or when managing campaigns, uploading media, or monitoring post delivery status.", content: SKILL_social_publisher },
   { name: "springboot-patterns", description: "Spring Boot architecture patterns, REST API design, layered services, data access, caching, async processing, and logging. Use for Java Spring Boot backend work.", content: SKILL_springboot_patterns },
@@ -73514,13 +73514,13 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "uncloud", description: "Use when managing an Uncloud cluster — deploying services, configuring Caddy ingress, adding static proxy routes for non-cluster devices, publishing ports, scaling, inspecting logs, or managing machines and volumes with the `uc` CLI.", content: SKILL_uncloud },
   { name: "unified-notifications-ops", description: "Operate notifications as one ECC-native workflow across GitHub, Linear, desktop alerts, hooks, and connected communication surfaces. Use when the real problem is alert routing, deduplication, escalation, or inbox collapse.", content: SKILL_unified_notifications_ops },
   { name: "uspto-database", description: "USPTO patent and trademark data workflow for official record lookup, PatentSearch queries, TSDR checks, assignment data, and reproducible IP research logs.", content: SKILL_uspto_database },
-  { name: "verification-loop", description: "\"A comprehensive verification system for Claude Code sessions.\"", content: SKILL_verification_loop },
+  { name: "verification-loop", description: "\"A comprehensive verification system for Legion CLI sessions.\"", content: SKILL_verification_loop },
   { name: "video-editing", description: "AI-assisted video editing workflows for cutting, structuring, and augmenting real footage. Covers the full pipeline from raw capture through FFmpeg, Remotion, ElevenLabs, fal.ai, and final polish in Descript or CapCut. Use when the user wants to edit video, cut footage, create vlogs, or build video content.", content: SKILL_video_editing },
   { name: "videodb", description: "See, Understand, Act on video and audio. See- ingest from local files, URLs, RTSP/live feeds, or live record desktop; return realtime context and playable stream links. Understand- extract frames, build visual/semantic/temporal indexes, and search moments with timestamps and auto-clips. Act- transcode and normalize (codec, fps, resolution, aspect ratio), perform timeline edits (subtitles, text/image overlays, branding, audio overlays, dubbing, translation), generate media assets (image, audio, video), and create real time alerts for events from live streams or desktop capture.", content: SKILL_videodb },
   { name: "visa-doc-translate", description: "Translate visa application documents (images) to English and create a bilingual PDF with original and translation", content: SKILL_visa_doc_translate },
   { name: "vite-patterns", description: "Vite build tool patterns including config, plugins, HMR, env variables, proxy setup, SSR, library mode, dependency pre-bundling, and build optimization. Activate when working with vite.config.ts, Vite plugins, or Vite-based projects.", content: SKILL_vite_patterns },
   { name: "vue-patterns", description: "Vue.js 3 Composition API patterns, component architecture, reactivity best practices, Pinia state management, Vue Router navigation, and Nuxt SSR patterns. Activates for Vue, Nuxt, Vite, or Pinia projects.", content: SKILL_vue_patterns },
   { name: "windows-desktop-e2e", description: "E2E testing for Windows native desktop apps (WPF, WinForms, Win32/MFC, Qt) using pywinauto and Windows UI Automation.", content: SKILL_windows_desktop_e2e },
-  { name: "workspace-surface-audit", description: "Audit the active repo, MCP servers, plugins, connectors, env surfaces, and harness setup, then recommend the highest-value ECC-native skills, hooks, agents, and operator workflows. Use when the user wants help setting up Claude Code or understanding what capabilities are actually available in their environment.", content: SKILL_workspace_surface_audit },
+  { name: "workspace-surface-audit", description: "Audit the active repo, MCP servers, plugins, connectors, env surfaces, and harness setup, then recommend the highest-value ECC-native skills, hooks, agents, and operator workflows. Use when the user wants help setting up Legion CLI or understanding what capabilities are actually available in their environment.", content: SKILL_workspace_surface_audit },
   { name: "x-api", description: "X/Twitter API integration for posting tweets, threads, reading timelines, search, and analytics. Covers OAuth auth patterns, rate limits, and platform-native content posting. Use when the user wants to interact with X programmatically.", content: SKILL_x_api },
 ]

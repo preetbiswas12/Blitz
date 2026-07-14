@@ -32,6 +32,20 @@ function rebrand(content: string): string {
     .replace(/PONYTAIL_DEFAULT_MODE/g, "CONTEXT_DEFAULT_MODE")
     .replace(/@ponytail/g, "@context")
     .replace(/\/ponytail/g, "/context")
+    // Additional Claude/Anthropic rebranding
+    .replace(/CLAUDE_PLUGIN_ROOT/g, "LEGION_PLUGIN_ROOT")
+    .replace(/~\/\.claude\//g, "~/.legion/")
+    .replace(/~\/\.claude/g, "~/.legion")
+    .replace(/CLAUDE\.md/g, "LEGION.md")
+    .replace(/\.claude\//g, ".legion/")
+    .replace(/\.claude\b/g, ".legion")
+    .replace(/claude -p/g, "legion -p")
+    .replace(/claude-code/g, "legion")
+    .replace(/anthropic-ai/g, "legioncli")
+    .replace(/docs\.anthropic\.com/g, "docs.legioncli.com")
+    .replace(/anthropic/g, "legion")
+    .replace(/\bClaude\b/g, "Legion")
+    .replace(/\bclaude\b/g, "legion")
 }
 
 interface SkillEntry {

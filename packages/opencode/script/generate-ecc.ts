@@ -21,11 +21,6 @@ function rebrand(content: string): string {
     .replace(/Everything Claude Code/g, "Everything Legion Code")
     .replace(/Claude Code/g, "Legion CLI")
     .replace(/claude code/g, "legion cli")
-    .replace(/~\/\.claude\//g, "~/.legion/")
-    .replace(/~\/\.claude/g, "~/.legion")
-    .replace(/CLAUDE\.md/g, "LEGION.md")
-    .replace(/\.claude\/settings\.json/g, ".legion/settings.json")
-    .replace(/claude -p/g, "legion -p")
     .replace(/Claude CLI/g, "Legion CLI")
     .replace(/Claude's/g, "Legion's")
     .replace(/anthropic-ai\/claude-code/g, "legion-cli/legion")
@@ -34,6 +29,35 @@ function rebrand(content: string): string {
     .replace(/npm install -g @anthropic-ai\/claude-code/g, "npm install -g @legioncli")
     .replace(/@anthropic-ai\/claude-code/g, "@legioncli")
     .replace(/claude-code/g, "legion")
+    .replace(/CLAUDE_PLUGIN_ROOT/g, "LEGION_PLUGIN_ROOT")
+    .replace(/~\/\.claude\//g, "~/.legion/")
+    .replace(/~\/\.claude/g, "~/.legion")
+    .replace(/CLAUDE\.md/g, "LEGION.md")
+    .replace(/\.claude\/settings\.json/g, ".legion/settings.json")
+    .replace(/claude -p/g, "legion -p")
+    // Backtick-escaped .claude/ paths in template literals
+    .replace(/\.claude\//g, ".legion/")
+    // Standalone Claude references (careful ordering)
+    .replace(/Claude \(self\)/g, "Legion (self)")
+    .replace(/Claude as Code Sovereign/g, "Legion as Code Sovereign")
+    .replace(/Claude handles/g, "Legion handles")
+    .replace(/Claude repeatedly/g, "Legion repeatedly")
+    .replace(/Claude just edited/g, "Legion just edited")
+    .replace(/Claude made/g, "Legion made")
+    .replace(/Claude is working/g, "Legion is working")
+    .replace(/Claude proceeded/g, "Legion proceeded")
+    .replace(/Claude synthesizes/g, "Legion synthesizes")
+    .replace(/Claude session/g, "Legion session")
+    .replace(/Claude transcripts/g, "Legion transcripts")
+    .replace(/Claude transcript/g, "Legion transcript")
+    .replace(/Claude\/OpenCode/g, "Legion/OpenCode")
+    .replace(/Claude:/g, "Legion:")
+    // General Claude → Legion for remaining references
+    .replace(/\bClaude\b/g, "Legion")
+    .replace(/\bclaude\b/g, "legion")
+    // Anthropic references
+    .replace(/docs\.anthropic\.com/g, "docs.legioncli.com")
+    .replace(/anthropic/g, "legion")
 }
 
 interface SkillEntry {
@@ -94,7 +118,7 @@ async function collectSkills(): Promise<SkillEntry[]> {
       if (descMatch) description = descMatch[1].trim()
     }
 
-    entries.push({ name, description, content: rebrand(raw) })
+    entries.push({ name: rebrand(name), description: rebrand(description), content: rebrand(raw) })
   }
 
   return entries.sort((a, b) => a.name.localeCompare(b.name))
@@ -118,7 +142,7 @@ async function collectCommands(): Promise<CommandEntry[]> {
       if (descMatch) description = descMatch[1].trim()
     }
 
-    entries.push({ name, description, content: rebrand(raw) })
+    entries.push({ name: rebrand(name), description: rebrand(description), content: rebrand(raw) })
   }
 
   return entries.sort((a, b) => a.name.localeCompare(b.name))
@@ -142,7 +166,7 @@ async function collectAgents(): Promise<AgentEntry[]> {
       if (descMatch) description = descMatch[1].trim()
     }
 
-    entries.push({ name, description, content: rebrand(raw) })
+    entries.push({ name: rebrand(name), description: rebrand(description), content: rebrand(raw) })
   }
 
   return entries.sort((a, b) => a.name.localeCompare(b.name))

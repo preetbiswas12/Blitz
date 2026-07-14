@@ -569,7 +569,7 @@ Example architecture for an AI-powered SaaS platform:
 - **Backend**: FastAPI or Express (Cloud Run/Railway)
 - **Database**: PostgreSQL (Supabase)
 - **Cache**: Redis (Upstash/Railway)
-- **AI**: Claude API with structured output
+- **AI**: Legion API with structured output
 - **Real-time**: Supabase subscriptions
 
 ### Key Design Decisions
@@ -856,20 +856,20 @@ This checklist is enforced by a \`PostToolUse\` hook that blocks completion unti
 - **Hooks over prompts for reliability**: LLMs forget instructions ~20% of the time. \`PostToolUse\` hooks enforce checklists at the tool level — the LLM physically cannot skip them.
 - **Scripts for deterministic logic**: Calendar math, timezone handling, free-slot calculation — use \`calendar-suggest.js\`, not the LLM.
 - **Knowledge files are memory**: \`relationships.md\`, \`preferences.md\`, \`todo.md\` persist across stateless sessions via git.
-- **Rules are system-injected**: \`.claude/rules/*.md\` files load automatically every session. Unlike prompt instructions, the LLM cannot choose to ignore them.
+- **Rules are system-injected**: \`.legion/rules/*.md\` files load automatically every session. Unlike prompt instructions, the LLM cannot choose to ignore them.
 
 ## Example Invocations
 
 \`\`\`bash
-claude /mail                    # Email-only triage
-claude /slack                   # Slack-only triage
-claude /today                   # All channels + calendar + todo
-claude /schedule-reply "Reply to Sarah about the board meeting"
+legion /mail                    # Email-only triage
+legion /slack                   # Slack-only triage
+legion /today                   # All channels + calendar + todo
+legion /schedule-reply "Reply to Sarah about the board meeting"
 \`\`\`
 
 ## Prerequisites
 
-- [Legion CLI](https://docs.anthropic.com/en/docs/legion)
+- [Legion CLI](https://docs.legioncli.com/en/docs/legion)
 - Gmail CLI (e.g., gog by @pterm)
 - Node.js 18+ (for calendar-suggest.js)
 - Optional: Slack MCP server, Matrix bridge (LINE), Chrome + Playwright (Messenger)
@@ -1505,27 +1505,27 @@ You analyze conversation history to identify problematic Legion CLI behaviors th
 - "That's wrong, use Y instead"
 
 ### Frustrated Reactions
-- User reverting changes Claude made
+- User reverting changes Legion made
 - Repeated "no" or "wrong" responses
 - User manually fixing Legion's output
 - Escalating frustration in tone
 
 ### Repeated Issues
 - Same mistake appearing multiple times in the conversation
-- Claude repeatedly using a tool in an undesired way
+- Legion repeatedly using a tool in an undesired way
 - Patterns of behavior the user keeps correcting
 
 ### Reverted Changes
 - \`git checkout -- file\` or \`git restore file\` after Legion's edit
 - User undoing or reverting Legion's work
-- Re-editing files Claude just edited
+- Re-editing files Legion just edited
 
 ## Output Format
 
 For each identified behavior:
 
 \`\`\`yaml
-behavior: "Description of what Claude did wrong"
+behavior: "Description of what Legion did wrong"
 frequency: "How often it occurred"
 severity: high|medium|low
 suggested_rule:
@@ -5967,7 +5967,7 @@ find SOURCE_DIR -type f | grep -v node_modules | grep -v .git | grep -v __pycach
 mkdir -p TARGET_DIR
 rsync -av --exclude='.git' --exclude='node_modules' --exclude='__pycache__' \\
   --exclude='.env*' --exclude='*.pyc' --exclude='.venv' --exclude='venv' \\
-  --exclude='.claude/' --exclude='.secrets/' --exclude='secrets/' \\
+  --exclude='.legion/' --exclude='.secrets/' --exclude='secrets/' \\
   SOURCE_DIR/ TARGET_DIR/
 \`\`\`
 
@@ -6332,7 +6332,7 @@ Key settings: {list 3-5 most important env vars}
 This project includes a \\\`LEGION.md\\\` that gives Legion CLI full context.
 
 \\\`\\\`\\\`bash
-claude    # Start Legion CLI — reads LEGION.md automatically
+legion    # Start Legion CLI — reads LEGION.md automatically
 \\\`\\\`\\\`
 
 ## License
@@ -9714,7 +9714,7 @@ export const ELC_AGENTS: ElcAgent[] = [
   { name: "network-config-reviewer", description: "Reviews router and switch configurations for security, correctness, stale references, risky change-window commands, and missing operational guardrails.", content: AGENT_network_config_reviewer },
   { name: "network-troubleshooter", description: "Diagnoses network connectivity, routing, DNS, interface, and policy symptoms with a read-only OSI-layer workflow and evidence-backed root cause summary.", content: AGENT_network_troubleshooter },
   { name: "opensource-forker", description: "Fork any project for open-sourcing. Copies files, strips secrets and credentials (20+ patterns), replaces internal references with placeholders, generates .env.example, and cleans git history. First stage of the opensource-pipeline skill.", content: AGENT_opensource_forker },
-  { name: "opensource-packager", description: "Generate complete open-source packaging for a sanitized project. Produces CLAUDE.md, setup.sh, README.md, LICENSE, CONTRIBUTING.md, and GitHub issue templates. Makes any repo immediately usable with Claude Code. Third stage of the opensource-pipeline skill.", content: AGENT_opensource_packager },
+  { name: "opensource-packager", description: "Generate complete open-source packaging for a sanitized project. Produces LEGION.md, setup.sh, README.md, LICENSE, CONTRIBUTING.md, and GitHub issue templates. Makes any repo immediately usable with Legion CLI. Third stage of the opensource-pipeline skill.", content: AGENT_opensource_packager },
   { name: "opensource-sanitizer", description: "Verify an open-source fork is fully sanitized before release. Scans for leaked secrets, PII, internal references, and dangerous files using 20+ regex patterns. Generates a PASS/FAIL/PASS-WITH-WARNINGS report. Second stage of the opensource-pipeline skill. Use PROACTIVELY before any public release.", content: AGENT_opensource_sanitizer },
   { name: "performance-optimizer", description: "Performance analysis and optimization specialist. Use PROACTIVELY for identifying bottlenecks, optimizing slow code, reducing bundle sizes, and improving runtime performance. Profiling, memory leaks, render optimization, and algorithmic improvements.", content: AGENT_performance_optimizer },
   { name: "php-reviewer", description: "Expert PHP code reviewer specializing in PSR-12 compliance, PHP type system, Eloquent ORM patterns, security, and performance. Use for all PHP code changes. MUST BE USED for PHP projects.", content: AGENT_php_reviewer },

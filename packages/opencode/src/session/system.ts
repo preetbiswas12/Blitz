@@ -19,6 +19,7 @@ import { Permission } from "@/permission"
 import { Skill } from "@/skill"
 
 // kilocode_change start
+import { Memory } from "../kilocode/memory"
 import SOUL from "../kilocode/soul.txt"
 import BRAIN from "../kilocode/brain.txt"
 import type { EditorContext } from "../kilocode/editor-context"
@@ -78,6 +79,20 @@ export function contextRules(opts?: { enabled?: boolean }) {
     "",
     CONTEXT_RULE.trim(),
   ].join("\n")
+}
+
+export function memory(): Effect.Effect<string> {
+  return Effect.gen(function* () {
+    const content = yield* Memory.formatContext()
+    if (!content) return ""
+    return [
+      "# Project Memory",
+      "The following memory has been loaded from LEGION.md and session memory.",
+      "Use this context to inform your responses about project conventions, decisions, and learnings.",
+      "",
+      content,
+    ].join("\n")
+  })
 }
 // kilocode_change end
 

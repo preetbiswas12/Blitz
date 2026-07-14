@@ -66,7 +66,7 @@ export const layer: Layer.Layer<
       ...(Flag.LEGION_CONFIG_DIR ? [path.join(Flag.LEGION_CONFIG_DIR, "AGENTS.md")] : []),
       // kilocode_change end
       path.join(global.config, "AGENTS.md"),
-      ...(!flags.disableClaudeCodePrompt ? [path.join(global.home, ".claude", "CLAUDE.md")] : []),
+      ...(!flags.disableClaudeCodePrompt ? [path.join(global.home, ".legion", "LEGION.md")] : []), // kilocode_change - rebrand .claude/CLAUDE.md to .legion/LEGION.md
     ]
     const instructionFiles = files(flags.disableClaudeCodePrompt)
 

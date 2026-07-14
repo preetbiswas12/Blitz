@@ -20,7 +20,7 @@ import { Git } from "@/git" // kilocode_change
 import { isRecord } from "@/util/record"
 
 const log = Log.create({ service: "skill" })
-const CLAUDE_EXTERNAL_DIR = ".claude"
+const CLAUDE_EXTERNAL_DIR = ".legion" // kilocode_change - rebrand .claude to .legion
 const AGENTS_EXTERNAL_DIR = ".agents"
 // kilocode_change start
 export const BUILTIN_LOCATION = "builtin"

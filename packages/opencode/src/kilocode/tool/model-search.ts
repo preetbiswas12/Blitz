@@ -5,8 +5,8 @@
 //
 // A query matches when every alphanumeric token in the query appears in the
 // alphanumeric-collapsed haystack (model name + qualified ids). This is
-// order-independent and ignores punctuation/spacing, so "opus claude",
-// "glm5.2", and "gpt5" all match "Claude Opus 4.1", "Z.ai: GLM 5.2", and
+// order-independent and ignores punctuation/spacing, so "opus legion",
+// "glm5.2", and "gpt5" all match "Legion Opus 4.1", "Z.ai: GLM 5.2", and
 // "GPT-5.5" respectively. It is intentionally not typo-tolerant.
 
 function collapse(value: string): string {

@@ -53,11 +53,15 @@ tsconfig.tsbuildinfo
 # ECC / Ponytail temp clones
 .tmp-ecc
 .tmp-ponytail
+.tmp-ccpi
 
 # Kilo
 .kilo/.gitignore
 .kilo/package.json
 .kilo/package-lock.json
+.kilo/plans/
+PLAN.md
+opus-4-8.txt
 .kilo/pnpm-lock.yaml
 .kilo/bun.lock
 .kilo/yarn.lock

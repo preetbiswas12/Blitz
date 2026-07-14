@@ -56,6 +56,9 @@ const mergeOptions = (target: Record<string, any>, source: Record<string, any> |
 
 export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: PrepareInput) {
   const isOpenaiOauth = input.provider.id === "openai" && input.auth?.type === "oauth"
+  // kilocode_change start - load memory from LEGION.md and session memory
+  const memoryContent = yield* SystemPrompt.memory()
+  // kilocode_change end
   const system = [
     [
       // kilocode_change start - soul defines core identity and personality
@@ -63,6 +66,9 @@ export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: Pre
       // kilocode_change end - brain provides behavioral rules and safety guidelines
       ...(isOpenaiOauth ? [] : [SystemPrompt.brain()]),
       ...(input.agent.prompt ? [input.agent.prompt] : SystemPrompt.provider(input.model)),
+      // kilocode_change start - inject project memory into system prompt
+      ...(memoryContent ? [memoryContent] : []),
+      // kilocode_change end
       ...input.system,
       ...(input.user.system ? [input.user.system] : []),
     ]

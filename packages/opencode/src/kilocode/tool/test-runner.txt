@@ -1,0 +1,18 @@
+The test_runner tool runs tests with auto-detection of framework and provides structured results.
+
+Usage:
+- Auto-detects test framework from project files (vitest, jest, pytest, go, cargo, maven, gradle)
+- Parses test output for failures with file references
+- Returns structured results with pass/fail counts and failure details
+- Can retry failed tests with different strategies
+
+Parameters:
+- command: Custom test command (overrides auto-detection)
+- pattern: Test file pattern (e.g., '**/*.test.ts')
+- retry: Retry failed tests with different strategies
+- coverage: Include coverage report
+
+Examples:
+- Run all tests: { "tool": "test_runner" }
+- Run specific pattern: { "tool": "test_runner", "pattern": "src/**/*.test.ts" }
+- Run with custom command: { "tool": "test_runner", "command": "pytest tests/ -v" }

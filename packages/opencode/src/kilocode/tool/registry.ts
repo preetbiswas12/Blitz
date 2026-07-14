@@ -6,6 +6,10 @@ import { AgentManagerTool } from "./agent-manager"
 import { BackgroundProcessTool } from "./background-process"
 import { InteractiveTerminalTool } from "./interactive-terminal"
 import { NotebookEditTool, NotebookExecuteTool, NotebookReadTool } from "./notebook-host"
+import { TestRunnerTool } from "./test-runner"
+import { GitPRCreateTool, GitPRListTool } from "../git/pr"
+import { GitConflictResolveTool, GitConflictListTool } from "../git/conflict"
+import { GitBlameTool } from "../git/blame"
 import * as Tool from "../../tool/tool"
 import { Flag } from "@opencode-ai/core/flag/flag"
 import { Effect } from "effect"
@@ -54,13 +58,19 @@ export namespace KiloToolRegistry {
       const manager = yield* AgentManagerTool
       const process = yield* BackgroundProcessTool
       const terminal = yield* InteractiveTerminalTool
-      if (!notebook) return { codebase, recall, managerModels, manager, process, terminal }
+      const testRunner = yield* TestRunnerTool
+      const gitPRCreate = yield* GitPRCreateTool
+      const gitPRList = yield* GitPRListTool
+      const gitConflictResolve = yield* GitConflictResolveTool
+      const gitConflictList = yield* GitConflictListTool
+      const gitBlame = yield* GitBlameTool
+      if (!notebook) return { codebase, recall, managerModels, manager, process, terminal, testRunner, gitPRCreate, gitPRList, gitConflictResolve, gitConflictList, gitBlame }
       const tools = yield* Effect.all({
         notebookRead: NotebookReadTool,
         notebookEdit: NotebookEditTool,
         notebookExecute: NotebookExecuteTool,
       }).pipe(Effect.provideService(Notebook.Service, notebook))
-      return { codebase, recall, managerModels, manager, process, terminal, ...tools }
+      return { codebase, recall, managerModels, manager, process, terminal, testRunner, gitPRCreate, gitPRList, gitConflictResolve, gitConflictList, gitBlame, ...tools }
     })
   }
 
@@ -74,6 +84,12 @@ export namespace KiloToolRegistry {
       manager: Tool.Info
       process: Tool.Info
       terminal?: Tool.Info
+      testRunner: Tool.Info
+      gitPRCreate: Tool.Info
+      gitPRList: Tool.Info
+      gitConflictResolve: Tool.Info
+      gitConflictList: Tool.Info
+      gitBlame: Tool.Info
       notebookRead?: Tool.Info
       notebookEdit?: Tool.Info
       notebookExecute?: Tool.Info
@@ -88,6 +104,12 @@ export namespace KiloToolRegistry {
         managerModels: Tool.init(tools.managerModels),
         manager: Tool.init(tools.manager),
         process: Tool.init(tools.process),
+        testRunner: Tool.init(tools.testRunner),
+        gitPRCreate: Tool.init(tools.gitPRCreate),
+        gitPRList: Tool.init(tools.gitPRList),
+        gitConflictResolve: Tool.init(tools.gitConflictResolve),
+        gitConflictList: Tool.init(tools.gitConflictList),
+        gitBlame: Tool.init(tools.gitBlame),
       })
       const terminal = tools.terminal ? yield* Tool.init(tools.terminal) : undefined
       const notebooks =
@@ -156,6 +178,12 @@ export namespace KiloToolRegistry {
       manager: Tool.Def
       process: Tool.Def
       terminal?: Tool.Def
+      testRunner: Tool.Def
+      gitPRCreate: Tool.Def
+      gitPRList: Tool.Def
+      gitConflictResolve: Tool.Def
+      gitConflictList: Tool.Def
+      gitBlame: Tool.Def
       notebookRead?: Tool.Def
       notebookEdit?: Tool.Def
       notebookExecute?: Tool.Def
@@ -177,6 +205,13 @@ export namespace KiloToolRegistry {
       tools.notebookExecute
         ? [tools.notebookRead, tools.notebookEdit, tools.notebookExecute]
         : []),
+      // Test runner and git tools
+      tools.testRunner,
+      tools.gitPRCreate,
+      tools.gitPRList,
+      tools.gitConflictResolve,
+      tools.gitConflictList,
+      tools.gitBlame,
     ]
   }
 

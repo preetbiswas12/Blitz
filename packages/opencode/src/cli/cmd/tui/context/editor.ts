@@ -383,7 +383,7 @@ function resolveEditorConnection(directory: string): EditorConnection | undefine
 }
 
 function resolveEditorLockFile(activeDirectory: string) {
-  const directory = path.join(os.homedir(), ".claude", "ide")
+  const directory = path.join(os.homedir(), ".legion", "ide") // kilocode_change - rebrand .claude to .legion
   let entries: string[]
 
   try {

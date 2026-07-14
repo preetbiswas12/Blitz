@@ -13,7 +13,7 @@ const Task = Schema.Struct({
   branchName: Schema.optional(Schema.String).annotate({ description: "Git branch name seed for worktree mode" }),
   model: Schema.optional(Schema.String).annotate({
     description:
-      "Model name from agent_manager_models (e.g. 'Claude Opus 4.1'). Agent Manager picks the provider. A qualified provider/model ID is also accepted to force a specific provider.",
+      "Model name from agent_manager_models (e.g. 'Legion Opus 4.1'). Agent Manager picks the provider. A qualified provider/model ID is also accepted to force a specific provider.",
   }),
   variant: Schema.optional(Schema.String).annotate({
     description: "Reasoning variant name for this model, from agent_manager_models",

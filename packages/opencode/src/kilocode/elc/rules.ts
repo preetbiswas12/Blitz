@@ -5045,7 +5045,7 @@ paths:
 
 > This file extends [common/hooks.md](../common/hooks.md) with Nuxt specific content.
 
-These are Legion CLI harness hooks for Nuxt work. They run via the harness, not Claude.
+These are Legion CLI harness hooks for Nuxt work. They run via the harness, not Legion.
 
 ## Typecheck
 

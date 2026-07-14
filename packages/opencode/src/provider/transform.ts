@@ -158,7 +158,7 @@ function normalizeMessages(
   }
 
   // Bedrock specific transforms
-  // kilocode_change start - only filter for Claude models on Bedrock, not all Bedrock models
+  // kilocode_change start - only filter for Anthropic models on Bedrock, not all Bedrock models
   const claude = model.api.id.includes("anthropic") || model.api.id.includes("claude") || model.id.includes("claude")
   if (model.api.npm === "@ai-sdk/amazon-bedrock" && claude) {
     // kilocode_change end

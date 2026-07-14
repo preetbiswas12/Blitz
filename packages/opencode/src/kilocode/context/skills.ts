@@ -336,7 +336,7 @@ Resolution: env var > config file > \`full\`.
 
 Enable auto-update once: open \`/plugin\`, go to Marketplaces, pick context, Enable auto-update. Legion CLI then pulls new versions at startup (run \`/reload-plugins\` when it prompts). Manual refresh: \`/plugin marketplace update context\` then \`/reload-plugins\`.
 
-If \`/plugin\` is not recognized, your Legion CLI is out of date. Update it (\`npm install -g @anthropic-ai/claude-code@latest\`, or \`brew upgrade claude-code\`) and restart. Other hosts use their own update flow.
+If \`/plugin\` is not recognized, your Legion CLI is out of date. Update it (\`npm install -g @legioncli/legion@latest\`, or \`brew upgrade legion\`) and restart. Other hosts use their own update flow.
 
 ## More
 

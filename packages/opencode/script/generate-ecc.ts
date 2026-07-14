@@ -58,6 +58,26 @@ function rebrand(content: string): string {
     // Anthropic references
     .replace(/docs\.anthropic\.com/g, "docs.legioncli.com")
     .replace(/anthropic/g, "legion")
+    // ECC → ELC branding
+    .replace(/\bECC\b/g, "ELC")
+    .replace(/\/ecc-/g, "/elc-")
+    .replace(/\becc\b/g, "elc")
+    // ECC env vars and paths
+    .replace(/ECC_ROOT/g, "ELC_ROOT")
+    .replace(/ECC_DISABLED/g, "ELC_DISABLED")
+    .replace(/ECC_ENABLE/g, "ELC_ENABLE")
+    .replace(/ECC_CONFIG/g, "ELC_CONFIG")
+    .replace(/ECC_DIR/g, "ELC_DIR")
+    .replace(/ECC_PATH/g, "ELC_PATH")
+    .replace(/ECC_VERSION/g, "ELC_VERSION")
+    .replace(/ECC_MODE/g, "ELC_MODE")
+    .replace(/ECC_GATEGUARD/g, "ELC_GATEGUARD")
+    .replace(/ECC_PLAN_CANVAS/g, "ELC_PLAN_CANVAS")
+    .replace(/ECC_QUALITY_GATE/g, "ELC_QUALITY_GATE")
+    .replace(/ECC_HOOK_PROFILE/g, "ELC_HOOK_PROFILE")
+    .replace(/ECC2/g, "ELC2")
+    .replace(/resolveEccRoot/g, "resolveElcRoot")
+    .replace(/EccRoot/g, "ElcRoot")
 }
 
 interface SkillEntry {

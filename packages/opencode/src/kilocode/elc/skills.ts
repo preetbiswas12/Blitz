@@ -12,7 +12,7 @@ name: accessibility
 description: Design, implement, and audit inclusive digital products using WCAG 2.2 Level AA
   standards. Use this skill to generate semantic ARIA for Web and accessibility traits for Web and Native platforms (iOS/Android).
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Accessibility (WCAG 2.2)
@@ -377,7 +377,7 @@ Audits should produce structured reports following this shape:
 
 \`\`\`json
 {
-  "schema_version": "ecc.agent-architecture-audit.report.v1",
+  "schema_version": "elc.agent-architecture-audit.report.v1",
   "executive_verdict": {
     "overall_health": "high_risk",
     "primary_failure_mode": "string",
@@ -419,7 +419,7 @@ const SKILL_agent_eval = `---
 name: agent-eval
 description: Head-to-head comparison of coding agents (Legion CLI, Aider, Codex, etc.) on custom tasks with pass rate, cost, time, and consistency metrics
 metadata:
-  origin: ECC
+  origin: ELC
 tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
@@ -567,7 +567,7 @@ const SKILL_agent_harness_construction = `---
 name: agent-harness-construction
 description: Design and optimize AI agent action spaces, tool definitions, and observation formatting for higher completion rates.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Agent Harness Construction
@@ -643,7 +643,7 @@ const SKILL_agent_introspection_debugging = `---
 name: agent-introspection-debugging
 description: Structured self-debugging workflow for AI agent failures using capture, diagnosis, contained recovery, and introspection reports.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Agent Introspection Debugging
@@ -670,7 +670,7 @@ Activate this skill for:
 
 Do not use this skill as the primary source for:
 - feature verification after code changes; use \`verification-loop\`
-- framework-specific debugging when a narrower ECC skill already exists
+- framework-specific debugging when a narrower ELC skill already exists
 - runtime promises the current harness cannot enforce automatically
 
 ## Four-Phase Loop
@@ -777,7 +777,7 @@ Good pattern:
 - run one direct check
 - change the plan only if the check supports it
 
-## Integration with ECC
+## Integration with ELC
 
 - Use \`verification-loop\` after recovery if code was changed.
 - Use \`continuous-learning-v2\` when the failure pattern is worth turning into an instinct or later skill.
@@ -1025,7 +1025,7 @@ main().catch((err) => {
 const SKILL_agent_self_evaluation = `---
 name: agent-self-evaluation
 description: Use after completing any non-trivial task. The agent self-rates its output on 5 axes — accuracy, completeness, clarity, actionability, conciseness — with concrete evidence per criterion. Produces a structured 1-5 scorecard with specific improvement suggestions.
-origin: ECC
+origin: ELC
 ---
 
 # Agent Self-Evaluation
@@ -1208,20 +1208,20 @@ FAIL: "Score: 3. I don't like Python decorators."
 
 const SKILL_agent_sort = `---
 name: agent-sort
-description: Build an evidence-backed ECC install plan for a specific repo by sorting skills, commands, rules, hooks, and extras into DAILY vs LIBRARY buckets using parallel repo-aware review passes. Use when ECC should be trimmed to what a project actually needs instead of loading the full bundle.
+description: Build an evidence-backed ELC install plan for a specific repo by sorting skills, commands, rules, hooks, and extras into DAILY vs LIBRARY buckets using parallel repo-aware review passes. Use when ELC should be trimmed to what a project actually needs instead of loading the full bundle.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Agent Sort
 
-Use this skill when a repo needs a project-specific ECC surface instead of the default full install.
+Use this skill when a repo needs a project-specific ELC surface instead of the default full install.
 
-The goal is not to guess what "feels useful." The goal is to classify ECC components with evidence from the actual codebase.
+The goal is not to guess what "feels useful." The goal is to classify ELC components with evidence from the actual codebase.
 
 ## When to Use
 
-- A project only needs a subset of ECC and full installs are too noisy
+- A project only needs a subset of ELC and full installs are too noisy
 - The repo stack is clear, but nobody wants to hand-curate skills one by one
 - A team wants a repeatable install decision backed by grep evidence instead of opinion
 - You need to separate always-loaded daily workflow surfaces from searchable library/reference surfaces
@@ -1233,7 +1233,7 @@ The goal is not to guess what "feels useful." The goal is to classify ECC compon
 - Every DAILY decision must cite concrete repo evidence
 - LIBRARY does not mean "delete"; it means "keep accessible without loading by default"
 - Do not install hooks, rules, or scripts that the current repo cannot use
-- Prefer ECC-native surfaces; do not introduce a second install system
+- Prefer ELC-native surfaces; do not introduce a second install system
 
 ## Outputs
 
@@ -1392,7 +1392,7 @@ Return a compact report with:
 
 If the next step is interactive installation or repair, hand off to:
 
-- \`configure-ecc\`
+- \`configure-elc\`
 
 If the next step is overlap cleanup or catalog review, hand off to:
 
@@ -1428,7 +1428,7 @@ const SKILL_agentic_engineering = `---
 name: agentic-engineering
 description: Operate as an agentic engineer using eval-first execution, decomposition, and cost-aware model routing.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Agentic Engineering
@@ -1494,7 +1494,7 @@ const SKILL_agentic_os = `---
 name: agentic-os
 description: Build persistent multi-agent operating systems on Legion CLI. Covers kernel architecture, specialist agents, slash commands, file-based memory, scheduled automation, and state management without external databases.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Agentic OS
@@ -1884,7 +1884,7 @@ const SKILL_ai_first_engineering = `---
 name: ai-first-engineering
 description: Engineering operating model for teams where AI agents generate a large share of implementation output.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # AI-First Engineering
@@ -1938,7 +1938,7 @@ const SKILL_ai_regression_testing = `---
 name: ai-regression-testing
 description: Regression testing strategies for AI-assisted development. Sandbox-mode API testing without database dependencies, automated bug-check workflows, and patterns to catch AI blind spots where the same model writes and reviews code.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # AI Regression Testing
@@ -2326,7 +2326,7 @@ const SKILL_android_clean_architecture = `---
 name: android-clean-architecture
 description: Clean Architecture patterns for Android and Kotlin Multiplatform projects — module structure, dependency rules, UseCases, Repositories, and data layer patterns.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Android Clean Architecture
@@ -2668,7 +2668,7 @@ const SKILL_angular_developer = `---
 name: angular-developer
 description: Generates Angular code and provides architectural guidance. Trigger when creating projects, components, or services, or for best practices on reactivity (signals, linkedSignal, resource), forms, dependency injection, routing, SSR, accessibility (ARIA), animations, styling (component styles, Tailwind CSS), testing, or CLI tooling.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Angular Developer Guidelines
@@ -2825,7 +2825,7 @@ const SKILL_api_connector_builder = `---
 name: api-connector-builder
 description: Build a new API connector or provider by matching the target repo's existing integration pattern exactly. Use when adding one more integration without inventing a second architecture.
 metadata:
-  origin: ECC direct-port adaptation
+  origin: ELC direct-port adaptation
 version: "1.0.0"
 ---
 
@@ -2948,7 +2948,7 @@ const SKILL_api_design = `---
 name: api-design
 description: REST API design patterns including resource naming, status codes, pagination, filtering, error responses, versioning, and rate limiting for production APIs.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # API Design Patterns
@@ -3474,7 +3474,7 @@ const SKILL_architecture_decision_records = `---
 name: architecture-decision-records
 description: Capture architectural decisions made during Legion CLI sessions as structured ADRs. Auto-detects decision moments, records context, alternatives considered, and rationale. Maintains an ADR log so future developers understand why the codebase is shaped the way it is.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Architecture Decision Records
@@ -3656,7 +3656,7 @@ const SKILL_article_writing = `---
 name: article-writing
 description: Write articles, guides, blog posts, tutorials, newsletter issues, and other long-form content in a distinctive voice derived from supplied examples or brand guidance. Use when the user wants polished written content longer than a paragraph, especially when voice consistency, structure, and credibility matter.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Article Writing
@@ -3736,9 +3736,9 @@ Before delivering:
 
 const SKILL_automation_audit_ops = `---
 name: automation-audit-ops
-description: Evidence-first automation inventory and overlap audit workflow for ECC. Use when the user wants to know which jobs, hooks, connectors, MCP servers, or wrappers are live, broken, redundant, or missing before fixing anything.
+description: Evidence-first automation inventory and overlap audit workflow for ELC. Use when the user wants to know which jobs, hooks, connectors, MCP servers, or wrappers are live, broken, redundant, or missing before fixing anything.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Automation Audit Ops
@@ -3749,12 +3749,12 @@ This is an audit-first operator skill. The job is to produce an evidence-backed 
 
 ## Skill Stack
 
-Pull these ECC-native skills into the workflow when relevant:
+Pull these ELC-native skills into the workflow when relevant:
 
 - \`workspace-surface-audit\` for connector, MCP, hook, and app inventory
 - \`knowledge-ops\` when the audit needs to reconcile live repo truth with durable context
 - \`github-ops\` when the answer depends on CI, scheduled workflows, issues, or PR automation
-- \`ecc-tools-cost-audit\` when the real problem is webhook fanout, queued jobs, or billing burn in the sibling app repo
+- \`elc-tools-cost-audit\` when the real problem is webhook fanout, queued jobs, or billing burn in the sibling app repo
 - \`research-ops\` when local inventory must be compared against current platform support or public docs
 - \`verification-loop\` for proving post-fix state instead of relying on assumed recovery
 
@@ -3762,7 +3762,7 @@ Pull these ECC-native skills into the workflow when relevant:
 
 - user asks "what automations do I have", "what is live", "what is broken", or "what overlaps"
 - the task spans cron jobs, GitHub Actions, local hooks, MCP servers, connectors, wrappers, or app integrations
-- the user wants to know what was ported from another agent system and what still needs to be rebuilt inside ECC
+- the user wants to know what was ported from another agent system and what still needs to be rebuilt inside ELC
 - the workspace has accumulated multiple ways to do the same thing and the user wants one canonical lane
 
 ## Guardrails
@@ -3838,7 +3838,7 @@ For each overlapping or suspect surface, return one call:
 - cut
 - fix next
 
-The value is in collapsing noisy automation into one canonical ECC lane, not in preserving every historical path.
+The value is in collapsing noisy automation into one canonical ELC lane, not in preserving every historical path.
 
 ## Output Format
 
@@ -3861,7 +3861,7 @@ RECOMMENDATION
 - cut
 - fix next
 
-NEXT ECC MOVE
+NEXT ELC MOVE
 - exact skill / hook / workflow / app lane to strengthen
 \`\`\`
 
@@ -3883,7 +3883,7 @@ const SKILL_autonomous_agent_harness = `---
 name: autonomous-agent-harness
 description: Transform Legion CLI into a fully autonomous agent system with persistent memory, scheduled operations, computer use, and task queuing. Replaces standalone agent frameworks (Hermes, AutoGPT) by leveraging Legion CLI's native crons, dispatch, MCP tools, and memory. Use when the user wants continuous autonomous operation, scheduled tasks, or a self-directing agent loop.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Autonomous Agent Harness
@@ -3894,7 +3894,7 @@ Turn Legion CLI into a persistent, self-directing agent system using only native
 
 Autonomous operation must be explicitly requested and scoped by the user. Do not create schedules, dispatch remote agents, write persistent memory, use computer control, post externally, modify third-party resources, or act on private communications unless the user has approved that capability and the target workspace for the current setup.
 
-Prefer dry-run plans and local queue files before enabling recurring or event-driven actions. Keep credentials, private workspace exports, personal datasets, and account-specific automations out of reusable ECC artifacts.
+Prefer dry-run plans and local queue files before enabling recurring or event-driven actions. Keep credentials, private workspace exports, personal datasets, and account-specific automations out of reusable ELC artifacts.
 
 ## When to Activate
 
@@ -3919,7 +3919,7 @@ Prefer dry-run plans and local queue files before enabling recurring or event-dr
 │       │              │             │                │        │
 │       ▼              ▼             ▼                ▼        │
 │  ┌──────────────────────────────────────────────────────┐    │
-│  │              ECC Skill + Agent Layer                  │    │
+│  │              ELC Skill + Agent Layer                  │    │
 │  │                                                      │    │
 │  │  skills/     agents/     commands/     hooks/        │    │
 │  └──────────────────────────────────────────────────────┘    │
@@ -4055,14 +4055,14 @@ description: Persistent task queue for autonomous operation
 
 ## Replacing Hermes
 
-| Hermes Component | ECC Equivalent | How |
+| Hermes Component | ELC Equivalent | How |
 |------------------|---------------|-----|
 | Gateway/Router | Legion CLI dispatch + crons | Scheduled tasks trigger agent sessions |
 | Memory System | Legion memory + MCP memory server | Built-in persistence + knowledge graph |
 | Tool Registry | MCP servers | Dynamically loaded tool providers |
-| Orchestration | ECC skills + agents | Skill definitions direct agent behavior |
+| Orchestration | ELC skills + agents | Skill definitions direct agent behavior |
 | Computer Use | computer-use MCP | Native browser and desktop control |
-| Context Manager | Session management + memory | ECC 2.0 session lifecycle |
+| Context Manager | Session management + memory | ELC 2.0 session lifecycle |
 | Task Queue | Memory-persisted task list | TodoWrite + memory files |
 
 ## Setup Guide
@@ -4159,7 +4159,7 @@ const SKILL_autonomous_loops = `---
 name: autonomous-loops
 description: "Patterns and architectures for autonomous Legion CLI loops — from simple sequential pipelines to RFC-driven multi-agent DAG systems."
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Autonomous Loops Skill
@@ -4266,7 +4266,7 @@ legion -p --allowedTools "Read,Write,Edit,Bash" "Implement the fixes from securi
 
 ## 2. NanoClaw REPL
 
-**ECC's built-in persistent loop.** A session-aware REPL that calls \`legion -p\` synchronously with full conversation history.
+**ELC's built-in persistent loop.** A session-aware REPL that calls \`legion -p\` synchronously with full conversation history.
 
 \`\`\`bash
 # Start the default session
@@ -4726,7 +4726,7 @@ These patterns compose well:
 
 2. **Continuous Legion + De-Sloppify** — Add \`--review-prompt\` with a de-sloppify directive to each iteration.
 
-3. **Any loop + Verification** — Use ECC's \`/verify\` command or \`verification-loop\` skill as a gate before commits.
+3. **Any loop + Verification** — Use ELC's \`/verify\` command or \`verification-loop\` skill as a gate before commits.
 
 4. **Ralphinho's tiered approach in simpler loops** — Even in a sequential pipeline, you can route simple tasks to Haiku and complex tasks to Opus:
    \`\`\`bash
@@ -4764,15 +4764,15 @@ These patterns compose well:
 | Ralphinho | enitrat | credit: @enitrat |
 | Infinite Agentic Loop | disler | credit: @disler |
 | Continuous Legion | AnandChowdhary | credit: @AnandChowdhary |
-| NanoClaw | ECC | \`/claw\` command in this repo |
-| Verification Loop | ECC | \`skills/verification-loop/\` in this repo |
+| NanoClaw | ELC | \`/claw\` command in this repo |
+| Verification Loop | ELC | \`skills/verification-loop/\` in this repo |
 `
 
 const SKILL_backend_patterns = `---
 name: backend-patterns
 description: Backend architecture patterns, API design, database optimization, and server-side best practices for Node.js, Express, and Next.js API routes.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Backend Development Patterns
@@ -5336,7 +5336,7 @@ const SKILL_benchmark = `---
 name: benchmark
 description: Use this skill to measure performance baselines, detect regressions before/after PRs, and compare stack alternatives.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Benchmark — Performance Baseline & Regression Detection
@@ -5419,7 +5419,7 @@ Output:
 
 ## Output
 
-Stores baselines in \`.ecc/benchmarks/\` as JSON. Git-tracked so the team shares baselines.
+Stores baselines in \`.elc/benchmarks/\` as JSON. Git-tracked so the team shares baselines.
 
 ## Integration
 
@@ -5624,7 +5624,7 @@ const SKILL_benchmark_optimization_loop = `---
 name: benchmark-optimization-loop
 description: Use when the user asks to make something faster, try many variants, run recursive optimization, benchmark latency/throughput/cost, or choose the best implementation by repeated measured tests.
 metadata:
-  origin: ECC
+  origin: ELC
 tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
@@ -5696,7 +5696,7 @@ const SKILL_blender_motion_state_inspection = `---
 name: blender-motion-state-inspection
 description: Use this skill when inspecting Blender characters, rigs, poses, animation retargeting, ground contact, facing direction, or model-vs-motion alignment where screenshots alone are not enough.
 metadata:
-  origin: ECC
+  origin: ELC
 tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
@@ -5934,17 +5934,17 @@ Produces a plan with parallel steps where possible (e.g., "implement Anthropic p
 
 ## Installation
 
-This skill ships with Everything Legion Code. No separate installation is needed when ECC is installed.
+This skill ships with Everything Legion Code. No separate installation is needed when ELC is installed.
 
-### Full ECC install
+### Full ELC install
 
-If you are working from the ECC repository checkout, verify the skill is present with:
+If you are working from the ELC repository checkout, verify the skill is present with:
 
 \`\`\`bash
 test -f skills/blueprint/SKILL.md
 \`\`\`
 
-To update later, review the ECC diff before updating:
+To update later, review the ELC diff before updating:
 
 \`\`\`bash
 cd /path/to/everything-legion
@@ -5955,7 +5955,7 @@ git checkout <reviewed-full-sha>          # pin to a specific reviewed commit
 
 ### Vendored standalone install
 
-If you are vendoring only this skill outside the full ECC install, copy the reviewed file from the ECC repository into \`~/.legion/skills/blueprint/SKILL.md\`. Vendored copies do not have a git remote, so update them by re-copying the file from a reviewed ECC commit rather than running \`git pull\`.
+If you are vendoring only this skill outside the full ELC install, copy the reviewed file from the ELC repository into \`~/.legion/skills/blueprint/SKILL.md\`. Vendored copies do not have a git remote, so update them by re-copying the file from a reviewed ELC commit rather than running \`git pull\`.
 
 ## Requirements
 
@@ -6111,14 +6111,14 @@ the module file, flag "productive tensions" for the group alignment workshop.
 ## Related Skills
 
 - \`competitive-platform-analysis\` — after brand-discovery establishes the positioning brief, use this to scope and categorise the competitor set.
-- \`brand-voice\` (ECC) — if the brand-discovery voice-and-tone module needs a separate, source-derived writing-style profile.
+- \`brand-voice\` (ELC) — if the brand-discovery voice-and-tone module needs a separate, source-derived writing-style profile.
 `
 
 const SKILL_brand_voice = `---
 name: brand-voice
 description: Build a source-derived writing style profile from real posts, essays, launch notes, docs, or site copy, then reuse that profile across content, outreach, and social workflows. Use when the user wants voice consistency without generic AI writing tropes.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Brand Voice
@@ -6149,7 +6149,7 @@ Do not use generic platform exemplars as source material.
 2. Prefer recent material over old material unless the user says the older writing is more canonical.
 3. Separate "public launch voice" from "private working voice" if the source set clearly splits.
 4. If live X access is available, use \`x-api\` to pull recent original posts before drafting.
-5. If site copy matters, include the current ECC landing page and repo/plugin framing.
+5. If site copy matters, include the current ELC landing page and repo/plugin framing.
 
 ## What to Extract
 
@@ -6169,9 +6169,9 @@ Produce a reusable \`VOICE PROFILE\` block that downstream skills can consume di
 
 Keep the profile structured and short enough to reuse in session context. The point is not literary criticism. The point is operational reuse.
 
-## Affaan / ECC Defaults
+## Affaan / ELC Defaults
 
-If the user wants Affaan / ECC voice and live sources are thin, start here unless newer source material overrides it:
+If the user wants Affaan / ELC voice and live sources are thin, start here unless newer source material overrides it:
 
 - direct, compressed, concrete
 - specifics, mechanisms, receipts, and numbers beat adjectives
@@ -6218,7 +6218,7 @@ const SKILL_browser_qa = `---
 name: browser-qa
 description: Use this skill to automate visual testing and UI interaction verification using browser automation after deploying features.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Browser QA — Automated Visual Testing & Interaction
@@ -6325,7 +6325,7 @@ const SKILL_bun_runtime = `---
 name: bun-runtime
 description: Bun as runtime, package manager, bundler, and test runner. When to choose Bun vs Node, migration notes, and Vercel support.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Bun Runtime
@@ -6412,7 +6412,7 @@ const SKILL_canary_watch = `---
 name: canary-watch
 description: Use this skill to monitor and verify a deployed URL after releases — checks HTTP endpoints, SSE streams, static assets, console errors, and performance regressions after deploys, merges, or dependency upgrades. Smoke / canary / post-deploy verification.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Canary Watch — Post-Deploy Monitoring
@@ -6531,7 +6531,7 @@ license: Apache-2.0
 version: 1.0.0
 homepage: https://github.com/affaan-m/everything-legion
 metadata:
-  origin: ECC
+  origin: ELC
   author: evos
   clawdbot:
     emoji: ""
@@ -7299,7 +7299,7 @@ const SKILL_clickhouse_io = `---
 name: clickhouse-io
 description: ClickHouse database patterns, query optimization, analytics, and data engineering best practices for high-performance analytical workloads.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # ClickHouse Analytics Patterns
@@ -7746,7 +7746,7 @@ const SKILL_code_tour = `---
 name: code-tour
 description: Create CodeTour \`.tour\` files — persona-targeted, step-by-step walkthroughs with real file and line anchors. Use for onboarding tours, architecture walkthroughs, PR tours, RCA tours, and structured "explain how this works" requests.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Code Tour
@@ -8002,7 +8002,7 @@ const SKILL_codebase_onboarding = `---
 name: codebase-onboarding
 description: Analyze an unfamiliar codebase and generate a structured onboarding guide with architecture map, key entry points, conventions, and a starter LEGION.md. Use when joining a new project or setting up Legion CLI for the first time in a repo.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Codebase Onboarding
@@ -8250,7 +8250,7 @@ Structural maintainability feedback for AI-assisted coding. Complements style/li
 
 ## Security and boundaries
 
-**Opt-in (ECC):** The \`codescene\` block in \`mcp-configs/mcp-servers.json\` is a template only. ECC plugin installs do not auto-enable bundled MCP servers. Copy the entry into your config only if you want it. You can exclude it during ECC install/sync with \`ECC_DISABLED_MCPS=codescene,...\`.
+**Opt-in (ELC):** The \`codescene\` block in \`mcp-configs/mcp-servers.json\` is a template only. ELC plugin installs do not auto-enable bundled MCP servers. Copy the entry into your config only if you want it. You can exclude it during ELC install/sync with \`ELC_DISABLED_MCPS=codescene,...\`.
 
 **Credentials:** No bundled token. Set \`CS_ACCESS_TOKEN\` yourself (see [getting-a-personal-access-token.md](https://github.com/codescene-oss/codescene-mcp-server/blob/main/docs/getting-a-personal-access-token.md) in the upstream repo). Never commit tokens to the repo.
 
@@ -8268,7 +8268,7 @@ Structural maintainability feedback for AI-assisted coding. Complements style/li
 
 ## When to Activate
 
-Same triggers as **When to Use** above — this heading is what ECC uses for skill auto-activation.
+Same triggers as **When to Use** above — this heading is what ELC uses for skill auto-activation.
 
 ## How It Works
 
@@ -8381,9 +8381,9 @@ Drive-by cleanup across the module
 # GOOD: review → small change → score → commit safeguard → analyze_change_set
 \`\`\`
 
-## Pairing with ECC
+## Pairing with ELC
 
-| ECC skill / flow | Code Health MCP role |
+| ELC skill / flow | Code Health MCP role |
 |------------------|----------------------|
 | \`coding-standards\` | Style/naming; Code Health = structure/complexity |
 | \`plankton-code-quality\` | Write-time lint/format; Code Health = pre/post edit structural gate |
@@ -8391,7 +8391,7 @@ Drive-by cleanup across the module
 | \`security-review\` | Security vs maintainability — use both when relevant |
 | \`tdd-workflow\` | Tests pass ≠ healthy design — check score after refactors |
 
-**Context tip:** ECC recommends keeping MCP count low. Enable \`codescene\` when doing substantive edits; disable when not needed.
+**Context tip:** ELC recommends keeping MCP count low. Enable \`codescene\` when doing substantive edits; disable when not needed.
 
 ## Related Skills
 
@@ -8407,7 +8407,7 @@ const SKILL_coding_standards = `---
 name: coding-standards
 description: Baseline cross-project coding conventions for naming, readability, immutability, and code-quality review. Use detailed frontend or backend skills for framework-specific patterns.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Coding Standards & Best Practices
@@ -8440,7 +8440,7 @@ Activate this skill for:
 Do not use this skill as the primary source for:
 - React composition, hooks, or rendering patterns
 - backend architecture, API design, or database layering
-- domain-specific framework guidance when a narrower ECC skill already exists
+- domain-specific framework guidance when a narrower ELC skill already exists
 
 ## Code Quality Principles
 
@@ -9340,7 +9340,7 @@ const SKILL_compose_multiplatform_patterns = `---
 name: compose-multiplatform-patterns
 description: Compose Multiplatform and Jetpack Compose patterns for KMP projects — state management, navigation, theming, performance, and platform-specific UI.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Compose Multiplatform Patterns
@@ -9642,7 +9642,7 @@ const SKILL_config_gc = `---
 name: config-gc
 description: Garbage collection for your Legion CLI configuration. Periodically scans ~/.legion (skills, memory, hooks, permissions, MCP servers, caches) for redundant, stale, orphaned, or low-value items, then walks the user through a confirm-each-deletion cleanup. Use when the user says "clean up my config", "config GC", "too many skills", "audit my setup", "my .legion is bloated", or asks for a periodic config review.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Config GC — Garbage Collection for Legion CLI Setups
@@ -9755,49 +9755,49 @@ jq '.permissions.allow -= ["Bash(git push)"]' ~/.legion/settings.local.json.bak 
 
 - \`skill-stocktake\` — audits skill *quality*; config-gc audits skill *existence*. Run stocktake on what survives GC.
 - \`workspace-surface-audit\` — the additive counterpart: recommends what to install. config-gc is the subtractive half of the same lifecycle.
-- \`configure-ecc\` — after installing skills with it, run config-gc to reconcile overlaps with your pre-existing setup.
+- \`configure-elc\` — after installing skills with it, run config-gc to reconcile overlaps with your pre-existing setup.
 - \`continuous-learning\` — produces the memory files this skill later audits.
 - \`security-review\` — pairs well with the permissions channel.
 `
 
-const SKILL_configure_ecc = `---
-name: configure-ecc
+const SKILL_configure_elc = `---
+name: configure-elc
 description: Interactive installer for Everything Legion Code — guides users through selecting and installing skills and rules to user-level or project-level directories, verifies paths, and optionally optimizes installed files.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
-# Configure Everything Legion Code (ECC)
+# Configure Everything Legion Code (ELC)
 
 An interactive, step-by-step installation wizard for the Everything Legion Code project. Uses \`AskUserQuestion\` to guide users through selective installation of skills and rules, then verifies correctness and offers optimization.
 
 ## When to Activate
 
-- User says "configure ecc", "install ecc", "setup everything legion cli", or similar
+- User says "configure elc", "install elc", "setup everything legion cli", or similar
 - User wants to selectively install skills or rules from this project
-- User wants to verify or fix an existing ECC installation
+- User wants to verify or fix an existing ELC installation
 - User wants to optimize installed skills or rules for their project
 
 ## Prerequisites
 
 This skill must be accessible to Legion CLI before activation. Two ways to bootstrap:
-1. **Via Plugin**: \`/plugin install ecc@ecc\` — the plugin loads this skill automatically
-2. **Manual**: Copy only this skill to \`~/.legion/skills/configure-ecc/SKILL.md\`, then activate by saying "configure ecc"
+1. **Via Plugin**: \`/plugin install elc@elc\` — the plugin loads this skill automatically
+2. **Manual**: Copy only this skill to \`~/.legion/skills/configure-elc/SKILL.md\`, then activate by saying "configure elc"
 
 ---
 
-## Step 0: Clone ECC Repository
+## Step 0: Clone ELC Repository
 
-Before any installation, clone the latest ECC source to \`/tmp\`:
+Before any installation, clone the latest ELC source to \`/tmp\`:
 
 \`\`\`bash
 rm -rf /tmp/everything-legion
 git clone https://github.com/affaan-m/everything-legion.git /tmp/everything-legion
 \`\`\`
 
-Set \`ECC_ROOT=/tmp/everything-legion\` as the source for all subsequent copy operations.
+Set \`ELC_ROOT=/tmp/everything-legion\` as the source for all subsequent copy operations.
 
-If the clone fails (network issues, etc.), use \`AskUserQuestion\` to ask the user to provide a local path to an existing ECC clone.
+If the clone fails (network issues, etc.), use \`AskUserQuestion\` to ask the user to provide a local path to an existing ELC clone.
 
 ---
 
@@ -9806,7 +9806,7 @@ If the clone fails (network issues, etc.), use \`AskUserQuestion\` to ask the us
 Use \`AskUserQuestion\` to ask the user where to install:
 
 \`\`\`
-Question: "Where should ECC components be installed?"
+Question: "Where should ELC components be installed?"
 Options:
   - "User-level (~/.legion/)" — "Applies to all your Legion CLI projects"
   - "Project-level (.legion/)" — "Applies only to the current project"
@@ -9932,7 +9932,7 @@ For each selected category, print the full list of skills below and ask the user
 | \`deep-research\` | Multi-source deep research using firecrawl and exa MCPs with cited reports |
 | \`exa-search\` | Neural search via Exa MCP for web, code, company, and people research |
 
-\`legion-api\` is an Anthropic canonical skill. Install it from [\`legions/skills\`](https://github.com/legions/skills) when you want the official Legion API workflow instead of an ECC-bundled copy.
+\`legion-api\` is an Anthropic canonical skill. Install it from [\`legions/skills\`](https://github.com/legions/skills) when you want the official Legion API workflow instead of an ELC-bundled copy.
 
 **Category: Social & Content Distribution (2 skills)**
 
@@ -9966,10 +9966,10 @@ For each selected skill, copy the entire skill directory from the correct source
 
 \`\`\`bash
 # Core skills live under .agents/skills/
-cp -R "\$ECC_ROOT/.agents/skills/<skill-name>" "\$TARGET/skills/"
+cp -R "\$ELC_ROOT/.agents/skills/<skill-name>" "\$TARGET/skills/"
 
 # Niche skills live under skills/
-cp -R "\$ECC_ROOT/skills/<skill-name>" "\$TARGET/skills/"
+cp -R "\$ELC_ROOT/skills/<skill-name>" "\$TARGET/skills/"
 \`\`\`
 
 When iterating over globbed source directories, never pass a trailing-slash source directly to \`cp\`. Use the directory path as the destination name explicitly:
@@ -9998,12 +9998,12 @@ Options:
 Execute installation:
 \`\`\`bash
 # Common rules
-cp -r \$ECC_ROOT/rules/common \$TARGET/rules/common
+cp -r \$ELC_ROOT/rules/common \$TARGET/rules/common
 
 # Language-specific rules (preserve per-language directories)
-cp -r \$ECC_ROOT/rules/typescript \$TARGET/rules/typescript   # if selected
-cp -r \$ECC_ROOT/rules/python \$TARGET/rules/python            # if selected
-cp -r \$ECC_ROOT/rules/golang \$TARGET/rules/golang            # if selected
+cp -r \$ELC_ROOT/rules/typescript \$TARGET/rules/typescript   # if selected
+cp -r \$ELC_ROOT/rules/python \$TARGET/rules/python            # if selected
+cp -r \$ELC_ROOT/rules/golang \$TARGET/rules/golang            # if selected
 \`\`\`
 
 **Important**: If the user selects any language-specific rules but NOT common rules, warn them:
@@ -10092,7 +10092,7 @@ Options:
    - Security requirements
 3. Edit the rule files in-place at the installation target
 
-**Critical**: Only modify files in the installation target (\`\$TARGET/\`), NEVER modify files in the source ECC repository (\`\$ECC_ROOT/\`).
+**Critical**: Only modify files in the installation target (\`\$TARGET/\`), NEVER modify files in the source ELC repository (\`\$ELC_ROOT/\`).
 
 ---
 
@@ -10107,7 +10107,7 @@ rm -rf /tmp/everything-legion
 Then print a summary report:
 
 \`\`\`
-## ECC Installation Complete
+## ELC Installation Complete
 
 ### Installation Target
 - Level: [user-level / project-level / both]
@@ -10151,7 +10151,7 @@ const SKILL_connections_optimizer = `---
 name: connections-optimizer
 description: Reorganize the user's X and LinkedIn network with review-first pruning, add/follow recommendations, and channel-specific warm outreach drafted in the user's real voice. Use when the user wants to clean up following lists, grow toward current priorities, or rebalance a social graph around higher-signal relationships.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Connections Optimizer
@@ -10343,7 +10343,7 @@ const SKILL_content_engine = `---
 name: content-engine
 description: Create platform-native content systems for X, LinkedIn, TikTok, YouTube, newsletters, and repurposed multi-platform campaigns. Use when the user wants social posts, threads, scripts, content calendars, or one source asset adapted cleanly across platforms.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Content Engine
@@ -10391,7 +10391,7 @@ Run it first when:
 - the content is launch, outreach, or reputation-sensitive
 
 Reuse the resulting \`VOICE PROFILE\` here instead of rebuilding a second voice model.
-If the user wants Affaan / ECC voice specifically, still treat \`brand-voice\` as the source of truth and feed it the best live or source-derived material available.
+If the user wants Affaan / ELC voice specifically, still treat \`brand-voice\` as the source of truth and feed it the best live or source-derived material available.
 
 ## Hard Bans
 
@@ -10477,7 +10477,7 @@ const SKILL_content_hash_cache_pattern = `---
 name: content-hash-cache-pattern
 description: Cache expensive file processing results using SHA-256 content hashes — path-independent, auto-invalidating, with service layer separation.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Content-Hash File Cache Pattern
@@ -10641,7 +10641,7 @@ const SKILL_context_budget = `---
 name: context-budget
 description: Audits Legion CLI context window consumption across agents, skills, MCP servers, and rules. Identifies bloat, redundant components, and produces prioritized token-savings recommendations.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Context Budget
@@ -10779,7 +10779,7 @@ const SKILL_continuous_agent_loop = `---
 name: continuous-agent-loop
 description: Patterns for continuous autonomous agent loops with quality gates, evals, and recovery controls.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Continuous Agent Loop
@@ -10827,7 +10827,7 @@ const SKILL_continuous_learning = `---
 name: continuous-learning
 description: "[DEPRECATED - use continuous-learning-v2] Legacy v1 stop-hook skill extractor. v2 is a strict superset with instinct-based, project-scoped, hook-reliable learning. Do not invoke v1; route continuous learning, session learning, and pattern extraction requests to continuous-learning-v2."
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Continuous Learning Skill - DEPRECATED
@@ -10961,7 +10961,7 @@ const SKILL_continuous_learning_v2 = `---
 name: continuous-learning-v2
 description: Instinct-based learning system that observes sessions via hooks, creates atomic instincts with confidence scoring, and evolves them into skills/commands/agents. v2.1 adds project-scoped instincts to prevent cross-project contamination.
 metadata:
-  origin: ECC
+  origin: ELC
 version: 2.1.0
 ---
 
@@ -10986,7 +10986,7 @@ An advanced learning system that turns your Legion CLI sessions into reusable kn
 
 | Feature | v2.0 | v2.1 |
 |---------|------|------|
-| Storage | Global (\`~/.legion/homunculus/\`) | Project-scoped (\`\${XDG_DATA_HOME:-~/.local/share}/ecc-homunculus/projects/<hash>/\`) |
+| Storage | Global (\`~/.legion/homunculus/\`) | Project-scoped (\`\${XDG_DATA_HOME:-~/.local/share}/elc-homunculus/projects/<hash>/\`) |
 | Scope | All instincts apply everywhere | Project-scoped + global |
 | Detection | None | git remote URL / repo path |
 | Promotion | N/A | Project → global when seen in 2+ projects |
@@ -11092,15 +11092,15 @@ The system automatically detects your current project:
 3. **\`git rev-parse --show-toplevel\`** -- fallback using repo path (machine-specific)
 4. **Global fallback** -- if no project is detected, instincts go to global scope
 
-Each project gets a 12-character hash ID (e.g., \`a1b2c3d4e5f6\`). A registry file at \`\${XDG_DATA_HOME:-~/.local/share}/ecc-homunculus/projects.json\` maps IDs to human-readable names.
+Each project gets a 12-character hash ID (e.g., \`a1b2c3d4e5f6\`). A registry file at \`\${XDG_DATA_HOME:-~/.local/share}/elc-homunculus/projects.json\` maps IDs to human-readable names.
 
 ### Data Directory
 
 Continuous-learning-v2 stores observer data outside \`~/.legion\` so Legion CLI's sensitive-path guard does not block background instinct writes:
 
 1. \`CLV2_HOMUNCULUS_DIR\` when set to an absolute path
-2. \`\$XDG_DATA_HOME/ecc-homunculus\`
-3. \`\$HOME/.local/share/ecc-homunculus\`
+2. \`\$XDG_DATA_HOME/elc-homunculus\`
+3. \`\$HOME/.local/share/elc-homunculus\`
 
 Existing users with data at \`~/.legion/homunculus\` can migrate once:
 
@@ -11147,7 +11147,7 @@ The system creates directories automatically on first use, but you can also crea
 
 \`\`\`bash
 # Global directories
-mkdir -p "\${XDG_DATA_HOME:-\$HOME/.local/share}/ecc-homunculus"/{instincts/{personal,inherited},evolved/{agents,skills,commands},projects}
+mkdir -p "\${XDG_DATA_HOME:-\$HOME/.local/share}/elc-homunculus"/{instincts/{personal,inherited},evolved/{agents,skills,commands},projects}
 
 # Project directories are auto-created when the hook first runs in a git repo
 \`\`\`
@@ -11200,7 +11200,7 @@ Other behavior (observation capture, instinct thresholds, project scoping, promo
 ## File Structure
 
 \`\`\`
-\${XDG_DATA_HOME:-~/.local/share}/ecc-homunculus/
+\${XDG_DATA_HOME:-~/.local/share}/elc-homunculus/
 +-- identity.json           # Your profile, technical level
 +-- projects.json           # Registry: project hash -> name/path/remote
 +-- observations.jsonl      # Global observations (fallback)
@@ -11311,7 +11311,7 @@ v2.1 is fully compatible with v2.0 and v1:
 
 ## Related
 
-- [ECC-Tools GitHub App](https://github.com/apps/ecc-tools) - Generate instincts from repo history
+- [ELC-Tools GitHub App](https://github.com/apps/elc-tools) - Generate instincts from repo history
 - Homunculus - Community project that inspired the v2 instinct-based architecture (atomic observations, confidence scoring, instinct evolution pipeline)
 - [The Longform Guide](https://x.com/affaanmustafa/status/2014040193557471352) - Continuous learning section
 
@@ -11324,7 +11324,7 @@ const SKILL_cost_aware_llm_pipeline = `---
 name: cost-aware-llm-pipeline
 description: Cost optimization patterns for LLM API usage — model routing by task complexity, budget tracking, retry logic, and prompt caching.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Cost-Aware LLM Pipeline
@@ -11508,7 +11508,7 @@ def process(text: str, config: Config, tracker: CostTracker) -> tuple[Result, Co
 
 const SKILL_cost_tracking = `---
 name: cost-tracking
-description: Track and report Legion CLI token usage, spending, and budgets from the local ECC cost-tracker metrics log. Use when the user asks about costs, spending, usage, tokens, budgets, or cost breakdowns by model, session, or date.
+description: Track and report Legion CLI token usage, spending, and budgets from the local ELC cost-tracker metrics log. Use when the user asks about costs, spending, usage, tokens, budgets, or cost breakdowns by model, session, or date.
 metadata:
   origin: community
 ---
@@ -11516,7 +11516,7 @@ metadata:
 # Cost Tracking
 
 Use this skill to analyze Legion CLI cost and usage history from the metrics log
-that ECC's \`stop:cost-tracker\` hook writes.
+that ELC's \`stop:cost-tracker\` hook writes.
 
 ## Where the data lives
 
@@ -11609,7 +11609,7 @@ const SKILL_council = `---
 name: council
 description: Convene a four-voice council for ambiguous decisions, tradeoffs, and go/no-go calls. Use when multiple valid paths exist and you need structured disagreement before choosing.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Council
@@ -11799,7 +11799,7 @@ If the user wants another round:
 Question:
 
 \`\`\`text
-Should we ship ECC 2.0 as alpha now, or hold until the control-plane UI is more complete?
+Should we ship ELC 2.0 as alpha now, or hold until the control-plane UI is more complete?
 \`\`\`
 
 Likely council shape:
@@ -11815,7 +11815,7 @@ const SKILL_cpp_coding_standards = `---
 name: cpp-coding-standards
 description: C++ coding standards based on the C++ Core Guidelines (isocpp.github.io). Use when writing, reviewing, or refactoring C++ code to enforce modern, safe, and idiomatic practices.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # C++ Coding Standards (C++ Core Guidelines)
@@ -12541,7 +12541,7 @@ const SKILL_cpp_testing = `---
 name: cpp-testing
 description: Use only when writing/updating/fixing C++ tests, configuring GoogleTest/CTest, diagnosing failing or flaky tests, or adding coverage/sanitizers.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # C++ Testing (Agent Skill)
@@ -12868,7 +12868,7 @@ const SKILL_crosspost = `---
 name: crosspost
 description: Multi-platform content distribution across X, LinkedIn, Threads, and Bluesky. Adapts content per platform using content-engine patterns. Never posts identical content cross-platform. Use when the user wants to distribute content across social platforms.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Crosspost
@@ -12982,7 +12982,7 @@ const SKILL_csharp_testing = `---
 name: csharp-testing
 description: C# and .NET testing patterns with xUnit, FluentAssertions, mocking, integration tests, and test organization best practices.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # C# Testing Patterns
@@ -13306,7 +13306,7 @@ const SKILL_customer_billing_ops = `---
 name: customer-billing-ops
 description: Operate customer billing workflows such as subscriptions, refunds, churn triage, billing-portal recovery, and plan analysis using connected billing tools like Stripe. Use when the user needs to help a customer, inspect subscription state, or manage revenue-impacting billing operations.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Customer Billing Ops
@@ -13398,7 +13398,7 @@ If the customer pain comes from a missing operator surface, call it out explicit
 - no cancellation flow
 - no duplicate-subscription guard
 
-Treat those as ECC or website follow-up items, not just support incidents.
+Treat those as ELC or website follow-up items, not just support incidents.
 
 ### 5. Produce the operator handoff
 
@@ -13459,7 +13459,7 @@ license: Apache-2.0
 version: 1.0.0
 homepage: https://github.com/affaan-m/everything-legion
 metadata:
-  origin: ECC
+  origin: ELC
   author: evos
   clawdbot:
     emoji: ""
@@ -13714,7 +13714,7 @@ const SKILL_dart_flutter_patterns = `---
 name: dart-flutter-patterns
 description: Production-ready Dart and Flutter patterns covering null safety, immutable state, async composition, widget architecture, popular state management frameworks (BLoC, Riverpod, Provider), GoRouter navigation, Dio networking, Freezed code generation, and clean architecture.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Dart/Flutter Patterns
@@ -14280,7 +14280,7 @@ const SKILL_dashboard_builder = `---
 name: dashboard-builder
 description: Build monitoring dashboards that answer real operator questions for Grafana, SigNoz, and similar platforms. Use when turning metrics into a working dashboard instead of a vanity board.
 metadata:
-  origin: ECC direct-port adaptation
+  origin: ELC direct-port adaptation
 version: "1.0.0"
 ---
 
@@ -15158,7 +15158,7 @@ const SKILL_data_throughput_accelerator = `---
 name: data-throughput-accelerator
 description: Use when large data ingestion, backfill, export, ETL, warehouse loading, manifest catch-up, or table synchronization needs to become much faster while preserving data correctness.
 metadata:
-  origin: ECC
+  origin: ELC
 tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
@@ -15233,7 +15233,7 @@ const SKILL_database_migrations = `---
 name: database-migrations
 description: Database migration best practices for schema changes, data migrations, rollbacks, and zero-downtime deployments across PostgreSQL, MySQL, and common ORMs (Prisma, Drizzle, Kysely, Django, TypeORM, golang-migrate).
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Database Migration Patterns
@@ -15665,7 +15665,7 @@ const SKILL_deep_research = `---
 name: deep-research
 description: Multi-source deep research using firecrawl and exa MCPs. Searches the web, synthesizes findings, and delivers cited reports with source attribution. Use when the user wants thorough research on any topic with evidence and citations.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Deep Research
@@ -15827,7 +15827,7 @@ const SKILL_defi_amm_security = `---
 name: defi-amm-security
 description: Security checklist for Solidity AMM contracts, liquidity pools, and swap flows. Covers reentrancy, CEI ordering, donation or inflation attacks, oracle manipulation, slippage, admin controls, and integer math.
 metadata:
-  origin: ECC direct-port adaptation
+  origin: ELC direct-port adaptation
 version: "1.0.0"
 ---
 
@@ -15997,7 +15997,7 @@ name: delivery-gate
 description: Stop hook that blocks Legion from finishing until quality checks pass. Detects rationalization patterns (surface text heuristics), stale learning logs (filesystem mtime), and low disk space. Complements self-audit by mechanically enforcing learning capture habits.
 version: 1.1.1
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Delivery Gate — Mechanical Quality Gate for Legion CLI
@@ -16124,7 +16124,7 @@ const SKILL_deployment_patterns = `---
 name: deployment-patterns
 description: Deployment workflows, CI/CD pipeline patterns, Docker containerization, health checks, rollback strategies, and production readiness checklists for web applications.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Deployment Patterns
@@ -16554,7 +16554,7 @@ const SKILL_design_system = `---
 name: design-system
 description: Use this skill to generate or audit design systems, check visual consistency, and review PRs that touch styling.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Design System — Generate & Audit Visual Systems
@@ -16639,7 +16639,7 @@ const SKILL_django_celery = `---
 name: django-celery
 description: Django + Celery async task patterns — configuration, task design, beat scheduling, retries, canvas workflows, monitoring, and testing. Use when adding background jobs, scheduled tasks, or async processing to a Django app.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Django + Celery Async Task Patterns
@@ -17099,7 +17099,7 @@ const SKILL_django_patterns = `---
 name: django-patterns
 description: Django architecture patterns, REST API design with DRF, ORM best practices, caching, signals, middleware, and production-grade Django apps.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Django Development Patterns
@@ -17836,7 +17836,7 @@ const SKILL_django_security = `---
 name: django-security
 description: Django security best practices, authentication, authorization, CSRF protection, SQL injection prevention, XSS prevention, and secure deployment configurations.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Django Security Best Practices
@@ -18482,7 +18482,7 @@ const SKILL_django_tdd = `---
 name: django-tdd
 description: Django testing strategies with pytest-django, TDD methodology, factory_boy, mocking, coverage, and testing Django REST Framework APIs.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Django Testing with TDD
@@ -19214,7 +19214,7 @@ const SKILL_django_verification = `---
 name: django-verification
 description: "Verification loop for Django projects: migrations, linting, tests with coverage, security scans, and deployment readiness checks before release or PR."
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Django Verification Loop
@@ -19686,7 +19686,7 @@ const SKILL_dmux_workflows = `---
 name: dmux-workflows
 description: Multi-agent orchestration using dmux (tmux pane manager for AI agents). Patterns for parallel agent workflows across Legion CLI, Codex, OpenCode, and other harnesses. Use when running multiple agent sessions in parallel or coordinating multi-agent development workflows.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # dmux Workflows
@@ -19821,9 +19821,9 @@ git merge feat/billing
 | **Legion CLI Task tool** | In-process subagent spawning | Programmatic parallelism within a session |
 | **Codex multi-agent** | Built-in agent roles | Codex-specific parallel work |
 
-## ECC Helper
+## ELC Helper
 
-ECC now includes a helper for external tmux-pane orchestration with separate git worktrees:
+ELC now includes a helper for external tmux-pane orchestration with separate git worktrees:
 
 \`\`\`bash
 node scripts/orchestrate-worktrees.js plan.json --execute
@@ -19880,7 +19880,7 @@ const SKILL_docker_patterns = `---
 name: docker-patterns
 description: Docker and Docker Compose patterns for local development, container security, networking, volume strategies, and multi-service orchestration.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Docker Patterns
@@ -20247,7 +20247,7 @@ const SKILL_documentation_lookup = `---
 name: documentation-lookup
 description: Use up-to-date library and framework docs via Context7 MCP instead of training data. Activates for setup questions, API references, code examples, or when the user names a framework (e.g. React, Next.js, Prisma).
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Documentation Lookup (Context7)
@@ -20340,7 +20340,7 @@ const SKILL_dotnet_patterns = `---
 name: dotnet-patterns
 description: Idiomatic C# and .NET patterns, conventions, dependency injection, async/await, and best practices for building robust, maintainable .NET applications.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # .NET Development Patterns
@@ -20664,7 +20664,7 @@ const SKILL_dynamic_workflow_mode = `---
 name: dynamic-workflow-mode
 description: "Design task-local harnesses, eval gates, and reusable skill extraction for Legion dynamic workflow mode and other adaptive agent harnesses."
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Dynamic Workflow Mode
@@ -20752,7 +20752,7 @@ Dynamic workflow mode becomes team-usable when it exposes state. Record these ch
 - **Gate**: test results, browser screenshots, security review, and merge readiness.
 - **Handoff**: what is done, what failed, what needs a human decision.
 
-If the repo has ECC2 state enabled, prefer adding or reading checkpoints through the ECC control pane or state-store-backed scripts instead of scattering untracked notes.
+If the repo has ELC2 state enabled, prefer adding or reading checkpoints through the ELC control pane or state-store-backed scripts instead of scattering untracked notes.
 
 ## Eval Gates
 
@@ -20790,7 +20790,7 @@ const SKILL_e2e_testing = `---
 name: e2e-testing
 description: Playwright E2E testing patterns, Page Object Model, configuration, CI/CD integration, artifact management, and flaky test strategies.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # E2E Testing Patterns
@@ -21115,14 +21115,14 @@ test('trade execution', async ({ page }) => {
 \`\`\`
 `
 
-const SKILL_ecc_guide = `---
-name: ecc-guide
-description: Guide users through ECC's current agents, skills, commands, hooks, rules, install profiles, and project onboarding by reading the live repository surface before answering.
+const SKILL_elc_guide = `---
+name: elc-guide
+description: Guide users through ELC's current agents, skills, commands, hooks, rules, install profiles, and project onboarding by reading the live repository surface before answering.
 metadata:
   origin: community
 ---
 
-# ECC Guide
+# ELC Guide
 
 Use this skill when a user needs help understanding, navigating, installing, or choosing parts of Everything Legion Code.
 
@@ -21130,19 +21130,19 @@ Use this skill when a user needs help understanding, navigating, installing, or 
 
 Use this skill when the user:
 
-- asks what ECC includes
+- asks what ELC includes
 - wants help finding a skill, command, agent, hook, rule, or install profile
 - is new to the repository and needs a guided path
-- asks "how do I do X with ECC?"
-- asks which ECC components fit a project
+- asks "how do I do X with ELC?"
+- asks which ELC components fit a project
 - needs a lightweight explanation of how commands, skills, agents, hooks, and rules relate
 - is confused by install paths, duplicate installs, reset/uninstall, or selective install options
 
 ## Core Principle
 
-Answer from current files, not memory. ECC changes quickly, so hard-coded catalog counts, feature lists, and install instructions go stale.
+Answer from current files, not memory. ELC changes quickly, so hard-coded catalog counts, feature lists, and install instructions go stale.
 
-When the ECC repository is available, inspect the relevant files before giving a concrete answer:
+When the ELC repository is available, inspect the relevant files before giving a concrete answer:
 
 \`\`\`bash
 node scripts/ci/catalog.js --json
@@ -21193,7 +21193,7 @@ Avoid:
 
 Give a short menu:
 
-- install or reset ECC
+- install or reset ELC
 - pick skills for a project
 - understand commands vs skills
 - inspect hooks and safety behavior
@@ -21239,7 +21239,7 @@ Warn users not to stack plugin installs and full manual/profile installs unless 
 
 ### Project Onboarding
 
-Use \`/project-init\` when the user wants ECC configured for a target repo. The expected sequence is:
+Use \`/project-init\` when the user wants ELC configured for a target repo. The expected sequence is:
 
 1. detect the stack from project files
 2. resolve a dry-run install plan
@@ -21307,23 +21307,23 @@ Needs approval before apply: <yes/no>
 - \`/security-scan\`: inspect Legion/OpenCode configuration security
 `
 
-const SKILL_ecc_recipes = `---
-name: ecc-recipes
-description: "Map a described workflow to the right ECC command-GROUP with run-order and stop condition, and browse all command-group recipe families. Adds a family-grouping + run-order + when-to-stop layer on top of the flat command catalog. Advisory only. TRIGGER when the user says which commands for X, what command group runs X, show ECC recipes, list ECC pipelines, or how do I run a workflow with ECC. DO NOT TRIGGER when the user wants the task executed directly, wants a single-command deep doc (use ecc-guide), or wants a draft prompt rewritten (use prompt-optimizer)."
+const SKILL_elc_recipes = `---
+name: elc-recipes
+description: "Map a described workflow to the right ELC command-GROUP with run-order and stop condition, and browse all command-group recipe families. Adds a family-grouping + run-order + when-to-stop layer on top of the flat command catalog. Advisory only. TRIGGER when the user says which commands for X, what command group runs X, show ELC recipes, list ELC pipelines, or how do I run a workflow with ELC. DO NOT TRIGGER when the user wants the task executed directly, wants a single-command deep doc (use elc-guide), or wants a draft prompt rewritten (use prompt-optimizer)."
 argument-hint: <workflow description | empty=list all>
 origin: community
 author: KyawZinLatt
 version: "1.0.0"
 ---
 
-# ECC Recipes
+# ELC Recipes
 
-One entry point for "which group of ECC slash-commands runs my workflow, in what
+One entry point for "which group of ELC slash-commands runs my workflow, in what
 order, and when do I stop." Also browses every command-group recipe family.
 
 Fills the gap between two existing skills:
 
-- \`ecc-guide\` — lists commands and where to read docs, but as a flat catalog.
+- \`elc-guide\` — lists commands and where to read docs, but as a flat catalog.
 - \`prompt-optimizer\` — matches a task to components, but outputs a single prompt,
   not a multi-command group with run-order and stop condition.
 
@@ -21333,14 +21333,14 @@ This skill adds: **family grouping + run-order + stop condition.**
 
 - "Which command group do I run for <workflow>?"
 - "What's the command sequence to build an MVP / fix a defect / refactor?"
-- "Show me all ECC command-group recipes" (catalog mode)
-- "How many workflow pipelines does ECC have?"
-- User invokes \`/ecc-recipes\` with or without a description.
+- "Show me all ELC command-group recipes" (catalog mode)
+- "How many workflow pipelines does ELC have?"
+- User invokes \`/elc-recipes\` with or without a description.
 
 ### Do Not Use When
 
 - User wants the task done now — route to the actual command, don't describe it.
-- User wants deep docs for ONE command — use \`ecc-guide\`.
+- User wants deep docs for ONE command — use \`elc-guide\`.
 - User wants a draft prompt rewritten — use \`prompt-optimizer\`.
 
 ## Core Principle
@@ -21355,14 +21355,14 @@ Resolve the commands directory (first that exists), then list names:
 
 \`\`\`bash
 for D in \\
-  "\$HOME"/.legion/plugins/marketplaces/ecc/commands \\
-  "\$HOME"/.legion/plugins/cache/ecc/ecc/*/commands \\
+  "\$HOME"/.legion/plugins/marketplaces/elc/commands \\
+  "\$HOME"/.legion/plugins/cache/elc/elc/*/commands \\
   ./commands \\
   ./.legion/commands \\
   "\$HOME"/.legion/commands; do
   [ -d "\$D" ] && CMD_DIR="\$D" && break
 done
-[ -z "\${CMD_DIR:-}" ] && { echo "No ECC commands directory found."; return 1; }
+[ -z "\${CMD_DIR:-}" ] && { echo "No ELC commands directory found."; return 1; }
 find "\$CMD_DIR" -maxdepth 1 -name '*.md' -exec basename {} .md \\; | sort
 \`\`\`
 
@@ -21414,7 +21414,7 @@ workflow for a matched recipe.
 4. **Stop condition** — always explicit (max-runs, completion-signal,
    review-passes, or single-shot). For autonomous loops, warn about subscription
    burn and recommend a backstop bound.
-5. **Where to read** — the \`commands/<name>.md\` path plus \`/ecc-guide <name>\`.
+5. **Where to read** — the \`commands/<name>.md\` path plus \`/elc-guide <name>\`.
 
 ## Output Template (match mode)
 
@@ -21433,47 +21433,47 @@ Run-order:
   add a max-iteration or max-cost backstop alongside the completion signal.
 
 Read full docs:
-  commands/<cmd1>.md   (or: /ecc-guide <cmd1>)
+  commands/<cmd1>.md   (or: /elc-guide <cmd1>)
 \`\`\`
 
 ## Examples
 
-**Catalog:** \`/ecc-recipes\` → prints the family table and total count.
+**Catalog:** \`/elc-recipes\` → prints the family table and total count.
 
-**Match:** \`/ecc-recipes plan a whole app upfront then auto-build with adversarial
+**Match:** \`/elc-recipes plan a whole app upfront then auto-build with adversarial
 review until done\` → Best fit: \`loop-*\` (autonomous) wrapping \`gan-*\` or
 \`santa-loop\` (adversarial). Run-order: \`plan-prd\` then
 \`loop-start rfc-dag --mode safe\` then monitor \`loop-status\`; STOP when all units
 pass review N consecutive times (add a max-iteration backstop to bound burn).
 
-**Match:** \`/ecc-recipes fix a bug in my Go service\` → Best fit: \`orch-fix-defect\`
+**Match:** \`/elc-recipes fix a bug in my Go service\` → Best fit: \`orch-fix-defect\`
 (reproduce, fix, review, commit). Alt: \`go-test\` then \`go-build\` then
 \`go-review\`. STOP: regression test green and review pass.
 
 ## Non-Goals
 
 - Not an executor — advisory only.
-- Not per-command deep docs — that's \`ecc-guide\`.
+- Not per-command deep docs — that's \`elc-guide\`.
 - Not prompt rewriting — that's \`prompt-optimizer\`.
 - Never hardcode command counts or member lists — always live-read.
 `
 
-const SKILL_ecc_tools_cost_audit = `---
-name: ecc-tools-cost-audit
-description: Evidence-first ECC Tools burn and billing audit workflow. Use when investigating runaway PR creation, quota bypass, premium-model leakage, duplicate jobs, or GitHub App cost spikes in the ECC Tools repo.
+const SKILL_elc_tools_cost_audit = `---
+name: elc-tools-cost-audit
+description: Evidence-first ELC Tools burn and billing audit workflow. Use when investigating runaway PR creation, quota bypass, premium-model leakage, duplicate jobs, or GitHub App cost spikes in the ELC Tools repo.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
-# ECC Tools Cost Audit
+# ELC Tools Cost Audit
 
-Use this skill when the user suspects the ECC Tools GitHub App is burning cost, over-creating PRs, bypassing usage limits, or routing free users into premium analysis paths.
+Use this skill when the user suspects the ELC Tools GitHub App is burning cost, over-creating PRs, bypassing usage limits, or routing free users into premium analysis paths.
 
-This is a focused operator workflow for the sibling [ECC-Tools](../../ECC-Tools) repo. It is not a generic billing skill and it is not a repo-wide code review pass.
+This is a focused operator workflow for the sibling [ELC-Tools](../../ELC-Tools) repo. It is not a generic billing skill and it is not a repo-wide code review pass.
 
 ## Skill Stack
 
-Pull these ECC-native skills into the workflow when relevant:
+Pull these ELC-native skills into the workflow when relevant:
 
 - \`autonomous-loops\` for bounded multi-step audits that cross webhooks, queues, billing, and retries
 - \`agentic-engineering\` for tracing the request path into discrete, provable units
@@ -21485,13 +21485,13 @@ Pull these ECC-native skills into the workflow when relevant:
 
 ## When To Use
 
-- user says ECC Tools burn rate, PR recursion, over-created PRs, usage-limit bypass, or premium-model leakage
-- the task is in the sibling \`ECC-Tools\` repo and depends on webhook handlers, queue workers, usage reservation, PR creation logic, or paid-gate enforcement
+- user says ELC Tools burn rate, PR recursion, over-created PRs, usage-limit bypass, or premium-model leakage
+- the task is in the sibling \`ELC-Tools\` repo and depends on webhook handlers, queue workers, usage reservation, PR creation logic, or paid-gate enforcement
 - a customer report says the app created too many PRs, billed incorrectly, or analyzed code without producing a usable result
 
 ## Scope Guardrails
 
-- work in the sibling \`ECC-Tools\` repo, not in \`everything-legion\`
+- work in the sibling \`ELC-Tools\` repo, not in \`everything-legion\`
 - start read-only unless the user clearly asked for a fix
 - do not mutate unrelated billing, checkout, or UI flows while tracing analysis burn
 - treat app-generated branches and app-generated PRs as red-flag recursion paths until proved otherwise
@@ -21504,7 +21504,7 @@ Pull these ECC-native skills into the workflow when relevant:
 
 ### 1. Freeze repo scope
 
-- switch into the sibling \`ECC-Tools\` repo
+- switch into the sibling \`ELC-Tools\` repo
 - check branch and local diff first
 - identify the exact surface under audit:
   - webhook router
@@ -21623,9 +21623,9 @@ If the system can spend tokens and then fail on PR creation, file update, or bra
 
 const SKILL_email_ops = `---
 name: email-ops
-description: Evidence-first mailbox triage, drafting, send verification, and sent-mail-safe follow-up workflow for ECC. Use when the user wants to organize email, draft or send through the real mail surface, or prove what landed in Sent.
+description: Evidence-first mailbox triage, drafting, send verification, and sent-mail-safe follow-up workflow for ELC. Use when the user wants to organize email, draft or send through the real mail surface, or prove what landed in Sent.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Email Ops
@@ -21636,7 +21636,7 @@ This is not a generic writing skill. It is an operator workflow around the actua
 
 ## Skill Stack
 
-Pull these ECC-native skills into the workflow when relevant:
+Pull these ELC-native skills into the workflow when relevant:
 
 - \`brand-voice\` before drafting anything user-facing
 - \`investor-outreach\` for investor, partner, or sponsor-facing mail
@@ -21759,7 +21759,7 @@ license: Apache-2.0
 version: 1.0.0
 homepage: https://github.com/affaan-m/everything-legion
 metadata:
-  origin: ECC
+  origin: ELC
   author: evos
   clawdbot:
     emoji: ""
@@ -21979,7 +21979,7 @@ const SKILL_enterprise_agent_ops = `---
 name: enterprise-agent-ops
 description: Operate long-lived agent workloads with observability, security boundaries, and lifecycle management.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Enterprise Agent Ops
@@ -22032,7 +22032,7 @@ const SKILL_error_handling = `---
 name: error-handling
 description: Patterns for robust error handling across TypeScript, Python, and Go. Covers typed errors, error boundaries, retries, circuit breakers, and user-facing error messages.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Error Handling Patterns
@@ -22411,7 +22411,7 @@ const SKILL_eval_harness = `---
 name: eval-harness
 description: Formal evaluation framework for Legion CLI sessions implementing eval-driven development (EDD) principles
 metadata:
-  origin: ECC
+  origin: ELC
 tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
@@ -22684,7 +22684,7 @@ const SKILL_evm_token_decimals = `---
 name: evm-token-decimals
 description: Prevent silent decimal mismatch bugs across EVM chains. Covers runtime decimal lookup, chain-aware caching, bridged-token precision drift, and safe normalization for bots, dashboards, and DeFi tools.
 metadata:
-  origin: ECC direct-port adaptation
+  origin: ELC direct-port adaptation
 version: "1.0.0"
 ---
 
@@ -22817,7 +22817,7 @@ const SKILL_exa_search = `---
 name: exa-search
 description: Neural search via Exa MCP for web, code, and company research. Use when the user needs web search, code examples, company intel, people lookup, or AI-powered deep research with Exa's neural search engine.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Exa Search
@@ -22927,7 +22927,7 @@ const SKILL_fal_ai_media = `---
 name: fal-ai-media
 description: Unified media generation via fal.ai MCP — image, video, and audio. Covers text-to-image (Nano Banana), text/image-to-video (Seedance, Kling, Veo 3), text-to-speech (CSM-1B), and video-to-audio (ThinkSound). Use when the user wants to generate images, videos, or audio with AI.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # fal.ai Media Generation
@@ -23218,7 +23218,7 @@ const SKILL_fastapi_patterns = `---
 name: fastapi-patterns
 description: FastAPI best practices covering project structure, Pydantic v2 schemas, dependency injection, async handlers, authentication, authorization, transactional service layers, and testing with httpx and pytest.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # FastAPI Patterns
@@ -23732,9 +23732,9 @@ async def list_items(db: AsyncSession = Depends(get_db)):
 
 const SKILL_finance_billing_ops = `---
 name: finance-billing-ops
-description: Evidence-first revenue, pricing, refunds, team-billing, and billing-model truth workflow for ECC. Use when the user wants a sales snapshot, pricing comparison, duplicate-charge diagnosis, or code-backed billing reality instead of generic payments advice.
+description: Evidence-first revenue, pricing, refunds, team-billing, and billing-model truth workflow for ELC. Use when the user wants a sales snapshot, pricing comparison, duplicate-charge diagnosis, or code-backed billing reality instead of generic payments advice.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Finance Billing Ops
@@ -23745,7 +23745,7 @@ This is broader than \`customer-billing-ops\`. That skill is for customer remedi
 
 ## Skill Stack
 
-Pull these ECC-native skills into the workflow when relevant:
+Pull these ELC-native skills into the workflow when relevant:
 
 - \`customer-billing-ops\` for customer-specific remediation and follow-up
 - \`research-ops\` when competitor pricing or current market evidence matters
@@ -24363,7 +24363,7 @@ const SKILL_flutter_dart_code_review = `---
 name: flutter-dart-code-review
 description: Library-agnostic Flutter/Dart code review checklist covering widget best practices, state management patterns (BLoC, Riverpod, Provider, GetX, MobX, Signals), Dart idioms, performance, accessibility, security, and clean architecture.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Flutter/Dart Code Review Best Practices
@@ -25492,7 +25492,7 @@ Before submitting any interactive component for review:
 
 const SKILL_frontend_design_direction = `---
 name: frontend-design-direction
-description: Set an ECC-specific frontend design direction for production UI work. Use when building or improving websites, dashboards, applications, components, landing pages, visual tools, or any web UI that needs stronger product-specific design judgment.
+description: Set an ELC-specific frontend design direction for production UI work. Use when building or improving websites, dashboards, applications, components, landing pages, visual tools, or any web UI that needs stronger product-specific design judgment.
 metadata:
   origin: community
 ---
@@ -25504,9 +25504,9 @@ purposeful, polished, and appropriate to the product domain.
 
 Source: salvaged from stale community PR #1659 by \`linus707\`.
 
-Note: ECC intentionally does not rebundle the canonical Anthropic
+Note: ELC intentionally does not rebundle the canonical Anthropic
 \`frontend-design\` skill. Install that from \`legions/skills\` when you want the
-official upstream skill. This skill is the ECC-specific design-direction salvage
+official upstream skill. This skill is the ELC-specific design-direction salvage
 of the useful local guidance from #1659.
 
 ## When to Use
@@ -25589,7 +25589,7 @@ const SKILL_frontend_patterns = `---
 name: frontend-patterns
 description: Frontend development patterns for React, Next.js, state management, performance optimization, and UI best practices.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Frontend Development Patterns
@@ -26248,7 +26248,7 @@ const SKILL_frontend_slides = `---
 name: frontend-slides
 description: Create stunning, animation-rich HTML presentations from scratch or by converting PowerPoint files. Use when the user wants to build a presentation, convert a PPT/PPTX to web, or create slides for a talk/pitch. Helps non-designers discover their aesthetic through visual exploration rather than abstract choices.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Frontend Slides
@@ -26300,7 +26300,7 @@ If the user already knows the desired preset, skip previews and use it directly.
 
 Otherwise:
 1. Ask what feeling the deck should create: impressed, energized, focused, inspired.
-2. Generate **3 single-slide preview files** in \`.ecc-design/slide-previews/\`.
+2. Generate **3 single-slide preview files** in \`.elc-design/slide-previews/\`.
 3. Each preview must be self-contained, show typography/color/motion clearly, and stay under roughly 100 lines of slide content.
 4. Ask the user which preview to keep or what elements to mix.
 
@@ -26415,7 +26415,7 @@ Use these maxima unless the user explicitly asks for denser slides and readabili
 - fixed-height content boxes that break on short screens
 - invalid negated CSS functions like \`-clamp(...)\`
 
-## Related ECC Skills
+## Related ELC Skills
 
 - \`frontend-patterns\` for component and interaction patterns around the deck
 - \`liquid-glass-design\` when a presentation intentionally borrows Apple glass aesthetics
@@ -26435,7 +26435,7 @@ const SKILL_fsharp_testing = `---
 name: fsharp-testing
 description: F# testing patterns with xUnit, FsUnit, Unquote, FsCheck property-based testing, integration tests, and test organization best practices.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # F# Testing Patterns
@@ -26718,7 +26718,7 @@ const SKILL_gan_style_harness = `---
 name: gan-style-harness
 description: "GAN-inspired Generator-Evaluator agent harness for building high-quality applications autonomously. Based on Anthropic's March 2026 harness design paper."
 metadata:
-  origin: ECC-community
+  origin: ELC-community
 tools: Read, Write, Edit, Bash, Grep, Glob, Task
 ---
 
@@ -27088,13 +27088,13 @@ Triggers on: \`rm -rf\`, \`git reset --hard\`, \`git push --force\`, \`drop tabl
 
 ## Quick Start
 
-### Option A: Use the ECC hook (zero install)
+### Option A: Use the ELC hook (zero install)
 
 The hook at \`scripts/hooks/gateguard-fact-force.js\` is included in this plugin. Enable it via hooks.json.
 
 If GateGuard blocks setup or repair work, start the session with
-\`ECC_GATEGUARD=off\`. For hook-level control, keep using
-\`ECC_DISABLED_HOOKS\` with the GateGuard hook ID.
+\`ELC_GATEGUARD=off\`. For hook-level control, keep using
+\`ELC_DISABLED_HOOKS\` with the GateGuard hook ID.
 
 In long sessions, only the first \`GATEGUARD_FACT_FORCE_FULL_DENIALS\`
 fact-force denials (default 3) emit the full four-fact block; later
@@ -28125,7 +28125,7 @@ const SKILL_git_workflow = `---
 name: git-workflow
 description: Git workflow patterns including branching strategies, commit conventions, merge vs rebase, conflict resolution, and collaborative development best practices for teams of all sizes.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Git Workflow Patterns
@@ -28843,7 +28843,7 @@ const SKILL_github_ops = `---
 name: github-ops
 description: GitHub repository operations, automation, and management. Issue triage, PR management, CI/CD operations, release management, and security monitoring using the gh CLI. Use when the user wants to manage GitHub issues, PRs, CI status, releases, contributors, stale items, or any GitHub operational task beyond simple git commands.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # GitHub Operations
@@ -28990,7 +28990,7 @@ const SKILL_golang_patterns = `---
 name: golang-patterns
 description: Idiomatic Go patterns, best practices, and conventions for building robust, efficient, and maintainable Go applications.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Go Development Patterns
@@ -29668,7 +29668,7 @@ const SKILL_golang_testing = `---
 name: golang-testing
 description: Go testing patterns including table-driven tests, subtests, benchmarks, fuzzing, and test coverage. Follows TDD methodology with idiomatic Go practices.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Go Testing Patterns
@@ -30391,7 +30391,7 @@ const SKILL_google_workspace_ops = `---
 name: google-workspace-ops
 description: Operate across Google Drive, Docs, Sheets, and Slides as one workflow surface for plans, trackers, decks, and shared documents. Use when the user needs to find, summarize, edit, migrate, or clean up Google Workspace assets without dropping to raw tool calls.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Google Workspace Ops
@@ -30490,7 +30490,7 @@ name: growth-log
 description: "Use after a complex task, failure, or when reviewing what was learned. Teaches how to write growth logs that extract reusable patterns — not diary entries."
 version: 1.1.0
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Growth Log Skill
@@ -31385,21 +31385,21 @@ console.log('Processing record:', patient.id);
 
 const SKILL_hermes_imports = `---
 name: hermes-imports
-description: Convert local Hermes operator workflows into sanitized ECC skills and release-pack artifacts. Use when preparing a Hermes workflow for public ECC reuse without leaking private workspace state, credentials, or local-only paths.
+description: Convert local Hermes operator workflows into sanitized ELC skills and release-pack artifacts. Use when preparing a Hermes workflow for public ELC reuse without leaking private workspace state, credentials, or local-only paths.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Hermes Imports
 
-Use this skill when turning a repeated Hermes workflow into something safe to ship in ECC.
+Use this skill when turning a repeated Hermes workflow into something safe to ship in ELC.
 
-Hermes is the operator shell. ECC is the reusable workflow layer. Imports should move stable patterns from Hermes into ECC without moving private state.
+Hermes is the operator shell. ELC is the reusable workflow layer. Imports should move stable patterns from Hermes into ELC without moving private state.
 
 ## When To Use
 
 - A Hermes workflow has repeated enough times to become reusable.
-- A local operator prompt should become a public ECC skill.
+- A local operator prompt should become a public ELC skill.
 - A launch, content, research, or engineering workflow needs sanitized handoff docs.
 - A workflow mentions local paths, credentials, personal datasets, or private account names that must be removed before publication.
 
@@ -31441,7 +31441,7 @@ Local Hermes prompt:
 Read my local workspace files and finalize launch copy.
 \`\`\`
 
-ECC-safe version:
+ELC-safe version:
 
 \`\`\`text
 Use the public release pack under docs/releases/<version>/.
@@ -31456,7 +31456,7 @@ Local Hermes job:
 Run my private inbox, finance, and content checks overnight.
 \`\`\`
 
-ECC-safe version:
+ELC-safe version:
 
 \`\`\`text
 Describe the scheduler policy, the quiet-hours window, the escalation rules, and the categories of checks. Do not include private data sources or credentials.
@@ -31466,7 +31466,7 @@ Describe the scheduler policy, the quiet-hours window, the escalation rules, and
 
 Return:
 
-- candidate ECC skill name
+- candidate ELC skill name
 - sanitized workflow summary
 - required public inputs
 - private inputs removed
@@ -31478,7 +31478,7 @@ const SKILL_hexagonal_architecture = `---
 name: hexagonal-architecture
 description: Design, implement, and refactor Ports & Adapters systems with clear domain boundaries, dependency inversion, and testable use-case orchestration across TypeScript, Java, Kotlin, and Go services.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Hexagonal Architecture
@@ -31757,7 +31757,7 @@ const SKILL_hipaa_compliance = `---
 name: hipaa-compliance
 description: HIPAA-specific entrypoint for healthcare privacy and security work. Use when a task is explicitly framed around HIPAA, PHI handling, covered entities, BAAs, breach posture, or US healthcare compliance requirements.
 metadata:
-  origin: ECC direct-port adaptation
+  origin: ELC direct-port adaptation
 version: "1.0.0"
 ---
 
@@ -33702,7 +33702,7 @@ license: Apache-2.0
 version: 1.0.0
 homepage: https://github.com/affaan-m/everything-legion
 metadata:
-  origin: ECC
+  origin: ELC
   author: evos
   clawdbot:
     emoji: ""
@@ -33941,7 +33941,7 @@ const SKILL_investor_materials = `---
 name: investor-materials
 description: Create and update pitch decks, one-pagers, investor memos, accelerator applications, financial models, and fundraising materials. Use when the user needs investor-facing documents, projections, use-of-funds tables, milestone plans, or materials that must stay internally consistent across multiple fundraising assets.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Investor Materials
@@ -34040,7 +34040,7 @@ const SKILL_investor_outreach = `---
 name: investor-outreach
 description: Draft cold emails, warm intro blurbs, follow-ups, update emails, and investor communications for fundraising. Use when the user wants outreach to angels, VCs, strategic investors, or accelerators and needs concise, personalized, investor-facing messaging.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Investor Outreach
@@ -34294,7 +34294,7 @@ const SKILL_iterative_retrieval = `---
 name: iterative-retrieval
 description: Pattern for progressively refining context retrieval to solve the subagent context problem
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Iterative Retrieval Pattern
@@ -34501,14 +34501,14 @@ When retrieving context for this task:
 
 - [The Longform Guide](https://x.com/affaanmustafa/status/2014040193557471352) - Subagent orchestration section
 - \`continuous-learning\` skill - For patterns that improve over time
-- Agent definitions bundled with ECC (manual install path: \`agents/\`)
+- Agent definitions bundled with ELC (manual install path: \`agents/\`)
 `
 
 const SKILL_ito_basket_compare = `---
 name: ito-basket-compare
 description: Compare Itô prediction-market baskets against a user's knowledge base, portfolio notes, financial context, watchlist, or research thesis. Use for read-only basket comparison and gap analysis without investment advice or live trading.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Itô Basket Compare
@@ -34574,7 +34574,7 @@ const SKILL_ito_data_atlas_agent = `---
 name: ito-data-atlas-agent
 description: Design background Data Atlas style agents for Itô basket research, market discovery, parameter drafting, and human-in-the-loop editing. Use for architecture and workflow planning, not live order execution.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Itô Data Atlas Agent
@@ -34640,7 +34640,7 @@ const SKILL_ito_market_intelligence = `---
 name: ito-market-intelligence
 description: Research prediction-market events, venues, underliers, liquidity, and news context for Itô basket workflows. Use for read-only market intelligence, API-gated Itô exploration, and source-grounded prediction-market briefings without investment advice or live trading.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Itô Market Intelligence
@@ -34703,7 +34703,7 @@ const SKILL_ito_trade_planner = `---
 name: ito-trade-planner
 description: Build a non-advisory prediction-market trade planning worksheet for Itô or venue workflows. Use to inspect venues, underliers, constraints, order prerequisites, and manual execution steps without placing trades or recommending positions.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Itô Trade Planner
@@ -34773,7 +34773,7 @@ const SKILL_java_coding_standards = `---
 name: java-coding-standards
 description: "Java coding standards for Spring Boot and Quarkus services: naming, immutability, Optional usage, streams, exceptions, generics, CDI, reactive patterns, and project layout. Automatically applies framework-specific conventions."
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Java Coding Standards
@@ -35159,7 +35159,7 @@ const SKILL_jira_integration = `---
 name: jira-integration
 description: Use this skill when retrieving Jira tickets, analyzing requirements, updating ticket status, adding comments, or transitioning issues. Provides Jira API patterns via MCP or direct REST calls.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Jira Integration Skill
@@ -35464,7 +35464,7 @@ const SKILL_jpa_patterns = `---
 name: jpa-patterns
 description: JPA/Hibernate patterns for entity design, relationships, query optimization, transactions, auditing, indexing, pagination, and pooling in Spring Boot.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # JPA/Hibernate Patterns
@@ -35618,7 +35618,7 @@ const SKILL_knowledge_ops = `---
 name: knowledge-ops
 description: Knowledge base management, ingestion, sync, and retrieval across multiple storage layers (local files, MCP memory, vector stores, Git repos). Use when the user wants to save, organize, sync, deduplicate, or search across their knowledge systems.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Knowledge Operations
@@ -35775,7 +35775,7 @@ const SKILL_kotlin_coroutines_flows = `---
 name: kotlin-coroutines-flows
 description: Kotlin Coroutines and Flow patterns for Android and KMP — structured concurrency, Flow operators, StateFlow, error handling, and testing.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Kotlin Coroutines & Flows
@@ -36062,7 +36062,7 @@ const SKILL_kotlin_exposed_patterns = `---
 name: kotlin-exposed-patterns
 description: JetBrains Exposed ORM patterns including DSL queries, DAO pattern, transactions, HikariCP connection pooling, Flyway migrations, and repository pattern.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Kotlin Exposed Patterns
@@ -36784,7 +36784,7 @@ const SKILL_kotlin_ktor_patterns = `---
 name: kotlin-ktor-patterns
 description: Ktor server patterns including routing DSL, plugins, authentication, Koin DI, kotlinx.serialization, WebSockets, and testApplication testing.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Ktor Server Patterns
@@ -37476,7 +37476,7 @@ const SKILL_kotlin_patterns = `---
 name: kotlin-patterns
 description: Idiomatic Kotlin patterns, best practices, and conventions for building robust, efficient, and maintainable Kotlin applications with coroutines, null safety, and DSL builders.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Kotlin Development Patterns
@@ -38190,7 +38190,7 @@ const SKILL_kotlin_testing = `---
 name: kotlin-testing
 description: Kotlin testing patterns with Kotest, MockK, coroutine testing, property-based testing, and Kover coverage. Follows TDD methodology with idiomatic Kotlin practices.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Kotlin Testing Patterns
@@ -39017,7 +39017,7 @@ const SKILL_kubernetes_patterns = `---
 name: kubernetes-patterns
 description: Kubernetes workload patterns, resource management, RBAC, probes, autoscaling, ConfigMap/Secret handling, and kubectl debugging for production-grade deployments.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Kubernetes Patterns
@@ -39775,7 +39775,7 @@ const SKILL_laravel_patterns = `---
 name: laravel-patterns
 description: Laravel architecture patterns, routing/controllers, Eloquent ORM, service layers, queues, events, caching, and API resources for production apps.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Laravel Development Patterns
@@ -40193,7 +40193,7 @@ const SKILL_laravel_plugin_discovery = `---
 name: laravel-plugin-discovery
 description: Discover and evaluate Laravel packages via LaraPlugins.io MCP. Use when the user wants to find plugins, check package health, or assess Laravel/PHP compatibility.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Laravel Plugin Discovery
@@ -40425,7 +40425,7 @@ const SKILL_laravel_security = `---
 name: laravel-security
 description: Laravel security best practices — authentication, authorization, Eloquent safety, CSRF, XSS prevention, API security, and secure deployment configurations.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Laravel Security Best Practices
@@ -41375,7 +41375,7 @@ const SKILL_laravel_tdd = `---
 name: laravel-tdd
 description: Laravel testing strategies with PHPUnit, Pest, model factories, HTTP tests, Sanctum authentication testing, mocking, and coverage.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Laravel Testing with TDD
@@ -42052,7 +42052,7 @@ const SKILL_laravel_verification = `---
 name: laravel-verification
 description: "Verification loop for Laravel projects: env checks, linting, static analysis, tests with coverage, security scans, and deployment readiness."
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Laravel Verification Loop
@@ -42234,7 +42234,7 @@ const SKILL_latency_critical_systems = `---
 name: latency-critical-systems
 description: Use for latency-sensitive systems such as realtime dashboards, market data, streaming agents, execution gateways, queues, caches, or HFT-like infrastructure where freshness and p95 latency matter.
 metadata:
-  origin: ECC
+  origin: ELC
 tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
@@ -42310,7 +42310,7 @@ const SKILL_lead_intelligence = `---
 name: lead-intelligence
 description: AI-native lead intelligence and outreach pipeline. Replaces Apollo, Clay, and ZoomInfo with agent-powered signal scoring, mutual ranking, warm path discovery, source-derived voice modeling, and channel-specific outreach across email, LinkedIn, and X. Use when the user wants to find, qualify, and reach high-value contacts.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Lead Intelligence
@@ -42645,7 +42645,7 @@ Use this skill when you need to dispatch multiple Legion CLI agents to work on c
 
 ## Setup
 
-The DevFleet server is a separate project, not bundled with ECC. Install and
+The DevFleet server is a separate project, not bundled with ELC. Install and
 run it from its repository first: <https://github.com/LEC-AI/legion-devfleet>
 
 Then connect the running instance via MCP:
@@ -43224,7 +43224,7 @@ const SKILL_llm_trading_agent_security = `---
 name: llm-trading-agent-security
 description: Security patterns for autonomous trading agents with wallet or transaction authority. Covers prompt injection, spend limits, pre-send simulation, circuit breakers, MEV protection, and key handling.
 metadata:
-  origin: ECC direct-port adaptation
+  origin: ELC direct-port adaptation
 version: "1.0.0"
 ---
 
@@ -43382,7 +43382,7 @@ license: Apache-2.0
 version: 1.0.0
 homepage: https://github.com/affaan-m/everything-legion
 metadata:
-  origin: ECC
+  origin: ELC
   author: evos
   clawdbot:
     emoji: ""
@@ -43597,7 +43597,7 @@ const SKILL_loop_design_check = `---
 name: loop-design-check
 description: Design a goal-oriented agent loop, and review it for the ways loops go wrong — spinning and burning tokens, Goodhart-gaming the verifier, or running a wrong answer to completion. Two actions: (1) WRITE a loop — gate whether to build it, define a machine-decidable goal, pick the loop type, pick a skeleton; (2) REVIEW a loop — run it past five failure modes plus decidability, boundaries, fallback, judge independence, and keep-judgment-with-the-human red lines. Use when designing an autonomous agent loop, or when you already have one and worry it will spin, cheat, or run a wrong answer to the end. Complements the mechanism-layer loop skills (autonomous-loops, continuous-agent-loop) by covering the judgment layer they don't. 中文触发：写 loop、设计 loop、做一个 loop、检查 loop 对不对、loop 体检、loop 会不会跑飞、可判定目标、五个崩法、plan build judge。English triggers: design an agent loop, write a loop, check a loop, loop review, prevent a runaway loop, goal-oriented loop, decidable goal, plan/build/judge.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Loop Design + Review
@@ -43741,7 +43741,7 @@ The naive loop and the reviewed loop differ by four lines of constraint — and 
 const SKILL_mailtrap_email_integration = `---
 name: mailtrap-email-integration
 description: Guides agents through integrating transactional email sending via Mailtrap's Email API, including sandbox testing, domain verification, and API authentication. Use when implementing email-sending features, debugging delivery issues, or setting up safe dev/staging email testing.
-origin: ECC
+origin: ELC
 ---
 
 # Mailtrap Email Integration
@@ -43973,9 +43973,9 @@ Omit principles that you checked but did not change.
 
 const SKILL_manim_video = `---
 name: manim-video
-description: Build reusable Manim explainers for technical concepts, graphs, system diagrams, and product walkthroughs, then hand off to the wider ECC video stack if needed. Use when the user wants a clean animated explainer rather than a generic talking-head script.
+description: Build reusable Manim explainers for technical concepts, graphs, system diagrams, and product walkthroughs, then hand off to the wider ELC video stack if needed. Use when the user wants a clean animated explainer rather than a generic talking-head script.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Manim Video
@@ -44067,7 +44067,7 @@ const SKILL_market_research = `---
 name: market-research
 description: Conduct market research, competitive analysis, investor due diligence, and industry intelligence with source attribution and decision-oriented summaries. Use when the user wants market sizing, competitor comparisons, fund research, technology scans, or research that informs business decisions.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Market Research
@@ -44145,7 +44145,7 @@ const SKILL_marketing_campaign = `---
 name: marketing-campaign
 description: End-to-end marketing campaign planning and execution. Covers audience research, positioning, campaign angle definition, landing page copy, email sequences, social posts, ad copy, short-form video scripts, and content calendars. Use as the orchestration layer for multi-channel product launches.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Marketing Campaign
@@ -44261,7 +44261,7 @@ const SKILL_mcp_server_patterns = `---
 name: mcp-server-patterns
 description: Build MCP servers with Node/TypeScript SDK — tools, resources, prompts, Zod validation, stdio vs Streamable HTTP. Use Context7 or official MCP docs for latest API.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # MCP Server Patterns
@@ -44331,9 +44331,9 @@ Use **Zod** (or the SDK’s preferred schema format) for input validation.
 
 const SKILL_messages_ops = `---
 name: messages-ops
-description: Evidence-first live messaging workflow for ECC. Use when the user wants to read texts or DMs, recover a recent one-time code, inspect a thread before replying, or prove which message source was actually checked.
+description: Evidence-first live messaging workflow for ELC. Use when the user wants to read texts or DMs, recover a recent one-time code, inspect a thread before replying, or prove which message source was actually checked.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Messages Ops
@@ -44344,7 +44344,7 @@ This is not email work. If the dominant surface is a mailbox, use \`email-ops\`.
 
 ## Skill Stack
 
-Pull these ECC-native skills into the workflow when relevant:
+Pull these ELC-native skills into the workflow when relevant:
 
 - \`email-ops\` when the message task is really mailbox work
 - \`connections-optimizer\` when the DM thread belongs to outbound network work
@@ -44439,7 +44439,7 @@ STATUS
 const SKILL_ml_adoption_playbook = `---
 name: ml-adoption-playbook
 description: End-to-end methodology for AI agents and software engineers to add machine learning algorithms to existing non-ML codebases. Covers problem framing, data readiness, architectural decoupling, and baseline model integration.
-origin: ECC
+origin: ELC
 ---
 
 # ML Adoption Playbook
@@ -44499,7 +44499,7 @@ const SKILL_mle_workflow = `---
 name: mle-workflow
 description: Production machine-learning engineering workflow for data contracts, reproducible training, model evaluation, deployment, monitoring, and rollback. Use when building, reviewing, or hardening ML systems beyond one-off notebooks.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Machine Learning Engineering Workflow
@@ -44533,7 +44533,7 @@ Use only the lanes that fit the system in front of you. This skill is useful for
 
 ## Reuse the SWE Surface
 
-Do not treat MLE as separate from software engineering. Most ECC SWE workflows apply directly to ML systems, often with stricter failure modes:
+Do not treat MLE as separate from software engineering. Most ELC SWE workflows apply directly to ML systems, often with stricter failure modes:
 
 The recommended \`minimal --with capability:machine-learning\` install keeps the core agent surface available alongside this skill. For skill-only or agent-limited harnesses, pair \`skill:mle-workflow\` with \`agent:mle-reviewer\` where the target supports agents.
 
@@ -44564,7 +44564,7 @@ The recommended \`minimal --with capability:machine-learning\` install keeps the
 
 Use these simulations as coverage checks when planning or reviewing MLE work. A strong MLE workflow should reduce each task to explicit contracts, reusable SWE surfaces, automated evidence, and a reviewable artifact.
 
-| ID | Common MLE task | Streamlined ECC path | Required output | Pipeline lanes covered |
+| ID | Common MLE task | Streamlined ELC path | Required output | Pipeline lanes covered |
 |----|-----------------|----------------------|-----------------|------------------------|
 | MLE-01 | Frame an ambiguous prediction, ranking, recommender, classifier, embedding, or forecast capability | \`product-capability\`, \`plan\`, \`architecture-decision-records\`, \`mle-workflow\` | Iteration Compact naming who cares, decision owner, success metric, unacceptable mistakes, assumptions, constraints, and first experiment | product contract, stakeholder loss, risk, rollout |
 | MLE-02 | Define metric goals, labels, data sources, and the mistake budget | \`repo-scan\`, \`database-reviewer\`, \`database-migrations\`, \`postgres-patterns\`, \`clickhouse-io\` | Data and metric contract with entity grain, label timing, label confidence, feature timing, point-in-time joins, split policy, and dataset snapshot | data contract, metric design, leakage, reproducibility |
@@ -46183,7 +46183,7 @@ const SKILL_motion_ui = `---
 name: motion-ui
 description: "Production-ready UI motion system for React/Next.js. Use when implementing animations, transitions, or motion patterns."
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Motion System v4.2
@@ -46761,7 +46761,7 @@ const SKILL_mysql_patterns = `---
 name: mysql-patterns
 description: MySQL and MariaDB schema, query, indexing, transaction, replication, and connection-pool patterns for production backends.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # MySQL Patterns
@@ -47174,9 +47174,9 @@ When this skill is used for review, return:
 
 const SKILL_nanoclaw_repl = `---
 name: nanoclaw-repl
-description: Operate and extend NanoClaw v2, ECC's zero-dependency session-aware REPL built on legion -p.
+description: Operate and extend NanoClaw v2, ELC's zero-dependency session-aware REPL built on legion -p.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # NanoClaw REPL
@@ -47212,7 +47212,7 @@ const SKILL_nestjs_patterns = `---
 name: nestjs-patterns
 description: NestJS architecture patterns for modules, controllers, providers, DTO validation, guards, interceptors, config, and production-grade TypeScript backends.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # NestJS Development Patterns
@@ -48159,7 +48159,7 @@ const SKILL_nextjs_turbopack = `---
 name: nextjs-turbopack
 description: Next.js 16+ and Turbopack — incremental bundling, FS caching, dev speed, and when to use Turbopack vs webpack.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Next.js and Turbopack
@@ -48219,7 +48219,7 @@ const SKILL_nodejs_keccak256 = `---
 name: nodejs-keccak256
 description: Prevent Ethereum hashing bugs in JavaScript and TypeScript. Node's sha3-256 is NIST SHA3, not Ethereum Keccak-256, and silently breaks selectors, signatures, storage slots, and address derivation.
 metadata:
-  origin: ECC direct-port adaptation
+  origin: ELC direct-port adaptation
 version: "1.0.0"
 ---
 
@@ -48324,7 +48324,7 @@ const SKILL_nutrient_document_processing = `---
 name: nutrient-document-processing
 description: Process, convert, OCR, extract, redact, sign, and fill documents using the Nutrient DWS API. Works with PDFs, DOCX, XLSX, PPTX, HTML, and images.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Nutrient Document Processing
@@ -48494,7 +48494,7 @@ const SKILL_nuxt4_patterns = `---
 name: nuxt4-patterns
 description: Nuxt 4 app patterns for hydration safety, performance, route rules, lazy loading, and SSR-safe data fetching with useFetch and useAsyncData.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Nuxt 4 Patterns
@@ -48888,7 +48888,7 @@ const SKILL_opensource_pipeline = `---
 name: opensource-pipeline
 description: "Open-source pipeline: fork, sanitize, and package private projects for safe public release. Chains 3 agents (forker, sanitizer, packager). Triggers: '/opensource', 'open source this', 'make this public', 'prepare for open source'."
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Open-Source Pipeline Skill
@@ -49144,9 +49144,9 @@ See \`security-review\` for secret detection patterns used by the sanitizer.
 
 const SKILL_orch_add_feature = `---
 name: orch-add-feature
-description: Orchestrate building a brand-new feature end to end — research, plan, TDD implementation, review, and gated commit — by delegating each phase to the matching ECC agent. Use when adding a capability that does not exist yet.
+description: Orchestrate building a brand-new feature end to end — research, plan, TDD implementation, review, and gated commit — by delegating each phase to the matching ELC agent. Use when adding a capability that does not exist yet.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # orch-add-feature
@@ -49193,7 +49193,7 @@ const SKILL_orch_build_mvp = `---
 name: orch-build-mvp
 description: Orchestrate bootstrapping a working MVP from a design or spec document — ingest the doc, plan thin vertical slices, scaffold the first end-to-end slice, then TDD-implement, review, and gated commit. Use to turn an SDD/PRD into a running starting point.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # orch-build-mvp
@@ -49244,7 +49244,7 @@ const SKILL_orch_change_feature = `---
 name: orch-change-feature
 description: Orchestrate altering an existing, working feature to new desired behavior — update its tests to the new spec, change the implementation to match, review, and gated commit. Use when behavior is not broken but should be different.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # orch-change-feature
@@ -49287,9 +49287,9 @@ orch-change-feature: make nws-poller alert at 2 warnings instead of 3
 
 const SKILL_orch_fix_defect = `---
 name: orch-fix-defect
-description: Orchestrate fixing a bug — reproduce it as a failing regression test, fix to green, review, and gated commit — by delegating each phase to the matching ECC agent. Use when existing behavior is broken or wrong.
+description: Orchestrate fixing a bug — reproduce it as a failing regression test, fix to green, review, and gated commit — by delegating each phase to the matching ELC agent. Use when existing behavior is broken or wrong.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # orch-fix-defect
@@ -49334,14 +49334,14 @@ const SKILL_orch_pipeline = `---
 name: orch-pipeline
 description: Shared orchestration engine for the orch-* skill family. Defines the gated Research-Plan-TDD-Review-Commit pipeline, the size classifier, the agent map, and the two human gates that the orch-* operation skills delegate to. Not usually invoked directly.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Orchestrator Pipeline (shared engine)
 
 The \`orch-*\` skills are thin wrappers. They do not re-implement any work — they
 classify the request, choose which phases of *this* pipeline run, and delegate
-each phase to an existing ECC agent or command. This file is that pipeline.
+each phase to an existing ELC agent or command. This file is that pipeline.
 
 > Invoke an operation skill (\`orch-add-feature\`, \`orch-fix-defect\`, …) rather
 > than this engine directly. This file is the reference they point at.
@@ -49362,7 +49362,7 @@ each phase to an existing ECC agent or command. This file is that pipeline.
 | \`orch-refine-code\` | refactor | behavior stays, structure improves | restructure while keeping tests green |
 | \`orch-build-mvp\` | mvp | bootstrap from a design/spec doc | ingest doc → vertical slices |
 
-> These wrappers **compose** existing ECC commands rather than replace them:
+> These wrappers **compose** existing ELC commands rather than replace them:
 > \`/feature-dev\`, \`/plan\`, \`/code-review\`, \`/build-fix\`, \`/refactor-clean\`, and
 > \`/gan-build\`, plus the \`tdd-workflow\` skill. The orch-* family adds the shared
 > size classifier and the two gates
@@ -49457,7 +49457,7 @@ const SKILL_orch_refine_code = `---
 name: orch-refine-code
 description: Orchestrate a behavior-preserving refactor — confirm tests are green, restructure without changing behavior, keep tests green, review, and gated commit. Use when the structure should improve but behavior must not change.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # orch-refine-code
@@ -49503,7 +49503,7 @@ const SKILL_parallel_execution_optimizer = `---
 name: parallel-execution-optimizer
 description: Use when the user wants a task done much faster through parallel work, concurrent agents, batched tool calls, isolated worktrees, or many independent verification lanes without losing correctness.
 metadata:
-  origin: ECC
+  origin: ELC
 tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
@@ -49578,7 +49578,7 @@ const SKILL_perl_patterns = `---
 name: perl-patterns
 description: Modern Perl 5.36+ idioms, best practices, and conventions for building robust, maintainable Perl applications.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Modern Perl Development Patterns
@@ -50085,7 +50085,7 @@ const SKILL_perl_security = `---
 name: perl-security
 description: Comprehensive Perl security covering taint mode, input validation, safe process execution, DBI parameterized queries, web security (XSS/SQLi/CSRF), and perlcritic security policies.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Perl Security Patterns
@@ -50591,7 +50591,7 @@ const SKILL_perl_testing = `---
 name: perl-testing
 description: Perl testing patterns using Test2::V0, Test::More, prove runner, mocking, coverage with Devel::Cover, and TDD methodology.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Perl Testing Patterns
@@ -51069,7 +51069,7 @@ const SKILL_plan_canvas = `---
 name: plan-canvas
 description: Open plans and HTML artifacts in a local browser canvas where the human annotates elements, chats, and approves or requests changes without leaving the page. Use when presenting a plan for review, or when feedback like "move this, change that" is easier pointed at than typed.
 metadata:
-  origin: ECC
+  origin: ELC
 version: "1.0.0"
 ---
 
@@ -51081,7 +51081,7 @@ and delivering an **Approve plan / Request changes** verdict — while you block
 on a single CLI call that returns their feedback as JSON.
 
 Inspired by [lavish-axi](https://github.com/kunchenguid/lavish-axi); rebuilt
-ECC-native around the \`/plan\` confirmation gate, with zero dependencies.
+ELC-native around the \`/plan\` confirmation gate, with zero dependencies.
 
 ## When to Use
 
@@ -51097,7 +51097,7 @@ remote URLs. The canvas serves local artifact files only.
 
 ## How It Works
 
-Invoke the CLI as \`ecc-plan-canvas\` — the bin shipped by the \`ecc-universal\`
+Invoke the CLI as \`elc-plan-canvas\` — the bin shipped by the \`elc-universal\`
 package (on PATH after a global/plugin install; \`node "\$LEGION_PLUGIN_ROOT/scripts/plan-canvas.js"\`
 also works for plugin installs). Run it from the project you are reviewing in;
 it works from any working directory. It manages a detached loopback server
@@ -51108,16 +51108,16 @@ The workflow is a plain CLI-plus-JSON loop, so it is model- and harness-agnostic
 any agent that can run a shell command and read stdout drives it the same way
 (Legion CLI, Codex, Cursor, Gemini, OpenCode, Copilot). Trigger it however your
 harness surfaces skills — e.g. \`/plan-canvas\` in Legion CLI, \`\$plan-canvas\` in
-Codex — or just run the \`ecc-plan-canvas\` commands directly.
+Codex — or just run the \`elc-plan-canvas\` commands directly.
 
 \`\`\`bash
 # 1. Open the artifact in the user's browser (returns immediately)
-ecc-plan-canvas open .legion/plans/feature.plan.md
+elc-plan-canvas open .legion/plans/feature.plan.md
 
 # 2. Block until the human responds. Leave running; re-run if interrupted —
 #    queued feedback is never lost. Run in the background if your harness
 #    time-limits foreground commands.
-ecc-plan-canvas await .legion/plans/feature.plan.md
+elc-plan-canvas await .legion/plans/feature.plan.md
 \`\`\`
 
 \`await\` prints JSON when the human acts:
@@ -51144,10 +51144,10 @@ ecc-plan-canvas await .legion/plans/feature.plan.md
 **3. Respond in the canvas**, then keep listening — one command does both:
 
 \`\`\`bash
-ecc-plan-canvas await <file> --reply "Split Phase 2 as requested — take a look."
+elc-plan-canvas await <file> --reply "Split Phase 2 as requested — take a look."
 \`\`\`
 
-**4. End** when review concludes: \`ecc-plan-canvas end <file>\`.
+**4. End** when review concludes: \`elc-plan-canvas end <file>\`.
 
 ## Diagrams (Mermaid)
 
@@ -51165,14 +51165,14 @@ flowchart LR
 \`\`\`
 \`\`\`\`
 
-Diagrams render in the ECC dark theme with the accent palette. Mermaid loads in
+Diagrams render in the ELC dark theme with the accent palette. Mermaid loads in
 the browser from a pinned CDN; if that is unavailable (offline), the block
 degrades to showing its source, so the review is never blocked. Point a local
-mirror at \`ECC_PLAN_CANVAS_MERMAID_URL\` for air-gapped use.
+mirror at \`ELC_PLAN_CANVAS_MERMAID_URL\` for air-gapped use.
 
 ## Rules
 
-- Markdown artifacts render in ECC's plan template (including Mermaid blocks);
+- Markdown artifacts render in ELC's plan template (including Mermaid blocks);
   \`.html\` artifacts render as-is with the annotation layer injected. For HTML
   authoring guidance use the \`frontend-design-direction\` and \`artifact-design\`
   skills.
@@ -51185,8 +51185,8 @@ mirror at \`ECC_PLAN_CANVAS_MERMAID_URL\` for air-gapped use.
 - Sibling assets (images, CSS) must sit next to the artifact and be
   referenced by relative path.
 - The server is loopback-only and exits after 30 idle minutes
-  (\`ECC_PLAN_CANVAS_IDLE_MS\`); \`stop\` shuts it down explicitly. State lives
-  in \`~/.legion/plan-canvas/\` (\`ECC_PLAN_CANVAS_STATE_DIR\`).
+  (\`ELC_PLAN_CANVAS_IDLE_MS\`); \`stop\` shuts it down explicitly. State lives
+  in \`~/.legion/plan-canvas/\` (\`ELC_PLAN_CANVAS_STATE_DIR\`).
 
 ## Examples
 
@@ -51194,10 +51194,10 @@ mirror at \`ECC_PLAN_CANVAS_MERMAID_URL\` for air-gapped use.
 \`.legion/plans/notifications.plan.md\` and must WAIT for confirmation:
 
 \`\`\`bash
-ecc-plan-canvas open .legion/plans/notifications.plan.md
-ecc-plan-canvas await .legion/plans/notifications.plan.md
+elc-plan-canvas open .legion/plans/notifications.plan.md
+elc-plan-canvas await .legion/plans/notifications.plan.md
 # → {"status":"feedback","items":[{"kind":"verdict","verdict":"approve"}]}
-ecc-plan-canvas end .legion/plans/notifications.plan.md
+elc-plan-canvas end .legion/plans/notifications.plan.md
 # plan is confirmed — begin implementation
 \`\`\`
 
@@ -51205,7 +51205,7 @@ ecc-plan-canvas end .legion/plans/notifications.plan.md
 
 \`\`\`bash
 # await returned annotations → edit the .plan.md (canvas live-reloads)
-ecc-plan-canvas await <file> --reply "Reworked the risk table."
+elc-plan-canvas await <file> --reply "Reworked the risk table."
 # → blocks again until the next response
 \`\`\`
 
@@ -51222,9 +51222,9 @@ ecc-plan-canvas await <file> --reply "Reworked the risk table."
 
 const SKILL_plan_orchestrate = `---
 name: plan-orchestrate
-description: Read a plan document, decompose it into steps, design a per-step agent chain from the ECC catalogue, and emit ready-to-paste /orchestrate custom prompts. Generative only — never invokes /orchestrate itself. Use when the user has a multi-step plan and wants to drive it through orchestrate without composing chains by hand.
+description: Read a plan document, decompose it into steps, design a per-step agent chain from the ELC catalogue, and emit ready-to-paste /orchestrate custom prompts. Generative only — never invokes /orchestrate itself. Use when the user has a multi-step plan and wants to drive it through orchestrate without composing chains by hand.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Plan Orchestrate
@@ -51265,7 +51265,7 @@ Where \`{ORCH_CMD}\` is determined in Phase 0 (see below). The command string in
 - No \`--mode\` / \`--gate\` / \`--agents=...\` flags exist — never invent them.
 - Agent names come from the catalogue in this skill. Embedded double quotes in the task description are escaped as \`\\"\`.
 
-## ECC install form and namespacing
+## ELC install form and namespacing
 
 Two install forms determine the prefix on **both** the slash command and every agent name. The two MUST stay in sync — one form per output, never mixed:
 
@@ -51273,10 +51273,10 @@ Let \`<legion-home>\` denote the Legion CLI home directory: \`~/.legion\` on mac
 
 | Form | Detection | \`{ORCH_CMD}\` | Agent name format |
 |---|---|---|---|
-| Plugin install (2.0.0+) | \`<legion-home>/plugins/marketplaces/ecc/\` exists | \`/ecc:orchestrate\` | \`ecc:<name>\` |
+| Plugin install (2.0.0+) | \`<legion-home>/plugins/marketplaces/elc/\` exists | \`/elc:orchestrate\` | \`elc:<name>\` |
 | Legacy bare install | Above absent; agent files under \`<legion-home>/agents/\` | \`/orchestrate\` | \`<name>\` |
 
-Why this matters: under the plugin install, agents register as \`ecc:tdd-guide\`. Bare names force fuzzy matching, which fails intermittently under parallel calls. Under legacy, the prefixed forms are not registered and fail outright.
+Why this matters: under the plugin install, agents register as \`elc:tdd-guide\`. Bare names force fuzzy matching, which fails intermittently under parallel calls. Under legacy, the prefixed forms are not registered and fail outright.
 
 ## Available agent catalogue (must pick from these)
 
@@ -51305,13 +51305,13 @@ A misspelled agent name fails \`/orchestrate\`. Cross-check against this list be
 
 ## How It Works
 
-### Phase 0 — Detect ECC mode + language
+### Phase 0 — Detect ELC mode + language
 
 1. Read \`<plan-doc-path>\`. If missing or empty, report and stop.
-2. Detect ECC install form once and freeze it into \`ECC_MODE\`. Algorithm (run in order, stop at the first match):
-   1. If \`<legion-home>/plugins/marketplaces/ecc/\` exists → \`ECC_MODE=plugin\`.
-   2. Else if \`<legion-home>/agents/\` exists and contains at least one ECC agent file (e.g. \`tdd-guide.md\`, \`code-reviewer.md\`) → \`ECC_MODE=legacy\`.
-   3. Else → default to \`ECC_MODE=legacy\` and emit a one-line warning at the top of the output: \`> Warning: could not detect ECC install; defaulting to legacy form. If you use the plugin install, edit the prefixes manually.\`
+2. Detect ELC install form once and freeze it into \`ELC_MODE\`. Algorithm (run in order, stop at the first match):
+   1. If \`<legion-home>/plugins/marketplaces/elc/\` exists → \`ELC_MODE=plugin\`.
+   2. Else if \`<legion-home>/agents/\` exists and contains at least one ELC agent file (e.g. \`tdd-guide.md\`, \`code-reviewer.md\`) → \`ELC_MODE=legacy\`.
+   3. Else → default to \`ELC_MODE=legacy\` and emit a one-line warning at the top of the output: \`> Warning: could not detect ELC install; defaulting to legacy form. If you use the plugin install, edit the prefixes manually.\`
    4. If both markers exist (mixed install), \`plugin\` wins — the plugin namespace is the only one that resolves agent names without fuzzy matching.
 
    From this point on, every emitted line uses the matching prefix on **both** the slash command and every agent name. **Never emit both forms in the same output.**
@@ -51321,7 +51321,7 @@ A misspelled agent name fails \`/orchestrate\`. Cross-check against this list be
    - No marker matched → set \`lang=unknown\`.
    - \`lang=unknown\` is a sentinel — it is **not** an agent name. Phase 2 rules 4 and 5 turn it into \`code-reviewer\` / \`build-error-resolver\` at chain composition time.
 4. Detect a **PyTorch sub-profile**: when \`lang=python\` and any of \`pyproject.toml\` / \`requirements.txt\` / \`uv.lock\` declares a dependency on \`torch\`, set \`pytorch=true\`. This only affects \`build\` chain selection (Phase 2 rule below); the reviewer remains \`python-reviewer\`.
-5. **Normalize any agent names declared in the plan**: if the plan text references agents by their plugin-prefixed form (e.g. \`ecc:tdd-guide\`), strip the prefix to get the bare catalogue name before validating or composing chains. Re-prefixing happens only at output time per \`ECC_MODE\` (Phase 4). Never let a pre-prefixed name flow into chain composition — it would double-prefix in plugin mode.
+5. **Normalize any agent names declared in the plan**: if the plan text references agents by their plugin-prefixed form (e.g. \`elc:tdd-guide\`), strip the prefix to get the bare catalogue name before validating or composing chains. Re-prefixing happens only at output time per \`ELC_MODE\` (Phase 4). Never let a pre-prefixed name flow into chain composition — it would double-prefix in plugin mode.
 
 ### Phase 1 — Decompose steps
 
@@ -51379,12 +51379,12 @@ Each emitted \`<task description>\` must:
 
 ### Phase 4 — Output
 
-Emit Markdown using **the form determined by \`ECC_MODE\`**. The output uses one form throughout — every \`{ORCH_CMD}\` and every agent name is rendered with the matching prefix from Phase 0. **Do not emit both forms; do not include "this is plugin form" / "strip the prefix" instructions in the rendered output.**
+Emit Markdown using **the form determined by \`ELC_MODE\`**. The output uses one form throughout — every \`{ORCH_CMD}\` and every agent name is rendered with the matching prefix from Phase 0. **Do not emit both forms; do not include "this is plugin form" / "strip the prefix" instructions in the rendered output.**
 
 Concrete rendering rules:
 
-- \`{ORCH_CMD}\` = \`/ecc:orchestrate\` under \`plugin\`, \`/orchestrate\` under \`legacy\`.
-- \`{AGENT(name)}\` = \`ecc:<name>\` under \`plugin\`, \`<name>\` under \`legacy\`.
+- \`{ORCH_CMD}\` = \`/elc:orchestrate\` under \`plugin\`, \`/orchestrate\` under \`legacy\`.
+- \`{AGENT(name)}\` = \`elc:<name>\` under \`plugin\`, \`<name>\` under \`legacy\`.
 - The overview-table "Chain" column uses the same \`{AGENT(name)}\` rendering.
 - Per-step bash blocks contain only the runnable command. **No \`# plugin form\` or \`# legacy form\` comments** — the form is implicit and uniform across the whole output.
 
@@ -51395,7 +51395,7 @@ Output structure:
 
 **Plan**: \`<path>\`
 **Lang**: \`<detected-or-given>\`
-**ECC mode**: \`<plugin | legacy>\`
+**ELC mode**: \`<plugin | legacy>\`
 **Steps**: <N>
 **Scope**: <all | step:n | range:a-b>
 
@@ -51425,7 +51425,7 @@ Append a final "Batch execution" block aggregating every step's command in order
 
 ### Phase 5 — Self-check (run before emitting)
 
-- [ ] Every agent in every chain comes from the catalogue (after stripping any \`ecc:\` prefix that appeared in the plan; see Phase 0 step 5).
+- [ ] Every agent in every chain comes from the catalogue (after stripping any \`elc:\` prefix that appeared in the plan; see Phase 0 step 5).
 - [ ] Resolved \`{ORCH_CMD}\` and every resolved \`{AGENT(...)}\` use the **same** form (\`plugin\` or \`legacy\`) — never mixed in one output.
 - [ ] No \`# plugin form\` / \`# legacy form\` annotations and no "strip the prefix" instructions remain in the rendered output.
 - [ ] No invented \`--mode\` / \`--gate\` / \`--agents=...\` fields.
@@ -51443,7 +51443,7 @@ Append a final "Batch execution" block aggregating every step's command in order
 - **No clear steps**: prefer H2/H3 splitting; if still ambiguous, report "no structured steps detected" with the document outline and ask the user to confirm running by outline.
 - **Large plan (>1500 lines)**: enter **overview-only mode** — emit only the overview table and ask the user to narrow with \`--scope\` before re-running for details. In this mode, skip per-step detail blocks and skip the Batch execution block.
 - **Step too broad** (e.g. "complete all backend work"): do not force a single chain. Suggest splitting into N.a and N.b and propose a split.
-- **Plan declares agents** (rare): first **strip any \`ecc:\` prefix** to get the bare catalogue name (Phase 0 step 5), then validate against the catalogue. Replace invalid agents and explain under "Chain rationale". The bare name is re-prefixed at output time per \`ECC_MODE\`.
+- **Plan declares agents** (rare): first **strip any \`elc:\` prefix** to get the bare catalogue name (Phase 0 step 5), then validate against the catalogue. Replace invalid agents and explain under "Chain rationale". The bare name is re-prefixed at output time per \`ELC_MODE\`.
 - **Polyglot project where \`--lang=auto\` cannot pick a winner**: set \`lang=unknown\`; reviewer resolves to \`code-reviewer\` and build resolver to \`build-error-resolver\`. Mention the fallback under "Chain rationale".
 
 ## Examples
@@ -51464,13 +51464,13 @@ Excerpt of expected output:
 **Chain rationale**: Security-sensitive write path, so \`security-reviewer\` closes the chain; \`database-reviewer\` validates the alembic migration; \`python-reviewer\` covers typing and PEP 8.
 
 \`\`\`bash
-/ecc:orchestrate custom "ecc:tdd-guide,ecc:database-reviewer,ecc:python-reviewer,ecc:security-reviewer" "[Plan: docs/plan/example-feature.md#step-2] Implement EncryptedString SQLAlchemy type and migrate UserProfile.birth_datetime/location columns; key from ENV APP_DB_KEY; Acceptance: encrypt/decrypt roundtrip tests pass; alembic upgrade/downgrade clean on empty DB; no plaintext in DB after migrate; Out of scope: cross-tenant profile sharing logic"
+/elc:orchestrate custom "elc:tdd-guide,elc:database-reviewer,elc:python-reviewer,elc:security-reviewer" "[Plan: docs/plan/example-feature.md#step-2] Implement EncryptedString SQLAlchemy type and migrate UserProfile.birth_datetime/location columns; key from ENV APP_DB_KEY; Acceptance: encrypt/decrypt roundtrip tests pass; alembic upgrade/downgrade clean on empty DB; no plaintext in DB after migrate; Out of scope: cross-tenant profile sharing logic"
 \`\`\`
 \`\`\`\`
 
 ### Example 2 — Legacy mode, same step
 
-If \`ECC_MODE=legacy\` were detected, the same step would be emitted as a single uniform command (no plugin-prefixed forms anywhere in the output):
+If \`ELC_MODE=legacy\` were detected, the same step would be emitted as a single uniform command (no plugin-prefixed forms anywhere in the output):
 
 \`\`\`bash
 /orchestrate custom "tdd-guide,database-reviewer,python-reviewer,security-reviewer" "[Plan: docs/plan/example-feature.md#step-2] ..."
@@ -51597,11 +51597,11 @@ To use Plankton hooks in your own project:
 | TOML | \`taplo\` | — |
 | JSON | \`jaq\` | — |
 
-## Pairing with ECC
+## Pairing with ELC
 
 ### Complementary, Not Overlapping
 
-| Concern | ECC | Plankton |
+| Concern | ELC | Plankton |
 |---------|-----|----------|
 | Code quality enforcement | PostToolUse hooks (Prettier, tsc) | PostToolUse hooks (20+ linters + subprocess fixes) |
 | Security scanning | AgentShield, security-reviewer agent | Bandit (Python), Semgrep (TypeScript) |
@@ -51612,17 +51612,17 @@ To use Plankton hooks in your own project:
 
 ### Recommended Combination
 
-1. Install ECC as your plugin (agents, skills, commands, rules)
+1. Install ELC as your plugin (agents, skills, commands, rules)
 2. Add Plankton hooks for write-time quality enforcement
 3. Use AgentShield for security audits
-4. Use ECC's verification-loop as a final gate before PRs
+4. Use ELC's verification-loop as a final gate before PRs
 
 ### Avoiding Hook Conflicts
 
-If running both ECC and Plankton hooks:
-- ECC's Prettier hook and Plankton's biome formatter may conflict on JS/TS files
-- Resolution: disable ECC's Prettier PostToolUse hook when using Plankton (Plankton's biome is more comprehensive)
-- Both can coexist on different file types (ECC handles what Plankton doesn't cover)
+If running both ELC and Plankton hooks:
+- ELC's Prettier hook and Plankton's biome formatter may conflict on JS/TS files
+- Resolution: disable ELC's Prettier PostToolUse hook when using Plankton (Plankton's biome is more comprehensive)
+- Both can coexist on different file types (ELC handles what Plankton doesn't cover)
 
 ## Configuration Reference
 
@@ -51680,16 +51680,16 @@ Plankton's \`.legion/hooks/config.json\` controls all behavior:
 - Plankton REFERENCE.md — Full architecture documentation (credit: @alxfazio)
 - Plankton SETUP.md — Detailed installation guide (credit: @alxfazio)
 
-## ECC v1.8 Additions
+## ELC v1.8 Additions
 
 ### Copyable Hook Profile
 
 Set strict quality behavior:
 
 \`\`\`bash
-export ECC_HOOK_PROFILE=strict
-export ECC_QUALITY_GATE_FIX=true
-export ECC_QUALITY_GATE_STRICT=true
+export ELC_HOOK_PROFILE=strict
+export ELC_QUALITY_GATE_FIX=true
+export ELC_QUALITY_GATE_STRICT=true
 \`\`\`
 
 ### Language Gate Table
@@ -51728,7 +51728,7 @@ const SKILL_postgres_patterns = `---
 name: postgres-patterns
 description: PostgreSQL database patterns for query optimization, schema design, indexing, and security. Based on Supabase best practices.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # PostgreSQL Patterns
@@ -51878,7 +51878,7 @@ const SKILL_prediction_market_oracle_research = `---
 name: prediction-market-oracle-research
 description: Research prediction markets as data sources or oracle signals for products, agents, dashboards, and corporate decision intelligence. Use for source-grounded analysis of market-implied probabilities, caveats, and integration patterns without investment advice.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Prediction Market Oracle Research
@@ -51944,7 +51944,7 @@ const SKILL_prediction_market_risk_review = `---
 name: prediction-market-risk-review
 description: Review prediction-market, basket, oracle, and trading-agent workflows for compliance, safety, data-quality, privacy, and execution risk. Use before any workflow handles venue auth, user portfolio data, API keys, or trade planning.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Prediction Market Risk Review
@@ -52007,7 +52007,7 @@ const SKILL_prisma_patterns = `---
 name: prisma-patterns
 description: Prisma ORM patterns for TypeScript backends — schema design, query optimization, transactions, pagination, and critical traps like updateMany returning count not records, \$transaction timeouts, migrate dev resetting the DB, @updatedAt skipped on bulk writes, and serverless connection exhaustion.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Prisma Patterns
@@ -52408,9 +52408,9 @@ await prisma.post.deleteMany({ where: { authorId: userId } });
 
 const SKILL_product_capability = `---
 name: product-capability
-description: Translate PRD intent, roadmap asks, or product discussions into an implementation-ready capability plan that exposes constraints, invariants, interfaces, and unresolved decisions before multi-service work starts. Use when the user needs an ECC-native PRD-to-SRS lane instead of vague planning prose.
+description: Translate PRD intent, roadmap asks, or product discussions into an implementation-ready capability plan that exposes constraints, invariants, interfaces, and unresolved decisions before multi-service work starts. Use when the user needs an ELC-native PRD-to-SRS lane instead of vague planning prose.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Product Capability
@@ -52507,7 +52507,7 @@ End with the exact handoff:
 - needs architecture review first
 - needs product clarification first
 
-If useful, point to the next ECC-native lane:
+If useful, point to the next ELC-native lane:
 
 - \`project-flow-ops\`
 - \`workspace-surface-audit\`
@@ -52540,21 +52540,21 @@ OPEN QUESTIONS
 - blockers or product decisions still required
 
 HANDOFF
-- what should happen next and which ECC lane should take it
+- what should happen next and which ELC lane should take it
 \`\`\`
 
 ## Good Outcomes
 
 - Product intent is now concrete enough to implement without rediscovering hidden constraints mid-PR.
 - Engineering review has a durable artifact instead of relying on memory or Slack context.
-- The resulting plan is reusable across Legion CLI, Codex, Cursor, OpenCode, and ECC 2.0 planning surfaces.
+- The resulting plan is reusable across Legion CLI, Codex, Cursor, OpenCode, and ELC 2.0 planning surfaces.
 `
 
 const SKILL_product_lens = `---
 name: product-lens
 description: Use this skill to validate the "why" before building, run product diagnostics, and pressure-test product direction before the request becomes an implementation contract.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Product Lens — Think Before You Build
@@ -52868,7 +52868,7 @@ license: Apache-2.0
 version: 1.0.0
 homepage: https://github.com/affaan-m/everything-legion
 metadata:
-  origin: ECC
+  origin: ELC
   author: evos
   clawdbot:
     emoji: ""
@@ -53098,7 +53098,7 @@ const SKILL_project_flow_ops = `---
 name: project-flow-ops
 description: Operate execution flow across GitHub and Linear by triaging issues and pull requests, linking active work, and keeping GitHub public-facing while Linear remains the internal execution layer. Use when the user wants backlog control, PR triage, or GitHub-to-Linear coordination.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Project Flow Ops
@@ -53146,7 +53146,7 @@ Every item should end up in one of these states:
 | State | Meaning |
 |-------|---------|
 | Merge | self-contained, policy-compliant, ready |
-| Port/Rebuild | useful idea, but should be manually re-landed inside ECC |
+| Port/Rebuild | useful idea, but should be manually re-landed inside ELC |
 | Close | wrong direction, stale, unsafe, or duplicated |
 | Park | potentially useful, but not scheduled now |
 
@@ -53176,7 +53176,7 @@ When work ships or is rejected:
 ## Review Rules
 
 - Never merge from title, summary, or trust alone; use the full diff
-- External-source features should be rebuilt inside ECC when they are valuable but not self-contained
+- External-source features should be rebuilt inside ELC when they are valuable but not self-contained
 - CI red means classify and fix or block; do not pretend it is merge-ready
 - If the real blocker is product direction, say so instead of hiding behind tooling
 
@@ -53204,14 +53204,14 @@ NEXT OPERATOR ACTION
 ## Good Use Cases
 
 - "Audit the open PR backlog and tell me what to merge vs rebuild"
-- "Map GitHub issues into our ECC 1.x and ECC 2.0 program lanes"
+- "Map GitHub issues into our ELC 1.x and ELC 2.0 program lanes"
 - "Check whether this needs a Linear issue or should stay GitHub-only"
 `
 
 const SKILL_prompt_optimizer = `---
 name: prompt-optimizer
 description: >-
-  Analyze raw prompts, identify intent and gaps, match ECC components
+  Analyze raw prompts, identify intent and gaps, match ELC components
   (skills/commands/agents/hooks), and output a ready-to-paste optimized
   prompt. Advisory role only — never executes the task itself.
   TRIGGER when: user says "optimize prompt", "improve my prompt",
@@ -53230,7 +53230,7 @@ metadata:
 
 # Prompt Optimizer
 
-Analyze a draft prompt, critique it, match it to ECC ecosystem components,
+Analyze a draft prompt, critique it, match it to ELC ecosystem components,
 and output a complete optimized prompt the user can paste and run.
 
 ## When to Use
@@ -53241,14 +53241,14 @@ and output a complete optimized prompt the user can paste and run.
 - User says "优化prompt", "改进prompt", "怎么写prompt", "帮我优化这个指令"
 - User pastes a draft prompt and asks for feedback or enhancement
 - User says "I don't know how to prompt for this"
-- User says "how should I use ECC for..."
+- User says "how should I use ELC for..."
 - User explicitly invokes \`/prompt-optimize\`
 
 ### Do Not Use When
 
 - User wants the task done directly (just execute it)
 - User says "优化代码", "优化性能", "optimize this code", "optimize performance" — these are refactoring tasks, not prompt optimization
-- User is asking about ECC configuration (use \`configure-ecc\` instead)
+- User is asking about ELC configuration (use \`configure-elc\` instead)
 - User wants a skill inventory (use \`skill-stocktake\` instead)
 - User says "just do it" or "直接做"
 
@@ -53319,9 +53319,9 @@ from the prompt description alone and mark the estimate as uncertain.
 | HIGH | Cross-domain, 5+ files | /plan first, then phased execution |
 | EPIC | Multi-session, multi-PR, architectural shift | Use blueprint skill for multi-session plan |
 
-### Phase 3: ECC Component Matching
+### Phase 3: ELC Component Matching
 
-Map intent + scope + tech stack (from Phase 0) to specific ECC components.
+Map intent + scope + tech stack (from Phase 0) to specific ELC components.
 
 #### By Intent Type
 
@@ -53422,7 +53422,7 @@ as the user's input.
 **Needs Clarification:** Numbered list of questions the user should answer.
 If Phase 0 auto-detected the answer, state it instead of asking.
 
-### Section 2: Recommended ECC Components
+### Section 2: Recommended ELC Components
 
 | Type | Component | Purpose |
 |------|-----------|---------|
@@ -53447,7 +53447,7 @@ For items that reference blueprint, write: "Use the blueprint skill to..."
 
 ### Section 4: Optimized Prompt — Quick Version
 
-A compact version for experienced ECC users. Vary by intent type:
+A compact version for experienced ELC users. Vary by intent type:
 
 | Intent | Quick Pattern |
 |--------|--------------|
@@ -53477,10 +53477,10 @@ A compact version for experienced ECC users. Vary by intent type:
 
 ### Trigger Examples
 
-- "Optimize this prompt for ECC"
+- "Optimize this prompt for ELC"
 - "Rewrite this prompt so Legion CLI uses the right commands"
 - "帮我优化这个指令"
-- "How should I prompt ECC for this task?"
+- "How should I prompt ELC for this task?"
 
 ### Example 1: Vague Chinese Prompt (Project Detected)
 
@@ -53600,7 +53600,7 @@ Recommended: Opus 4.6 for blueprint planning, Sonnet 4.6 for phase execution.
 
 | Component | When to Reference |
 |-----------|------------------|
-| \`configure-ecc\` | User hasn't set up ECC yet |
+| \`configure-elc\` | User hasn't set up ELC yet |
 | \`skill-stocktake\` | Audit which components are installed (use instead of hardcoded catalog) |
 | \`search-first\` | Research phase in optimized prompts |
 | \`blueprint\` | EPIC-scope optimized prompts (invoke as skill, not command) |
@@ -53727,7 +53727,7 @@ def esearch(query: str, retmax: int = 20) -> list[str]:
         "term": query,
         "retmode": "json",
         "retmax": retmax,
-        "tool": "ecc-pubmed-search",
+        "tool": "elc-pubmed-search",
         "email": os.environ.get("NCBI_EMAIL", ""),
     }
     api_key = os.environ.get("NCBI_API_KEY")
@@ -53790,7 +53790,7 @@ const SKILL_python_patterns = `---
 name: python-patterns
 description: Pythonic idioms, PEP 8 standards, type hints, and best practices for building robust, efficient, and maintainable Python applications.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Python Development Patterns
@@ -54543,7 +54543,7 @@ const SKILL_python_testing = `---
 name: python-testing
 description: Python testing strategies using pytest, TDD methodology, fixtures, mocking, parametrization, and coverage requirements.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Python Testing Patterns
@@ -55362,7 +55362,7 @@ const SKILL_pytorch_patterns = `---
 name: pytorch-patterns
 description: PyTorch deep learning patterns and best practices for building robust, efficient, and reproducible training pipelines, model architectures, and data loading.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # PyTorch Development Patterns
@@ -55771,7 +55771,7 @@ license: Apache-2.0
 version: 1.0.0
 homepage: https://github.com/affaan-m/everything-legion
 metadata:
-  origin: ECC
+  origin: ELC
   author: evos
   clawdbot:
     emoji: ""
@@ -56023,7 +56023,7 @@ const SKILL_quarkus_patterns = `---
 name: quarkus-patterns
 description: Quarkus 3.x LTS architecture patterns with Camel for messaging, RESTful API design, CDI services, data access with Panache, and async processing. Use for Java Quarkus backend work with event-driven architectures.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Quarkus Development Patterns
@@ -56748,7 +56748,7 @@ const SKILL_quarkus_security = `---
 name: quarkus-security
 description: Quarkus Security best practices for authentication, authorization, JWT/OIDC, RBAC, input validation, CSRF, secrets management, and dependency security.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Quarkus Security Review
@@ -57218,7 +57218,7 @@ const SKILL_quarkus_tdd = `---
 name: quarkus-tdd
 description: Test-driven development for Quarkus 3.x LTS using JUnit 5, Mockito, REST Assured, Camel testing, and JaCoCo. Use when adding features, fixing bugs, or refactoring event-driven services.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Quarkus TDD Workflow
@@ -58032,7 +58032,7 @@ const SKILL_quarkus_verification = `---
 name: quarkus-verification
 description: "Verification loop for Quarkus projects: build, static analysis, tests with coverage, security scans, native compilation, and diff review before release or PR."
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Quarkus Verification Loop
@@ -58514,7 +58514,7 @@ const SKILL_ralphinho_rfc_pipeline = `---
 name: ralphinho-rfc-pipeline
 description: RFC-driven multi-agent DAG execution pattern with quality gates, merge queues, and work unit orchestration.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Ralphinho RFC Pipeline
@@ -58583,14 +58583,14 @@ If a unit stalls:
 const SKILL_react_native_patterns = `---
 name: react-native-patterns
 description: React Native and Expo app patterns — Expo Router navigation, state separation (server/client/route/form), TanStack Query data fetching with Zod, performant lists, NativeWind/StyleSheet styling, native APIs, and secure storage. Use when building or editing React Native / Expo screens, components, navigation, or data layers.
-origin: ECC
+origin: ELC
 ---
 
 # React Native / Expo Patterns
 
 Practical patterns for building production React Native apps with Expo. Covers navigation, state, data fetching, lists, styling, and native APIs. Pairs with the \`rules/react-native/\` ruleset: rules say *what* to enforce, this skill shows *how*.
 
-Libraries named below (NativeWind, Zustand/Jotai, TanStack Query) are common, well-established options shown for illustration — the patterns matter more than the specific package, and any equivalent works. Zod is used for validation to stay consistent with ECC's existing \`typescript/\` rules.
+Libraries named below (NativeWind, Zustand/Jotai, TanStack Query) are common, well-established options shown for illustration — the patterns matter more than the specific package, and any equivalent works. Zod is used for validation to stay consistent with ELC's existing \`typescript/\` rules.
 
 These patterns assume the managed Expo workflow (Expo Router, EAS, \`expo-*\` modules) on the New Architecture (the default in recent Expo SDKs, mandatory from SDK 55+). They do NOT assume the browser DOM — React Native has no \`<div>\`, no URL bar, and no web data-fetching defaults.
 
@@ -58912,7 +58912,7 @@ const SKILL_react_patterns = `---
 name: react-patterns
 description: React 18/19 patterns including hooks discipline, server/client component boundaries, Suspense + error boundaries, form actions, data fetching, state management decision trees, and accessibility-first composition. Use when writing or reviewing React components.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # React Patterns
@@ -59256,7 +59256,7 @@ const SKILL_react_performance = `---
 name: react-performance
 description: React and Next.js performance optimization patterns adapted from Vercel Engineering's React Best Practices (https://github.com/vercel-labs/agent-skills). Organizes 70+ rules across 8 priority categories — waterfalls, bundle size, server-side, client fetching, re-render, rendering, JS micro-perf, advanced. Use when writing, reviewing, or refactoring React/Next.js code for performance.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # React Performance
@@ -59833,7 +59833,7 @@ const SKILL_react_testing = `---
 name: react-testing
 description: React component testing with React Testing Library, Vitest/Jest, MSW for network mocking, accessibility assertions with axe, and the decision boundary between component tests and Playwright/Cypress end-to-end runs. Use when writing or fixing tests for React components, hooks, or pages.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # React Testing
@@ -60376,7 +60376,7 @@ const SKILL_recursive_decision_ledger = `---
 name: recursive-decision-ledger
 description: Use when the user asks for repeated rollouts, marked decision processes, high-dimensional search, stochastic optimization, local-optima exploration, ensemble comparison, or recursive reasoning with a visible evidence trail.
 metadata:
-  origin: ECC
+  origin: ELC
 tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
@@ -60458,7 +60458,7 @@ const SKILL_redis_patterns = `---
 name: redis-patterns
 description: Redis data structure patterns, caching strategies, distributed locks, rate limiting, pub/sub, and connection management for production applications.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Redis Patterns
@@ -60864,7 +60864,7 @@ const SKILL_regex_vs_llm_structured_text = `---
 name: regex-vs-llm-structured-text
 description: Decision framework for choosing between regex and LLM when parsing structured text — start with regex, add LLM only for low-confidence edge cases.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Regex vs LLM for Structured Text Parsing
@@ -61211,9 +61211,9 @@ On a 50,000-file C++ monorepo:
 
 const SKILL_research_ops = `---
 name: research-ops
-description: Evidence-first current-state research workflow for ECC. Use when the user wants fresh facts, comparisons, enrichment, or a recommendation built from current public evidence and any supplied local context.
+description: Evidence-first current-state research workflow for ELC. Use when the user wants fresh facts, comparisons, enrichment, or a recommendation built from current public evidence and any supplied local context.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Research Ops
@@ -61224,7 +61224,7 @@ This is the operator wrapper around the repo's research stack. It is not a repla
 
 ## Skill Stack
 
-Pull these ECC-native skills into the workflow when relevant:
+Pull these ELC-native skills into the workflow when relevant:
 
 - \`exa-search\` for fast current-web discovery
 - \`deep-research\` for multi-source synthesis with citations
@@ -61338,7 +61338,7 @@ license: Apache-2.0
 version: 1.0.0
 homepage: https://github.com/affaan-m/everything-legion
 metadata:
-  origin: ECC
+  origin: ELC
   author: evos
   clawdbot:
     emoji: ""
@@ -61570,7 +61570,7 @@ const SKILL_rules_distill = `---
 name: rules-distill
 description: "Scan skills to extract cross-cutting principles and distill them into rules — append, revise, or create new rule files"
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Rules Distill
@@ -61837,7 +61837,7 @@ const SKILL_rust_patterns = `---
 name: rust-patterns
 description: Idiomatic Rust patterns, ownership, error handling, traits, concurrency, and best practices for building safe, performant applications.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Rust Development Patterns
@@ -62339,7 +62339,7 @@ const SKILL_rust_testing = `---
 name: rust-testing
 description: Rust testing patterns including unit tests, integration tests, async testing, property-based testing, mocking, and coverage. Follows TDD methodology.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Rust Testing Patterns
@@ -62842,7 +62842,7 @@ const SKILL_safety_guard = `---
 name: safety-guard
 description: Use this skill to prevent destructive operations when working on production systems or running agents autonomously.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Safety Guard — Prevent Destructive Operations
@@ -62912,7 +62912,7 @@ Uses PreToolUse hooks to intercept Bash, Write, Edit, and MultiEdit tool calls. 
 ## Integration
 
 - Enable by default for \`codex -a never\` sessions
-- Pair with observability risk scoring in ECC 2.0
+- Pair with observability risk scoring in ELC 2.0
 - Logs all blocked actions to \`~/.legion/safety-guard.log\`
 `
 
@@ -63392,7 +63392,7 @@ const SKILL_search_first = `---
 name: search-first
 description: Research-before-coding workflow. Search for existing tools, libraries, and patterns before writing custom code. Invokes the researcher agent.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # /search-first — Research Before You Code
@@ -63577,7 +63577,7 @@ const SKILL_security_bounty_hunter = `---
 name: security-bounty-hunter
 description: Hunt for exploitable, bounty-worthy security issues in repositories. Focuses on remotely reachable vulnerabilities that qualify for real reports instead of noisy local-only findings.
 metadata:
-  origin: ECC direct-port adaptation
+  origin: ELC direct-port adaptation
 version: "1.0.0"
 ---
 
@@ -63679,7 +63679,7 @@ const SKILL_security_review = `---
 name: security-review
 description: Use this skill when adding authentication, handling user input, working with secrets, creating API endpoints, or implementing payment/sensitive features. Provides comprehensive security checklist and patterns.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Security Review Skill
@@ -64185,7 +64185,7 @@ const SKILL_security_scan = `---
 name: security-scan
 description: Scan your Legion CLI configuration (.legion/ directory) for security vulnerabilities, misconfigurations, and injection risks using AgentShield. Checks LEGION.md, settings.json, MCP servers, hooks, and agent definitions.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Security Scan Skill
@@ -64216,13 +64216,13 @@ AgentShield must be installed. Check and install if needed:
 
 \`\`\`bash
 # Check if installed
-npx ecc-agentshield --version
+npx elc-agentshield --version
 
 # Install globally (recommended)
-npm install -g ecc-agentshield
+npm install -g elc-agentshield
 
 # Or run directly via npx (no install needed)
-npx ecc-agentshield scan .
+npx elc-agentshield scan .
 \`\`\`
 
 ## Usage
@@ -64233,29 +64233,29 @@ Run against the current project's \`.legion/\` directory:
 
 \`\`\`bash
 # Scan current project
-npx ecc-agentshield scan
+npx elc-agentshield scan
 
 # Scan a specific path
-npx ecc-agentshield scan --path /path/to/.legion
+npx elc-agentshield scan --path /path/to/.legion
 
 # Scan with minimum severity filter
-npx ecc-agentshield scan --min-severity medium
+npx elc-agentshield scan --min-severity medium
 \`\`\`
 
 ### Output Formats
 
 \`\`\`bash
 # Terminal output (default) — colored report with grade
-npx ecc-agentshield scan
+npx elc-agentshield scan
 
 # JSON — for CI/CD integration
-npx ecc-agentshield scan --format json
+npx elc-agentshield scan --format json
 
 # Markdown — for documentation
-npx ecc-agentshield scan --format markdown
+npx elc-agentshield scan --format markdown
 
 # HTML — self-contained dark-theme report
-npx ecc-agentshield scan --format html > security-report.html
+npx elc-agentshield scan --format html > security-report.html
 \`\`\`
 
 ### Auto-Fix
@@ -64263,7 +64263,7 @@ npx ecc-agentshield scan --format html > security-report.html
 Apply safe fixes automatically (only fixes marked as auto-fixable):
 
 \`\`\`bash
-npx ecc-agentshield scan --fix
+npx elc-agentshield scan --fix
 \`\`\`
 
 This will:
@@ -64278,7 +64278,7 @@ Run the adversarial three-agent pipeline for deeper analysis:
 \`\`\`bash
 # Requires ANTHROPIC_API_KEY
 export ANTHROPIC_API_KEY=your-key
-npx ecc-agentshield scan --opus --stream
+npx elc-agentshield scan --opus --stream
 \`\`\`
 
 This runs:
@@ -64291,7 +64291,7 @@ This runs:
 Scaffold a new secure \`.legion/\` configuration from scratch:
 
 \`\`\`bash
-npx ecc-agentshield init
+npx elc-agentshield init
 \`\`\`
 
 Creates:
@@ -64346,14 +64346,14 @@ Add to your CI pipeline:
 ## Links
 
 - **GitHub**: [github.com/affaan-m/agentshield](https://github.com/affaan-m/agentshield)
-- **npm**: [npmjs.com/package/ecc-agentshield](https://www.npmjs.com/package/ecc-agentshield)
+- **npm**: [npmjs.com/package/elc-agentshield](https://www.npmjs.com/package/elc-agentshield)
 `
 
 const SKILL_seo = `---
 name: seo
 description: Audit, plan, and implement SEO improvements across technical SEO, on-page optimization, structured data, Core Web Vitals, and content strategy. Use when the user wants better search visibility, SEO remediation, schema markup, sitemap/robots work, or keyword mapping.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # SEO
@@ -64510,7 +64510,7 @@ const SKILL_skill_comply = `---
 name: skill-comply
 description: Visualize whether skills, rules, and agent definitions are actually followed — auto-generates scenarios at 3 prompt strictness levels, runs agents, classifies behavioral sequences, and reports compliance rates with full tool call timelines
 metadata:
-  origin: ECC
+  origin: ELC
 tools: Read, Bash
 ---
 
@@ -64681,8 +64681,8 @@ finds no close match.
 \`\`\`markdown
 | # | Skill | Source | Why it matches | Gap |
 | --- | --- | --- | --- | --- |
-| 1 | article-writing | Local ECC | Drafts articles and guides | Not focused on release notes |
-| 2 | content-engine | Local ECC | Multi-format content workflow | Heavier than needed |
+| 1 | article-writing | Local ELC | Drafts articles and guides | Not focused on release notes |
+| 2 | content-engine | Local ELC | Multi-format content workflow | Heavier than needed |
 | 3 | blog-writer | GitHub | Blog writing skill with recent commits | Needs security review |
 \`\`\`
 
@@ -64714,7 +64714,7 @@ const SKILL_skill_stocktake = `---
 name: skill-stocktake
 description: "Use when auditing Legion skills and commands for quality. Supports Quick Scan (changed skills only) and Full Stocktake modes with sequential subagent batch evaluation."
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # skill-stocktake
@@ -64902,7 +64902,7 @@ Obtain via Bash: \`date -u +%Y-%m-%dT%H:%M:%SZ\`. Never use a date-only approxim
 
 ## Notes
 
-- Evaluation is blind: the same checklist applies to all skills regardless of origin (ECC, self-authored, auto-extracted)
+- Evaluation is blind: the same checklist applies to all skills regardless of origin (ELC, self-authored, auto-extracted)
 - Archive / delete operations always require explicit user confirmation
 - No verdict branching by skill origin
 `
@@ -64911,7 +64911,7 @@ const SKILL_social_graph_ranker = `---
 name: social-graph-ranker
 description: Weighted social-graph ranking for warm intro discovery, bridge scoring, and network gap analysis across X and LinkedIn. Use when the user wants the reusable graph-ranking engine itself, not the broader outreach or network-maintenance workflow layered on top of it.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Social Graph Ranker
@@ -65141,7 +65141,7 @@ For OpenClaw users who have already approved TweetClaw in their dependency polic
 openclaw plugins install npm:@xquik/tweetclaw@1.6.31
 \`\`\`
 
-Use it for public tweet search, reply search, follower export, user lookup, media review, monitors, or giveaway evidence. Keep the output as research input for \`schedule.json\`; SocialClaw remains responsible for validation, scheduling, publishing, and delivery status. Store TweetClaw credentials in its plugin config, not in \`SC_API_KEY\`, schedule files, or campaign assets. Do not install it as a default ECC or SocialClaw dependency.
+Use it for public tweet search, reply search, follower export, user lookup, media review, monitors, or giveaway evidence. Keep the output as research input for \`schedule.json\`; SocialClaw remains responsible for validation, scheduling, publishing, and delivery status. Store TweetClaw credentials in its plugin config, not in \`SC_API_KEY\`, schedule files, or campaign assets. Do not install it as a default ELC or SocialClaw dependency.
 
 ### 4. Validate before publishing
 \`\`\`bash
@@ -65200,7 +65200,7 @@ const SKILL_springboot_patterns = `---
 name: springboot-patterns
 description: Spring Boot architecture patterns, REST API design, layered services, data access, caching, async processing, and logging. Use for Java Spring Boot backend work.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Spring Boot Development Patterns
@@ -65517,7 +65517,7 @@ const SKILL_springboot_security = `---
 name: springboot-security
 description: Spring Security best practices for authn/authz, validation, CSRF, secrets, headers, rate limiting, and dependency security in Java Spring Boot services.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Spring Boot Security Review
@@ -65792,7 +65792,7 @@ const SKILL_springboot_tdd = `---
 name: springboot-tdd
 description: Test-driven development for Spring Boot using JUnit 5, Mockito, MockMvc, Testcontainers, and JaCoCo. Use when adding features, fixing bugs, or refactoring.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Spring Boot TDD Workflow
@@ -65953,7 +65953,7 @@ const SKILL_springboot_verification = `---
 name: springboot-verification
 description: "Verification loop for Spring Boot projects: build, static analysis, tests with coverage, security scans, and diff review before release or PR."
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Spring Boot Verification Loop
@@ -66187,7 +66187,7 @@ const SKILL_strategic_compact = `---
 name: strategic-compact
 description: Suggests manual context compaction at logical intervals to preserve context through task phases rather than arbitrary auto-compaction.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Strategic Compact Skill
@@ -66327,7 +66327,7 @@ const SKILL_swift_actor_persistence = `---
 name: swift-actor-persistence
 description: Thread-safe data persistence in Swift using actors — in-memory cache with file-backed storage, eliminating data races by design.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Swift Actors for Thread-Safe Persistence
@@ -66691,7 +66691,7 @@ const SKILL_swift_protocol_di_testing = `---
 name: swift-protocol-di-testing
 description: Protocol-based dependency injection for testable Swift code — mock file system, network, and external APIs using focused protocols and Swift Testing.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Swift Protocol-Based Dependency Injection for Testing
@@ -67143,8 +67143,8 @@ See skill: \`swift-protocol-di-testing\` for protocol-based DI and testing with 
 
 const SKILL_taste = `---
 name: taste
-description: A creative-direction (taste) layer for music videos and short-form edits in the angelcore / cloud-trance / hyperpop visual family. Distills a named-genre aesthetic vocabulary, a mood + color + light system, and a beat-synced editing grammar, then chains ECC's video skills (video-editing, fal-ai-media, remotion-video-creation, motion-*, content-engine) into one production pipeline. Use when the work is not just making a video function but making it feel intentional, when building a music video, a fancam/edit, a moodboard-driven reel, or when choosing a coherent visual direction for AI-generated b-roll.
-origin: ECC
+description: A creative-direction (taste) layer for music videos and short-form edits in the angelcore / cloud-trance / hyperpop visual family. Distills a named-genre aesthetic vocabulary, a mood + color + light system, and a beat-synced editing grammar, then chains ELC's video skills (video-editing, fal-ai-media, remotion-video-creation, motion-*, content-engine) into one production pipeline. Use when the work is not just making a video function but making it feel intentional, when building a music video, a fancam/edit, a moodboard-driven reel, or when choosing a coherent visual direction for AI-generated b-roll.
+origin: ELC
 ---
 
 # Taste
@@ -67262,9 +67262,9 @@ From the reference edits, the techniques that recur and define the style:
 shot held past its musical phrase; readable on-screen UI chrome (crop it out); mixed aspect
 ratios in one timeline.
 
-## The Pipeline — mixing the ECC video skills
+## The Pipeline — mixing the ELC video skills
 
-This skill is the conductor. Each ECC skill is an instrument. Do not skip layers.
+This skill is the conductor. Each ELC skill is an instrument. Do not skip layers.
 
 \`\`\`
 0. TASTE (this skill)        decide genre + mood + grammar BEFORE anything renders
@@ -67278,7 +67278,7 @@ This skill is the conductor. Each ECC skill is an instrument. Do not skip layers
 8. DISTRIBUTE (content-engine) platform-native versions + caption/cover
 \`\`\`
 
-| Step | ECC skill to load | What it does here |
+| Step | ELC skill to load | What it does here |
 |------|-------------------|-------------------|
 | Structure & cut | \`video-editing\` | FFmpeg cut/concat/reframe, EDL, scene/silence detection |
 | Generate b-roll | \`fal-ai-media\` | image/video models per genre preset |
@@ -67412,7 +67412,7 @@ name: tdd-workflow
 description: Use this skill when writing new features, fixing bugs, or refactoring code. Enforces test-driven development with 80%+ coverage including unit, integration, and E2E tests.
 argument-hint: <path/to/*.plan.md>
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Test-Driven Development Workflow
@@ -67498,7 +67498,7 @@ ALWAYS write tests first, then implement code to make tests pass.
 
 Do not assume \`npm test\`. The commands in the steps and examples below use \`<test>\`, \`<test-watch>\`, and \`<coverage>\` as placeholders for the project's actual runner. Resolve them once before starting:
 
-1. **Run the package-manager detector** (ships with ECC):
+1. **Run the package-manager detector** (ships with ELC):
 
    \`\`\`bash
    node scripts/setup-package-manager.js --detect
@@ -67996,7 +67996,7 @@ const SKILL_team_agent_orchestration = `---
 name: team-agent-orchestration
 description: "Run team-based orchestration for agent squads using work items, ownership, agent Kanban, merge gates, and control pane handoffs."
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Team Agent Orchestration
@@ -68157,7 +68157,7 @@ agents/
 
 Agents are discovered via two methods, merged and deduplicated by agent name:
 
-1. **\`legion agents\` command** (primary) — run \`legion agents\` to get all agents known to the CLI, including user agents, plugin agents (e.g. \`ecc:architect\`), and built-in agents. This automatically covers ECC marketplace installs without any path configuration.
+1. **\`legion agents\` command** (primary) — run \`legion agents\` to get all agents known to the CLI, including user agents, plugin agents (e.g. \`elc:architect\`), and built-in agents. This automatically covers ELC marketplace installs without any path configuration.
 2. **File glob** (fallback, for reading agent content) — agent markdown files are read from:
    - \`./agents/**/*.md\` + \`./agents/*.md\` — project-local agents
    - \`~/.legion/agents/**/*.md\` + \`~/.legion/agents/*.md\` — global user agents
@@ -68169,7 +68169,7 @@ Earlier sources take precedence when names collide: user agents > plugin agents 
 ### Step 1: Discover Available Agents
 
 Run \`legion agents\` to get the full agent list. Parse each line:
-- **Plugin agents** are prefixed with \`plugin-name:\` (e.g., \`ecc:security-reviewer\`). Use the part after \`:\` as the agent name and the plugin name as the domain.
+- **Plugin agents** are prefixed with \`plugin-name:\` (e.g., \`elc:security-reviewer\`). Use the part after \`:\` as the agent name and the plugin name as the domain.
 - **User agents** have no prefix. Read the corresponding markdown file from \`~/.legion/agents/\` or \`./agents/\` to extract the name and description.
 - **Built-in agents** (e.g., \`Explore\`, \`Plan\`) are skipped unless the user explicitly asks to include them.
 
@@ -68278,9 +68278,9 @@ Next steps: [...]
 
 const SKILL_terminal_ops = `---
 name: terminal-ops
-description: Evidence-first repo execution workflow for ECC. Use when the user wants a command run, a repo checked, a CI failure debugged, or a narrow fix pushed with exact proof of what was executed and verified.
+description: Evidence-first repo execution workflow for ELC. Use when the user wants a command run, a repo checked, a CI failure debugged, or a narrow fix pushed with exact proof of what was executed and verified.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Terminal Ops
@@ -68291,7 +68291,7 @@ This skill is intentionally narrower than general coding guidance. It is an oper
 
 ## Skill Stack
 
-Pull these ECC-native skills into the workflow when relevant:
+Pull these ELC-native skills into the workflow when relevant:
 
 - \`verification-loop\` for exact proving steps after changes
 - \`tdd-workflow\` when the right fix needs regression coverage
@@ -68392,7 +68392,7 @@ const SKILL_tinystruct_patterns = `---
 name: tinystruct-patterns
 description: Expert guidance for developing with the tinystruct Java framework. Use when working on the tinystruct codebase or any project built on tinystruct — including creating Application classes, @Action-mapped routes, unit tests, ActionRegistry, HTTP/CLI dual-mode handling, the built-in HTTP server, the event system, JSON with Builder/Builders, database persistence with AbstractData, POJO generation, Server-Sent Events (SSE), file uploads, and outbound HTTP networking.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # tinystruct Development Patterns
@@ -68809,7 +68809,7 @@ const SKILL_ui_demo = `---
 name: ui-demo
 description: Record polished UI demo videos using Playwright. Use when the user asks to create a demo, walkthrough, screen recording, or tutorial video of a web application. Produces WebM videos with visible cursor, natural pacing, and professional feel.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # UI Demo Video Recorder
@@ -69414,7 +69414,7 @@ const SKILL_uncloud = `---
 name: uncloud
 description: Use when managing an Uncloud cluster — deploying services, configuring Caddy ingress, adding static proxy routes for non-cluster devices, publishing ports, scaling, inspecting logs, or managing machines and volumes with the \`uc\` CLI.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Uncloud Cluster Management
@@ -69758,9 +69758,9 @@ uc deploy --recreate
 
 const SKILL_unified_notifications_ops = `---
 name: unified-notifications-ops
-description: Operate notifications as one ECC-native workflow across GitHub, Linear, desktop alerts, hooks, and connected communication surfaces. Use when the real problem is alert routing, deduplication, escalation, or inbox collapse.
+description: Operate notifications as one ELC-native workflow across GitHub, Linear, desktop alerts, hooks, and connected communication surfaces. Use when the real problem is alert routing, deduplication, escalation, or inbox collapse.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Unified Notifications Ops
@@ -69778,7 +69778,7 @@ The job is to turn scattered events into one operator surface with:
 - the user wants a unified notification lane across GitHub, Linear, local hooks, desktop alerts, chat, or email
 - CI failures, review requests, issue updates, and operator events are arriving in disconnected places
 - the current setup creates noise instead of action
-- the user wants to consolidate overlapping notification branches or backlog proposals into one ECC-native lane
+- the user wants to consolidate overlapping notification branches or backlog proposals into one ELC-native lane
 - the workspace already has hooks, MCPs, or connected tools, but no coherent notification policy
 
 ## Preferred Surface
@@ -69790,7 +69790,7 @@ Start from what already exists:
 - desktop notification primitives
 - connected email/chat surfaces when they actually exist
 
-Prefer ECC-native orchestration over telling the user to adopt a separate notification product.
+Prefer ELC-native orchestration over telling the user to adopt a separate notification product.
 
 ## Non-Negotiable Rules
 
@@ -69838,7 +69838,7 @@ List:
 - duplicate paths for the same event
 - silent failure cases where important things are not being surfaced
 
-Call out what ECC already owns.
+Call out what ELC already owns.
 
 ### 2. Decide what deserves interruption
 
@@ -69866,7 +69866,7 @@ Prefer:
 - one primary channel
 - one fallback path
 
-### 4. Design the ECC-native workflow
+### 4. Design the ELC-native workflow
 
 For each real notification need, define:
 - **source**
@@ -69875,7 +69875,7 @@ For each real notification need, define:
 - **channel**
 - **action**
 
-If ECC already has the primitive, prefer:
+If ELC already has the primitive, prefer:
 - a skill for operator triage
 - a hook for automatic emission/enforcement
 - an agent for delegated classification
@@ -69887,7 +69887,7 @@ End with:
 - what to keep
 - what to suppress
 - what to merge
-- what ECC should wrap next
+- what ELC should wrap next
 
 ## Output Format
 
@@ -69914,7 +69914,7 @@ CONSOLIDATION
 - merge
 - canonical summaries
 
-NEXT ECC MOVE
+NEXT ELC MOVE
 - skill / hook / agent / MCP
 - exact workflow to build next
 \`\`\`
@@ -69935,7 +69935,7 @@ NEXT ECC MOVE
 - "Our CI failures are noisy and people ignore them"
 - "I want one notification policy across Legion, OpenCode, and Codex surfaces"
 - "Figure out what should interrupt versus land in a digest"
-- "Collapse overlapping notification PR ideas into one canonical ECC lane"
+- "Collapse overlapping notification PR ideas into one canonical ELC lane"
 
 ## Related Skills
 
@@ -70130,7 +70130,7 @@ const SKILL_verification_loop = `---
 name: verification-loop
 description: "A comprehensive verification system for Legion CLI sessions."
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Verification Loop Skill
@@ -70259,7 +70259,7 @@ const SKILL_video_editing = `---
 name: video-editing
 description: AI-assisted video editing workflows for cutting, structuring, and augmenting real footage. Covers the full pipeline from raw capture through FFmpeg, Remotion, ElevenLabs, fal.ai, and final polish in Descript or CapCut. Use when the user wants to edit video, cut footage, create vlogs, or build video content.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Video Editing
@@ -70572,7 +70572,7 @@ const SKILL_videodb = `---
 name: videodb
 description: See, Understand, Act on video and audio. See- ingest from local files, URLs, RTSP/live feeds, or live record desktop; return realtime context and playable stream links. Understand- extract frames, build visual/semantic/temporal indexes, and search moments with timestamps and auto-clips. Act- transcode and normalize (codec, fps, resolution, aspect ratio), perform timeline edits (subtitles, text/image overlays, branding, audio overlays, dubbing, translation), generate media assets (image, audio, video), and create real time alerts for events from live streams or desktop capture.
 metadata:
-  origin: ECC
+  origin: ELC
 allowed-tools: Read Grep Glob Bash(python:*)
 argument-hint: "[task description]"
 ---
@@ -71068,7 +71068,7 @@ const SKILL_vite_patterns = `---
 name: vite-patterns
 description: Vite build tool patterns including config, plugins, HMR, env variables, proxy setup, SSR, library mode, dependency pre-bundling, and build optimization. Activate when working with vite.config.ts, Vite plugins, or Vite-based projects.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Vite Patterns
@@ -71519,7 +71519,7 @@ import.meta.hot.data.count = 0                 // CORRECT
 const SKILL_vue_patterns = `---
 name: vue-patterns
 description: Vue.js 3 Composition API patterns, component architecture, reactivity best practices, Pinia state management, Vue Router navigation, and Nuxt SSR patterns. Activates for Vue, Nuxt, Vite, or Pinia projects.
-origin: ECC
+origin: ELC
 ---
 
 # Vue.js Patterns and Best Practices
@@ -71993,7 +71993,7 @@ const SKILL_windows_desktop_e2e = `---
 name: windows-desktop-e2e
 description: E2E testing for Windows native desktop apps (WPF, WinForms, Win32/MFC, Qt) using pywinauto and Windows UI Automation.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Windows Desktop E2E Testing
@@ -72881,33 +72881,33 @@ pytest tests/test_login.py --count=5 -v
 
 const SKILL_workspace_surface_audit = `---
 name: workspace-surface-audit
-description: Audit the active repo, MCP servers, plugins, connectors, env surfaces, and harness setup, then recommend the highest-value ECC-native skills, hooks, agents, and operator workflows. Use when the user wants help setting up Legion CLI or understanding what capabilities are actually available in their environment.
+description: Audit the active repo, MCP servers, plugins, connectors, env surfaces, and harness setup, then recommend the highest-value ELC-native skills, hooks, agents, and operator workflows. Use when the user wants help setting up Legion CLI or understanding what capabilities are actually available in their environment.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # Workspace Surface Audit
 
 Read-only audit skill for answering the question "what can this workspace and machine actually do right now, and what should we add or enable next?"
 
-This is the ECC-native answer to setup-audit plugins. It does not modify files unless the user explicitly asks for follow-up implementation.
+This is the ELC-native answer to setup-audit plugins. It does not modify files unless the user explicitly asks for follow-up implementation.
 
 ## When to Use
 
 - User says "set up Legion CLI", "recommend automations", "what plugins or MCPs should I use?", or "what am I missing?"
 - Auditing a machine or repo before installing more skills, hooks, or connectors
-- Comparing official marketplace plugins against ECC-native coverage
+- Comparing official marketplace plugins against ELC-native coverage
 - Reviewing \`.env\`, \`.mcp.json\`, plugin settings, or connected-app surfaces to find missing workflow layers
 - Deciding whether a capability should be a skill, hook, agent, MCP, or external connector
 
 ## Non-Negotiable Rules
 
 - Never print secret values. Surface only provider names, capability names, file paths, and whether a key or config exists.
-- Prefer ECC-native workflows over generic "install another plugin" advice when ECC can reasonably own the surface.
+- Prefer ELC-native workflows over generic "install another plugin" advice when ELC can reasonably own the surface.
 - Treat external plugins as benchmarks and inspiration, not authoritative product boundaries.
 - Separate three things clearly:
   - already available now
-  - available but not wrapped well in ECC
+  - available but not wrapped well in ELC
   - not available and would require a new integration
 
 ## Audit Inputs
@@ -72919,11 +72919,11 @@ Inspect only the files and settings needed to answer the question well:
    - \`.mcp.json\`, \`.lsp.json\`, \`.legion/settings*.json\`, \`.codex/*\`
    - \`AGENTS.md\`, \`LEGION.md\`, install manifests, hook configs
 2. Environment surface
-   - \`.env*\` files in the active repo and obvious adjacent ECC workspaces
+   - \`.env*\` files in the active repo and obvious adjacent ELC workspaces
    - Surface only key names such as \`STRIPE_API_KEY\`, \`TWILIO_AUTH_TOKEN\`, \`FAL_KEY\`
 3. Connected tool surface
    - Installed plugins, enabled connectors, MCP servers, LSPs, and app integrations
-4. ECC surface
+4. ELC surface
    - Existing skills, commands, hooks, agents, and install modules that already cover the need
 
 ## Audit Process
@@ -72937,12 +72937,12 @@ Produce a compact inventory:
 - configured MCP servers
 - configured LSP servers
 - env-backed services implied by key names
-- existing ECC skills already relevant to the workspace
+- existing ELC skills already relevant to the workspace
 
 If a surface exists only as a primitive, call that out. Example:
 
-- "Stripe is available via connected app, but ECC lacks a billing-operator skill"
-- "Google Drive is connected, but there is no ECC-native Google Workspace operator workflow"
+- "Stripe is available via connected app, but ELC lacks a billing-operator skill"
+- "Google Drive is connected, but there is no ELC-native Google Workspace operator workflow"
 
 ### Phase 2: Benchmark Against Official and Installed Surfaces
 
@@ -72955,15 +72955,15 @@ Compare the workspace against:
 Do not just list names. For each comparison, answer:
 
 1. what they actually do
-2. whether ECC already has parity
-3. whether ECC only has primitives
-4. whether ECC is missing the workflow entirely
+2. whether ELC already has parity
+3. whether ELC only has primitives
+4. whether ELC is missing the workflow entirely
 
-### Phase 3: Turn Gaps Into ECC Decisions
+### Phase 3: Turn Gaps Into ELC Decisions
 
-For every real gap, recommend the correct ECC-native shape:
+For every real gap, recommend the correct ELC-native shape:
 
-| Gap Type | Preferred ECC Shape |
+| Gap Type | Preferred ELC Shape |
 |----------|---------------------|
 | Repeatable operator workflow | Skill |
 | Automatic enforcement or side-effect | Hook |
@@ -72980,13 +72980,13 @@ Return five sections in this order:
 1. **Current surface**
    - what is already usable right now
 2. **Parity**
-   - where ECC already matches or exceeds the benchmark
+   - where ELC already matches or exceeds the benchmark
 3. **Primitive-only gaps**
-   - tools exist, but ECC lacks a clean operator skill
+   - tools exist, but ELC lacks a clean operator skill
 4. **Missing integrations**
    - capability not available yet
 5. **Top 3-5 next moves**
-   - concrete ECC-native additions, ordered by impact
+   - concrete ELC-native additions, ordered by impact
 
 ## Recommendation Rules
 
@@ -72998,11 +72998,11 @@ Return five sections in this order:
   - Google Workspace ops
   - deployment/ops control
 - If a connector is company-specific, recommend it only when it is genuinely available or clearly useful to the user's workflow.
-- If ECC already has a strong primitive, propose a wrapper skill instead of inventing a brand-new subsystem.
+- If ELC already has a strong primitive, propose a wrapper skill instead of inventing a brand-new subsystem.
 
 ## Good Outcomes
 
-- The user can immediately see what is connected, what is missing, and what ECC should own next.
+- The user can immediately see what is connected, what is missing, and what ELC should own next.
 - Recommendations are specific enough to implement in the repo without another discovery pass.
 - The final answer is organized around workflows, not API brands.
 `
@@ -73011,7 +73011,7 @@ const SKILL_x_api = `---
 name: x-api
 description: X/Twitter API integration for posting tweets, threads, reading timelines, search, and analytics. Covers OAuth auth patterns, rate limits, and platform-native content posting. Use when the user wants to interact with X programmatically.
 metadata:
-  origin: ECC
+  origin: ELC
 ---
 
 # X API
@@ -73252,7 +73252,7 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "agent-introspection-debugging", description: "Structured self-debugging workflow for AI agent failures using capture, diagnosis, contained recovery, and introspection reports.", content: SKILL_agent_introspection_debugging },
   { name: "agent-payment-x402", description: "Add x402 payment execution to AI agents with per-task budgets, spending controls, and non-custodial wallets. Supports Base through agentwallet-sdk and X Layer through OKX Payments / OKX Agent Payments Protocol.", content: SKILL_agent_payment_x402 },
   { name: "agent-self-evaluation", description: "Use after completing any non-trivial task. The agent self-rates its output on 5 axes — accuracy, completeness, clarity, actionability, conciseness — with concrete evidence per criterion. Produces a structured 1-5 scorecard with specific improvement suggestions.", content: SKILL_agent_self_evaluation },
-  { name: "agent-sort", description: "Build an evidence-backed ECC install plan for a specific repo by sorting skills, commands, rules, hooks, and extras into DAILY vs LIBRARY buckets using parallel repo-aware review passes. Use when ECC should be trimmed to what a project actually needs instead of loading the full bundle.", content: SKILL_agent_sort },
+  { name: "agent-sort", description: "Build an evidence-backed ELC install plan for a specific repo by sorting skills, commands, rules, hooks, and extras into DAILY vs LIBRARY buckets using parallel repo-aware review passes. Use when ELC should be trimmed to what a project actually needs instead of loading the full bundle.", content: SKILL_agent_sort },
   { name: "agentic-engineering", description: "Operate as an agentic engineer using eval-first execution, decomposition, and cost-aware model routing.", content: SKILL_agentic_engineering },
   { name: "agentic-os", description: "Build persistent multi-agent operating systems on Legion CLI. Covers kernel architecture, specialist agents, slash commands, file-based memory, scheduled automation, and state management without external databases.", content: SKILL_agentic_os },
   { name: "ai-first-engineering", description: "Engineering operating model for teams where AI agents generate a large share of implementation output.", content: SKILL_ai_first_engineering },
@@ -73263,7 +73263,7 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "api-design", description: "REST API design patterns including resource naming, status codes, pagination, filtering, error responses, versioning, and rate limiting for production APIs.", content: SKILL_api_design },
   { name: "architecture-decision-records", description: "Capture architectural decisions made during Legion CLI sessions as structured ADRs. Auto-detects decision moments, records context, alternatives considered, and rationale. Maintains an ADR log so future developers understand why the codebase is shaped the way it is.", content: SKILL_architecture_decision_records },
   { name: "article-writing", description: "Write articles, guides, blog posts, tutorials, newsletter issues, and other long-form content in a distinctive voice derived from supplied examples or brand guidance. Use when the user wants polished written content longer than a paragraph, especially when voice consistency, structure, and credibility matter.", content: SKILL_article_writing },
-  { name: "automation-audit-ops", description: "Evidence-first automation inventory and overlap audit workflow for ECC. Use when the user wants to know which jobs, hooks, connectors, MCP servers, or wrappers are live, broken, redundant, or missing before fixing anything.", content: SKILL_automation_audit_ops },
+  { name: "automation-audit-ops", description: "Evidence-first automation inventory and overlap audit workflow for ELC. Use when the user wants to know which jobs, hooks, connectors, MCP servers, or wrappers are live, broken, redundant, or missing before fixing anything.", content: SKILL_automation_audit_ops },
   { name: "autonomous-agent-harness", description: "Transform Legion CLI into a fully autonomous agent system with persistent memory, scheduled operations, computer use, and task queuing. Replaces standalone agent frameworks (Hermes, AutoGPT) by leveraging Legion CLI's native crons, dispatch, MCP tools, and memory. Use when the user wants continuous autonomous operation, scheduled tasks, or a self-directing agent loop.", content: SKILL_autonomous_agent_harness },
   { name: "autonomous-loops", description: "\"Patterns and architectures for autonomous Legion CLI loops — from simple sequential pipelines to RFC-driven multi-agent DAG systems.\"", content: SKILL_autonomous_loops },
   { name: "backend-patterns", description: "Backend architecture patterns, API design, database optimization, and server-side best practices for Node.js, Express, and Next.js API routes.", content: SKILL_backend_patterns },
@@ -73290,7 +73290,7 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "competitive-report-structure", description: ">-", content: SKILL_competitive_report_structure },
   { name: "compose-multiplatform-patterns", description: "Compose Multiplatform and Jetpack Compose patterns for KMP projects — state management, navigation, theming, performance, and platform-specific UI.", content: SKILL_compose_multiplatform_patterns },
   { name: "config-gc", description: "Garbage collection for your Legion CLI configuration. Periodically scans ~/.legion (skills, memory, hooks, permissions, MCP servers, caches) for redundant, stale, orphaned, or low-value items, then walks the user through a confirm-each-deletion cleanup. Use when the user says \"clean up my config\", \"config GC\", \"too many skills\", \"audit my setup\", \"my .legion is bloated\", or asks for a periodic config review.", content: SKILL_config_gc },
-  { name: "configure-ecc", description: "Interactive installer for Everything Legion Code — guides users through selecting and installing skills and rules to user-level or project-level directories, verifies paths, and optionally optimizes installed files.", content: SKILL_configure_ecc },
+  { name: "configure-elc", description: "Interactive installer for Everything Legion Code — guides users through selecting and installing skills and rules to user-level or project-level directories, verifies paths, and optionally optimizes installed files.", content: SKILL_configure_elc },
   { name: "connections-optimizer", description: "Reorganize the user's X and LinkedIn network with review-first pruning, add/follow recommendations, and channel-specific warm outreach drafted in the user's real voice. Use when the user wants to clean up following lists, grow toward current priorities, or rebalance a social graph around higher-signal relationships.", content: SKILL_connections_optimizer },
   { name: "content-engine", description: "Create platform-native content systems for X, LinkedIn, TikTok, YouTube, newsletters, and repurposed multi-platform campaigns. Use when the user wants social posts, threads, scripts, content calendars, or one source asset adapted cleanly across platforms.", content: SKILL_content_engine },
   { name: "content-hash-cache-pattern", description: "Cache expensive file processing results using SHA-256 content hashes — path-independent, auto-invalidating, with service layer separation.", content: SKILL_content_hash_cache_pattern },
@@ -73299,7 +73299,7 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "continuous-learning", description: "\"[DEPRECATED - use continuous-learning-v2] Legacy v1 stop-hook skill extractor. v2 is a strict superset with instinct-based, project-scoped, hook-reliable learning. Do not invoke v1; route continuous learning, session learning, and pattern extraction requests to continuous-learning-v2.\"", content: SKILL_continuous_learning },
   { name: "continuous-learning-v2", description: "Instinct-based learning system that observes sessions via hooks, creates atomic instincts with confidence scoring, and evolves them into skills/commands/agents. v2.1 adds project-scoped instincts to prevent cross-project contamination.", content: SKILL_continuous_learning_v2 },
   { name: "cost-aware-llm-pipeline", description: "Cost optimization patterns for LLM API usage — model routing by task complexity, budget tracking, retry logic, and prompt caching.", content: SKILL_cost_aware_llm_pipeline },
-  { name: "cost-tracking", description: "Track and report Legion CLI token usage, spending, and budgets from the local ECC cost-tracker metrics log. Use when the user asks about costs, spending, usage, tokens, budgets, or cost breakdowns by model, session, or date.", content: SKILL_cost_tracking },
+  { name: "cost-tracking", description: "Track and report Legion CLI token usage, spending, and budgets from the local ELC cost-tracker metrics log. Use when the user asks about costs, spending, usage, tokens, budgets, or cost breakdowns by model, session, or date.", content: SKILL_cost_tracking },
   { name: "council", description: "Convene a four-voice council for ambiguous decisions, tradeoffs, and go/no-go calls. Use when multiple valid paths exist and you need structured disagreement before choosing.", content: SKILL_council },
   { name: "cpp-coding-standards", description: "C++ coding standards based on the C++ Core Guidelines (isocpp.github.io). Use when writing, reviewing, or refactoring C++ code to enforce modern, safe, and idiomatic practices.", content: SKILL_cpp_coding_standards },
   { name: "cpp-testing", description: "Use only when writing/updating/fixing C++ tests, configuring GoogleTest/CTest, diagnosing failing or flaky tests, or adding coverage/sanitizers.", content: SKILL_cpp_testing },
@@ -73328,10 +73328,10 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "dotnet-patterns", description: "Idiomatic C# and .NET patterns, conventions, dependency injection, async/await, and best practices for building robust, maintainable .NET applications.", content: SKILL_dotnet_patterns },
   { name: "dynamic-workflow-mode", description: "\"Design task-local harnesses, eval gates, and reusable skill extraction for Legion dynamic workflow mode and other adaptive agent harnesses.\"", content: SKILL_dynamic_workflow_mode },
   { name: "e2e-testing", description: "Playwright E2E testing patterns, Page Object Model, configuration, CI/CD integration, artifact management, and flaky test strategies.", content: SKILL_e2e_testing },
-  { name: "ecc-guide", description: "Guide users through ECC's current agents, skills, commands, hooks, rules, install profiles, and project onboarding by reading the live repository surface before answering.", content: SKILL_ecc_guide },
-  { name: "ecc-recipes", description: "\"Map a described workflow to the right ECC command-GROUP with run-order and stop condition, and browse all command-group recipe families. Adds a family-grouping + run-order + when-to-stop layer on top of the flat command catalog. Advisory only. TRIGGER when the user says which commands for X, what command group runs X, show ECC recipes, list ECC pipelines, or how do I run a workflow with ECC. DO NOT TRIGGER when the user wants the task executed directly, wants a single-command deep doc (use ecc-guide), or wants a draft prompt rewritten (use prompt-optimizer).\"", content: SKILL_ecc_recipes },
-  { name: "ecc-tools-cost-audit", description: "Evidence-first ECC Tools burn and billing audit workflow. Use when investigating runaway PR creation, quota bypass, premium-model leakage, duplicate jobs, or GitHub App cost spikes in the ECC Tools repo.", content: SKILL_ecc_tools_cost_audit },
-  { name: "email-ops", description: "Evidence-first mailbox triage, drafting, send verification, and sent-mail-safe follow-up workflow for ECC. Use when the user wants to organize email, draft or send through the real mail surface, or prove what landed in Sent.", content: SKILL_email_ops },
+  { name: "elc-guide", description: "Guide users through ELC's current agents, skills, commands, hooks, rules, install profiles, and project onboarding by reading the live repository surface before answering.", content: SKILL_elc_guide },
+  { name: "elc-recipes", description: "\"Map a described workflow to the right ELC command-GROUP with run-order and stop condition, and browse all command-group recipe families. Adds a family-grouping + run-order + when-to-stop layer on top of the flat command catalog. Advisory only. TRIGGER when the user says which commands for X, what command group runs X, show ELC recipes, list ELC pipelines, or how do I run a workflow with ELC. DO NOT TRIGGER when the user wants the task executed directly, wants a single-command deep doc (use elc-guide), or wants a draft prompt rewritten (use prompt-optimizer).\"", content: SKILL_elc_recipes },
+  { name: "elc-tools-cost-audit", description: "Evidence-first ELC Tools burn and billing audit workflow. Use when investigating runaway PR creation, quota bypass, premium-model leakage, duplicate jobs, or GitHub App cost spikes in the ELC Tools repo.", content: SKILL_elc_tools_cost_audit },
+  { name: "email-ops", description: "Evidence-first mailbox triage, drafting, send verification, and sent-mail-safe follow-up workflow for ELC. Use when the user wants to organize email, draft or send through the real mail surface, or prove what landed in Sent.", content: SKILL_email_ops },
   { name: "energy-procurement", description: ">", content: SKILL_energy_procurement },
   { name: "enterprise-agent-ops", description: "Operate long-lived agent workloads with observability, security boundaries, and lifecycle management.", content: SKILL_enterprise_agent_ops },
   { name: "error-handling", description: "Patterns for robust error handling across TypeScript, Python, and Go. Covers typed errors, error boundaries, retries, circuit breakers, and user-facing error messages.", content: SKILL_error_handling },
@@ -73340,12 +73340,12 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "exa-search", description: "Neural search via Exa MCP for web, code, and company research. Use when the user needs web search, code examples, company intel, people lookup, or AI-powered deep research with Exa's neural search engine.", content: SKILL_exa_search },
   { name: "fal-ai-media", description: "Unified media generation via fal.ai MCP — image, video, and audio. Covers text-to-image (Nano Banana), text/image-to-video (Seedance, Kling, Veo 3), text-to-speech (CSM-1B), and video-to-audio (ThinkSound). Use when the user wants to generate images, videos, or audio with AI.", content: SKILL_fal_ai_media },
   { name: "fastapi-patterns", description: "FastAPI best practices covering project structure, Pydantic v2 schemas, dependency injection, async handlers, authentication, authorization, transactional service layers, and testing with httpx and pytest.", content: SKILL_fastapi_patterns },
-  { name: "finance-billing-ops", description: "Evidence-first revenue, pricing, refunds, team-billing, and billing-model truth workflow for ECC. Use when the user wants a sales snapshot, pricing comparison, duplicate-charge diagnosis, or code-backed billing reality instead of generic payments advice.", content: SKILL_finance_billing_ops },
+  { name: "finance-billing-ops", description: "Evidence-first revenue, pricing, refunds, team-billing, and billing-model truth workflow for ELC. Use when the user wants a sales snapshot, pricing comparison, duplicate-charge diagnosis, or code-backed billing reality instead of generic payments advice.", content: SKILL_finance_billing_ops },
   { name: "flox-environments", description: "\"Create reproducible, cross-platform (macOS/Linux) development environments with Flox, a declarative Nix-based environment manager. Use when setting up project toolchains for any language, installing system-level dependencies (compilers, databases, native libs like openssl/BLAS), pinning exact package versions for a team, running local services (PostgreSQL, Redis, Kafka), onboarding developers with one command, or solving 'works on my machine' problems — including agent/vibe-coding setups that need project-scoped tools without sudo. Also use when the user mentions .flox/, manifest.toml, flox activate, or FloxHub.\"", content: SKILL_flox_environments },
   { name: "flutter-dart-code-review", description: "Library-agnostic Flutter/Dart code review checklist covering widget best practices, state management patterns (BLoC, Riverpod, Provider, GetX, MobX, Signals), Dart idioms, performance, accessibility, security, and clean architecture.", content: SKILL_flutter_dart_code_review },
   { name: "foundation-models-on-device", description: "Apple FoundationModels framework for on-device LLM — text generation, guided generation with @Generable, tool calling, and snapshot streaming in iOS 26+.", content: SKILL_foundation_models_on_device },
   { name: "frontend-a11y", description: ">", content: SKILL_frontend_a11y },
-  { name: "frontend-design-direction", description: "Set an ECC-specific frontend design direction for production UI work. Use when building or improving websites, dashboards, applications, components, landing pages, visual tools, or any web UI that needs stronger product-specific design judgment.", content: SKILL_frontend_design_direction },
+  { name: "frontend-design-direction", description: "Set an ELC-specific frontend design direction for production UI work. Use when building or improving websites, dashboards, applications, components, landing pages, visual tools, or any web UI that needs stronger product-specific design judgment.", content: SKILL_frontend_design_direction },
   { name: "frontend-patterns", description: "Frontend development patterns for React, Next.js, state management, performance optimization, and UI best practices.", content: SKILL_frontend_patterns },
   { name: "frontend-slides", description: "Create stunning, animation-rich HTML presentations from scratch or by converting PowerPoint files. Use when the user wants to build a presentation, convert a PPT/PPTX to web, or create slides for a talk/pitch. Helps non-designers discover their aesthetic through visual exploration rather than abstract choices.", content: SKILL_frontend_slides },
   { name: "fsharp-testing", description: "F# testing patterns with xUnit, FsUnit, Unquote, FsCheck property-based testing, integration tests, and test organization best practices.", content: SKILL_fsharp_testing },
@@ -73363,7 +73363,7 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "healthcare-emr-patterns", description: "EMR/EHR development patterns for healthcare applications. Clinical safety, encounter workflows, prescription generation, clinical decision support integration, and accessibility-first UI for medical data entry.", content: SKILL_healthcare_emr_patterns },
   { name: "healthcare-eval-harness", description: "Patient safety evaluation harness for healthcare application deployments. Automated test suites for CDSS accuracy, PHI exposure, clinical workflow integrity, and integration compliance. Blocks deployments on safety failures.", content: SKILL_healthcare_eval_harness },
   { name: "healthcare-phi-compliance", description: "Protected Health Information (PHI) and Personally Identifiable Information (PII) compliance patterns for healthcare applications. Covers data classification, access control, audit trails, encryption, and common leak vectors.", content: SKILL_healthcare_phi_compliance },
-  { name: "hermes-imports", description: "Convert local Hermes operator workflows into sanitized ECC skills and release-pack artifacts. Use when preparing a Hermes workflow for public ECC reuse without leaking private workspace state, credentials, or local-only paths.", content: SKILL_hermes_imports },
+  { name: "hermes-imports", description: "Convert local Hermes operator workflows into sanitized ELC skills and release-pack artifacts. Use when preparing a Hermes workflow for public ELC reuse without leaking private workspace state, credentials, or local-only paths.", content: SKILL_hermes_imports },
   { name: "hexagonal-architecture", description: "Design, implement, and refactor Ports & Adapters systems with clear domain boundaries, dependency inversion, and testable use-case orchestration across TypeScript, Java, Kotlin, and Go services.", content: SKILL_hexagonal_architecture },
   { name: "hipaa-compliance", description: "HIPAA-specific entrypoint for healthcare privacy and security work. Use when a task is explicitly framed around HIPAA, PHI handling, covered entities, BAAs, breach posture, or US healthcare compliance requirements.", content: SKILL_hipaa_compliance },
   { name: "homelab-network-readiness", description: "Readiness checklist for homelab VLAN segmentation, local DNS filtering, and WireGuard-style remote access before changing router, firewall, DHCP, or VPN configuration.", content: SKILL_homelab_network_readiness },
@@ -73408,11 +73408,11 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "loop-design-check", description: "Design a goal-oriented agent loop, and review it for the ways loops go wrong — spinning and burning tokens, Goodhart-gaming the verifier, or running a wrong answer to completion. Two actions: (1) WRITE a loop — gate whether to build it, define a machine-decidable goal, pick the loop type, pick a skeleton; (2) REVIEW a loop — run it past five failure modes plus decidability, boundaries, fallback, judge independence, and keep-judgment-with-the-human red lines. Use when designing an autonomous agent loop, or when you already have one and worry it will spin, cheat, or run a wrong answer to the end. Complements the mechanism-layer loop skills (autonomous-loops, continuous-agent-loop) by covering the judgment layer they don't. 中文触发：写 loop、设计 loop、做一个 loop、检查 loop 对不对、loop 体检、loop 会不会跑飞、可判定目标、五个崩法、plan build judge。English triggers: design an agent loop, write a loop, check a loop, loop review, prevent a runaway loop, goal-oriented loop, decidable goal, plan/build/judge.", content: SKILL_loop_design_check },
   { name: "mailtrap-email-integration", description: "Guides agents through integrating transactional email sending via Mailtrap's Email API, including sandbox testing, domain verification, and API authentication. Use when implementing email-sending features, debugging delivery issues, or setting up safe dev/staging email testing.", content: SKILL_mailtrap_email_integration },
   { name: "make-interfaces-feel-better", description: "Apply concrete design-engineering details that make interfaces feel polished. Use when reviewing or improving UI spacing, typography, borders, shadows, motion, hit areas, icons, text wrapping, and interaction states.", content: SKILL_make_interfaces_feel_better },
-  { name: "manim-video", description: "Build reusable Manim explainers for technical concepts, graphs, system diagrams, and product walkthroughs, then hand off to the wider ECC video stack if needed. Use when the user wants a clean animated explainer rather than a generic talking-head script.", content: SKILL_manim_video },
+  { name: "manim-video", description: "Build reusable Manim explainers for technical concepts, graphs, system diagrams, and product walkthroughs, then hand off to the wider ELC video stack if needed. Use when the user wants a clean animated explainer rather than a generic talking-head script.", content: SKILL_manim_video },
   { name: "market-research", description: "Conduct market research, competitive analysis, investor due diligence, and industry intelligence with source attribution and decision-oriented summaries. Use when the user wants market sizing, competitor comparisons, fund research, technology scans, or research that informs business decisions.", content: SKILL_market_research },
   { name: "marketing-campaign", description: "End-to-end marketing campaign planning and execution. Covers audience research, positioning, campaign angle definition, landing page copy, email sequences, social posts, ad copy, short-form video scripts, and content calendars. Use as the orchestration layer for multi-channel product launches.", content: SKILL_marketing_campaign },
   { name: "mcp-server-patterns", description: "Build MCP servers with Node/TypeScript SDK — tools, resources, prompts, Zod validation, stdio vs Streamable HTTP. Use Context7 or official MCP docs for latest API.", content: SKILL_mcp_server_patterns },
-  { name: "messages-ops", description: "Evidence-first live messaging workflow for ECC. Use when the user wants to read texts or DMs, recover a recent one-time code, inspect a thread before replying, or prove which message source was actually checked.", content: SKILL_messages_ops },
+  { name: "messages-ops", description: "Evidence-first live messaging workflow for ELC. Use when the user wants to read texts or DMs, recover a recent one-time code, inspect a thread before replying, or prove which message source was actually checked.", content: SKILL_messages_ops },
   { name: "ml-adoption-playbook", description: "End-to-end methodology for AI agents and software engineers to add machine learning algorithms to existing non-ML codebases. Covers problem framing, data readiness, architectural decoupling, and baseline model integration.", content: SKILL_ml_adoption_playbook },
   { name: "mle-workflow", description: "Production machine-learning engineering workflow for data contracts, reproducible training, model evaluation, deployment, monitoring, and rollback. Use when building, reviewing, or hardening ML systems beyond one-off notebooks.", content: SKILL_mle_workflow },
   { name: "motion-advanced", description: "Advanced motion patterns for React / Next.js — drag & drop, gestures, text animations, SVG path drawing, custom hooks, imperative sequences (useAnimate), loaders, and the full API decision tree. Requires motion-foundations.", content: SKILL_motion_advanced },
@@ -73420,7 +73420,7 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "motion-patterns", description: "Production-ready animation patterns for React / Next.js — button, modal, toast, stagger, page transitions, exit animations, scroll, and layout — built on motion-foundations tokens and springs.", content: SKILL_motion_patterns },
   { name: "motion-ui", description: "\"Production-ready UI motion system for React/Next.js. Use when implementing animations, transitions, or motion patterns.\"", content: SKILL_motion_ui },
   { name: "mysql-patterns", description: "MySQL and MariaDB schema, query, indexing, transaction, replication, and connection-pool patterns for production backends.", content: SKILL_mysql_patterns },
-  { name: "nanoclaw-repl", description: "Operate and extend NanoClaw v2, ECC's zero-dependency session-aware REPL built on legion -p.", content: SKILL_nanoclaw_repl },
+  { name: "nanoclaw-repl", description: "Operate and extend NanoClaw v2, ELC's zero-dependency session-aware REPL built on legion -p.", content: SKILL_nanoclaw_repl },
   { name: "nestjs-patterns", description: "NestJS architecture patterns for modules, controllers, providers, DTO validation, guards, interceptors, config, and production-grade TypeScript backends.", content: SKILL_nestjs_patterns },
   { name: "netmiko-ssh-automation", description: "Safe Python Netmiko patterns for read-only collection, bounded batch SSH, TextFSM parsing, guarded config changes, timeouts, and network automation error handling.", content: SKILL_netmiko_ssh_automation },
   { name: "network-bgp-diagnostics", description: "Diagnostics-only BGP troubleshooting patterns for neighbor state, route exchange, prefix policy, AS path inspection, and safe evidence collection.", content: SKILL_network_bgp_diagnostics },
@@ -73432,10 +73432,10 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "nuxt4-patterns", description: "Nuxt 4 app patterns for hydration safety, performance, route rules, lazy loading, and SSR-safe data fetching with useFetch and useAsyncData.", content: SKILL_nuxt4_patterns },
   { name: "openclaw-persona-forge", description: "\"为 OpenClaw AI Agent 锻造完整的龙虾灵魂方案。根据用户偏好或随机抽卡， 输出身份定位、灵魂描述(SOUL.md)、角色化底线规则、名字和头像生图提示词。 如当前环境提供已审核的生图 skill，可自动生成统一风格头像图片。 当用户需要创建、设计或定制 OpenClaw 龙虾灵魂时使用。 不适用于：微调已有 SOUL.md、非 OpenClaw 平台的角色设计、纯工具型无性格 Agent。 触发词：龙虾灵魂、虾魂、OpenClaw 灵魂、养虾灵魂、龙虾角色、龙虾定位、 龙虾剧本杀角色、龙虾游戏角色、龙虾 NPC、龙虾性格、龙虾背景故事、 lobster soul、lobster character、抽卡、随机龙虾、龙虾 SOUL、gacha。\"", content: SKILL_openclaw_persona_forge },
   { name: "opensource-pipeline", description: "\"Open-source pipeline: fork, sanitize, and package private projects for safe public release. Chains 3 agents (forker, sanitizer, packager). Triggers: '/opensource', 'open source this', 'make this public', 'prepare for open source'.\"", content: SKILL_opensource_pipeline },
-  { name: "orch-add-feature", description: "Orchestrate building a brand-new feature end to end — research, plan, TDD implementation, review, and gated commit — by delegating each phase to the matching ECC agent. Use when adding a capability that does not exist yet.", content: SKILL_orch_add_feature },
+  { name: "orch-add-feature", description: "Orchestrate building a brand-new feature end to end — research, plan, TDD implementation, review, and gated commit — by delegating each phase to the matching ELC agent. Use when adding a capability that does not exist yet.", content: SKILL_orch_add_feature },
   { name: "orch-build-mvp", description: "Orchestrate bootstrapping a working MVP from a design or spec document — ingest the doc, plan thin vertical slices, scaffold the first end-to-end slice, then TDD-implement, review, and gated commit. Use to turn an SDD/PRD into a running starting point.", content: SKILL_orch_build_mvp },
   { name: "orch-change-feature", description: "Orchestrate altering an existing, working feature to new desired behavior — update its tests to the new spec, change the implementation to match, review, and gated commit. Use when behavior is not broken but should be different.", content: SKILL_orch_change_feature },
-  { name: "orch-fix-defect", description: "Orchestrate fixing a bug — reproduce it as a failing regression test, fix to green, review, and gated commit — by delegating each phase to the matching ECC agent. Use when existing behavior is broken or wrong.", content: SKILL_orch_fix_defect },
+  { name: "orch-fix-defect", description: "Orchestrate fixing a bug — reproduce it as a failing regression test, fix to green, review, and gated commit — by delegating each phase to the matching ELC agent. Use when existing behavior is broken or wrong.", content: SKILL_orch_fix_defect },
   { name: "orch-pipeline", description: "Shared orchestration engine for the orch-* skill family. Defines the gated Research-Plan-TDD-Review-Commit pipeline, the size classifier, the agent map, and the two human gates that the orch-* operation skills delegate to. Not usually invoked directly.", content: SKILL_orch_pipeline },
   { name: "orch-refine-code", description: "Orchestrate a behavior-preserving refactor — confirm tests are green, restructure without changing behavior, keep tests green, review, and gated commit. Use when the structure should improve but behavior must not change.", content: SKILL_orch_refine_code },
   { name: "parallel-execution-optimizer", description: "Use when the user wants a task done much faster through parallel work, concurrent agents, batched tool calls, isolated worktrees, or many independent verification lanes without losing correctness.", content: SKILL_parallel_execution_optimizer },
@@ -73443,13 +73443,13 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "perl-security", description: "Comprehensive Perl security covering taint mode, input validation, safe process execution, DBI parameterized queries, web security (XSS/SQLi/CSRF), and perlcritic security policies.", content: SKILL_perl_security },
   { name: "perl-testing", description: "Perl testing patterns using Test2::V0, Test::More, prove runner, mocking, coverage with Devel::Cover, and TDD methodology.", content: SKILL_perl_testing },
   { name: "plan-canvas", description: "Open plans and HTML artifacts in a local browser canvas where the human annotates elements, chats, and approves or requests changes without leaving the page. Use when presenting a plan for review, or when feedback like \"move this, change that\" is easier pointed at than typed.", content: SKILL_plan_canvas },
-  { name: "plan-orchestrate", description: "Read a plan document, decompose it into steps, design a per-step agent chain from the ECC catalogue, and emit ready-to-paste /orchestrate custom prompts. Generative only — never invokes /orchestrate itself. Use when the user has a multi-step plan and wants to drive it through orchestrate without composing chains by hand.", content: SKILL_plan_orchestrate },
+  { name: "plan-orchestrate", description: "Read a plan document, decompose it into steps, design a per-step agent chain from the ELC catalogue, and emit ready-to-paste /orchestrate custom prompts. Generative only — never invokes /orchestrate itself. Use when the user has a multi-step plan and wants to drive it through orchestrate without composing chains by hand.", content: SKILL_plan_orchestrate },
   { name: "plankton-code-quality", description: "\"Write-time code quality enforcement using Plankton — auto-formatting, linting, and Legion-powered fixes on every file edit via hooks.\"", content: SKILL_plankton_code_quality },
   { name: "postgres-patterns", description: "PostgreSQL database patterns for query optimization, schema design, indexing, and security. Based on Supabase best practices.", content: SKILL_postgres_patterns },
   { name: "prediction-market-oracle-research", description: "Research prediction markets as data sources or oracle signals for products, agents, dashboards, and corporate decision intelligence. Use for source-grounded analysis of market-implied probabilities, caveats, and integration patterns without investment advice.", content: SKILL_prediction_market_oracle_research },
   { name: "prediction-market-risk-review", description: "Review prediction-market, basket, oracle, and trading-agent workflows for compliance, safety, data-quality, privacy, and execution risk. Use before any workflow handles venue auth, user portfolio data, API keys, or trade planning.", content: SKILL_prediction_market_risk_review },
   { name: "prisma-patterns", description: "Prisma ORM patterns for TypeScript backends — schema design, query optimization, transactions, pagination, and critical traps like updateMany returning count not records, $transaction timeouts, migrate dev resetting the DB, @updatedAt skipped on bulk writes, and serverless connection exhaustion.", content: SKILL_prisma_patterns },
-  { name: "product-capability", description: "Translate PRD intent, roadmap asks, or product discussions into an implementation-ready capability plan that exposes constraints, invariants, interfaces, and unresolved decisions before multi-service work starts. Use when the user needs an ECC-native PRD-to-SRS lane instead of vague planning prose.", content: SKILL_product_capability },
+  { name: "product-capability", description: "Translate PRD intent, roadmap asks, or product discussions into an implementation-ready capability plan that exposes constraints, invariants, interfaces, and unresolved decisions before multi-service work starts. Use when the user needs an ELC-native PRD-to-SRS lane instead of vague planning prose.", content: SKILL_product_capability },
   { name: "product-lens", description: "Use this skill to validate the \"why\" before building, run product diagnostics, and pressure-test product direction before the request becomes an implementation contract.", content: SKILL_product_lens },
   { name: "production-audit", description: "Local-evidence production readiness audit for shipped apps, pre-launch reviews, post-merge checks, and \"what breaks in prod?\" questions without sending repo data to an external audit service.", content: SKILL_production_audit },
   { name: "production-scheduling", description: ">", content: SKILL_production_scheduling },
@@ -73475,7 +73475,7 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "regex-vs-llm-structured-text", description: "Decision framework for choosing between regex and LLM when parsing structured text — start with regex, add LLM only for low-confidence edge cases.", content: SKILL_regex_vs_llm_structured_text },
   { name: "remotion-video-creation", description: "Best practices for Remotion - Video creation in React. 29 domain-specific rules covering 3D, animations, audio, captions, charts, transitions, and more.", content: SKILL_remotion_video_creation },
   { name: "repo-scan", description: "Cross-stack source code asset audit — classifies every file, detects embedded third-party libraries, and delivers actionable four-level verdicts per module with interactive HTML reports.", content: SKILL_repo_scan },
-  { name: "research-ops", description: "Evidence-first current-state research workflow for ECC. Use when the user wants fresh facts, comparisons, enrichment, or a recommendation built from current public evidence and any supplied local context.", content: SKILL_research_ops },
+  { name: "research-ops", description: "Evidence-first current-state research workflow for ELC. Use when the user wants fresh facts, comparisons, enrichment, or a recommendation built from current public evidence and any supplied local context.", content: SKILL_research_ops },
   { name: "returns-reverse-logistics", description: ">", content: SKILL_returns_reverse_logistics },
   { name: "rules-distill", description: "\"Scan skills to extract cross-cutting principles and distill them into rules — append, revise, or create new rule files\"", content: SKILL_rules_distill },
   { name: "rust-patterns", description: "Idiomatic Rust patterns, ownership, error handling, traits, concurrency, and best practices for building safe, performant applications.", content: SKILL_rust_patterns },
@@ -73502,17 +73502,17 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "swift-concurrency-6-2", description: "Swift 6.2 Approachable Concurrency — single-threaded by default, @concurrent for explicit background offloading, isolated conformances for main actor types.", content: SKILL_swift_concurrency_6_2 },
   { name: "swift-protocol-di-testing", description: "Protocol-based dependency injection for testable Swift code — mock file system, network, and external APIs using focused protocols and Swift Testing.", content: SKILL_swift_protocol_di_testing },
   { name: "swiftui-patterns", description: "SwiftUI architecture patterns, state management with @Observable, view composition, navigation, performance optimization, and modern iOS/macOS UI best practices.", content: SKILL_swiftui_patterns },
-  { name: "taste", description: "A creative-direction (taste) layer for music videos and short-form edits in the angelcore / cloud-trance / hyperpop visual family. Distills a named-genre aesthetic vocabulary, a mood + color + light system, and a beat-synced editing grammar, then chains ECC's video skills (video-editing, fal-ai-media, remotion-video-creation, motion-*, content-engine) into one production pipeline. Use when the work is not just making a video function but making it feel intentional, when building a music video, a fancam/edit, a moodboard-driven reel, or when choosing a coherent visual direction for AI-generated b-roll.", content: SKILL_taste },
+  { name: "taste", description: "A creative-direction (taste) layer for music videos and short-form edits in the angelcore / cloud-trance / hyperpop visual family. Distills a named-genre aesthetic vocabulary, a mood + color + light system, and a beat-synced editing grammar, then chains ELC's video skills (video-editing, fal-ai-media, remotion-video-creation, motion-*, content-engine) into one production pipeline. Use when the work is not just making a video function but making it feel intentional, when building a music video, a fancam/edit, a moodboard-driven reel, or when choosing a coherent visual direction for AI-generated b-roll.", content: SKILL_taste },
   { name: "tdd-workflow", description: "Use this skill when writing new features, fixing bugs, or refactoring code. Enforces test-driven development with 80%+ coverage including unit, integration, and E2E tests.", content: SKILL_tdd_workflow },
   { name: "team-agent-orchestration", description: "\"Run team-based orchestration for agent squads using work items, ownership, agent Kanban, merge gates, and control pane handoffs.\"", content: SKILL_team_agent_orchestration },
   { name: "team-builder", description: "Interactive agent picker for composing and dispatching parallel teams", content: SKILL_team_builder },
-  { name: "terminal-ops", description: "Evidence-first repo execution workflow for ECC. Use when the user wants a command run, a repo checked, a CI failure debugged, or a narrow fix pushed with exact proof of what was executed and verified.", content: SKILL_terminal_ops },
+  { name: "terminal-ops", description: "Evidence-first repo execution workflow for ELC. Use when the user wants a command run, a repo checked, a CI failure debugged, or a narrow fix pushed with exact proof of what was executed and verified.", content: SKILL_terminal_ops },
   { name: "tinystruct-patterns", description: "Expert guidance for developing with the tinystruct Java framework. Use when working on the tinystruct codebase or any project built on tinystruct — including creating Application classes, @Action-mapped routes, unit tests, ActionRegistry, HTTP/CLI dual-mode handling, the built-in HTTP server, the event system, JSON with Builder/Builders, database persistence with AbstractData, POJO generation, Server-Sent Events (SSE), file uploads, and outbound HTTP networking.", content: SKILL_tinystruct_patterns },
   { name: "token-budget-advisor", description: ">-", content: SKILL_token_budget_advisor },
   { name: "ui-demo", description: "Record polished UI demo videos using Playwright. Use when the user asks to create a demo, walkthrough, screen recording, or tutorial video of a web application. Produces WebM videos with visible cursor, natural pacing, and professional feel.", content: SKILL_ui_demo },
   { name: "ui-to-vue", description: "Use when the user has UI screenshots or design exports that need batch conversion into Vue 3 components, especially with Vant, Element Plus, or Ant Design Vue.", content: SKILL_ui_to_vue },
   { name: "uncloud", description: "Use when managing an Uncloud cluster — deploying services, configuring Caddy ingress, adding static proxy routes for non-cluster devices, publishing ports, scaling, inspecting logs, or managing machines and volumes with the `uc` CLI.", content: SKILL_uncloud },
-  { name: "unified-notifications-ops", description: "Operate notifications as one ECC-native workflow across GitHub, Linear, desktop alerts, hooks, and connected communication surfaces. Use when the real problem is alert routing, deduplication, escalation, or inbox collapse.", content: SKILL_unified_notifications_ops },
+  { name: "unified-notifications-ops", description: "Operate notifications as one ELC-native workflow across GitHub, Linear, desktop alerts, hooks, and connected communication surfaces. Use when the real problem is alert routing, deduplication, escalation, or inbox collapse.", content: SKILL_unified_notifications_ops },
   { name: "uspto-database", description: "USPTO patent and trademark data workflow for official record lookup, PatentSearch queries, TSDR checks, assignment data, and reproducible IP research logs.", content: SKILL_uspto_database },
   { name: "verification-loop", description: "\"A comprehensive verification system for Legion CLI sessions.\"", content: SKILL_verification_loop },
   { name: "video-editing", description: "AI-assisted video editing workflows for cutting, structuring, and augmenting real footage. Covers the full pipeline from raw capture through FFmpeg, Remotion, ElevenLabs, fal.ai, and final polish in Descript or CapCut. Use when the user wants to edit video, cut footage, create vlogs, or build video content.", content: SKILL_video_editing },
@@ -73521,6 +73521,6 @@ export const ELC_SKILLS: ElcSkill[] = [
   { name: "vite-patterns", description: "Vite build tool patterns including config, plugins, HMR, env variables, proxy setup, SSR, library mode, dependency pre-bundling, and build optimization. Activate when working with vite.config.ts, Vite plugins, or Vite-based projects.", content: SKILL_vite_patterns },
   { name: "vue-patterns", description: "Vue.js 3 Composition API patterns, component architecture, reactivity best practices, Pinia state management, Vue Router navigation, and Nuxt SSR patterns. Activates for Vue, Nuxt, Vite, or Pinia projects.", content: SKILL_vue_patterns },
   { name: "windows-desktop-e2e", description: "E2E testing for Windows native desktop apps (WPF, WinForms, Win32/MFC, Qt) using pywinauto and Windows UI Automation.", content: SKILL_windows_desktop_e2e },
-  { name: "workspace-surface-audit", description: "Audit the active repo, MCP servers, plugins, connectors, env surfaces, and harness setup, then recommend the highest-value ECC-native skills, hooks, agents, and operator workflows. Use when the user wants help setting up Legion CLI or understanding what capabilities are actually available in their environment.", content: SKILL_workspace_surface_audit },
+  { name: "workspace-surface-audit", description: "Audit the active repo, MCP servers, plugins, connectors, env surfaces, and harness setup, then recommend the highest-value ELC-native skills, hooks, agents, and operator workflows. Use when the user wants help setting up Legion CLI or understanding what capabilities are actually available in their environment.", content: SKILL_workspace_surface_audit },
   { name: "x-api", description: "X/Twitter API integration for posting tweets, threads, reading timelines, search, and analytics. Covers OAuth auth patterns, rate limits, and platform-native content posting. Use when the user wants to interact with X programmatically.", content: SKILL_x_api },
 ]

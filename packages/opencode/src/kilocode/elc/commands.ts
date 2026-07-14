@@ -174,26 +174,26 @@ WARNING: Note: This could affect the feature we're building. Want to address thi
 `
 
 const CMD_auto_update = `---
-description: Pull the latest ECC repo changes and reinstall the current managed targets.
+description: Pull the latest ELC repo changes and reinstall the current managed targets.
 disable-model-invocation: true
 ---
 
 # Auto Update
 
-Update ECC from its upstream repo and regenerate the current context's managed install using the original install-state request.
+Update ELC from its upstream repo and regenerate the current context's managed install using the original install-state request.
 
 ## Usage
 
 \`\`\`bash
 # Preview the update without mutating anything
-ECC_ROOT="\${LEGION_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
-node "\$ECC_ROOT/scripts/auto-update.js" --dry-run
+ELC_ROOT="\${LEGION_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-elc-root')).resolveElcRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['elc','elc@elc','marketplaces/elc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['elc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
+node "\$ELC_ROOT/scripts/auto-update.js" --dry-run
 
 # Update only Cursor-managed files in the current project
-node "\$ECC_ROOT/scripts/auto-update.js" --target cursor
+node "\$ELC_ROOT/scripts/auto-update.js" --target cursor
 
-# Override the ECC repo root explicitly
-node "\$ECC_ROOT/scripts/auto-update.js" --repo-root /path/to/everything-legion
+# Override the ELC repo root explicitly
+node "\$ELC_ROOT/scripts/auto-update.js" --repo-root /path/to/everything-legion
 \`\`\`
 
 ## Notes
@@ -643,14 +643,14 @@ Next steps:
 `
 
 const CMD_cost_report = `---
-description: Generate a local Legion CLI cost report from the ECC cost-tracker metrics log.
+description: Generate a local Legion CLI cost report from the ELC cost-tracker metrics log.
 argument-hint: [csv]
 ---
 
 # Cost Report
 
 Summarize local Legion CLI spend by day, model, and session from the metrics
-log that ECC's \`stop:cost-tracker\` hook writes.
+log that ELC's \`stop:cost-tracker\` hook writes.
 
 ## Where the data lives
 
@@ -1287,25 +1287,25 @@ genhtml coverage.info --output-directory coverage_html
 - Skill: \`skills/tdd-workflow/\`
 `
 
-const CMD_ecc_guide = `---
-description: Navigate ECC's current agents, skills, commands, hooks, install profiles, and docs from the live repository surface.
+const CMD_elc_guide = `---
+description: Navigate ELC's current agents, skills, commands, hooks, install profiles, and docs from the live repository surface.
 ---
 
-# /ecc-guide
+# /elc-guide
 
-Use this command as a conversational map of Everything Legion Code. It should help the user discover the right ECC surface for their task without dumping the entire README or stale catalog counts.
+Use this command as a conversational map of Everything Legion Code. It should help the user discover the right ELC surface for their task without dumping the entire README or stale catalog counts.
 
 ## Usage
 
 \`\`\`text
-/ecc-guide
-/ecc-guide setup
-/ecc-guide skills
-/ecc-guide commands
-/ecc-guide hooks
-/ecc-guide install
-/ecc-guide find: <query>
-/ecc-guide <feature-or-file-name>
+/elc-guide
+/elc-guide setup
+/elc-guide skills
+/elc-guide commands
+/elc-guide hooks
+/elc-guide install
+/elc-guide find: <query>
+/elc-guide <feature-or-file-name>
 \`\`\`
 
 ## Operating Rules
@@ -1328,7 +1328,7 @@ Use these files as the canonical map:
 - \`agents/*.md\` for delegated agent roles
 - \`hooks/README.md\` and \`hooks/hooks.json\` for hook behavior
 - \`manifests/install-*.json\` for selective install modules, components, and profiles
-- \`scripts/ci/catalog.js --json\` for live catalog counts when running inside ECC
+- \`scripts/ci/catalog.js --json\` for live catalog counts when running inside ELC
 
 ## Response Patterns
 
@@ -1375,7 +1375,7 @@ For a specific feature name:
 
 ## Related Commands
 
-- \`/project-init\` for stack-aware ECC onboarding of a target project
+- \`/project-init\` for stack-aware ELC onboarding of a target project
 - \`/harness-audit\` for deterministic repo readiness scoring
 - \`/skill-health\` for skill quality checks
 - \`/skill-create\` for extracting a new skill from local git history
@@ -3127,7 +3127,7 @@ The script computes up to 12 fixed categories (\`0-10\` normalized each). The fi
 12. Fly Integration *(when \`fly.toml\` is present)*
 
 Scores are derived from explicit file/rule checks and are reproducible for the same commit.
-The script audits the current working directory by default and auto-detects whether the target is the ECC repo itself or a consumer project using ECC.
+The script audits the current working directory by default and auto-detects whether the target is the ELC repo itself or a consumer project using ELC.
 
 ## Output Contract
 
@@ -3138,7 +3138,7 @@ Return:
 3. Category scores and concrete findings.
 4. Failed checks with exact file paths.
 5. Top 3 actions from the deterministic output (\`top_actions\`).
-6. Suggested ECC skills to apply next.
+6. Suggested ELC skills to apply next.
 
 ## Checklist
 
@@ -3504,7 +3504,7 @@ Shows learned instincts for the current project plus global instincts, grouped b
 
 ## Implementation
 
-Run the instinct CLI, resolving the active ECC plugin root the same way
+Run the instinct CLI, resolving the active ELC plugin root the same way
 \`hooks/hooks.json\` and the other slash commands (\`/sessions\`, \`/skill-health\`)
 do — env var → standard install → known plugin roots → plugin cache → fallback.
 This avoids the divergence that happens when \`LEGION_PLUGIN_ROOT\` is unset
@@ -3512,8 +3512,8 @@ while a legacy \`~/.legion/skills/continuous-learning-v2/\` directory still
 exists (#2037).
 
 \`\`\`bash
-ECC_ROOT="\${LEGION_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
-python3 "\$ECC_ROOT/skills/continuous-learning-v2/scripts/instinct-cli.py" status
+ELC_ROOT="\${LEGION_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-elc-root')).resolveElcRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['elc','elc@elc','marketplaces/elc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['elc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
+python3 "\$ELC_ROOT/skills/continuous-learning-v2/scripts/instinct-cli.py" status
 \`\`\`
 
 ## Usage
@@ -4515,7 +4515,7 @@ Start a managed autonomous loop pattern with safety defaults.
 ## Required Safety Checks
 
 - Verify tests pass before first loop iteration.
-- Ensure \`ECC_HOOK_PROFILE\` is not disabled globally.
+- Ensure \`ELC_HOOK_PROFILE\` is not disabled globally.
 - Ensure loop has explicit stop condition.
 
 ## Arguments
@@ -4538,7 +4538,7 @@ need to inspect a wedged or sibling session, run the packaged CLI from another
 terminal:
 
 \`\`\`bash
-npx --package ecc-universal ecc loop-status --json
+npx --package elc-universal elc loop-status --json
 \`\`\`
 
 The CLI scans local Legion transcript JSONL files under
@@ -4559,24 +4559,24 @@ tool calls that have no matching \`tool_result\`.
 
 ## Cross-Session CLI
 
-- \`ecc loop-status --json\` emits machine-readable status for recent local
+- \`elc loop-status --json\` emits machine-readable status for recent local
   Legion transcripts.
-- \`ecc loop-status --home <dir>\` scans a different home directory when
+- \`elc loop-status --home <dir>\` scans a different home directory when
   inspecting another local profile or mounted workspace.
-- \`ecc loop-status --transcript <session.jsonl>\` inspects one transcript
+- \`elc loop-status --transcript <session.jsonl>\` inspects one transcript
   directly.
-- \`ecc loop-status --bash-timeout-seconds 1800\` adjusts the stale Bash
+- \`elc loop-status --bash-timeout-seconds 1800\` adjusts the stale Bash
   threshold.
-- \`ecc loop-status --exit-code\` exits \`2\` when stale loop or tool signals are
+- \`elc loop-status --exit-code\` exits \`2\` when stale loop or tool signals are
   found, or \`1\` when transcripts cannot be scanned.
 - \`--exit-code\` with \`--watch\` requires \`--watch-count\` so watchdog scripts do
   not wait forever for a process exit.
-- \`ecc loop-status --watch\` refreshes status until interrupted.
-- \`ecc loop-status --watch --watch-count 3 --exit-code\` refreshes a bounded
+- \`elc loop-status --watch\` refreshes status until interrupted.
+- \`elc loop-status --watch --watch-count 3 --exit-code\` refreshes a bounded
   number of times, then exits with the highest status seen.
-- \`ecc loop-status --watch --watch-count 3\` emits a bounded watch stream for
+- \`elc loop-status --watch --watch-count 3\` emits a bounded watch stream for
   scripts and handoffs.
-- \`ecc loop-status --watch --write-dir ~/.legion/loops\` maintains
+- \`elc loop-status --watch --write-dir ~/.legion/loops\` maintains
   \`index.json\` and per-session JSON snapshots for sibling terminals or
   watchdog scripts.
 
@@ -4775,7 +4775,7 @@ description: Run a backend-focused multi-model workflow for APIs, algorithms, da
 
 Backend-focused workflow (Research → Ideation → Plan → Execute → Optimize → Review), Codex-led.
 
-> **Prerequisite:** Requires the external \`ccg-workflow\` runtime, which is **not** part of the base ECC install. Initialize it with \`npx ccg-workflow\` to provision \`~/.legion/bin/codeagent-wrapper\` and the \`~/.legion/.ccg/prompts/*\` role files this command depends on. Without that runtime, this command will not run correctly.
+> **Prerequisite:** Requires the external \`ccg-workflow\` runtime, which is **not** part of the base ELC install. Initialize it with \`npx ccg-workflow\` to provision \`~/.legion/bin/codeagent-wrapper\` and the \`~/.legion/.ccg/prompts/*\` role files this command depends on. Without that runtime, this command will not run correctly.
 
 ## Usage
 
@@ -4941,7 +4941,7 @@ description: Execute a multi-model implementation plan while preserving Legion a
 
 Multi-model collaborative execution - Get prototype from plan → Legion refactors and implements → Multi-model audit and delivery.
 
-> **Prerequisite:** Requires the external \`ccg-workflow\` runtime, which is **not** part of the base ECC install. Initialize it with \`npx ccg-workflow\` to provision \`~/.legion/bin/codeagent-wrapper\` and the \`~/.legion/.ccg/prompts/*\` role files this command depends on. Without that runtime, this command will not run correctly.
+> **Prerequisite:** Requires the external \`ccg-workflow\` runtime, which is **not** part of the base ELC install. Initialize it with \`npx ccg-workflow\` to provision \`~/.legion/bin/codeagent-wrapper\` and the \`~/.legion/.ccg/prompts/*\` role files this command depends on. Without that runtime, this command will not run correctly.
 
 \$ARGUMENTS
 
@@ -5264,7 +5264,7 @@ description: Run a frontend-focused multi-model workflow for components, layouts
 
 Frontend-focused workflow (Research → Ideation → Plan → Execute → Optimize → Review), Gemini-led.
 
-> **Prerequisite:** Requires the external \`ccg-workflow\` runtime, which is **not** part of the base ECC install. Initialize it with \`npx ccg-workflow\` to provision \`~/.legion/bin/codeagent-wrapper\` and the \`~/.legion/.ccg/prompts/*\` role files this command depends on. Without that runtime, this command will not run correctly.
+> **Prerequisite:** Requires the external \`ccg-workflow\` runtime, which is **not** part of the base ELC install. Initialize it with \`npx ccg-workflow\` to provision \`~/.legion/bin/codeagent-wrapper\` and the \`~/.legion/.ccg/prompts/*\` role files this command depends on. Without that runtime, this command will not run correctly.
 
 ## Usage
 
@@ -5430,7 +5430,7 @@ description: Create a multi-model implementation plan without modifying producti
 
 Multi-model collaborative planning - Context retrieval + Dual-model analysis → Generate step-by-step implementation plan.
 
-> **Prerequisite:** Requires the external \`ccg-workflow\` runtime, which is **not** part of the base ECC install. Initialize it with \`npx ccg-workflow\` to provision \`~/.legion/bin/codeagent-wrapper\` and the \`~/.legion/.ccg/prompts/*\` role files this command depends on. Without that runtime, this command will not run correctly.
+> **Prerequisite:** Requires the external \`ccg-workflow\` runtime, which is **not** part of the base ELC install. Initialize it with \`npx ccg-workflow\` to provision \`~/.legion/bin/codeagent-wrapper\` and the \`~/.legion/.ccg/prompts/*\` role files this command depends on. Without that runtime, this command will not run correctly.
 
 \$ARGUMENTS
 
@@ -5706,7 +5706,7 @@ description: Run a full multi-model development workflow with research, planning
 
 Multi-model collaborative development workflow (Research → Ideation → Plan → Execute → Optimize → Review), with intelligent routing: Frontend → Gemini, Backend → Codex.
 
-> **Prerequisite:** Requires the external \`ccg-workflow\` runtime, which is **not** part of the base ECC install. Initialize it with \`npx ccg-workflow\` to provision \`~/.legion/bin/codeagent-wrapper\` and the \`~/.legion/.ccg/prompts/*\` role files this command depends on. Without that runtime, this command will not run correctly.
+> **Prerequisite:** Requires the external \`ccg-workflow\` runtime, which is **not** part of the base ELC install. Initialize it with \`npx ccg-workflow\` to provision \`~/.legion/bin/codeagent-wrapper\` and the \`~/.legion/.ccg/prompts/*\` role files this command depends on. Without that runtime, this command will not run correctly.
 
 Structured development workflow with quality gates, MCP services, and multi-model collaboration.
 
@@ -6415,7 +6415,7 @@ After planning:
 
 ## Optional Planner Agent
 
-ECC also provides a \`planner\` agent for manual installs that include agent files. Use it only when the local runtime already exposes that subagent and the user explicitly asks you to delegate planning.
+ELC also provides a \`planner\` agent for manual installs that include agent files. Use it only when the local runtime already exposes that subagent and the user explicitly asks you to delegate planning.
 
 If the \`planner\` subagent is unavailable, continue planning inline instead of surfacing an "Agent type 'planner' not found" error.
 
@@ -6430,7 +6430,7 @@ argument-hint: "[path/to/artifact.plan.md | path/to/artifact.html]"
 
 # Plan Canvas Command
 
-Opens a local artifact in the Plan Canvas — ECC's browser review surface —
+Opens a local artifact in the Plan Canvas — ELC's browser review surface —
 where the user annotates elements, chats with you, and approves the plan or
 requests changes without leaving the page.
 
@@ -6441,8 +6441,8 @@ skill for the full workflow and rules.
 
 1. Resolve the artifact: the given path, else the most recently modified
    \`.legion/plans/*.plan.md\`, else ask what to review.
-2. \`ecc-plan-canvas open <artifact>\` — opens the user's browser.
-3. \`ecc-plan-canvas await <artifact>\` — block until feedback,
+2. \`elc-plan-canvas open <artifact>\` — opens the user's browser.
+3. \`elc-plan-canvas await <artifact>\` — block until feedback,
    verdict, or session end; leave it running.
 4. Apply feedback to the artifact file (the canvas live-reloads), answer with
    \`await <artifact> --reply "..."\`, and repeat until the user approves or
@@ -7097,12 +7097,12 @@ Next steps:
 `
 
 const CMD_project_init = `---
-description: Detect a project's stack and produce a dry-run ECC onboarding plan using the repository's install manifests and stack mappings.
+description: Detect a project's stack and produce a dry-run ELC onboarding plan using the repository's install manifests and stack mappings.
 ---
 
 # /project-init
 
-Create a safe, reviewable ECC onboarding plan for the current project. This command should start in dry-run mode and only write files after explicit user approval.
+Create a safe, reviewable ELC onboarding plan for the current project. This command should start in dry-run mode and only write files after explicit user approval.
 
 ## Usage
 
@@ -7112,14 +7112,14 @@ Create a safe, reviewable ECC onboarding plan for the current project. This comm
 /project-init --target legion
 /project-init --target cursor
 /project-init --skills continuous-learning-v2,security-review
-/project-init --config ecc-install.json
+/project-init --config elc-install.json
 \`\`\`
 
 ## Safety Rules
 
 1. Default to dry-run. Do not modify \`LEGION.md\`, settings files, rules, skills, or install state until the user approves the concrete plan.
 2. Preserve existing project guidance. If \`LEGION.md\`, \`.legion/settings.local.json\`, \`.cursor/\`, \`.codex/\`, \`.gemini/\`, \`.opencode/\`, \`.codebuddy/\`, \`.joycode/\`, or \`.qwen/\` already exists, inspect it and propose a merge/append plan instead of overwriting.
-3. Use ECC's installer and manifest tooling. Do not hand-copy files or clone arbitrary remotes as an install shortcut.
+3. Use ELC's installer and manifest tooling. Do not hand-copy files or clone arbitrary remotes as an install shortcut.
 4. Keep permissions narrow. Any generated settings should match detected build/test/lint tools and avoid broad shell access.
 5. Report exactly what would change before applying anything.
 
@@ -7130,17 +7130,17 @@ Read the current project root and detect stack signals from:
 - package manager files: \`package.json\`, \`package-lock.json\`, \`pnpm-lock.yaml\`, \`yarn.lock\`, \`bun.lockb\`
 - language manifests: \`pyproject.toml\`, \`requirements.txt\`, \`go.mod\`, \`Cargo.toml\`, \`pom.xml\`, \`build.gradle\`, \`build.gradle.kts\`
 - framework files: \`next.config.*\`, \`vite.config.*\`, \`tailwind.config.*\`, \`Dockerfile\`, \`docker-compose.yml\`
-- ECC config: \`ecc-install.json\`
-- optional stack map: \`config/project-stack-mappings.json\` in the ECC repo
+- ELC config: \`elc-install.json\`
+- optional stack map: \`config/project-stack-mappings.json\` in the ELC repo
 
-When the ECC checkout is available, use \`config/project-stack-mappings.json\` as the stack-to-rules/skills reference. If the file is unavailable, fall back to the installed ECC manifests and explicit user choices.
+When the ELC checkout is available, use \`config/project-stack-mappings.json\` as the stack-to-rules/skills reference. If the file is unavailable, fall back to the installed ELC manifests and explicit user choices.
 
 ## Planning Flow
 
 1. Identify the target harness. Default to \`legion\` unless the user asks for \`cursor\`, \`codex\`, \`gemini\`, \`opencode\`, \`codebuddy\`, \`joycode\`, or \`qwen\`.
 2. Detect stacks from project files and show the evidence for each match.
-3. Resolve the smallest useful ECC plan:
-   - project has an \`ecc-install.json\`: \`node scripts/install-plan.js --config ecc-install.json --json\`
+3. Resolve the smallest useful ELC plan:
+   - project has an \`elc-install.json\`: \`node scripts/install-plan.js --config elc-install.json --json\`
    - user named a profile: \`node scripts/install-plan.js --profile <profile> --target <target> --json\`
    - user named skills: \`node scripts/install-plan.js --skills <skill-ids> --target <target> --json\`
    - only language stacks are detected: use the legacy language install dry-run with those language names
@@ -7181,7 +7181,7 @@ Never replace an existing \`LEGION.md\` without showing a diff and receiving app
 - \`config/project-stack-mappings.json\` for stack-to-surface hints
 - \`scripts/install-plan.js\` for deterministic plan resolution
 - \`scripts/install-apply.js\` for dry-run and apply operations
-- \`/ecc-guide\` for interactive feature discovery before installing
+- \`/elc-guide\` for interactive feature discovery before installing
 `
 
 const CMD_projects = `---
@@ -8891,7 +8891,7 @@ This will automatically select the next pending phase and create an implementati
 
 ---
 
-## Integration with ECC
+## Integration with ELC
 
 After PRD generation:
 - Use \`/prp-plan\` to create implementation plans from PRD phases
@@ -9241,7 +9241,7 @@ Ensure your project's \`pyproject.toml\` or \`setup.py\` specifies the correct m
 `
 
 const CMD_quality_gate = `---
-description: Run the ECC formatter quality gate for a single file and report remediation steps.
+description: Run the ELC formatter quality gate for a single file and report remediation steps.
 ---
 
 # Quality Gate Command
@@ -9256,8 +9256,8 @@ The gate is a single-file formatter check driven by hook input, not CLI flags:
 - The script reads the target from the hook's stdin JSON
   (\`tool_input.file_path\`); it does not take a path argument.
 - Behavior toggles are environment variables:
-  - \`ECC_QUALITY_GATE_FIX=true\` - apply formatting fixes instead of check-only
-  - \`ECC_QUALITY_GATE_STRICT=true\` - log formatter failures as gate failures
+  - \`ELC_QUALITY_GATE_FIX=true\` - apply formatting fixes instead of check-only
+  - \`ELC_QUALITY_GATE_STRICT=true\` - log formatter failures as gate failures
 - Coverage by file type:
   - \`.ts/.tsx/.js/.jsx/.json/.md\` - Biome \`check\` or Prettier \`--check\`,
     whichever the project ships (JS/TS under Biome is skipped here because
@@ -9274,7 +9274,7 @@ script (set the env toggles first if you want fix or strict behavior):
 
 \`\`\`bash
 echo '{"tool_input":{"file_path":"src/example.ts"}}' \\
-  | ECC_QUALITY_GATE_FIX=true node scripts/hooks/quality-gate.js
+  | ELC_QUALITY_GATE_FIX=true node scripts/hooks/quality-gate.js
 \`\`\`
 
 Then report formatter findings and concrete remediation steps.
@@ -11303,7 +11303,7 @@ Then test with Postman — the response should include a \`Set-Cookie\` header.
 
 const CMD_security_scan = `---
 description: Run AgentShield against agent, hook, MCP, permission, and secret surfaces.
-agent: ecc:security-reviewer
+agent: elc:security-reviewer
 subtask: true
 ---
 
@@ -11325,7 +11325,7 @@ Run AgentShield against the current project or a target path, then turn the find
 Prefer the packaged scanner:
 
 \`\`\`bash
-npx ecc-agentshield scan --path "\${TARGET_PATH:-.}" --format text
+npx elc-agentshield scan --path "\${TARGET_PATH:-.}" --format text
 \`\`\`
 
 For local AgentShield development, run from the AgentShield checkout:
@@ -11426,7 +11426,7 @@ Use \`/sessions info\` when you need operator-surface context for a swarm: branc
 **Script:**
 \`\`\`bash
 node -e "
-const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
+const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-elc-root')).resolveElcRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['elc','elc@elc','marketplaces/elc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['elc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
 const sm = require(_r + '/scripts/lib/session-manager');
 const aa = require(_r + '/scripts/lib/session-aliases');
 const path = require('path');
@@ -11468,7 +11468,7 @@ Load and display a session's content (by ID or alias).
 **Script:**
 \`\`\`bash
 node -e "
-const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
+const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-elc-root')).resolveElcRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['elc','elc@elc','marketplaces/elc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['elc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
 const sm = require(_r + '/scripts/lib/session-manager');
 const aa = require(_r + '/scripts/lib/session-aliases');
 const id = process.argv[1];
@@ -11542,7 +11542,7 @@ Create a memorable alias for a session.
 **Script:**
 \`\`\`bash
 node -e "
-const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
+const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-elc-root')).resolveElcRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['elc','elc@elc','marketplaces/elc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['elc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
 const sm = require(_r + '/scripts/lib/session-manager');
 const aa = require(_r + '/scripts/lib/session-aliases');
 
@@ -11583,7 +11583,7 @@ Delete an existing alias.
 **Script:**
 \`\`\`bash
 node -e "
-const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
+const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-elc-root')).resolveElcRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['elc','elc@elc','marketplaces/elc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['elc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
 const aa = require(_r + '/scripts/lib/session-aliases');
 
 const aliasName = process.argv[1];
@@ -11613,7 +11613,7 @@ Show detailed information about a session.
 **Script:**
 \`\`\`bash
 node -e "
-const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
+const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-elc-root')).resolveElcRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['elc','elc@elc','marketplaces/elc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['elc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
 const sm = require(_r + '/scripts/lib/session-manager');
 const aa = require(_r + '/scripts/lib/session-aliases');
 
@@ -11664,7 +11664,7 @@ Show all session aliases.
 **Script:**
 \`\`\`bash
 node -e "
-const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
+const _r = (function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-elc-root')).resolveElcRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['elc','elc@elc','marketplaces/elc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['elc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();
 const aa = require(_r + '/scripts/lib/session-aliases');
 
 const aliases = aa.listAliases();
@@ -11956,22 +11956,22 @@ Shows a comprehensive health dashboard for all skills in the portfolio with succ
 Run the skill health CLI in dashboard mode:
 
 \`\`\`bash
-ECC_ROOT="\${LEGION_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
-node "\$ECC_ROOT/scripts/skills-health.js" --dashboard
+ELC_ROOT="\${LEGION_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-elc-root')).resolveElcRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['elc','elc@elc','marketplaces/elc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['elc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
+node "\$ELC_ROOT/scripts/skills-health.js" --dashboard
 \`\`\`
 
 For a specific panel only:
 
 \`\`\`bash
-ECC_ROOT="\${LEGION_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
-node "\$ECC_ROOT/scripts/skills-health.js" --dashboard --panel failures
+ELC_ROOT="\${LEGION_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-elc-root')).resolveElcRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['elc','elc@elc','marketplaces/elc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['elc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
+node "\$ELC_ROOT/scripts/skills-health.js" --dashboard --panel failures
 \`\`\`
 
 For machine-readable output:
 
 \`\`\`bash
-ECC_ROOT="\${LEGION_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-ecc-root')).resolveEccRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['ecc','ecc@ecc','marketplaces/ecc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['ecc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
-node "\$ECC_ROOT/scripts/skills-health.js" --dashboard --json
+ELC_ROOT="\${LEGION_PLUGIN_ROOT:-\$(node -e "var r=(function(){var p=require('path'),f=require('fs'),o=require('os');var e=process.env.LEGION_PLUGIN_ROOT;if(e&&e.trim())return e.trim();var d=p.join(o.homedir(),'.legion');function L(x){try{return require(p.join(x,'scripts','lib','resolve-elc-root')).resolveElcRoot()}catch(_){return null}}var r=L(d);if(r)return r;var s=['elc','elc@elc','marketplaces/elc','everything-legion','everything-legion@everything-legion','marketplaces/everything-legion'];for(var i=0;i<s.length;i++){r=L(p.join(d,'plugins',s[i]));if(r)return r}try{var g=['elc','everything-legion'];for(var j=0;j<g.length;j++){var c=p.join(d,'plugins','cache',g[j]);var O=f.readdirSync(c);for(var k=0;k<O.length;k++){var q=p.join(c,O[k]);var V=f.readdirSync(q);for(var m=0;m<V.length;m++){r=L(p.join(q,V[m]));if(r)return r}}}}catch(_){}return d})();console.log(r)")}"
+node "\$ELC_ROOT/scripts/skills-health.js" --dashboard --json
 \`\`\`
 
 ## Usage
@@ -12418,15 +12418,15 @@ Recommendation: FAIL: Block merge until CRITICAL issue is fixed
 
 export const ELC_COMMANDS: ElcCommand[] = [
   { name: "aside", description: "Answer a quick side question without interrupting or losing context from the current task. Resume work automatically after answering.", content: CMD_aside },
-  { name: "auto-update", description: "Pull the latest ECC repo changes and reinstall the current managed targets.", content: CMD_auto_update },
+  { name: "auto-update", description: "Pull the latest ELC repo changes and reinstall the current managed targets.", content: CMD_auto_update },
   { name: "build-fix", description: "Detect the project build system and incrementally fix build/type errors with minimal safe changes.", content: CMD_build_fix },
   { name: "checkpoint", description: "Create, verify, or list workflow checkpoints after running verification checks.", content: CMD_checkpoint },
   { name: "code-review", description: "Code review — local uncommitted changes or GitHub PR (pass PR number/URL for PR mode)", content: CMD_code_review },
-  { name: "cost-report", description: "Generate a local Legion CLI cost report from the ECC cost-tracker metrics log.", content: CMD_cost_report },
+  { name: "cost-report", description: "Generate a local Legion CLI cost report from the ELC cost-tracker metrics log.", content: CMD_cost_report },
   { name: "cpp-build", description: "Fix C++ build errors, CMake issues, and linker problems incrementally. Invokes the cpp-build-resolver agent for minimal, surgical fixes.", content: CMD_cpp_build },
   { name: "cpp-review", description: "Comprehensive C++ code review for memory safety, modern C++ idioms, concurrency, and security. Invokes the cpp-reviewer agent.", content: CMD_cpp_review },
   { name: "cpp-test", description: "Enforce TDD workflow for C++. Write GoogleTest tests first, then implement. Verify coverage with gcov/lcov.", content: CMD_cpp_test },
-  { name: "ecc-guide", description: "Navigate ECC's current agents, skills, commands, hooks, install profiles, and docs from the live repository surface.", content: CMD_ecc_guide },
+  { name: "elc-guide", description: "Navigate ELC's current agents, skills, commands, hooks, install profiles, and docs from the live repository surface.", content: CMD_elc_guide },
   { name: "epic-claim", description: "Claim an epic issue, stamp coordination state, and sync local ownership.", content: CMD_epic_claim },
   { name: "epic-decompose", description: "Break an epic into task children without creating task branches.", content: CMD_epic_decompose },
   { name: "epic-publish", description: "Publish a validated epic update back to the issue and local cache.", content: CMD_epic_publish },
@@ -12480,7 +12480,7 @@ export const ELC_COMMANDS: ElcCommand[] = [
   { name: "plan-prd", description: "\"Generate a lean, problem-first PRD and hand off to /plan for implementation planning.\"", content: CMD_plan_prd },
   { name: "pm2", description: "Analyze a project and generate PM2 service commands for detected frontend, backend, or database services.", content: CMD_pm2 },
   { name: "pr", description: "\"Create a GitHub PR from current branch with unpushed commits — discovers templates, analyzes changes, pushes\"", content: CMD_pr },
-  { name: "project-init", description: "Detect a project's stack and produce a dry-run ECC onboarding plan using the repository's install manifests and stack mappings.", content: CMD_project_init },
+  { name: "project-init", description: "Detect a project's stack and produce a dry-run ELC onboarding plan using the repository's install manifests and stack mappings.", content: CMD_project_init },
   { name: "projects", description: "List known projects and their instinct statistics", content: CMD_projects },
   { name: "promote", description: "Promote project-scoped instincts to global scope", content: CMD_promote },
   { name: "prp-commit", description: "\"Quick commit with natural language file targeting — describe what to commit in plain English\"", content: CMD_prp_commit },
@@ -12490,7 +12490,7 @@ export const ELC_COMMANDS: ElcCommand[] = [
   { name: "prp-prd", description: "\"Interactive PRD generator - problem-first, hypothesis-driven product spec with back-and-forth questioning\"", content: CMD_prp_prd },
   { name: "prune", description: "Delete pending instincts older than 30 days that were never promoted", content: CMD_prune },
   { name: "python-review", description: "Comprehensive Python code review for PEP 8 compliance, type hints, security, and Pythonic idioms. Invokes the python-reviewer agent.", content: CMD_python_review },
-  { name: "quality-gate", description: "Run the ECC formatter quality gate for a single file and report remediation steps.", content: CMD_quality_gate },
+  { name: "quality-gate", description: "Run the ELC formatter quality gate for a single file and report remediation steps.", content: CMD_quality_gate },
   { name: "react-build", description: "Fix React build failures (Vite, webpack, Next.js, CRA, Parcel, esbuild, Bun) incrementally — JSX/TSX compile errors, hydration mismatches, server/client component boundary failures, missing types. Invokes the react-build-resolver agent for minimal, surgical fixes.", content: CMD_react_build },
   { name: "react-review", description: "Comprehensive React/JSX code review for hook correctness, render performance, server/client component boundaries, accessibility, and React-specific security. Invokes the react-reviewer agent (and typescript-reviewer alongside on TSX/JSX changes).", content: CMD_react_review },
   { name: "react-test", description: "Enforce TDD workflow for React. Write React Testing Library tests first (behavior-focused, accessibility-first), then implement components. Detects Vitest or Jest and verifies coverage targets.", content: CMD_react_test },

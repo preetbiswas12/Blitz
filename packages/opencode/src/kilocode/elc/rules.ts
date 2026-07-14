@@ -1853,7 +1853,7 @@ const RULE_common_git_workflow_md = `# Git Workflow
 
 Types: feat, fix, refactor, docs, test, chore, perf, ci
 
-Note: To disable co-author attribution on commits, set \`"includeCoAuthoredBy": false\` in \`~/.legion/settings.json\` (Legion CLI appends \`Co-Authored-By\` by default; ECC does not ship this setting).
+Note: To disable co-author attribution on commits, set \`"includeCoAuthoredBy": false\` in \`~/.legion/settings.json\` (Legion CLI appends \`Co-Authored-By\` by default; ELC does not ship this setting).
 
 ## Pull Request Workflow
 
@@ -5028,7 +5028,7 @@ Three distinct files, do not conflate.
 
 ## Reference
 
-- ECC skills: \`nuxt4-patterns\`, \`vite-patterns\`, \`frontend-patterns\`.
+- ELC skills: \`nuxt4-patterns\`, \`vite-patterns\`, \`frontend-patterns\`.
 - [Nuxt directory structure](https://nuxt.com/docs/guide/directory-structure/app)
 - [Nuxt configuration](https://nuxt.com/docs/api/nuxt-config)
 `
@@ -5069,7 +5069,7 @@ These are Legion CLI harness hooks for Nuxt work. They run via the harness, not 
 
 ## Reference
 
-- ECC skills: \`nuxt4-patterns\`, \`vite-patterns\`.
+- ELC skills: \`nuxt4-patterns\`, \`vite-patterns\`.
 - [@nuxt/eslint module](https://eslint.nuxt.com/)
 - [nuxi typecheck](https://nuxt.com/docs/api/commands/typecheck)
 `
@@ -5124,7 +5124,7 @@ Load-bearing. Pick by render timing, not habit.
 
 ## Reference
 
-- ECC skills: \`nuxt4-patterns\`, \`vite-patterns\`, \`frontend-patterns\`.
+- ELC skills: \`nuxt4-patterns\`, \`vite-patterns\`, \`frontend-patterns\`.
 - [Nuxt data fetching](https://nuxt.com/docs/getting-started/data-fetching)
 - [Nuxt state management](https://nuxt.com/docs/getting-started/state-management)
 - [Nuxt server engine (Nitro)](https://nuxt.com/docs/guide/directory-structure/server)
@@ -5175,7 +5175,7 @@ paths:
 
 ## Reference
 
-- ECC skills: \`security-review\`, \`nuxt4-patterns\`.
+- ELC skills: \`security-review\`, \`nuxt4-patterns\`.
 - [Nuxt runtime config](https://nuxt.com/docs/guide/going-further/runtime-config)
 - [h3 request utils](https://v1.h3.dev/utils/request)
 `
@@ -5226,7 +5226,7 @@ Import from \`@nuxt/test-utils/e2e\`.
 
 ## Reference
 
-- ECC skills: \`nuxt4-patterns\`, \`e2e-testing\`, \`vite-patterns\`.
+- ELC skills: \`nuxt4-patterns\`, \`e2e-testing\`, \`vite-patterns\`.
 - [Nuxt testing docs](https://nuxt.com/docs/getting-started/testing)
 - [@nuxt/test-utils npm](https://www.npmjs.com/package/@nuxt/test-utils)
 `
@@ -5936,7 +5936,7 @@ paths:
 ---
 # React Native / Expo Accessibility
 
-> Extends the ECC quality bar to accessibility (a11y). Treat a11y as a release requirement, not an afterthought.
+> Extends the ELC quality bar to accessibility (a11y). Treat a11y as a release requirement, not an afterthought.
 > Target: usable with screen readers (VoiceOver on iOS, TalkBack on Android) and at large font sizes.
 
 ## Labeling
@@ -6086,7 +6086,7 @@ These are recommended PostToolUse automations to keep RN/Expo code healthy. Wire
 
 - Do not run heavy native builds inside fast edit hooks; keep edit-time hooks to typecheck/lint/format.
 - Reserve \`eas build\` / E2E for explicit commands or CI, not per-edit automation.
-- Keep these consistent with ECC hook runtime controls (\`ECC_HOOK_PROFILE\`, \`ECC_DISABLED_HOOKS\`).
+- Keep these consistent with ELC hook runtime controls (\`ELC_HOOK_PROFILE\`, \`ELC_DISABLED_HOOKS\`).
 `
 
 const RULE_react_native_patterns_md = `---
@@ -6148,7 +6148,7 @@ The rule is to keep these concerns separate and not duplicate server data into c
 Use a server-cache library (TanStack Query, SWR) instead of ad-hoc fetch-in-\`useEffect\`. The examples use TanStack Query.
 
 - Route server reads through the cache (e.g. \`useQuery\`) and mutations through it (e.g. \`useMutation\`) with cache invalidation.
-- Validate API responses with Zod at the boundary; infer types from the schema. (Zod is already the validation default in ECC's \`typescript/\` rules.)
+- Validate API responses with Zod at the boundary; infer types from the schema. (Zod is already the validation default in ELC's \`typescript/\` rules.)
 - Handle the three states explicitly in UI: loading, error, empty.
 - Use optimistic updates for fast interactions: snapshot, apply, roll back on failure with visible feedback.
 - Fetch independent data in parallel; avoid request waterfalls between parent and child.
@@ -6233,7 +6233,7 @@ paths:
 ---
 # React Native / Expo Production Readiness
 
-> Extends the ECC philosophy to ship-grade concerns that style/pattern rules cannot encode by themselves.
+> Extends the ELC philosophy to ship-grade concerns that style/pattern rules cannot encode by themselves.
 > A clean codebase is necessary but not sufficient for production — these items are mandatory before release.
 
 ## Architecture
@@ -8747,7 +8747,7 @@ const open = defineModel<boolean>('open', { default: false })
 
 ## Reference
 
-- ECC skills: \`frontend-patterns\`, \`vite-patterns\`.
+- ELC skills: \`frontend-patterns\`, \`vite-patterns\`.
 - Docs: <https://vuejs.org/api/sfc-script-setup.html> · <https://vuejs.org/guide/essentials/reactivity-fundamentals.html> · <https://eslint.vuejs.org/>
 `
 
@@ -8794,7 +8794,7 @@ vue-tsc --noEmit
 
 ## Reference
 
-- ECC skills: \`frontend-patterns\`, \`vite-patterns\`.
+- ELC skills: \`frontend-patterns\`, \`vite-patterns\`.
 - Docs: <https://github.com/vuejs/language-tools> (vue-tsc) · <https://eslint.vuejs.org/> · <https://github.com/feature-sliced/steiger>
 `
 
@@ -8852,7 +8852,7 @@ queryClient.invalidateQueries({ queryKey: ['auction', id] })
 
 ## Reference
 
-- ECC skills: \`frontend-patterns\`, \`vite-patterns\`.
+- ELC skills: \`frontend-patterns\`, \`vite-patterns\`.
 - Docs: <https://pinia.vuejs.org/> · <https://router.vuejs.org/> · <https://tanstack.com/query/latest/docs/framework/vue/overview> · <https://vuejs.org/guide/reusability/composables.html>
 `
 
@@ -8900,7 +8900,7 @@ paths:
 
 ## Reference
 
-- ECC skills: \`frontend-patterns\`, \`vite-patterns\`.
+- ELC skills: \`frontend-patterns\`, \`vite-patterns\`.
 - Docs: <https://vuejs.org/guide/best-practices/security.html> · <https://github.com/cure53/DOMPurify> · <https://github.com/braintree/sanitize-url>
 `
 
@@ -8955,7 +8955,7 @@ expect(wrapper.emitted('bid')).toBeTruthy()
 
 ## Reference
 
-- ECC skills: \`frontend-patterns\`, \`vite-patterns\`.
+- ELC skills: \`frontend-patterns\`, \`vite-patterns\`.
 - Docs: <https://test-utils.vuejs.org/api/> · <https://pinia.vuejs.org/cookbook/testing.html> · <https://vitest.dev/>
 `
 
@@ -9121,7 +9121,7 @@ Every meaningful frontend surface should demonstrate at least four of these:
 2. Define a palette intentionally.
 3. Choose typography deliberately.
 4. Gather at least a small set of real references.
-5. Use ECC design/frontend skills where relevant.
+5. Use ELC design/frontend skills where relevant.
 
 ## Worthwhile Style Directions
 

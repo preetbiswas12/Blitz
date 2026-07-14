@@ -17,6 +17,7 @@ import { DEFAULT_HEADERS } from "@/kilocode/const" // kilocode_change
 import { LegionSession} from "@/kilocode/session"
 import { stripInternalOptions } from "@/kilocode/agent/options"
 import { formatMemoryContext } from "@/kilocode/memory"
+import { detectEmotions, formatEmotionContext } from "@/kilocode/emotion"
 // kilocode_change end
 
 type PrepareInput = {
@@ -61,6 +62,21 @@ export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: Pre
   const instCtx = yield* InstanceState.context
   const memoryContent = yield* Effect.promise(() => formatMemoryContext(instCtx.directory))
   // kilocode_change end
+  // kilocode_change start - detect user emotions from latest message
+  const lastUserMsg = input.messages.findLast((m) => m.role === "user")
+  const userText =
+    typeof lastUserMsg?.content === "string"
+      ? lastUserMsg.content
+      : Array.isArray(lastUserMsg?.content)
+        ? (lastUserMsg.content as Array<{ type: string; text?: string }>)
+            .filter((p) => p.type === "text" && p.text)
+            .map((p) => p.text)
+            .join(" ")
+        : ""
+  const detectedEmotions = detectEmotions(userText)
+  const emotionContext = formatEmotionContext(detectedEmotions)
+  // kilocode_change end
+
   const system = [
     [
       // kilocode_change start - soul defines core identity and personality
@@ -70,6 +86,9 @@ export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: Pre
       ...(input.agent.prompt ? [input.agent.prompt] : SystemPrompt.provider(input.model)),
       // kilocode_change start - inject project memory into system prompt
       ...(memoryContent ? [memoryContent] : []),
+      // kilocode_change end
+      // kilocode_change start - inject detected emotional state
+      ...(emotionContext ? [emotionContext] : []),
       // kilocode_change end
       ...input.system,
       ...(input.user.system ? [input.user.system] : []),

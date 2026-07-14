@@ -1,9 +1,8 @@
 // kilocode_change - new file
-import { Effect, Context, Layer } from "effect"
+import { Effect, Context, Layer, Ref } from "effect"
 import * as Log from "@opencode-ai/core/util/log"
 import * as fs from "fs/promises"
 import * as path from "path"
-import { InstanceState } from "@/effect/instance-state"
 
 const log = Log.create({ service: "memory" })
 
@@ -61,57 +60,55 @@ async function saveMemoryFile(entries: MemoryEntry[]): Promise<void> {
 }
 
 export interface Interface {
-  readonly load: Effect.Effect<{ entries: MemoryEntry[]; legionMd: string | null }>
+  readonly load: (cwd: string) => Effect.Effect<{ entries: MemoryEntry[]; legionMd: string | null }>
   readonly save: (input: { key: string; content: string; source?: "user" | "auto" }) => Effect.Effect<MemoryEntry>
   readonly remove: (input: { key: string }) => Effect.Effect<boolean>
   readonly list: Effect.Effect<MemoryEntry[]>
-  readonly formatContext: Effect.Effect<string>
+  readonly formatContext: (cwd: string) => Effect.Effect<string>
   readonly autoSaveLearnings: (input: { learnings: string[] }) => Effect.Effect<number>
 }
 
 export class Service extends Context.Service<Service, Interface>()("@opencode/Memory") {}
 
+function initialState(): MemoryState {
+  return {
+    entries: new Map(),
+    legionMdContent: null,
+  }
+}
+
 export const layer = Layer.effect(
   Service,
   Effect.gen(function* () {
-    const state = yield* InstanceState.make<MemoryState>(
-      Effect.fn("Memory.state")(() =>
-        Effect.succeed({
-          entries: new Map(),
-          legionMdContent: null,
-        }),
-      ),
-    )
+    const ref = yield* Ref.make(initialState())
 
-    const load = Effect.fn("Memory.load")(function* () {
-      const ctx = yield* InstanceState.context
-      const s = yield* InstanceState.get(state)
-      const cwd = ctx.directory
+    const load = (cwd: string) =>
+      Effect.fn("Memory.load")(function* () {
+        const s = yield* Ref.get(ref)
 
-      if (s.legionMdContent === null) {
-        s.legionMdContent = yield* Effect.promise(() => loadLegionMd(cwd))
-      }
-
-      if (s.entries.size === 0) {
-        const entries = yield* Effect.promise(() => loadMemoryFile())
-        for (const entry of entries) {
-          s.entries.set(entry.key, entry)
+        if (s.legionMdContent === null) {
+          const content = yield* Effect.promise(() => loadLegionMd(cwd))
+          yield* Ref.update(ref, (prev) => ({ ...prev, legionMdContent: content }))
         }
-      }
 
-      const entries = Array.from(s.entries.values())
-      const legionMd = s.legionMdContent
+        if (s.entries.size === 0) {
+          const entries = yield* Effect.promise(() => loadMemoryFile())
+          const updated = new Map(s.entries)
+          for (const entry of entries) {
+            updated.set(entry.key, entry)
+          }
+          yield* Ref.update(ref, (prev) => ({ ...prev, entries: updated }))
+        }
 
-      return { entries, legionMd }
-    })
+        const current = yield* Ref.get(ref)
+        return { entries: Array.from(current.entries.values()), legionMd: current.legionMdContent }
+      })()
 
     const save = Effect.fn("Memory.save")(function* (input: {
       key: string
       content: string
       source?: "user" | "auto"
     }) {
-      const s = yield* InstanceState.get(state)
-
       const entry: MemoryEntry = {
         key: input.key,
         content: input.content,
@@ -119,63 +116,68 @@ export const layer = Layer.effect(
         timestamp: Date.now(),
       }
 
-      s.entries.set(entry.key, entry)
+      const s = yield* Ref.get(ref)
+      const updated = new Map(s.entries)
+      updated.set(entry.key, entry)
+      yield* Ref.update(ref, (prev) => ({ ...prev, entries: updated }))
 
-      const entries = Array.from(s.entries.values())
-      yield* Effect.promise(() => saveMemoryFile(entries))
-
+      yield* Effect.promise(() => saveMemoryFile(Array.from(updated.values())))
       log.info("saved memory", { key: entry.key })
       return entry
     })
 
     const remove = Effect.fn("Memory.remove")(function* (input: { key: string }) {
-      const s = yield* InstanceState.get(state)
-      s.entries.delete(input.key)
+      const s = yield* Ref.get(ref)
+      const updated = new Map(s.entries)
+      updated.delete(input.key)
+      yield* Ref.update(ref, (prev) => ({ ...prev, entries: updated }))
 
-      const entries = Array.from(s.entries.values())
-      yield* Effect.promise(() => saveMemoryFile(entries))
-
+      yield* Effect.promise(() => saveMemoryFile(Array.from(updated.values())))
       log.info("removed memory", { key: input.key })
       return true
     })
 
     const list = Effect.fn("Memory.list")(function* () {
-      const s = yield* InstanceState.get(state)
+      const s = yield* Ref.get(ref)
 
       if (s.entries.size === 0) {
         const entries = yield* Effect.promise(() => loadMemoryFile())
+        const updated = new Map(s.entries)
         for (const entry of entries) {
-          s.entries.set(entry.key, entry)
+          updated.set(entry.key, entry)
         }
+        yield* Ref.update(ref, (prev) => ({ ...prev, entries: updated }))
+        return entries
       }
 
       return Array.from(s.entries.values())
     })
 
-    const formatContext = Effect.fn("Memory.formatContext")(function* () {
-      const { entries, legionMd } = yield* load()
+    const formatContext = (cwd: string) =>
+      Effect.fn("Memory.formatContext")(function* () {
+        const { entries, legionMd } = yield* load(cwd)
 
-      const lines: string[] = []
+        const lines: string[] = []
 
-      if (legionMd) {
-        lines.push("# Project Memory (LEGION.md)")
-        lines.push("")
-        lines.push(legionMd)
-        lines.push("")
-      }
-
-      if (entries.length > 0) {
-        lines.push("# Session Memory")
-        lines.push("")
-        for (const entry of entries) {
-          lines.push(`## ${entry.key}`)
-          lines.push(entry.content)
+        if (legionMd) {
+          lines.push("# Project Memory (LEGION.md)")
+          lines.push("")
+          lines.push(legionMd)
           lines.push("")
         }
-      }
 
-      return lines.join("\n")
-    })
+        if (entries.length > 0) {
+          lines.push("# Session Memory")
+          lines.push("")
+          for (const entry of entries) {
+            lines.push(`## ${entry.key}`)
+            lines.push(entry.content)
+            lines.push("")
+          }
+        }
+
+        return lines.join("\n")
+      })()
 
     const autoSaveLearnings = Effect.fn("Memory.autoSaveLearnings")(function* (input: {
       learnings: string[]

@@ -50,10 +50,10 @@ export const GitPRCreateTool = Tool.define(
     description:
       "Create a GitHub PR from the current branch. Pushes the branch and creates a PR with title and optional body.",
     parameters: zod(Schema.Struct({
-      title: Schema.String.describe("PR title"),
-      body: Schema.optional(Schema.String).describe("PR description/body"),
-      base: Schema.optional(Schema.String).describe("Base branch (default: main)"),
-      draft: Schema.optional(Schema.Boolean).describe("Create as draft PR"),
+      title: Schema.String.annotate({ description: "PR title" }),
+      body: Schema.optional(Schema.String).annotate({ description: "PR description/body" }),
+      base: Schema.optional(Schema.String).annotate({ description: "Base branch (default: main)" }),
+      draft: Schema.optional(Schema.Boolean).annotate({ description: "Create as draft PR" }),
     })),
     execute: async (args, ctx) => {
       const cwd = process.cwd()
@@ -111,8 +111,8 @@ export const GitPRListTool = Tool.define(
   {
     description: "List open GitHub PRs for the current repository",
     parameters: zod(Schema.Struct({
-      state: Schema.optional(Schema.String).describe("PR state filter (default: open)"),
-      limit: Schema.optional(Schema.Number).describe("Maximum number of PRs to show (default: 10)"),
+      state: Schema.optional(Schema.String).annotate({ description: "PR state filter (default: open)" }),
+      limit: Schema.optional(Schema.Number).annotate({ description: "Maximum number of PRs to show (default: 10)" }),
     })),
     execute: async (args, ctx) => {
       const cwd = process.cwd()

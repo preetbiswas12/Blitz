@@ -97,8 +97,8 @@ export const GitConflictResolveTool = Tool.define(
     description:
       "Resolve merge conflicts in a file using a specified strategy (ours, theirs, or manual)",
     parameters: zod(Schema.Struct({
-      file: Schema.String.describe("Path to the file with conflicts"),
-      strategy: Schema.optional(Schema.String).describe("Resolution strategy (default: ours)"),
+      file: Schema.String.annotate({ description: "Path to the file with conflicts" }),
+      strategy: Schema.optional(Schema.String).annotate({ description: "Resolution strategy (default: ours)" }),
     })),
     execute: async (args, ctx) => {
       const cwd = process.cwd()

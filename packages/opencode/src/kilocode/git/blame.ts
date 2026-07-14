@@ -40,9 +40,9 @@ export const GitBlameTool = Tool.define(
   {
     description: "Show git blame for a file, displaying who last modified each line",
     parameters: zod(Schema.Struct({
-      file: Schema.String.describe("Path to the file to blame"),
-      line: Schema.optional(Schema.Number).describe("Show blame for a specific line number"),
-      range: Schema.optional(Schema.String).describe("Line range (e.g., '10-20')"),
+      file: Schema.String.annotate({ description: "Path to the file to blame" }),
+      line: Schema.optional(Schema.Number).annotate({ description: "Show blame for a specific line number" }),
+      range: Schema.optional(Schema.String).annotate({ description: "Line range (e.g., '10-20')" }),
     })),
     execute: async (args, ctx) => {
       const cwd = process.cwd()

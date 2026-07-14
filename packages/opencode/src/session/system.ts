@@ -130,7 +130,7 @@ export function provider(model: Provider.Model) {
 export interface Interface {
   readonly environment: (model: Provider.Model, editorContext?: EditorContext) => Effect.Effect<string[]> // kilocode_change
   readonly skills: (agent: Agent.Info) => Effect.Effect<string | undefined>
-  readonly memory: (cwd: string) => Effect.Effect<string> // kilocode_change
+  readonly memory: Effect.Effect<string> // kilocode_change
 }
 
 export class Service extends Context.Service<Service, Interface>()("@opencode/SystemPrompt") {}
@@ -167,8 +167,9 @@ export const layer = Layer.effect(
       }),
 
       // kilocode_change start
-      memory: (cwd: string) => Effect.fn("SystemPrompt.memory")(function* () {
-        const content = yield* mem.formatContext(cwd)
+      memory: Effect.fn("SystemPrompt.memory")(function* () {
+        const ctx = yield* InstanceState.context
+        const content = yield* mem.formatContext(ctx.directory)
         if (!content) return ""
         return [
           "# Project Memory",

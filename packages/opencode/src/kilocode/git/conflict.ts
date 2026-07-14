@@ -1,8 +1,7 @@
 // kilocode_change - new file
 import * as Tool from "../../tool/tool"
-import { Schema } from "effect"
+import { Effect, Schema } from "effect"
 import { zod } from "@opencode-ai/core/effect-zod"
-import { Effect } from "effect"
 import * as Log from "@opencode-ai/core/util/log"
 import * as fs from "fs/promises"
 import * as path from "path"
@@ -93,7 +92,7 @@ function resolveWithStrategy(
 
 export const GitConflictResolveTool = Tool.define(
   "git_conflict_resolve",
-  {
+  Effect.succeed({
     description:
       "Resolve merge conflicts in a file using a specified strategy (ours, theirs, or manual)",
     parameters: zod(Schema.Struct({
@@ -140,13 +139,12 @@ export const GitConflictResolveTool = Tool.define(
         }
       }
     },
-  },
-  () => ({})
+  }),
 )
 
 export const GitConflictListTool = Tool.define(
   "git_conflict_list",
-  {
+  Effect.succeed({
     description: "List all files with merge conflicts in the current repository",
     parameters: zod(Schema.Struct({})),
     execute: async (args, ctx) => {
@@ -182,6 +180,5 @@ export const GitConflictListTool = Tool.define(
         }
       }
     },
-  },
-  () => ({})
+  }),
 )

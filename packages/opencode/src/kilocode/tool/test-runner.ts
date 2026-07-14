@@ -1,6 +1,6 @@
 // kilocode_change - new file
 import * as Tool from "../../tool/tool"
-import { Schema } from "effect"
+import { Effect, Schema } from "effect"
 import { zod } from "@opencode-ai/core/effect-zod"
 import * as Log from "@opencode-ai/core/util/log"
 import { execSync } from "child_process"
@@ -170,7 +170,7 @@ function parseOutput(framework: Framework, output: string): TestResult {
 
 export const TestRunnerTool = Tool.define(
   "test_runner",
-  {
+  Effect.succeed({
     description:
       "Run tests with auto-detection of framework (vitest, jest, pytest, go, cargo, maven, gradle), parse results, and suggest fixes for failures",
     parameters: zod(Schema.Struct({
@@ -236,6 +236,5 @@ export const TestRunnerTool = Tool.define(
         output: lines.join("\n"),
       }
     },
-  },
-  () => ({}) // metadata type
+  }),
 )

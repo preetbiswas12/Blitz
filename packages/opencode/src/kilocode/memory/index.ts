@@ -4,7 +4,7 @@ import * as Log from "@opencode-ai/core/util/log"
 import * as fs from "fs/promises"
 import * as path from "path"
 import { InstanceState } from "@/effect/instance-state"
-import { Bus } from "@/event"
+import { Bus } from "@/bus"
 
 const log = Log.create({ service: "memory" })
 

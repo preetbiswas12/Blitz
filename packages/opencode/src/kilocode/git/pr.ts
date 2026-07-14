@@ -1,5 +1,6 @@
 // kilocode_change - new file
 import * as Tool from "../../tool/tool"
+import { Schema } from "effect"
 import { zod } from "@opencode-ai/core/effect-zod"
 import * as Log from "@opencode-ai/core/util/log"
 import { execSync } from "child_process"
@@ -48,12 +49,12 @@ export const GitPRCreateTool = Tool.define(
   {
     description:
       "Create a GitHub PR from the current branch. Pushes the branch and creates a PR with title and optional body.",
-    parameters: zod({
-      title: zod.string().describe("PR title"),
-      body: zod.string().optional().describe("PR description/body"),
-      base: zod.string().optional().describe("Base branch (default: main)"),
-      draft: zod.boolean().optional().describe("Create as draft PR"),
-    }),
+    parameters: zod(Schema.Struct({
+      title: Schema.String.describe("PR title"),
+      body: Schema.optional(Schema.String).describe("PR description/body"),
+      base: Schema.optional(Schema.String).describe("Base branch (default: main)"),
+      draft: Schema.optional(Schema.Boolean).describe("Create as draft PR"),
+    })),
     execute: async (args, ctx) => {
       const cwd = process.cwd()
 
@@ -109,10 +110,10 @@ export const GitPRListTool = Tool.define(
   "git_pr_list",
   {
     description: "List open GitHub PRs for the current repository",
-    parameters: zod({
-      state: zod.enum(["open", "closed", "all"]).optional().describe("PR state filter (default: open)"),
-      limit: zod.number().optional().describe("Maximum number of PRs to show (default: 10)"),
-    }),
+    parameters: zod(Schema.Struct({
+      state: Schema.optional(Schema.String).describe("PR state filter (default: open)"),
+      limit: Schema.optional(Schema.Number).describe("Maximum number of PRs to show (default: 10)"),
+    })),
     execute: async (args, ctx) => {
       const cwd = process.cwd()
 

@@ -1,5 +1,6 @@
 // kilocode_change - new file
 import * as Tool from "../../tool/tool"
+import { Schema } from "effect"
 import { zod } from "@opencode-ai/core/effect-zod"
 import * as Log from "@opencode-ai/core/util/log"
 import { execSync } from "child_process"
@@ -172,12 +173,12 @@ export const TestRunnerTool = Tool.define(
   {
     description:
       "Run tests with auto-detection of framework (vitest, jest, pytest, go, cargo, maven, gradle), parse results, and suggest fixes for failures",
-    parameters: zod({
-      command: zod.string().optional().describe("Custom test command (overrides auto-detection)"),
-      pattern: zod.string().optional().describe("Test file pattern (e.g., '**/*.test.ts')"),
-      retry: zod.boolean().optional().describe("Retry failed tests with different strategies"),
-      coverage: zod.boolean().optional().describe("Include coverage report"),
-    }),
+    parameters: zod(Schema.Struct({
+      command: Schema.optional(Schema.String).describe("Custom test command (overrides auto-detection)"),
+      pattern: Schema.optional(Schema.String).describe("Test file pattern (e.g., '**/*.test.ts')"),
+      retry: Schema.optional(Schema.Boolean).describe("Retry failed tests with different strategies"),
+      coverage: Schema.optional(Schema.Boolean).describe("Include coverage report"),
+    })),
     execute: async (args, ctx) => {
       const cwd = process.cwd()
       const framework = detectFramework(cwd)

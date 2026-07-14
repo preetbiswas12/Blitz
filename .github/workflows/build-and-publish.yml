@@ -24,7 +24,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -50,54 +50,49 @@ jobs:
         env:
           KILO_VERSION: ${{ inputs.version }}
           KILO_BUMP: ${{ inputs.bump || 'patch' }}
-          GH_TOKEN: ${{ github.token }}
-
-      - name: Upload platform artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: platform-packages
-          path: packages/opencode/dist/@legioncli-*/
-          retention-days: 5
-
-      - name: Upload main package
-        uses: actions/upload-artifact@v4
-        with:
-          name: main-package
-          path: |
-            packages/opencode/dist/@legioncli/
-            !packages/opencode/dist/@legioncli/**/*.map
-          retention-days: 5
-
-  publish:
-    needs: build
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           registry-url: "https://registry.npmjs.org"
 
-      - name: Download platform packages
-        uses: actions/download-artifact@v4
-        with:
-          name: platform-packages
-          path: dist-platforms
+      - name: Create main package
+        working-directory: packages/opencode
+        run: |
+          mkdir -p dist/@legioncli
+          cp -r bin dist/@legioncli/bin
+          cp script/postinstall.mjs dist/@legioncli/postinstall.mjs
+          cp ../../LICENSE dist/@legioncli/LICENSE
+          cp README.md dist/@legioncli/README.md
 
-      - name: Download main package
-        uses: actions/download-artifact@v4
-        with:
-          name: main-package
-          path: dist-main
+          VERSION=$(cat dist/@legioncli-linux-x64/package.json | grep '"version"' | head -1 | sed 's/.*: *"//;s/".*//')
+
+          cat > dist/@legioncli/package.json << EOF
+          {
+            "name": "@legioncli",
+            "version": "$VERSION",
+            "bin": {
+              "legion": "./bin/legion",
+              "legioncli": "./bin/legion"
+            },
+            "scripts": {
+              "postinstall": "node ./postinstall.mjs"
+            },
+            "license": "MIT",
+            "os": ["darwin", "linux", "win32"],
+            "cpu": ["arm64", "x64"],
+            "private": false
+          }
+          EOF
 
       - name: Publish platform packages
+        working-directory: packages/opencode
         run: |
-          for dir in dist-platforms/@legioncli-*/; do
+          for dir in dist/@legioncli-*/; do
             if [ -d "$dir" ]; then
               echo "Publishing $dir"
               cd "$dir"
-              npm publish --access public --provenance || echo "Failed to publish $dir"
+              npm publish --access public --provenance || echo "Warning: failed to publish $dir"
               cd -
             fi
           done
@@ -105,8 +100,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish main package
-        run: |
-          cd dist-main/@legioncli
-          npm publish --access public --provenance
+        working-directory: packages/opencode/dist/@legioncli
+        run: npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

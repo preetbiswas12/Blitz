@@ -58,10 +58,12 @@ function compareVersion(
 }
 
 async function fetchLatest() {
-  const data: any = await fetch("https://registry.npmjs.org/@legioncli/latest").then((res) => {
-    if (!res.ok) throw new Error(res.statusText)
-    return res.json()
-  })
+  const data: any = await fetch("https://registry.npmjs.org/@legioncli/latest")
+    .then((res) => {
+      if (!res.ok) throw new Error(res.statusText)
+      return res.json()
+    })
+    .catch(() => ({ version: "1.0.0" }))
   return data.version as string
 }
 
@@ -101,53 +103,13 @@ const VERSION = await (async () => {
     return `0.0.0-${CHANNEL}-${new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "")}`
   }
   const version = await fetchHighest() // kilocode_change
+  if (version === "1.0.0") return version // kilocode_change - first release, no prior version to bump from
   return bumpVersion(version, env.KILO_BUMP?.toLowerCase() ?? "patch") // kilocode_change
 })()
 
-// kilocode_change start
 const team = [
-  "actions-user",
-  "kilo-maintainer[bot]",
-  "kiloconnect[bot]",
-  "kiloconnect-lite[bot]",
-  "alexkgold",
-  "arimesser",
-  "arkadiykondrashov",
-  "bturcotte520",
-  "catrielmuller",
-  "chrarnoldus",
-  "codingelves",
-  "darkogj",
-  "dependabot[bot]",
-  "dosire",
-  "DScdng",
-  "emilieschario",
-  "eshurakov",
-  "Helix-Kilo",
-  "iscekic",
-  "jeanduplessis",
-  "jobrietbergen",
-  "jrf0110",
-  "johnnyeric",
-  "alex-alecu",
-  "imanolmzd-svg",
-  "kilocode-bot",
-  "kilo-code-bot",
-  "kilo-code-bot[bot]",
-  "kirillk",
-  "lambertjosh",
-  "LigiaZ",
-  "marius-kilocode",
-  "markijbema",
-  "olearycrew",
-  "pandemicsyn",
-  "pedroheyerdahl",
-  "RSO",
-  "sbreitenother",
-  "suhailkc2025",
-  "Sureshkumars",
+  "preetbiswas12",
 ]
-// kilocode_change end
 
 export const Script = {
   get channel() {
@@ -166,4 +128,4 @@ export const Script = {
     return team
   },
 }
-console.log(`kilo script`, JSON.stringify(Script, null, 2)) // kilocode_change
+console.log(`legion script`, JSON.stringify(Script, null, 2)) // kilocode_change

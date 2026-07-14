@@ -173,10 +173,10 @@ export const TestRunnerTool = Tool.define(
     description:
       "Run tests with auto-detection of framework (vitest, jest, pytest, go, cargo, maven, gradle), parse results, and suggest fixes for failures",
     parameters: zod({
-      command: z.string().optional().describe("Custom test command (overrides auto-detection)"),
-      pattern: z.string().optional().describe("Test file pattern (e.g., '**/*.test.ts')"),
-      retry: z.boolean().optional().describe("Retry failed tests with different strategies"),
-      coverage: z.boolean().optional().describe("Include coverage report"),
+      command: zod.string().optional().describe("Custom test command (overrides auto-detection)"),
+      pattern: zod.string().optional().describe("Test file pattern (e.g., '**/*.test.ts')"),
+      retry: zod.boolean().optional().describe("Retry failed tests with different strategies"),
+      coverage: zod.boolean().optional().describe("Include coverage report"),
     }),
     execute: async (args, ctx) => {
       const cwd = process.cwd()

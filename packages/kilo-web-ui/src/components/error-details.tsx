@@ -1,1 +1,1 @@
-export * from "@Legioncode/kilo-ui/error-details"
+export * from "@legion/kilo-ui/error-details"

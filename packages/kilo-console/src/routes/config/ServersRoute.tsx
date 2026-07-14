@@ -1,5 +1,5 @@
-import { Button } from "@Legioncode/kilo-web-ui/button"
-import { Card } from "@Legioncode/kilo-web-ui/card"
+import { Button } from "@legion/kilo-web-ui/button"
+import { Card } from "@legion/kilo-web-ui/card"
 import { For, Show, createMemo, createSignal } from "solid-js"
 import { useConfig } from "../../context/config"
 import { ConfigPage, ConfigTag as Tag, ConfigToolbar } from "./ConfigPage"

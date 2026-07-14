@@ -1,6 +1,6 @@
 import { createUniqueId, Show } from "solid-js"
-import { Button } from "@Legioncode/kilo-web-ui/button"
-import { Icon } from "@Legioncode/kilo-web-ui/icon"
+import { Button } from "@legion/kilo-web-ui/button"
+import { Icon } from "@legion/kilo-web-ui/icon"
 
 type Props = {
   open: boolean

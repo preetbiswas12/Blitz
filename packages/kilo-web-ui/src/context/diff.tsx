@@ -1,1 +1,1 @@
-export * from "@Legioncode/kilo-ui/context/diff"
+export * from "@legion/kilo-ui/context/diff"

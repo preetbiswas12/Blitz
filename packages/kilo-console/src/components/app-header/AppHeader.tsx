@@ -1,4 +1,4 @@
-import { IconButton } from "@Legioncode/kilo-web-ui/icon-button"
+import { IconButton } from "@legion/kilo-web-ui/icon-button"
 import { OmniSearch } from "./OmniSearch"
 
 export function AppHeader() {

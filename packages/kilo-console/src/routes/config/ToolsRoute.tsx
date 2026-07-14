@@ -1,5 +1,5 @@
 import { createMemo, createSignal, For, Show } from "solid-js"
-import { ConfigRow, SectionTitle, StatusTag } from "@Legioncode/kilo-web-ui/console"
+import { ConfigRow, SectionTitle, StatusTag } from "@legion/kilo-web-ui/console"
 import { SearchField } from "../../components/SearchField"
 import { useConfig } from "../../context/config"
 import { toolCapabilities, toolName } from "../../shared/utils"

@@ -1,5 +1,5 @@
 import { splitProps, type Component } from "solid-js"
-import { ProviderIcon as Icon, type ProviderIconProps } from "@Legioncode/kilo-ui/provider-icon"
+import { ProviderIcon as Icon, type ProviderIconProps } from "@legion/kilo-ui/provider-icon"
 
 export type { ProviderIconProps }
 

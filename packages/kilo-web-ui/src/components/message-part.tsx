@@ -1,1 +1,1 @@
-export * from "@Legioncode/kilo-ui/message-part"
+export * from "@legion/kilo-ui/message-part"

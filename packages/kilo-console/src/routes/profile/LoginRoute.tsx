@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "@solidjs/router"
-import { Button } from "@Legioncode/kilo-web-ui/button"
-import { Card } from "@Legioncode/kilo-web-ui/card"
+import { Button } from "@legion/kilo-web-ui/button"
+import { Card } from "@legion/kilo-web-ui/card"
 import { createEffect, createMemo, createSignal, Match, onCleanup, Show, Switch } from "solid-js"
 import { LoadingScreen } from "../../components/LoadingScreen"
 import { completeKiloLogin, loadKiloProfile, startKiloLogin, type ProjectQuery } from "../../client"

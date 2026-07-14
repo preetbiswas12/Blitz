@@ -1,6 +1,6 @@
 import { createEffect, createMemo, createResource, createSignal, For, Show } from "solid-js"
 import { A } from "@solidjs/router"
-import { Card } from "@Legioncode/kilo-web-ui/card"
+import { Card } from "@legion/kilo-web-ui/card"
 import { SearchField } from "../../components/SearchField"
 import { LoadingScreen } from "../../components/LoadingScreen"
 import {

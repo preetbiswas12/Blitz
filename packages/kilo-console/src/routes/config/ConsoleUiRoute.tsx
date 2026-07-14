@@ -1,7 +1,7 @@
 import { Show } from "solid-js"
-import { Button } from "@Legioncode/kilo-web-ui/button"
-import { Card } from "@Legioncode/kilo-web-ui/card"
-import { Spinner } from "@Legioncode/kilo-web-ui/spinner"
+import { Button } from "@legion/kilo-web-ui/button"
+import { Card } from "@legion/kilo-web-ui/card"
+import { Spinner } from "@legion/kilo-web-ui/spinner"
 import { CustomSelect, type SelectOption } from "../../components/CustomSelect"
 import { ConfigPage } from "./ConfigPage"
 import {

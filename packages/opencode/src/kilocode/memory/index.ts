@@ -4,7 +4,6 @@ import * as Log from "@opencode-ai/core/util/log"
 import * as fs from "fs/promises"
 import * as path from "path"
 import { InstanceState } from "@/effect/instance-state"
-import { Bus } from "@/bus"
 
 const log = Log.create({ service: "memory" })
 
@@ -75,9 +74,6 @@ export class Service extends Context.Service<Service, Interface>()("@opencode/Me
 export const layer = Layer.effect(
   Service,
   Effect.gen(function* () {
-    const ctx = yield* InstanceState.context
-    const bus = yield* Bus.Service
-
     const state = yield* InstanceState.make<MemoryState>(
       Effect.fn("Memory.state")(() =>
         Effect.succeed({
@@ -88,15 +84,14 @@ export const layer = Layer.effect(
     )
 
     const load = Effect.fn("Memory.load")(function* () {
+      const ctx = yield* InstanceState.context
       const s = yield* InstanceState.get(state)
       const cwd = ctx.directory
 
-      // Load LEGION.md if not cached
       if (s.legionMdContent === null) {
         s.legionMdContent = yield* Effect.promise(() => loadLegionMd(cwd))
       }
 
-      // Load memory entries if empty
       if (s.entries.size === 0) {
         const entries = yield* Effect.promise(() => loadMemoryFile())
         for (const entry of entries) {
@@ -126,7 +121,6 @@ export const layer = Layer.effect(
 
       s.entries.set(entry.key, entry)
 
-      // Persist to file
       const entries = Array.from(s.entries.values())
       yield* Effect.promise(() => saveMemoryFile(entries))
 
@@ -138,7 +132,6 @@ export const layer = Layer.effect(
       const s = yield* InstanceState.get(state)
       s.entries.delete(input.key)
 
-      // Persist to file
       const entries = Array.from(s.entries.values())
       yield* Effect.promise(() => saveMemoryFile(entries))
 
@@ -205,6 +198,6 @@ export const layer = Layer.effect(
   }),
 )
 
-export const defaultLayer = layer.pipe(Layer.provide(Bus.layer))
+export const defaultLayer = layer
 
 export * as Memory from "./index"

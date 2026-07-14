@@ -139,7 +139,6 @@ export const layer = Layer.effect(
   Service,
   Effect.gen(function* () {
     const skill = yield* Skill.Service
-    const mem = yield* Memory.Service // kilocode_change
 
     return Service.of({
       // kilocode_change start
@@ -168,6 +167,7 @@ export const layer = Layer.effect(
 
       // kilocode_change start
       memory: Effect.fn("SystemPrompt.memory")(function* () {
+        const mem = yield* Memory.Service
         const ctx = yield* InstanceState.context
         const content = yield* mem.formatContext(ctx.directory)
         if (!content) return ""

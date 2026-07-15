@@ -79,6 +79,10 @@ jobs:
               "postinstall": "node ./postinstall.mjs"
             },
             "license": "MIT",
+            "repository": {
+              "type": "git",
+              "url": "https://github.com/preetbiswas12/Blitz"
+            },
             "os": ["darwin", "linux", "win32"],
             "cpu": ["arm64", "x64"],
             "private": false

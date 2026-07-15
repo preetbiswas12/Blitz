@@ -420,7 +420,7 @@ for (const item of targets) {
         private: pkg.private,
         repository: {
           type: "git",
-          url: "https://github.com/preetbiswas12/blitz",
+          url: "https://github.com/preetbiswas12/Blitz",
         },
         // kilocode_change end
       },

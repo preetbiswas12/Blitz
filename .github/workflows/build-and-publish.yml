@@ -37,16 +37,21 @@ jobs:
           if [ -n "${{ inputs.version }}" ]; then
             echo "version=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
           else
-            LATEST=$(npm view @legioncli/cli version 2>/dev/null || echo "1.1.0")
-            echo "Latest published: $LATEST"
-            IFS='.' read -r MAJOR MINOR PATCH <<< "$LATEST"
-            BUMP="${{ inputs.bump || 'patch' }}"
-            if [ "$BUMP" = "major" ]; then
-              echo "version=$((MAJOR+1)).0.0" >> "$GITHUB_OUTPUT"
-            elif [ "$BUMP" = "minor" ]; then
-              echo "version=${MAJOR}.$((MINOR+1)).0" >> "$GITHUB_OUTPUT"
+            LATEST=$(npm view @legioncli/cli version 2>/dev/null || echo "")
+            if [ -z "$LATEST" ]; then
+              echo "No published version found, defaulting to 1.0.0"
+              echo "version=1.0.0" >> "$GITHUB_OUTPUT"
             else
-              echo "version=${MAJOR}.${MINOR}.$((PATCH+1))" >> "$GITHUB_OUTPUT"
+              echo "Latest published: $LATEST"
+              IFS='.' read -r MAJOR MINOR PATCH <<< "$LATEST"
+              BUMP="${{ inputs.bump || 'patch' }}"
+              if [ "$BUMP" = "major" ]; then
+                echo "version=$((MAJOR+1)).0.0" >> "$GITHUB_OUTPUT"
+              elif [ "$BUMP" = "minor" ]; then
+                echo "version=${MAJOR}.$((MINOR+1)).0" >> "$GITHUB_OUTPUT"
+              else
+                echo "version=${MAJOR}.${MINOR}.$((PATCH+1))" >> "$GITHUB_OUTPUT"
+              fi
             fi
           fi
 
@@ -75,11 +80,12 @@ jobs:
       - name: Publish platform packages
         working-directory: packages/opencode
         run: |
+          set -euo pipefail
           for dir in dist/@legioncli/cli-*/; do
             if [ -d "$dir" ]; then
               PKG_NAME=$(cat "$dir/package.json" | grep '"name"' | head -1 | sed 's/.*: *"//;s/".*//')
               PKG_VERSION=$(cat "$dir/package.json" | grep '"version"' | head -1 | sed 's/.*: *"//;s/".*//')
-              if npm view "$PKG_NAME@$PKG_VERSION" version >/dev/null 2>&1; then
+              if npm view "$PKG_NAME@$PKG_VERSION" version 2>/dev/null | grep -q "$PKG_VERSION"; then
                 echo "Already published $PKG_NAME@$PKG_VERSION, skipping"
                 continue
               fi
@@ -110,6 +116,7 @@ jobs:
       - name: Create and publish main package
         working-directory: packages/opencode
         run: |
+          set -euo pipefail
           mkdir -p dist/@legioncli/cli
           cp -r bin dist/@legioncli/cli/bin
           cp script/postinstall.mjs dist/@legioncli/cli/postinstall.mjs
@@ -159,7 +166,7 @@ jobs:
           echo "Main package.json:"
           cat dist/@legioncli/cli/package.json
 
-          if npm view "@legioncli/cli@$VERSION" version >/dev/null 2>&1; then
+          if npm view "@legioncli/cli@$VERSION" version 2>/dev/null | grep -q "$VERSION"; then
             echo "Already published @legioncli/cli@$VERSION, skipping"
             exit 0
           fi

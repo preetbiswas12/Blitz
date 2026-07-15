@@ -40,10 +40,10 @@ jobs:
           if [ -n "${{ inputs.version }}" ]; then
             echo "version=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
           else
-            LATEST=$(npm view @legioncli/cli version 2>/dev/null || echo "0.0.0")
+            LATEST=$(npm view @legioncli/cli version 2>/dev/null || echo "1.0.0")
             echo "Latest published: $LATEST"
             IFS='.' read -r MAJOR MINOR PATCH <<< "$LATEST"
-            BUMP="${{ inputs.bump || 'patch' }}"
+            BUMP="${{ inputs.bump || 'minor' }}"
             if [ "$BUMP" = "major" ]; then
               echo "version=$((MAJOR+1)).0.0" >> "$GITHUB_OUTPUT"
             elif [ "$BUMP" = "minor" ]; then

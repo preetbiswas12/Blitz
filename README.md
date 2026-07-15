@@ -1,10 +1,11 @@
 <p align="center">
-  <h1 align="center">Blitz</h1>
-  <p align="center">The open source coding agent for building with AI.</p>
+  <img src="packages/opencode/home.png" alt="Legion CLI" width="700" />
+  <h1 align="center">Legion CLI</h1>
+  <p align="center">The open source AI coding agent for building with AI.</p>
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@legioncode/cli"><img alt="npm" src="https://raster.shields.io/npm/v/@legioncode/cli?style=flat" height="20" /></a>
+  <a href="https://www.npmjs.com/package/@legioncli/cli"><img alt="npm" src="https://raster.shields.io/npm/v/@legioncli/cli?style=flat" height="20" /></a>
   <a href="https://x.com/legioncode"><img src="https://raster.shields.io/badge/legioncode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="20"></a>
   <a href="https://legion.ai/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
   <a href="https://www.reddit.com/r/legioncode/"><img src="https://raster.shields.io/badge/Join%20r%2Flegioncode-D84315?style=flat&logo=reddit&logoColor=white" alt="Reddit" height="20"></a>
@@ -12,22 +13,22 @@
 
 ---
 
-Blitz is an open source AI coding agent. You pick from 500+ models, switch between them mid-task, and pay the model provider's rate with zero markup. No API keys required to start.
+Legion CLI is an open source AI coding agent. You pick from 500+ models, switch between them mid-task, and pay the model provider's rate with zero markup. No API keys required to start.
 
 ### Installation
 
 ```bash
 # npm
-npm install -g @legioncode/cli
+npm install -g @legioncli/cli
 
 # curl
 curl -fsSL https://legion.ai/cli/install | bash
 
 # pnpm
-pnpm add -g @legioncode/cli
+pnpm add -g @legioncli/cli
 
 # bun
-bun add -g @legioncode/cli
+bun add -g @legioncli/cli
 
 # Homebrew (macOS / Linux)
 brew install Legion-Org/tap/blitz
@@ -41,21 +42,24 @@ Then run `legion` in any project directory to start.
 <details>
 <summary>Install from GitHub Releases (binaries)</summary>
 
-Download the latest binary from the [Releases page](https://github.com/Legion-Org/legioncode/releases).
+Download the latest binary from the [Releases page](https://github.com/preetbiswas12/Blitz/releases).
 
 | Platform | Asset |
 |---|---|
 | Windows (most PCs) | `legion-windows-x64.zip` |
+| Windows (ARM) | `legion-windows-arm64.zip` |
 | macOS (Apple Silicon) | `legion-darwin-arm64.zip` |
 | macOS (Intel) | `legion-darwin-x64.zip` |
 | Linux x64 | `legion-linux-x64.tar.gz` |
 | Linux ARM | `legion-linux-arm64.tar.gz` |
+| Linux x64 (musl/Alpine) | `legion-linux-x64-musl.tar.gz` |
+| Linux ARM (musl/Alpine) | `legion-linux-arm64-musl.tar.gz` |
 
 </details>
 
 ### Agents
 
-Blitz ships with specialized agents you switch between depending on the task. You can also build your own custom agents.
+Legion CLI ships with specialized agents you switch between depending on the task. You can also build your own custom agents.
 
 - **Code** - The default. Implements and edits code from natural language.
 - **Plan** - Designs architecture and writes implementation plans before any code gets written.
@@ -72,6 +76,8 @@ Learn more about [agents and custom agents](https://legion.ai/docs/code-with-ai/
 - **Terminal and browser control** to run commands and automate the web.
 - **MCP marketplace** to find and wire up MCP servers that extend what the agent can do.
 - **500+ models** with mid-task switching, so you can match latency, cost, and reasoning to the job.
+- **Codebase indexing** with tree-sitter for fast, accurate code navigation and understanding.
+- **Sandbox execution** for safely running untrusted code in isolated environments.
 
 ### Autonomous Mode (CI/CD)
 
@@ -100,9 +106,16 @@ MIT. You're free to use, modify, and distribute this code, including commerciall
 ### FAQ
 
 <details>
-<summary>Where did Blitz come from?</summary>
+<summary>Where did Legion CLI come from?</summary>
 
-Blitz is a fork of [OpenCode](https://github.com/anomalyco/opencode), enhanced to work as a standalone BYOK (Bring Your Own Key) coding agent.
+Legion CLI is a fork of [OpenCode](https://github.com/anomalyco/opencode), enhanced to work as a standalone BYOK (Bring Your Own Key) coding agent with additional features like codebase indexing, sandbox execution, and a built-in console.
+
+</details>
+
+<details>
+<summary>What models are supported?</summary>
+
+Legion CLI supports 500+ models through multiple providers including Anthropic, OpenAI, Google, OpenRouter, and more. You can bring your own API keys or use the built-in provider routing. Switch models mid-task with `/model`.
 
 </details>
 

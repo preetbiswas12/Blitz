@@ -74,7 +74,6 @@ jobs:
         env:
           KILO_VERSION: ${{ steps.version.outputs.version }}
           KILO_BUMP: ${{ inputs.bump || 'patch' }}
-          KILO_RELEASE: "1"
 
       - name: Remove source maps to reduce package size
         run: |

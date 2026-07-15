@@ -40,10 +40,10 @@ jobs:
           if [ -n "${{ inputs.version }}" ]; then
             echo "version=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
           else
-            LATEST=$(npm view @legioncli/cli version 2>/dev/null || echo "1.0.0")
+            LATEST=$(npm view @legioncli/cli version 2>/dev/null || echo "1.1.0")
             echo "Latest published: $LATEST"
             IFS='.' read -r MAJOR MINOR PATCH <<< "$LATEST"
-            BUMP="${{ inputs.bump || 'minor' }}"
+            BUMP="${{ inputs.bump || 'patch' }}"
             if [ "$BUMP" = "major" ]; then
               echo "version=$((MAJOR+1)).0.0" >> "$GITHUB_OUTPUT"
             elif [ "$BUMP" = "minor" ]; then
@@ -81,7 +81,12 @@ jobs:
           for dir in dist/@legioncli/cli-*/; do
             if [ -d "$dir" ]; then
               PKG_NAME=$(cat "$dir/package.json" | grep '"name"' | head -1 | sed 's/.*: *"//;s/".*//')
-              echo "Publishing $PKG_NAME"
+              PKG_VERSION=$(cat "$dir/package.json" | grep '"version"' | head -1 | sed 's/.*: *"//;s/".*//')
+              if npm view "$PKG_NAME@$PKG_VERSION" version >/dev/null 2>&1; then
+                echo "Already published $PKG_NAME@$PKG_VERSION, skipping"
+                continue
+              fi
+              echo "Publishing $PKG_NAME@$PKG_VERSION"
               for attempt in 1 2 3; do
                 cd "$dir"
                 if npm publish --access public --provenance 2>&1; then
@@ -91,15 +96,15 @@ jobs:
                 fi
                 cd -
                 if [ "$attempt" -lt 3 ]; then
-                  echo "Attempt $attempt failed, waiting 30s before retry..."
-                  sleep 30
+                  echo "Attempt $attempt failed, waiting 45s before retry..."
+                  sleep 45
                 else
                   echo "ERROR: Failed to publish $PKG_NAME after 3 attempts"
                   exit 1
                 fi
               done
-              echo "Waiting 15s before next publish..."
-              sleep 15
+              echo "Waiting 20s before next publish..."
+              sleep 20
             fi
           done
         env:
@@ -116,44 +121,51 @@ jobs:
 
           VERSION=$(cat dist/@legioncli/cli-linux-x64/package.json | grep '"version"' | head -1 | sed 's/.*: *"//;s/".*//')
 
-          cat > dist/@legioncli/cli/package.json << JSONEOF
-          {
-            "name": "@legioncli/cli",
-            "version": "$VERSION",
-            "bin": {
-              "legion": "./bin/legion",
-              "legioncli": "./bin/legion"
-            },
-            "scripts": {
-              "postinstall": "node ./postinstall.mjs"
-            },
-            "license": "MIT",
-            "repository": {
-              "type": "git",
-              "url": "https://github.com/preetbiswas12/Blitz"
-            },
-            "os": ["darwin", "linux", "win32"],
-            "cpu": ["arm64", "x64"],
-            "private": false,
-            "optionalDependencies": {}
-          }
-          JSONEOF
-
+          OPTIONAL_DEPS="{}"
           for dir in dist/@legioncli/cli-*/; do
             if [ -d "$dir" ]; then
               PLATFORM_NAME=$(cat "$dir/package.json" | grep '"name"' | head -1 | sed 's/.*: *"//;s/".*//')
-              PLATFORM_VERSION=$(cat "$dir/package.json" | grep '"version"' | head -1 | sed 's/.*: *"//;s/".*//')
-              node -e "
+              OPTIONAL_DEPS=$(echo "$OPTIONAL_DEPS" | node -e "
                 const fs = require('fs');
-                const pkg = JSON.parse(fs.readFileSync('dist/@legioncli/cli/package.json', 'utf8'));
-                pkg.optionalDependencies['$PLATFORM_NAME'] = '$VERSION';
-                fs.writeFileSync('dist/@legioncli/cli/package.json', JSON.stringify(pkg, null, 2));
-              "
+                const data = JSON.parse(fs.readFileSync('/dev/stdin', 'utf8'));
+                data['$PLATFORM_NAME'] = '$VERSION';
+                console.log(JSON.stringify(data));
+              ")
             fi
           done
 
+          node -e "
+            const fs = require('fs');
+            const pkg = {
+              name: '@legioncli/cli',
+              version: '$VERSION',
+              bin: {
+                legion: './bin/legion',
+                legioncli: './bin/legion'
+              },
+              scripts: {
+                postinstall: 'node ./postinstall.mjs'
+              },
+              license: 'MIT',
+              repository: {
+                type: 'git',
+                url: 'https://github.com/preetbiswas12/Blitz'
+              },
+              os: ['darwin', 'linux', 'win32'],
+              cpu: ['arm64', 'x64'],
+              private: false,
+              optionalDependencies: JSON.parse(process.argv[1])
+            };
+            fs.writeFileSync('dist/@legioncli/cli/package.json', JSON.stringify(pkg, null, 2));
+          " "$OPTIONAL_DEPS"
+
           echo "Main package.json:"
           cat dist/@legioncli/cli/package.json
+
+          if npm view "@legioncli/cli@$VERSION" version >/dev/null 2>&1; then
+            echo "Already published @legioncli/cli@$VERSION, skipping"
+            exit 0
+          fi
 
           cd dist/@legioncli/cli
           for attempt in 1 2 3; do
@@ -162,8 +174,8 @@ jobs:
               break
             fi
             if [ "$attempt" -lt 3 ]; then
-              echo "Attempt $attempt failed, waiting 30s before retry..."
-              sleep 30
+              echo "Attempt $attempt failed, waiting 45s before retry..."
+              sleep 45
             else
               echo "ERROR: Failed to publish @legioncli/cli after 3 attempts"
               exit 1

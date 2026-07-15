@@ -34,6 +34,25 @@ jobs:
       - name: Install dependencies
         run: bun install
 
+      - name: Resolve version
+        id: version
+        run: |
+          if [ -n "${{ inputs.version }}" ]; then
+            echo "version=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            LATEST=$(npm view @legioncli/cli version 2>/dev/null || echo "0.0.0")
+            echo "Latest published: $LATEST"
+            IFS='.' read -r MAJOR MINOR PATCH <<< "$LATEST"
+            BUMP="${{ inputs.bump || 'patch' }}"
+            if [ "$BUMP" = "major" ]; then
+              echo "version=$((MAJOR+1)).0.0" >> "$GITHUB_OUTPUT"
+            elif [ "$BUMP" = "minor" ]; then
+              echo "version=${MAJOR}.$((MINOR+1)).0" >> "$GITHUB_OUTPUT"
+            else
+              echo "version=${MAJOR}.${MINOR}.$((PATCH+1))" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
       - name: Setup Zig for Linux sandbox helpers
         run: |
           curl --fail --location --retry 3 \
@@ -48,7 +67,7 @@ jobs:
           cd packages/opencode
           bun run build
         env:
-          KILO_VERSION: ${{ inputs.version }}
+          KILO_VERSION: ${{ steps.version.outputs.version }}
           KILO_BUMP: ${{ inputs.bump || 'patch' }}
 
       - uses: actions/setup-node@v4

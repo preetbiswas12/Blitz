@@ -1,89 +1,66 @@
-# Kilo Code CLI
+# Legion CLI
 
-The AI coding agent built for the terminal. Generate code from natural language, automate tasks, and run terminal commands -- powered by 500+ AI models.
+The AI coding agent built for the terminal. Generate code from natural language, automate tasks, and run terminal commands — powered by 500+ AI models.
 
-![Kilo CLI showing code edits in a terminal](https://raw.githubusercontent.com/Kilo-Org/kilocode/main/packages/kilo-docs/public/img/npm-package-readme/kilo-cli.png)
-
-Kilo is the all-in-one agentic engineering platform. Build, ship, and iterate faster with the most popular open source coding agent.
-
-[Website](https://legion.ai) · [Install](https://legion.ai/install) · [IDE](https://legion.ai/landing/vs-code) · [CLI](https://legion.ai/cli) · [Docs](https://legion.ai/docs) · [Models](https://legion.ai/leaderboard) · [Gateway](https://legion.ai/gateway) · [Pricing](https://legion.ai/pricing) · [Legion Pass](https://legion.ai/pricing/kilo-pass)
-
-[500+ models](https://legion.ai/leaderboard). One open source agent in [VS Code](https://legion.ai/vscode-marketplace), [JetBrains](https://plugins.jetbrains.com/plugin/27133-kilo-code), [CLI](https://www.npmjs.com/package/@legion/cli), [Slack](https://legion.ai/slack), and [Cloud](https://legion.ai/cloud).
+![Legion CLI](./home.png)
 
 ## Install
 
 ```bash
-npm install -g @legion/cli
+npm install -g @legioncli/cli
 ```
 
 Or run directly with npx:
 
 ```bash
-npx --package @legion/cli kilo
+npx @legioncli/cli
 ```
 
 ## Getting Started
 
-Run `kilo` in any project directory to launch the interactive TUI:
+Run `legion` in any project directory to launch the interactive TUI:
 
 ```bash
-kilo
+legion
 ```
 
 Run a one-off task:
 
 ```bash
-kilo run "add input validation to the signup form"
+legion run "add input validation to the signup form"
 ```
 
 ## Features
 
-- **Code generation** -- describe what you want in natural language
-- **Terminal commands** -- the agent can run shell commands on your behalf
-- **500+ AI models** -- use models from OpenAI, Anthropic, Google, and more
-- **MCP servers** -- extend agent capabilities with the Model Context Protocol
-- **Multiple modes** -- Plan with Architect, code with Coder, debug with Debugger, or create your own
-- **Sessions** -- resume previous conversations and export transcripts
-- **API keys optional** -- bring your own keys or use Legion credits
+- **Code generation** — describe what you want in natural language
+- **Terminal commands** — the agent can run shell commands on your behalf
+- **500+ AI models** — use models from OpenAI, Anthropic, Google, and more
+- **MCP servers** — extend agent capabilities with the Model Context Protocol
+- **Multiple modes** — Plan, Code, Debug, or create your own custom agent
+- **Sessions** — resume previous conversations and export transcripts
+- **Memory** — persistent memory across sessions
+- **Emotion detection** — adaptive responses based on user sentiment
+- **Built-in tools** — Test Runner, Git PR tools, Memory System, and more
 
 ## Commands
 
-| Command               | Description                |
-| --------------------- | -------------------------- |
-| `kilo`                | Launch interactive TUI     |
-| `kilo run "<task>"`   | Run a one-off task         |
-| `kilo auth`           | Manage authentication      |
-| `kilo models`         | List available models      |
-| `kilo mcp`            | Manage MCP servers         |
-| `kilo session list`   | List sessions              |
-| `kilo session delete` | Delete a session           |
-| `kilo export`         | Export session transcripts |
+| Command                  | Description                |
+| ------------------------ | -------------------------- |
+| `legion`                 | Launch interactive TUI     |
+| `legion run "<task>"`    | Run a one-off task         |
+| `legion auth`            | Manage authentication      |
+| `legion models`          | List available models      |
+| `legion mcp`             | Manage MCP servers         |
+| `legion session list`    | List sessions              |
+| `legion session delete`  | Delete a session           |
+| `legion export`          | Export session transcripts |
+| `legion upgrade`         | Upgrade to latest version  |
 
-Run `kilo --help` for the full list.
-
-## Alternative Installation
-
-### Homebrew (macOS/Linux)
-
-```bash
-brew install Kilo-Org/tap/kilo
-```
-
-### GitHub Releases
-
-Download pre-built binaries from the [Releases page](https://github.com/Kilo-Org/kilocode/releases).
-
-## Documentation
-- [Docs](https://legion.ai/docs)
-
-- [Getting Started](https://legion.ai/docs/getting-started)
+Run `legion --help` for the full list.
 
 ## Links
 
-- [GitHub](https://github.com/Kilo-Org/kilocode)
-- [Discord](https://legion.ai/discord)
-- [VS Code Extension](https://legion.ai/vscode-marketplace)
-- [Website](https://legion.ai)
+- [GitHub](https://github.com/preetbiswas12/Blitz)
 
 ## License
 

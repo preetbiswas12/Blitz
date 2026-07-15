@@ -45,8 +45,8 @@ await Bun.file(`./dist/${pkg.name}/package.json`).write(
       name: pkg.name, // kilocode_change
       bin: {
         // kilocode_change start
-        kilo: `./bin/kilo`,
-        kilocode: `./bin/kilo`,
+        legion: `./bin/legion`,
+        legioncli: `./bin/legion`,
         // kilocode_change end
       },
       scripts: {
@@ -62,7 +62,7 @@ await Bun.file(`./dist/${pkg.name}/package.json`).write(
       // kilocode_change start
       repository: {
         type: "git",
-        url: "https://github.com/Kilo-Org/kilocode",
+        url: "https://github.com/preetbiswas12/Blitz",
       },
       // kilocode_change end
     },

@@ -75,7 +75,37 @@ jobs:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
 
-      - name: Create main package
+      - name: Publish platform packages
+        working-directory: packages/opencode
+        run: |
+          for dir in dist/@legioncli/cli-*/; do
+            if [ -d "$dir" ]; then
+              PKG_NAME=$(cat "$dir/package.json" | grep '"name"' | head -1 | sed 's/.*: *"//;s/".*//')
+              echo "Publishing $PKG_NAME"
+              for attempt in 1 2 3; do
+                cd "$dir"
+                if npm publish --access public --provenance 2>&1; then
+                  cd -
+                  echo "Published $PKG_NAME successfully"
+                  break
+                fi
+                cd -
+                if [ "$attempt" -lt 3 ]; then
+                  echo "Attempt $attempt failed, waiting 30s before retry..."
+                  sleep 30
+                else
+                  echo "ERROR: Failed to publish $PKG_NAME after 3 attempts"
+                  exit 1
+                fi
+              done
+              echo "Waiting 15s before next publish..."
+              sleep 15
+            fi
+          done
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create and publish main package
         working-directory: packages/opencode
         run: |
           mkdir -p dist/@legioncli/cli
@@ -86,7 +116,7 @@ jobs:
 
           VERSION=$(cat dist/@legioncli/cli-linux-x64/package.json | grep '"version"' | head -1 | sed 's/.*: *"//;s/".*//')
 
-          cat > dist/@legioncli/cli/package.json << EOF
+          cat > dist/@legioncli/cli/package.json << JSONEOF
           {
             "name": "@legioncli/cli",
             "version": "$VERSION",
@@ -104,26 +134,40 @@ jobs:
             },
             "os": ["darwin", "linux", "win32"],
             "cpu": ["arm64", "x64"],
-            "private": false
+            "private": false,
+            "optionalDependencies": {}
           }
-          EOF
+          JSONEOF
 
-      - name: Publish platform packages
-        working-directory: packages/opencode
-        run: |
           for dir in dist/@legioncli/cli-*/; do
             if [ -d "$dir" ]; then
-              echo "Publishing $dir"
-              cd "$dir"
-              npm publish --access public --provenance || echo "Warning: failed to publish $dir"
-              cd -
+              PLATFORM_NAME=$(cat "$dir/package.json" | grep '"name"' | head -1 | sed 's/.*: *"//;s/".*//')
+              PLATFORM_VERSION=$(cat "$dir/package.json" | grep '"version"' | head -1 | sed 's/.*: *"//;s/".*//')
+              node -e "
+                const fs = require('fs');
+                const pkg = JSON.parse(fs.readFileSync('dist/@legioncli/cli/package.json', 'utf8'));
+                pkg.optionalDependencies['$PLATFORM_NAME'] = '$VERSION';
+                fs.writeFileSync('dist/@legioncli/cli/package.json', JSON.stringify(pkg, null, 2));
+              "
             fi
           done
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish main package
-        working-directory: packages/opencode/dist/@legioncli/cli
-        run: npm publish --access public --provenance
+          echo "Main package.json:"
+          cat dist/@legioncli/cli/package.json
+
+          cd dist/@legioncli/cli
+          for attempt in 1 2 3; do
+            if npm publish --access public --provenance 2>&1; then
+              echo "Published @legioncli/cli@$VERSION successfully"
+              break
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              echo "Attempt $attempt failed, waiting 30s before retry..."
+              sleep 30
+            else
+              echo "ERROR: Failed to publish @legioncli/cli after 3 attempts"
+              exit 1
+            fi
+          done
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

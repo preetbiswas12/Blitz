@@ -1,0 +1,197 @@
+name: Build and Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: "Version bump type"
+        required: false
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      version:
+        description: "Override version (optional, e.g. 1.0.0)"
+        required: false
+        type: string
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-bun
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Resolve version
+        id: version
+        run: |
+          if [ -n "${{ inputs.version }}" ]; then
+            echo "version=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            LATEST=$(npm view @legioncli/cli version 2>/dev/null || echo "1.0.0")
+            echo "Latest published: $LATEST"
+            IFS='.' read -r MAJOR MINOR PATCH <<< "$LATEST"
+            BUMP="${{ inputs.bump || 'patch' }}"
+            if [ "$BUMP" = "major" ]; then
+              echo "version=$((MAJOR+1)).0.0" >> "$GITHUB_OUTPUT"
+            elif [ "$BUMP" = "minor" ]; then
+              echo "version=${MAJOR}.$((MINOR+1)).0" >> "$GITHUB_OUTPUT"
+            else
+              echo "version=${MAJOR}.${MINOR}.$((PATCH+1))" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
+      - name: Setup Zig for Linux sandbox helpers
+        run: |
+          curl --fail --location --retry 3 \
+            https://ziglang.org/download/0.14.0/zig-linux-x86_64-0.14.0.tar.xz \
+            --output "$RUNNER_TEMP/zig.tar.xz"
+          echo "473ec26806133cf4d1918caf1a410f8403a13d979726a9045b421b685031a982  $RUNNER_TEMP/zig.tar.xz" | sha256sum --check --status
+          tar -xJf "$RUNNER_TEMP/zig.tar.xz" -C "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/zig-linux-x86_64-0.14.0" >> "$GITHUB_PATH"
+
+      - name: Build all platforms
+        run: |
+          cd packages/opencode
+          bun run build
+        env:
+          KILO_VERSION: ${{ steps.version.outputs.version }}
+          KILO_BUMP: ${{ inputs.bump || 'patch' }}
+
+      - name: Remove source maps
+        run: find packages/opencode/dist -name "*.map" -delete
+
+      - name: Print package sizes
+        run: |
+          for dir in packages/opencode/dist/@legioncli/cli-*/; do
+            if [ -d "$dir" ]; then
+              PKG_NAME=$(cat "$dir/package.json" | grep '"name"' | head -1 | sed 's/.*: *"//;s/".*//')
+              SIZE=$(du -sh "$dir" | cut -f1)
+              echo "  $PKG_NAME: $SIZE"
+            fi
+          done
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Publish platform packages
+        working-directory: packages/opencode
+        run: |
+          for dir in dist/@legioncli/cli-*/; do
+            if [ -d "$dir" ]; then
+              PKG_NAME=$(cat "$dir/package.json" | grep '"name"' | head -1 | sed 's/.*: *"//;s/".*//')
+              PKG_VERSION=$(cat "$dir/package.json" | grep '"version"' | head -1 | sed 's/.*: *"//;s/".*//')
+              if npm view "$PKG_NAME@$PKG_VERSION" version >/dev/null 2>&1; then
+                echo "Already published $PKG_NAME@$PKG_VERSION, skipping"
+                continue
+              fi
+              echo "Publishing $PKG_NAME@$PKG_VERSION"
+              for attempt in 1 2 3 4 5; do
+                cd "$dir"
+                if npm publish --access public 2>&1; then
+                  cd -
+                  echo "Published $PKG_NAME successfully"
+                  break
+                fi
+                cd -
+                if [ "$attempt" -lt 5 ]; then
+                  WAIT=$((attempt * 30))
+                  echo "Attempt $attempt failed, waiting ${WAIT}s before retry..."
+                  sleep $WAIT
+                else
+                  echo "ERROR: Failed to publish $PKG_NAME after 5 attempts"
+                  exit 1
+                fi
+              done
+              echo "Waiting 15s before next publish..."
+              sleep 15
+            fi
+          done
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create and publish main package
+        working-directory: packages/opencode
+        run: |
+          mkdir -p dist/@legioncli/cli
+          cp -r bin dist/@legioncli/cli/bin
+          cp script/postinstall.mjs dist/@legioncli/cli/postinstall.mjs
+          cp ../../LICENSE dist/@legioncli/cli/LICENSE
+          cp README.md dist/@legioncli/cli/README.md
+
+          VERSION=$(cat dist/@legioncli/cli-linux-x64/package.json | grep '"version"' | head -1 | sed 's/.*: *"//;s/".*//')
+
+          OPTIONAL_DEPS="{}"
+          for dir in dist/@legioncli/cli-*/; do
+            if [ -d "$dir" ]; then
+              PLATFORM_NAME=$(cat "$dir/package.json" | grep '"name"' | head -1 | sed 's/.*: *"//;s/".*//')
+              OPTIONAL_DEPS=$(echo "$OPTIONAL_DEPS" | node -e "
+                const fs = require('fs');
+                const data = JSON.parse(fs.readFileSync('/dev/stdin', 'utf8'));
+                data['$PLATFORM_NAME'] = '$VERSION';
+                console.log(JSON.stringify(data));
+              ")
+            fi
+          done
+
+          node -e "
+            const fs = require('fs');
+            const pkg = {
+              name: '@legioncli/cli',
+              version: '$VERSION',
+              bin: {
+                legion: './bin/legion',
+                legioncli: './bin/legion'
+              },
+              scripts: {
+                postinstall: 'node ./postinstall.mjs'
+              },
+              license: 'MIT',
+              repository: {
+                type: 'git',
+                url: 'https://github.com/preetbiswas12/Blitz'
+              },
+              os: ['darwin', 'linux', 'win32'],
+              cpu: ['arm64', 'x64'],
+              private: false,
+              optionalDependencies: JSON.parse(process.argv[1])
+            };
+            fs.writeFileSync('dist/@legioncli/cli/package.json', JSON.stringify(pkg, null, 2));
+          " "$OPTIONAL_DEPS"
+
+          echo "Main package.json:"
+          cat dist/@legioncli/cli/package.json
+
+          if npm view "@legioncli/cli@$VERSION" version >/dev/null 2>&1; then
+            echo "Already published @legioncli/cli@$VERSION, skipping"
+            exit 0
+          fi
+
+          cd dist/@legioncli/cli
+          for attempt in 1 2 3 4 5; do
+            if npm publish --access public 2>&1; then
+              echo "Published @legioncli/cli@$VERSION successfully"
+              break
+            fi
+            if [ "$attempt" -lt 5 ]; then
+              WAIT=$((attempt * 30))
+              echo "Attempt $attempt failed, waiting ${WAIT}s before retry..."
+              sleep $WAIT
+            else
+              echo "ERROR: Failed to publish @legioncli/cli after 5 attempts"
+              exit 1
+            fi
+          done
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

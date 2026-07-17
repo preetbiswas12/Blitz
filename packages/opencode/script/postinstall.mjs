@@ -25,9 +25,9 @@ const archMap = {
 
 const platform = platformMap[os.platform()] ?? os.platform()
 const arch = archMap[os.arch()] ?? os.arch()
-const base = `@blitxcode/cli-${platform}-${arch}`
-const sourceBinary = platform === "windows" ? "kilo.exe" : "kilo"
-const targetBinary = path.join(__dirname, "bin", ".kilo")
+const base = `@legioncli/cli-${platform}-${arch}`
+const sourceBinary = platform === "windows" ? "legion.exe" : "legion"
+const targetBinary = path.join(__dirname, "bin", ".legion")
 
 function supportsAvx2() {
   if (arch !== "x64") return false
@@ -189,7 +189,7 @@ function main() {
       copyBinary(resolveBinary(name))
       if (verifyBinary()) return
     } catch {
-      const temp = fs.mkdtempSync(path.join(os.tmpdir(), "kilo-install-"))
+      const temp = fs.mkdtempSync(path.join(os.tmpdir(), "legion-install-"))
       try {
         const version = packageJson.optionalDependencies?.[name]
         if (!version) continue
@@ -208,7 +208,7 @@ function main() {
   }
 
   throw new Error(
-    `It seems your package manager failed to install the right Blitx CLI package. Try manually installing ${packageNames()
+    `It seems your package manager failed to install the right Legion CLI package. Try manually installing ${packageNames()
       .map((name) => JSON.stringify(name))
       .join(" or ")}.`,
   )
@@ -217,6 +217,6 @@ function main() {
 try {
   main()
 } catch (error) {
-  console.error("Failed to setup kilo binary:", error.message)
+  console.error("Failed to setup legion binary:", error.message)
   process.exit(1)
 }

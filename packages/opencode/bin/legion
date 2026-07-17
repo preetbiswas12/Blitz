@@ -85,7 +85,7 @@ const envPath = process.env.KILO_BIN_PATH
 const scriptPath = fs.realpathSync(__filename)
 const scriptDir = path.dirname(scriptPath)
 
-const cached = path.join(scriptDir, ".blitx")
+const cached = path.join(scriptDir, ".legion")
 
 const platformMap = {
   darwin: "darwin",
@@ -106,8 +106,8 @@ let arch = archMap[os.arch()]
 if (!arch) {
   arch = os.arch()
 }
-const base = "@blitxcode/cli-" + platform + "-" + arch
-const binary = platform === "windows" ? "blitx.exe" : "blitx"
+const base = "@legioncli/cli-" + platform + "-" + arch
+const binary = platform === "windows" ? "legion.exe" : "legion"
 
 function supportsAvx2() {
   if (arch !== "x64") return false
@@ -225,7 +225,7 @@ function findBinary(startDir) {
 const resolved = envPath || (fs.existsSync(cached) ? cached : findBinary(scriptDir))
 if (!resolved) {
   console.error(
-    "It seems that your package manager failed to install the right version of the Blitx CLI for your platform. You can try manually installing " +
+    "It seems that your package manager failed to install the right version of the Legion CLI for your platform. You can try manually installing " +
       names.map((n) => `\"${n}\"`).join(" or ") +
       " package",
   )

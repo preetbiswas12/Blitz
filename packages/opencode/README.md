@@ -2,7 +2,7 @@
 
 The AI coding agent built for the terminal. Generate code from natural language, automate tasks, and run terminal commands — powered by 500+ AI models.
 
-![Legion CLI](./home.png)
+![Legion CLI](https://res.cloudinary.com/ttrllc2i/image/upload/v1784270695/Screenshot_2026-07-15_164637_knyaxm.png)
 
 ## Install
 

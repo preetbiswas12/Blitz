@@ -22,13 +22,13 @@ export namespace LegionLLM {
     fallback?: Record<string, unknown>
     log?: Pick<Logger, "debug">
   }): { timeout?: { chunkMs: number } } {
+    const DEFAULT_CHUNK_TIMEOUT_MS = 60_000 // kilocode_change - 60s default prevents indefinite hangs
     const value =
       typeof input.options["chunkTimeout"] === "number"
         ? input.options["chunkTimeout"]
         : typeof input.fallback?.["chunkTimeout"] === "number"
           ? input.fallback["chunkTimeout"]
-          : undefined
-    if (!value) return {}
+          : DEFAULT_CHUNK_TIMEOUT_MS
     input.log?.debug("chunk idle timeout configured", { chunkTimeout: value })
     return { timeout: { chunkMs: value } }
   }

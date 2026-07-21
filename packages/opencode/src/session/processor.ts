@@ -1,5 +1,5 @@
 import { Image } from "@/image/image"
-import { Cause, Deferred, Effect, Exit, Layer, Context, Scope, Schema } from "effect"
+import { Cause, Deferred, Duration, Effect, Exit, Layer, Context, Scope, Schema } from "effect"
 import * as Stream from "effect/Stream"
 import { Agent } from "@/agent/agent"
 import { Bus } from "@/bus"
@@ -36,6 +36,7 @@ import { RuntimeFlags } from "@/effect/runtime-flags"
 import { Usage, type LLMEvent } from "@opencode-ai/llm"
 
 const DOOM_LOOP_THRESHOLD = 3
+const STREAM_WATCHDOG_MS = 120_000 // kilocode_change - kill streams that stall for 2 minutes
 const log = Log.create({ service: "session.processor" })
 
 export type Result = "compact" | "stop" | "continue"
@@ -1000,11 +1001,18 @@ export const layer = Layer.effect(
             })
             // kilocode_change end
 
+            // kilocode_change start - wrap stream with watchdog timeout to prevent indefinite hangs
             yield* stream.pipe(
               Stream.tap((event) => handleEvent(event)),
               Stream.takeUntil(() => ctx.needsCompaction),
+              Stream.timeout(Duration.millis(STREAM_WATCHDOG_MS)),
               Stream.runDrain,
+            ).pipe(
+              Effect.catchTag("TimeoutError", () =>
+                Effect.fail(new Error(`LLM stream timed out after ${STREAM_WATCHDOG_MS / 1000}s with no tokens received`))
+              ),
             )
+            // kilocode_change end
           }).pipe(
             Effect.onInterrupt(() =>
               Effect.gen(function* () {

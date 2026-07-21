@@ -12,7 +12,7 @@ import { Plugin } from "@/plugin"
 import { Config } from "@/config/config"
 import { NotFoundError } from "@/storage/storage"
 import { ModelID, ProviderID } from "@/provider/schema"
-import { Effect, Layer, Context, Schema } from "effect"
+import { Duration, Effect, Layer, Context, Schema } from "effect"
 import * as DateTime from "effect/DateTime"
 import { InstanceState } from "@/effect/instance-state"
 import { isOverflow as overflow, usable } from "./overflow"
@@ -46,6 +46,7 @@ const PRUNE_PROTECTED_TOOLS = ["skill"]
 const DEFAULT_TAIL_TURNS = 2
 const MIN_PRESERVE_RECENT_TOKENS = 2_000
 const MAX_PRESERVE_RECENT_TOKENS = 8_000
+const COMPACTION_TIMEOUT_MS = 90_000 // kilocode_change - cap compaction LLM call at 90 seconds
 const SUMMARY_TEMPLATE = `Output exactly the Markdown structure shown inside <template> and keep the section order unchanged. Do not include the <template> tags in your response.
 <template>
 ## Goal
@@ -726,7 +727,16 @@ export const layer = Layer.effect(
     return Service.of({
       isOverflow,
       prune,
-      process: (input) => processCompaction(input).pipe(Effect.orDie), // kilocode_change
+      // kilocode_change start - cap compaction with a watchdog timeout to prevent hangs
+      process: (input) =>
+        processCompaction(input).pipe(
+          Effect.timeout(Duration.millis(COMPACTION_TIMEOUT_MS)),
+          Effect.catchTag("TimeoutError", () =>
+            Effect.succeed("stop" as const),
+          ),
+          Effect.orDie,
+        ),
+      // kilocode_change end
       create,
     })
   }),

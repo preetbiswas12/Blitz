@@ -381,7 +381,19 @@ export const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProce
           stdout: upgradeResult.stdout,
           stderr: upgradeResult.stderr,
         })
-        yield* text([process.execPath, "--version"])
+        // kilocode_change start - verify binary works after upgrade
+        const verify = yield* run([process.execPath, "--version"])
+        if (verify.code !== 0) {
+          log.error("upgrade verification failed, binary may be corrupted", {
+            method: m,
+            target,
+            stderr: verify.stderr,
+          })
+          return yield* new UpgradeFailedError({
+            stderr: `Upgrade completed but verification failed. The binary may be corrupted. Try running: npm install -g ${KiloNpm.name}@${target}`,
+          })
+        }
+        // kilocode_change end
       }),
     }
 

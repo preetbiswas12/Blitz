@@ -149,11 +149,11 @@ it.live("does not infer free status from zero catalog prices", () =>
   }),
 )
 
-it.effect("enables a paid catalog anonymously without auth", () =>
+it.effect("enables a paid catalog without auth", () =>
   Effect.gen(function* () {
     const result = yield* load()
     expect(result.autoload).toBe(true)
-    expect(result.options).toEqual({ apiKey: "anonymous" })
+    expect(result.options).toEqual({})
   }),
 )
 
@@ -168,7 +168,7 @@ it.effect("enables a paid catalog when config apiKey is present", () =>
 it.effect("denies provider data collection when prompt-training models are hidden", () =>
   Effect.gen(function* () {
     const result = yield* load({ config: { hide_prompt_training_models: true } })
-    expect(result.options).toEqual({ apiKey: "anonymous", dataCollection: "deny" })
+    expect(result.options).toEqual({ dataCollection: "deny" })
   }),
 )
 

@@ -155,9 +155,7 @@ export function LegionCustomLoaders(dep: CustomDep): Record<string, CustomLoader
       if (config.hide_prompt_training_models === true) {
         options.dataCollection = "deny"
       }
-      if (!hasKey) {
-        options.apiKey = "anonymous"
-      }
+      // kilocode_change - removed anonymous fallback; provider works without auth
 
       return {
         autoload: Object.keys(input.models).length > 0,

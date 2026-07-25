@@ -32,9 +32,9 @@ export const KiloPlugin = PluginV2.define({
             provider.options.headers["HTTP-Referer"] = "https://legion.ai/"
             // kilocode_change start
             provider.options.headers["X-Title"] = "Legion Code"
-            options.kilocodeToken = token ?? "anonymous"
+            if (token) options.kilocodeToken = token
             if (org) options.kilocodeOrganizationId = org
-            if (!provider.enabled) provider.enabled = { via: "custom", data: { anonymous: true } }
+            if (!provider.enabled) provider.enabled = { via: "custom", data: {} }
             // kilocode_change end
           })
         }

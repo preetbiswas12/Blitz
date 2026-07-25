@@ -87,7 +87,6 @@ const SUBCOMMANDS = [
   ["mcp", "auth"],
   ["mcp", "logout"],
   ["providers", "list"],
-  ["providers", "login"],
   ["providers", "logout"],
   ["agent", "create"],
   ["agent", "list"],

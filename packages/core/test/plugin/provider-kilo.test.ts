@@ -125,7 +125,7 @@ describe("KiloPlugin", () => {
         expect(updated.endpoint).toEqual({
           type: "aisdk",
           package: "@ai-sdk/openai-compatible",
-          url: "https://api.kilo.ai/api/openrouter",
+          url: "https://openrouter.kilo.ai/api/v1",
         })
         expect(updated.options.aisdk.provider.kilocodeToken).toBe("stored-token")
 
@@ -178,7 +178,7 @@ describe("KiloPlugin", () => {
     ),
   )
 
-  it.effect("keeps anonymous Kilo models available without credentials", () =>
+  it.effect("keeps Kilo models available without credentials", () =>
     withEnv({ KILO_API_KEY: undefined, KILO_ORG_ID: undefined }, () =>
       Effect.gen(function* () {
         const plugin = yield* PluginV2.Service
@@ -188,8 +188,8 @@ describe("KiloPlugin", () => {
         yield* transform((catalog) => catalog.provider.update(ProviderV2.ID.make("legion"), () => {}))
         const result = yield* catalog.provider.get(ProviderV2.ID.make("legion"))
 
-        expect(result.enabled).toEqual({ via: "custom", data: { anonymous: true } })
-        expect(result.options.aisdk.provider.kilocodeToken).toBe("anonymous")
+        expect(result.enabled).toEqual({ via: "custom", data: {} })
+        expect(result.options.aisdk.provider.kilocodeToken).toBeUndefined()
       }),
     ),
   )

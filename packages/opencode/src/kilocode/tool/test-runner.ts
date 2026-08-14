@@ -178,62 +178,61 @@ export const TestRunnerTool = Tool.define(
       retry: Schema.optional(Schema.Boolean).annotate({ description: "Retry failed tests with different strategies" }),
       coverage: Schema.optional(Schema.Boolean).annotate({ description: "Include coverage report" }),
     }),
-    execute: async (args, ctx) => {
-      const cwd = process.cwd()
-      const framework = detectFramework(cwd)
-      const command = args.command || getTestCommand(framework, args.pattern)
+    execute: (args: { command?: string; pattern?: string; retry?: boolean; coverage?: boolean }, _ctx: Tool.Context) =>
+      Effect.tryPromise(async () => {
+        const cwd = process.cwd()
+        const framework = detectFramework(cwd)
+        const command = args.command || getTestCommand(framework, args.pattern)
 
-      log.info("running tests", { framework, command })
+        log.info("running tests", { framework, command })
 
-      let result: string
-      try {
-        result = execSync(command, {
-          cwd,
-          encoding: "utf-8",
-          timeout: 300000, // 5 minutes
-          stdio: ["pipe", "pipe", "pipe"],
-        })
-      } catch (err: any) {
-        // Command failed but we still got output
-        result = (err.stdout || "") + (err.stderr || "")
-        if (!result) {
-          result = `Error running tests: ${err.message}`
+        let result: string
+        try {
+          result = execSync(command, {
+            cwd,
+            encoding: "utf-8",
+            timeout: 300000,
+            stdio: ["pipe", "pipe", "pipe"],
+          })
+        } catch (err: unknown) {
+          const error = err as { stdout?: string; stderr?: string; message?: string }
+          result = (error.stdout || "") + (error.stderr || "")
+          if (!result) {
+            result = `Error running tests: ${error.message ?? String(err)}`
+          }
         }
-      }
 
-      const parsed = parseOutput(framework, result)
-
-      // Format output
-      const lines: string[] = []
-      lines.push(`## Test Results (${parsed.framework})`)
-      lines.push("")
-      lines.push(`- Passed: ${parsed.passed}`)
-      lines.push(`- Failed: ${parsed.failed}`)
-      lines.push(`- Skipped: ${parsed.skipped}`)
-      lines.push(`- Duration: ${(parsed.duration / 1000).toFixed(2)}s`)
-      lines.push("")
-
-      if (parsed.failures.length > 0) {
-        lines.push("### Failures")
+        const parsed = parseOutput(framework, result)
+        const lines: string[] = []
+        lines.push(`## Test Results (${parsed.framework})`)
         lines.push("")
-        for (const f of parsed.failures) {
-          lines.push(`- **${f.file}** → ${f.name}`)
-          if (f.line) lines.push(`  Line: ${f.line}`)
-          lines.push(`  Error: ${f.error}`)
+        lines.push(`- Passed: ${parsed.passed}`)
+        lines.push(`- Failed: ${parsed.failed}`)
+        lines.push(`- Skipped: ${parsed.skipped}`)
+        lines.push(`- Duration: ${(parsed.duration / 1000).toFixed(2)}s`)
+        lines.push("")
+
+        if (parsed.failures.length > 0) {
+          lines.push("### Failures")
+          lines.push("")
+          for (const f of parsed.failures) {
+            lines.push(`- **${f.file}** → ${f.name}`)
+            if (f.line) lines.push(`  Line: ${f.line}`)
+            lines.push(`  Error: ${f.error}`)
+          }
+          lines.push("")
         }
-        lines.push("")
-      }
 
-      lines.push("### Output")
-      lines.push("```")
-      lines.push(result.slice(-2000)) // Last 2000 chars
-      lines.push("```")
+        lines.push("### Output")
+        lines.push("```")
+        lines.push(result.slice(-2000))
+        lines.push("```")
 
-      return {
-        title: `Tests: ${parsed.passed} passed, ${parsed.failed} failed`,
-        metadata: { framework, passed: parsed.passed, failed: parsed.failed },
-        output: lines.join("\n"),
-      }
-    },
+        return {
+          title: `Tests: ${parsed.passed} passed, ${parsed.failed} failed`,
+          metadata: { framework, passed: parsed.passed, failed: parsed.failed },
+          output: lines.join("\n"),
+        }
+      }),
   }),
 )

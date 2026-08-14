@@ -98,46 +98,41 @@ export const GitConflictResolveTool = Tool.define(
       file: Schema.String.annotate({ description: "Path to the file with conflicts" }),
       strategy: Schema.optional(Schema.String).annotate({ description: "Resolution strategy (default: ours)" }),
     }),
-    execute: async (args, ctx) => {
-      const cwd = process.cwd()
-      const filePath = path.resolve(cwd, args.file)
-      const strategy = args.strategy || "ours"
+    execute: (args: { file: string; strategy?: string }, _ctx: Tool.Context) =>
+      Effect.tryPromise(async () => {
+        const cwd = process.cwd()
+        const filePath = path.resolve(cwd, args.file)
+        const strategy = (args.strategy ?? "ours") as "ours" | "theirs" | "manual"
 
-      log.info("resolving conflicts", { file: args.file, strategy })
+        log.info("resolving conflicts", { file: args.file, strategy })
 
-      try {
-        // Read the file
-        const content = await fs.readFile(filePath, "utf-8")
+        try {
+          const content = await fs.readFile(filePath, "utf-8")
+          const markers = parseConflictMarkers(content)
+          if (markers.length === 0) {
+            return {
+              title: "No conflicts found",
+              metadata: { file: args.file, strategy, conflicts: 0 },
+              output: `No conflict markers found in ${args.file}.`,
+            }
+          }
 
-        // Check for conflict markers
-        const markers = parseConflictMarkers(content)
-        if (markers.length === 0) {
+          const resolved = resolveWithStrategy(content, strategy)
+          await fs.writeFile(filePath, resolved)
+
           return {
-            title: "No conflicts found",
-            metadata: { file: args.file },
-            output: `No conflict markers found in ${args.file}.`,
+            title: "Conflicts resolved",
+            metadata: { file: args.file, strategy, conflicts: markers.length },
+            output: `Resolved ${markers.length} conflict(s) in ${args.file} using '${strategy}' strategy.`,
+          }
+        } catch (err) {
+          return {
+            title: "Error resolving conflicts",
+            metadata: { file: args.file, strategy, conflicts: 0 },
+            output: `Error: ${err instanceof Error ? err.message : "Unknown error"}`,
           }
         }
-
-        // Resolve conflicts
-        const resolved = resolveWithStrategy(content, strategy)
-
-        // Write resolved file
-        await fs.writeFile(filePath, resolved)
-
-        return {
-          title: "Conflicts resolved",
-          metadata: { file: args.file, strategy, conflicts: markers.length },
-          output: `Resolved ${markers.length} conflict(s) in ${args.file} using '${strategy}' strategy.`,
-        }
-      } catch (err) {
-        return {
-          title: "Error resolving conflicts",
-          metadata: { file: args.file },
-          output: `Error: ${err instanceof Error ? err.message : "Unknown error"}`,
-        }
-      }
-    },
+      }),
   }),
 )
 
@@ -146,38 +141,39 @@ export const GitConflictListTool = Tool.define(
   Effect.succeed({
     description: "List all files with merge conflicts in the current repository",
     parameters: Schema.Struct({}),
-    execute: async (args, ctx) => {
-      const cwd = process.cwd()
+    execute: () =>
+      Effect.tryPromise(async () => {
+        const cwd = process.cwd()
 
-      try {
-        const { execSync } = await import("child_process")
-        const output = execSync("git diff --name-only --diff-filter=U", {
-          cwd,
-          encoding: "utf-8",
-        })
+        try {
+          const { execSync } = await import("child_process")
+          const output = execSync("git diff --name-only --diff-filter=U", {
+            cwd,
+            encoding: "utf-8",
+          })
 
-        const files = output.trim().split("\n").filter((f) => f.trim())
+          const files = output.trim().split("\n").filter((f) => f.trim())
 
-        if (files.length === 0) {
+          if (files.length === 0) {
+            return {
+              title: "No conflicts",
+              metadata: { count: 0 },
+              output: "No merge conflicts found.",
+            }
+          }
+
           return {
-            title: "No conflicts",
+            title: `${files.length} file(s) with conflicts`,
+            metadata: { count: files.length },
+            output: `Files with merge conflicts:\n${files.map((f) => `- ${f}`).join("\n")}`,
+          }
+        } catch (err) {
+          return {
+            title: "Error listing conflicts",
             metadata: { count: 0 },
-            output: "No merge conflicts found.",
+            output: `Error: ${err instanceof Error ? err.message : "Unknown error"}`,
           }
         }
-
-        return {
-          title: `${files.length} file(s) with conflicts`,
-          metadata: { count: files.length },
-          output: `Files with merge conflicts:\n${files.map((f) => `- ${f}`).join("\n")}`,
-        }
-      } catch (err) {
-        return {
-          title: "Error listing conflicts",
-          metadata: {},
-          output: `Error: ${err instanceof Error ? err.message : "Unknown error"}`,
-        }
-      }
-    },
+      }),
   }),
 )

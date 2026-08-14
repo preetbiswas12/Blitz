@@ -54,9 +54,9 @@ describe("prompt-training model filter", () => {
 
     const result = filterPromptTrainingModels(providers, true)
 
-    expect(Object.keys(result.legion.models)).toEqual(["private", "unknown"])
+    expect(Object.keys(result.Legion.models)).toEqual(["private", "unknown"])
     expect(Object.keys(result.other.models)).toEqual(["training"])
-    expect(Object.keys(providers.legion.models)).toEqual(["training", "private", "unknown"])
+    expect(Object.keys(providers.Legion.models)).toEqual(["training", "private", "unknown"])
   })
 
   test("preserves the catalog when disabled", () => {

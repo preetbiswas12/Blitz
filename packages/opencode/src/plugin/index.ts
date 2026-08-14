@@ -87,7 +87,7 @@ function internalPlugins(flags: RuntimeFlags.Info, cfg?: Config.Info): PluginIns
     DigitalOceanAuthPlugin,
     XaiAuthPlugin,
     // kilocode_change start - ELC hooks plugin
-    (input) => elcHooks({ enabled: cfg?.elc?.hooks !== false }),
+    async (input) => elcHooks({ enabled: cfg?.elc?.hooks !== false }),
     // kilocode_change end
   ]
 }

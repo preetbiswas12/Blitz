@@ -8,7 +8,7 @@ import { markNoIndex } from "./kilocode/spotlight" // kilocode_change
 import { ensureRealDir } from "./kilocode/global" // kilocode_change
 import { Flag } from "./flag/flag"
 
-const app = "kilo" // kilocode_change
+const app = "legion" // kilocode_change
 // kilocode_change start
 // Defensively strip newline characters from the resolved XDG paths.
 // If `$HOME` (or any `$XDG_*_HOME` override) has a trailing newline in

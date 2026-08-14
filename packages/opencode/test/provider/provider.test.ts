@@ -1115,7 +1115,7 @@ it.instance(
   Effect.gen(function* () {
     const providers = yield* list
     expect(providers[ProviderID.make("nvidia")].options.headers).toEqual({
-      "HTTP-Referer": "https://kilo.ai/", // kilocode_change
+      "HTTP-Referer": "https://legion.ai/", // kilocode_change
       "X-Title": "Legion Code", // kilocode_change
       "X-BILLING-INVOKE-ORIGIN": "LegionCode", // kilocode_change
     })
@@ -1128,7 +1128,7 @@ it.instance(
   Effect.gen(function* () {
     const providers = yield* list
     expect(providers[ProviderID.make("nvidia")].options.headers).toEqual({
-      "HTTP-Referer": "https://kilo.ai/", // kilocode_change
+      "HTTP-Referer": "https://legion.ai/", // kilocode_change
       "X-Title": "Legion Code", // kilocode_change
       "X-BILLING-INVOKE-ORIGIN": "LegionCode", // kilocode_change
     })

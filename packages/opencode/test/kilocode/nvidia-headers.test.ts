@@ -19,7 +19,7 @@ function withNvidiaKey<A, E, R>(self: Effect.Effect<A, E, R>) {
   })
 }
 
-it.live("nvidia provider includes KiloCode billing origin header", () =>
+it.live("nvidia provider includes Legion billing origin header", () =>
   provideTmpdirInstance(() =>
     withNvidiaKey(
       Provider.Service.use((provider) =>
@@ -27,9 +27,9 @@ it.live("nvidia provider includes KiloCode billing origin header", () =>
           const providers = yield* provider.list()
           const headers = providers[ProviderID.make("nvidia")].options.headers
 
-          expect(headers["HTTP-Referer"]).toBe("https://kilo.ai/")
-          expect(headers["X-Title"]).toBe("Kilo Code")
-          expect(headers["X-BILLING-INVOKE-ORIGIN"]).toBe("KiloCode")
+          expect(headers["HTTP-Referer"]).toBe("https://legion.ai/")
+          expect(headers["X-Title"]).toBe("Legion Code")
+          expect(headers["X-BILLING-INVOKE-ORIGIN"]).toBe("LegionCode")
         }),
       ),
     ),
@@ -63,8 +63,8 @@ it.live("nvidia billing origin header can be overridden from config", () =>
             const providers = yield* provider.list()
             const headers = providers[ProviderID.make("nvidia")].options.headers
 
-            expect(headers["HTTP-Referer"]).toBe("https://kilo.ai/")
-            expect(headers["X-Title"]).toBe("Kilo Code")
+            expect(headers["HTTP-Referer"]).toBe("https://legion.ai/")
+            expect(headers["X-Title"]).toBe("Legion Code")
             expect(headers["X-BILLING-INVOKE-ORIGIN"]).toBe("CustomOrigin")
           }),
         ),

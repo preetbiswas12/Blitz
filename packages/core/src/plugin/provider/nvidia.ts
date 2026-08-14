@@ -14,6 +14,7 @@ export const NvidiaPlugin = PluginV2.define({
           if (item.provider.id !== ProviderV2.ID.make("nvidia")) continue // kilocode_change
           evt.provider.update(item.provider.id, (provider) => {
             provider.options.headers["HTTP-Referer"] = "https://legion.ai/" // kilocode_change
+            provider.options.headers["X-Enable-Thinking"] = "true" // kilocode_change
             // kilocode_change start
             provider.options.headers["X-Title"] = "Legion Code"
             provider.options.headers["X-BILLING-INVOKE-ORIGIN"] ??= "LegionCode"

@@ -4,7 +4,7 @@ import * as Log from "@opencode-ai/core/util/log"
 import { Context, Effect, Layer } from "effect"
 import * as Stream from "effect/Stream"
 import { streamText, wrapLanguageModel, type ModelMessage, type Tool } from "ai"
-import type { LLMEvent } from "@opencode-ai/llm"
+import { LLMEvent } from "@opencode-ai/llm"
 import { LLMClient, RequestExecutor, WebSocketExecutor } from "@opencode-ai/llm/route"
 import type { LLMClientService } from "@opencode-ai/llm/route"
 import { GitLabWorkflowLanguageModel } from "gitlab-ai-provider"
@@ -27,6 +27,9 @@ import { LegionSession} from "@/kilocode/session"
 import { LegionSessionOverflow } from "@/kilocode/session/overflow"
 import { LegionLLM } from "@/kilocode/session/llm"
 import { normalizeUsageForExport, observeFullStreamForExport } from "@/kilocode/session-export/llm"
+// kilocode_change end
+// kilocode_change start - import Nemotron thinking extraction
+import { NemotronThinking } from "@/provider/nemotron-thinking"
 // kilocode_change end
 import { EffectBridge } from "@/effect/bridge"
 import { RuntimeFlags } from "@/effect/runtime-flags"
@@ -387,11 +390,67 @@ const live: Layer.Layer<
             // Adapter seam: both runtimes expose the same LLMEvent stream. Native
             // already returns one; AI SDK streams are converted here.
             const state = LLMAISDK.adapterState()
+            // kilocode_change start - extract thinking blocks for Nemotron to prevent 504 timeouts
+            const isNemotron = NemotronThinking.isNemotron(input.model)
+            let textBuffer = ""
+            let reasoningID = 0
+            // kilocode_change end
+            
             return Stream.fromAsyncIterable(result.result.fullStream, (e) =>
               e instanceof Error ? e : new Error(String(e)),
             ).pipe(
               Stream.mapEffect((event) => LLMAISDK.toLLMEvents(state, event)),
               Stream.flatMap((events) => Stream.fromIterable(events)),
+              // kilocode_change start - extract thinking blocks from Nemotron text deltas
+              isNemotron
+                ? Stream.flatMap((event) => {
+                    if (event.type !== "text-delta") {
+                      return Stream.make(event)
+                    }
+
+                    const incomingText = event.text
+                    textBuffer += incomingText
+                    const result: LLMEvent[] = []
+
+                    let pos = 0
+                    while (pos < textBuffer.length) {
+                      const openIdx = textBuffer.indexOf("<think>", pos)
+                      const closeIdx = openIdx >= 0 ? textBuffer.indexOf("</think>", openIdx) : -1
+
+                      if (openIdx < 0) {
+                        const remaining = textBuffer.substring(pos)
+                        textBuffer = ""
+                        if (remaining) {
+                          result.push(LLMEvent.textDelta({ id: event.id, text: remaining }))
+                        }
+                        break
+                      }
+
+                      if (closeIdx < 0) {
+                        textBuffer = textBuffer.substring(openIdx)
+                        if (openIdx > pos) {
+                          result.push(LLMEvent.textDelta({ id: event.id, text: textBuffer.substring(pos, openIdx) }))
+                        }
+                        break
+                      }
+
+                      if (openIdx > pos) {
+                        result.push(LLMEvent.textDelta({ id: event.id, text: textBuffer.substring(pos, openIdx) }))
+                      }
+
+                      const thinkingContent = textBuffer.substring(openIdx + 7, closeIdx)
+                      const rid = `nemotron-reasoning-${++reasoningID}`
+                      result.push(LLMEvent.reasoningStart({ id: rid }))
+                      result.push(LLMEvent.reasoningDelta({ id: rid, text: thinkingContent }))
+                      result.push(LLMEvent.reasoningEnd({ id: rid }))
+
+                      pos = closeIdx + 8
+                    }
+
+                    return Stream.fromIterable(result)
+                  })
+                : Stream.map((event) => event),
+              // kilocode_change end
             )
           }),
         ),

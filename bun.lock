@@ -271,7 +271,7 @@
     },
     "packages/kilo-ui": {
       "name": "@legion/kilo-ui",
-      "version": "1.0.0",
+      "version": "2.2.6",
       "dependencies": {
         "@kobalte/core": "0.13.11",
         "@legion/sdk": "workspace:*",
@@ -308,7 +308,7 @@
     },
     "packages/kilo-web-ui": {
       "name": "@legion/kilo-web-ui",
-      "version": "1.0.0",
+      "version": "2.2.6",
       "dependencies": {
         "@kobalte/core": "catalog:",
         "@legion/kilo-ui": "workspace:*",
@@ -342,8 +342,8 @@
       },
     },
     "packages/opencode": {
-      "name": "@legioncli",
-      "version": "1.0.0",
+      "name": "@legioncli/cli",
+      "version": "2.2.6",
       "bin": {
         "legion": "./bin/legion",
       },
@@ -582,7 +582,7 @@
     },
     "packages/ui": {
       "name": "@opencode-ai/ui",
-      "version": "1.0.0",
+      "version": "2.2.6",
       "dependencies": {
         "@kobalte/core": "catalog:",
         "@legion/sdk": "workspace:*",
@@ -1250,7 +1250,7 @@
 
     "@legion/sdk": ["@legion/sdk@workspace:packages/sdk/js"],
 
-    "@legioncli": ["@legioncli@workspace:packages/opencode"],
+    "@legioncli/cli": ["@legioncli/cli@workspace:packages/opencode"],
 
     "@leichtgewicht/ip-codec": ["@leichtgewicht/ip-codec@2.0.5", "", {}, "sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw=="],
 

@@ -65,10 +65,10 @@ describe("session platform attribution", () => {
       fn: async () => {
         const root = await create({ platform: "agent-manager" })
         const child = await create({ parentID: root.id, title: "child" })
-        const attr = LegionSessionattribution(child.id)
+        const attr = LegionSession.attribution(child.id)
 
-        expect(LegionSessiongetPlatformOverride(root.id)).toBe("agent-manager")
-        expect(LegionSessiongetPlatformOverride(child.id)).toBe("agent-manager")
+        expect(LegionSession.getPlatformOverride(root.id)).toBe("agent-manager")
+        expect(LegionSession.getPlatformOverride(child.id)).toBe("agent-manager")
         expect(LegionSession.resolvePlatform(child.id)).toBe("agent-manager")
         expect(attr.rootID).toBe(root.id)
         expect(attr.feature).toBe("agent-manager")

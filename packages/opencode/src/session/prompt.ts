@@ -128,8 +128,6 @@ const EXT_TO_LANG: Record<string, string> = {
   ".dart": "dart",
   ".vue": "vue",
   ".svelte": "react",
-  ".jsx": "react",
-  ".tsx": "react",
   ".fs": "fsharp",
   ".fsx": "fsharp",
   ".pl": "perl",

@@ -1,6 +1,7 @@
 .husky/_
 .DS_Store
 .secrets/
+npm-packages/
 node_modules
 .worktrees
 .sst

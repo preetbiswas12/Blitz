@@ -38,7 +38,7 @@ describe("NvidiaPlugin", () => {
         Existing: "value",
         "HTTP-Referer": "https://legion.ai/",
         "X-Title": "Legion Code",
-        "X-BILLING-INVOKE-ORIGIN": "KiloCode",
+        "X-BILLING-INVOKE-ORIGIN": "LegionCode",
       })
       expect((yield* catalog.provider.get(ProviderV2.ID.openrouter)).options.headers).toEqual({})
     }),
@@ -64,7 +64,7 @@ describe("NvidiaPlugin", () => {
       expect((yield* catalog.provider.get(ProviderV2.ID.make("nvidia"))).options.headers).toEqual({
         "HTTP-Referer": "https://legion.ai/",
         "X-Title": "Legion Code",
-        "X-BILLING-INVOKE-ORIGIN": "KiloCode",
+        "X-BILLING-INVOKE-ORIGIN": "LegionCode",
       })
     }),
   )

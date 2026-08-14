@@ -18,6 +18,7 @@ import { LegionSession} from "@/kilocode/session"
 import { stripInternalOptions } from "@/kilocode/agent/options"
 import { formatMemoryContext } from "@/kilocode/memory"
 import { detectEmotions, formatEmotionContext } from "@/kilocode/emotion"
+import { NemotronThinking } from "@/provider/nemotron-thinking" // kilocode_change - Nemotron thinking output
 // kilocode_change end
 
 type PrepareInput = {
@@ -90,6 +91,9 @@ export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: Pre
       // kilocode_change start - inject detected emotional state
       ...(emotionContext ? [emotionContext] : []),
       // kilocode_change end
+      // kilocode_change start - inject Nemotron thinking output to prevent 504 timeouts
+      ...(NemotronThinking.isNemotron(input.model) ? NemotronThinking.injectThinkingPrompt([]) : []),
+      // kilocode_change end
       ...input.system,
       ...(input.user.system ? [input.user.system] : []),
     ]
@@ -123,8 +127,15 @@ export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: Pre
   // kilocode_change start - drop Kilo-internal agent metadata (id/displayName/source)
   // so it never leaks into providerOptions and gets rejected by strict providers
   const agentOptions = stripInternalOptions(input.agent.options)
-  const options = mergeOptions(mergeOptions(mergeOptions(base, input.model.options), agentOptions), variant)
+  let options = mergeOptions(mergeOptions(mergeOptions(base, input.model.options), agentOptions), variant)
   // kilocode_change end
+  
+  // kilocode_change start - enable Nemotron thinking output to prevent 504 timeouts
+  if (NemotronThinking.isNemotron(input.model)) {
+    options = NemotronThinking.injectThinkingOptions(options)
+  }
+  // kilocode_change end
+  
   if (isOpenaiOauth) {
     // kilocode_change start - prepend soul + brain to instructions
     options.instructions = SystemPrompt.soul() + "\n" + SystemPrompt.brain() + "\n" + system.join("\n")

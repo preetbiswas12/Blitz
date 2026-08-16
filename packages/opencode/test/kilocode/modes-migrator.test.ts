@@ -52,7 +52,7 @@ describe("ModesMigrator", () => {
     })
 
     test("converts fileRegex groups to restricted permissions", () => {
-      const groups: ModesMigrator.KilocodeMode["groups"] = [
+      const groups: ModesMigrator.kiloMode["groups"] = [
         "read",
         ["edit", { fileRegex: "\\.md$", description: "Markdown only" }],
       ]
@@ -68,7 +68,7 @@ describe("ModesMigrator", () => {
     })
 
     test("handles tuple without fileRegex", () => {
-      const groups: ModesMigrator.KilocodeMode["groups"] = [["edit", {}]]
+      const groups: ModesMigrator.kiloMode["groups"] = [["edit", {}]]
       const permissions = ModesMigrator.convertPermissions(groups)
 
       expect(permissions.edit).toBe("allow")
@@ -101,7 +101,7 @@ describe("ModesMigrator", () => {
 
   describe("convertMode", () => {
     test("converts full mode to agent config", () => {
-      const mode: ModesMigrator.KilocodeMode = {
+      const mode: ModesMigrator.kiloMode = {
         slug: "translate",
         name: "Translate",
         roleDefinition: "You are a translator...",
@@ -121,7 +121,7 @@ describe("ModesMigrator", () => {
     })
 
     test("uses description when available", () => {
-      const mode: ModesMigrator.KilocodeMode = {
+      const mode: ModesMigrator.kiloMode = {
         slug: "test",
         name: "Test",
         roleDefinition: "Role",
@@ -134,7 +134,7 @@ describe("ModesMigrator", () => {
     })
 
     test("falls back to whenToUse for description", () => {
-      const mode: ModesMigrator.KilocodeMode = {
+      const mode: ModesMigrator.kiloMode = {
         slug: "test",
         name: "Test",
         roleDefinition: "Role",
@@ -147,7 +147,7 @@ describe("ModesMigrator", () => {
     })
 
     test("falls back to name for description", () => {
-      const mode: ModesMigrator.KilocodeMode = {
+      const mode: ModesMigrator.kiloMode = {
         slug: "test",
         name: "Test Mode",
         roleDefinition: "Role",
@@ -159,7 +159,7 @@ describe("ModesMigrator", () => {
     })
 
     test("handles mode without customInstructions", () => {
-      const mode: ModesMigrator.KilocodeMode = {
+      const mode: ModesMigrator.kiloMode = {
         slug: "test",
         name: "Test",
         roleDefinition: "You are a test agent.",
@@ -240,7 +240,7 @@ describe("ModesMigrator", () => {
       await using tmp = await tmpdir({
         init: async (dir) => {
           await Bun.write(
-            path.join(dir, ".kilocodemodes"),
+            path.join(dir, ".kilomodes"),
             `customModes:
   - slug: code
     name: Code
@@ -280,9 +280,9 @@ describe("ModesMigrator", () => {
       - read`,
           )
 
-          // Create project .kilocodemodes (should win)
+          // Create project .kilomodes (should win)
           await Bun.write(
-            path.join(dir, ".kilocodemodes"),
+            path.join(dir, ".kilomodes"),
             `customModes:
   - slug: translate
     name: Translate Project
@@ -317,7 +317,7 @@ describe("ModesMigrator", () => {
       await using tmp = await tmpdir({
         init: async (dir) => {
           await Bun.write(
-            path.join(dir, ".kilocodemodes"),
+            path.join(dir, ".kilomodes"),
             `customModes:
   - slug: translate
     name: Translate

@@ -148,7 +148,7 @@ describe("Legion PublicApi OpenAPI contract", () => {
     }
   })
 
-  test.skip("keeps personal organization resets nullable (skipped — KiloGateway removed)", () => {
+  test.skip("keeps personal organization resets nullable (skipped — Kilocode gateway)", () => {
     const spec = OpenApi.fromApi(PublicApi)
     const body = spec.paths["/organization"]?.post?.requestBody as Body | undefined
     const schema = body?.content?.["application/json"]?.schema
@@ -156,7 +156,7 @@ describe("Legion PublicApi OpenAPI contract", () => {
     expect(props?.organizationId).toEqual({ anyOf: [{ type: "string" }, { type: "null" }] })
   })
 
-  test.skip("keeps Kilo gateway responses nullable (skipped — KiloGateway removed)", () => {
+  test.skip("keeps Kilocode gateway responses nullable (skipped — Kilocode gateway)", () => {
     const spec = OpenApi.fromApi(PublicApi)
     const response = (path: string) => {
       const body = spec.paths[path]?.get?.responses?.["200"] as Body | undefined
@@ -170,7 +170,7 @@ describe("Legion PublicApi OpenAPI contract", () => {
     expect(response("/claw-chat-credentials")).toBeDefined()
   })
 
-  test.skip("keeps transcription prompts in the public contract (skipped — KiloGateway removed)", () => {
+  test.skip("keeps transcription prompts in the public contract (skipped — Kilocode gateway)", () => {
     const spec = OpenApi.fromApi(PublicApi)
     const body = spec.paths["/audio-transcriptions"]?.post?.requestBody as Body | undefined
     const schema = body?.content?.["application/json"]?.schema

@@ -1,8 +1,8 @@
 // kilocode_change - new file
 //
 // Kilo uses Npm.Service (arborist) for dependency installation and may write
-// a .gitignore inside the .kilo config dir. Users may have pnpm or yarn as
-// their system package manager, which can produce lockfiles in the .kilo/
+// a .gitignore inside the .kilocode config dir. Users may have pnpm or yarn as
+// their system package manager, which can produce lockfiles in the .kilocode/
 // config directory. These must be ignored so they don't appear as untracked
 // files in the user's project.
 
@@ -24,6 +24,7 @@ import { Filesystem } from "../../src/util/filesystem"
 import * as CrossSpawnSpawner from "@opencode-ai/core/cross-spawn-spawner"
 import { HttpClient } from "effect/unstable/http"
 import { tmpdir } from "../fixture/fixture"
+import { InstanceRef } from "../../src/effect/instance-ref"
 
 const infra = CrossSpawnSpawner.defaultLayer.pipe(
   Layer.provideMerge(Layer.mergeAll(NodeFileSystem.layer, NodePath.layer)),
@@ -48,28 +49,34 @@ const unexpectedHttp = HttpClient.make((request) =>
   Effect.die(`unexpected http request: ${request.method} ${request.url}`),
 )
 
-const testLayer = Config.layer.pipe(
-  Layer.provide(Git.defaultLayer),
-  Layer.provide(EffectFlock.defaultLayer),
-  Layer.provide(AppFileSystem.defaultLayer),
-  Layer.provide(Env.defaultLayer),
-  Layer.provide(emptyAuth),
-  Layer.provide(emptyAccount),
-  Layer.provideMerge(infra),
-  Layer.provide(noopNpm),
-  Layer.provide(Layer.succeed(HttpClient.HttpClient, unexpectedHttp)),
+const testLayer = Config.defaultLayer.pipe(
+  Layer.provideMerge(Layer.mergeAll(
+    Git.defaultLayer,
+    EffectFlock.defaultLayer,
+    AppFileSystem.defaultLayer,
+    Env.defaultLayer,
+    emptyAuth,
+    emptyAccount,
+    infra,
+    noopNpm,
+    Layer.succeed(HttpClient.HttpClient, unexpectedHttp),
+  )),
 )
 
-test(".gitignore in .kilo config dir includes pnpm and yarn lockfile patterns", async () => {
+test(".gitignore in .kilocode config dir includes pnpm and yarn lockfile patterns", async () => {
   await using tmp = await tmpdir()
   const dir = path.join(tmp.path, "a")
-  const kilo = path.join(dir, ".kilo")
+  const kilo = path.join(dir, ".kilocode")
   await fs.mkdir(kilo, { recursive: true })
 
   await provideTestInstance({
     directory: dir,
-    fn: async () => {
-      await Effect.runPromise(Config.Service.use((svc) => svc.get()).pipe(Effect.scoped, Effect.provide(testLayer)))
+    fn: async (ctx) => {
+      await Effect.runPromise(Config.Service.use((svc) => svc.get()).pipe(
+        Effect.scoped,
+        Effect.provide(testLayer),
+        Effect.provideService(InstanceRef, ctx),
+      ))
     },
   })
 

@@ -150,7 +150,7 @@ Configuration is defined in `utils/config.ts`:
   // Kilo-specific directories (preserved)
   kiloDirectories: [
     "packages/opencode/src/kilocode",
-    "packages/kilo-gateway",
+    "packages/kilocode",
     "packages/kilo-telemetry",
     // ...
   ],

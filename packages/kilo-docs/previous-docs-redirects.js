@@ -910,7 +910,7 @@ module.exports = [
   },
   {
     source: "/docs/contributing/architecture/auto-model-tiers",
-    destination: "/docs/contributing/architecture/cloud-platform#kilo-gateway",
+    destination: "/docs/contributing/architecture/cloud-platform#kilocode",
     basePath: false,
     permanent: true,
   },
@@ -928,7 +928,7 @@ module.exports = [
   },
   {
     source: "/docs/contributing/architecture/track-repo-url",
-    destination: "/docs/contributing/architecture/cloud-platform#kilo-gateway",
+    destination: "/docs/contributing/architecture/cloud-platform#kilocode",
     basePath: false,
     permanent: true,
   },

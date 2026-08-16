@@ -35,7 +35,7 @@ Create a `.env` file and add your Kilo API key:
 LEGION_API_KEY=your_api_key_here
 ```
 
-For step-by-step instructions on getting an API key, please see the [Kilo Gateway API Key instructions](/docs/getting-started/setup-authentication#kilo-gateway-api-key).
+For step-by-step instructions on getting an API key, please see the [Kilocode API Key instructions](/docs/getting-started/setup-authentication#kilocode-api-key).
 
 ### 4. Create and run your script
 

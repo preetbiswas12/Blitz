@@ -26,7 +26,7 @@ import { PLUGIN_AGENT } from "../fixture/agent-plugin.constants"
 const pluginUrl = pathToFileURL(path.join(import.meta.dir, "..", "fixture", "agent-plugin.ts")).href
 
 const provider = ProviderTest.fake()
-const configLayer = Config.layer.pipe(
+const configLayer = Config.defaultLayer.pipe(
   Layer.provide(Git.defaultLayer), // kilocode_change
   Layer.provide(RuntimeFlags.layer({ disableDefaultPlugins: true })),
   Layer.provide(AppFileSystem.defaultLayer),

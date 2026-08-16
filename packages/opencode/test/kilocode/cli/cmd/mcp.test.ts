@@ -15,8 +15,8 @@ const added = `{
 }`
 
 describe("KilocodeMcpConfig.format", () => {
-  test("writes strict JSON for kilo.json", () => {
-    const output = KilocodeMcpConfig.format("/tmp/kilo.json", added)
+  test("writes strict JSON for legion.json", () => {
+    const output = KilocodeMcpConfig.format("/tmp/legion.json", added)
 
     expect(JSON.parse(output)).toEqual({
       permission: { bash: "allow" },
@@ -31,7 +31,7 @@ describe("KilocodeMcpConfig.format", () => {
     expect(output).not.toEndWith(",\n}")
   })
 
-  test("preserves JSONC formatting for kilo.jsonc", () => {
-    expect(KilocodeMcpConfig.format("/tmp/kilo.jsonc", added)).toBe(added)
+  test("preserves JSONC formatting for legion.jsonc", () => {
+    expect(KilocodeMcpConfig.format("/tmp/legion.jsonc", added)).toBe(added)
   })
 })

@@ -138,7 +138,7 @@
     },
     "packages/kilo-console": {
       "name": "@legion/kilo-console",
-      "version": "1.0.0",
+      "version": "2.3.0",
       "dependencies": {
         "@legion/kilo-web-ui": "workspace:*",
         "@legion/sdk": "workspace:*",
@@ -271,7 +271,7 @@
     },
     "packages/kilo-ui": {
       "name": "@legion/kilo-ui",
-      "version": "2.2.6",
+      "version": "2.3.0",
       "dependencies": {
         "@kobalte/core": "0.13.11",
         "@legion/sdk": "workspace:*",
@@ -308,13 +308,28 @@
     },
     "packages/kilo-web-ui": {
       "name": "@legion/kilo-web-ui",
-      "version": "2.2.6",
+      "version": "2.3.0",
       "dependencies": {
         "@kobalte/core": "catalog:",
         "@legion/kilo-ui": "workspace:*",
         "@opencode-ai/ui": "workspace:*",
         "@pierre/diffs": "catalog:",
         "solid-js": "catalog:",
+      },
+      "devDependencies": {
+        "@tsconfig/node22": "catalog:",
+        "@types/bun": "catalog:",
+        "@typescript/native-preview": "catalog:",
+        "typescript": "catalog:",
+      },
+    },
+    "packages/kilocode": {
+      "name": "@legion/kilocode",
+      "version": "2.3.0",
+      "dependencies": {
+        "@opencode-ai/core": "workspace:*",
+        "effect": "catalog:",
+        "zod": "catalog:",
       },
       "devDependencies": {
         "@tsconfig/node22": "catalog:",
@@ -343,7 +358,7 @@
     },
     "packages/opencode": {
       "name": "@legioncli/cli",
-      "version": "2.2.6",
+      "version": "2.3.0",
       "bin": {
         "legion": "./bin/legion",
       },
@@ -379,6 +394,7 @@
         "@gitlab/opencode-gitlab-auth": "1.3.3",
         "@legion/kilo-indexing": "workspace:*",
         "@legion/kilo-telemetry": "workspace:*",
+        "@legion/kilocode": "workspace:*",
         "@legion/plugin": "workspace:*",
         "@legion/plugin-atomic-chat": "workspace:*",
         "@legion/sandbox": "workspace:*",
@@ -582,7 +598,7 @@
     },
     "packages/ui": {
       "name": "@opencode-ai/ui",
-      "version": "2.2.6",
+      "version": "2.3.0",
       "dependencies": {
         "@kobalte/core": "catalog:",
         "@legion/sdk": "workspace:*",
@@ -1241,6 +1257,8 @@
     "@legion/kilo-ui": ["@legion/kilo-ui@workspace:packages/kilo-ui"],
 
     "@legion/kilo-web-ui": ["@legion/kilo-web-ui@workspace:packages/kilo-web-ui"],
+
+    "@legion/kilocode": ["@legion/kilocode@workspace:packages/kilocode"],
 
     "@legion/plugin": ["@legion/plugin@workspace:packages/plugin"],
 

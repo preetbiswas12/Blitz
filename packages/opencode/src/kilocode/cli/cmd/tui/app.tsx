@@ -177,8 +177,8 @@ export function handleSessionError(error: unknown, toast: ReturnType<typeof useT
 /**
  * One-shot initialiser called from the App component body.
  *
- * - Injects TUI dependencies into kilo-gateway
- * - Registers Kilo Gateway commands (profile, teams, etc.)
+  * - Injects TUI dependencies into kilo-gateway
+  * - Registers Kilo Gateway commands (profile, teams, etc.)
  * - Registers the auto-approve toggle command
  */
 export function init() {

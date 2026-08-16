@@ -119,6 +119,13 @@ export const Info = Schema.Struct({
       [Schema.Record(Schema.String, Schema.Any)],
     ),
   ),
+  openaiCompatible: Schema.optional(
+    Schema.Struct({
+      name: Schema.optional(Schema.String),
+      baseURL: Schema.optional(Schema.String),
+      apiKey: Schema.optional(Schema.String),
+    }),
+  ),
   models: Schema.optional(Schema.Record(Schema.String, Schema.NullOr(Model))), // kilocode_change - allow null values so removed models can be deleted via stripNulls on save
 }).annotate({ identifier: "ProviderConfig" })
 export type Info = Schema.Schema.Type<typeof Info>

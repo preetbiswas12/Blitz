@@ -307,8 +307,8 @@ describe("Session.fork task detachment", () => {
   test(
     "preserves workspace sync event sequencing in the atomic copy",
     async () => {
-      const flag = Flag.KILO_EXPERIMENTAL_WORKSPACES
-      Flag.KILO_EXPERIMENTAL_WORKSPACES = true
+      const flag = Flag.kilocodecodecode_EXPERIMENTAL_WORKSPACES
+      Flag.kilocodecodecode_EXPERIMENTAL_WORKSPACES = true
       try {
         await using tmp = await tmpdir({ git: true })
         await provideTestInstance({
@@ -350,7 +350,7 @@ describe("Session.fork task detachment", () => {
           },
         })
       } finally {
-        Flag.KILO_EXPERIMENTAL_WORKSPACES = flag
+        Flag.kilocodecodecode_EXPERIMENTAL_WORKSPACES = flag
       }
     },
     { timeout: 30000 },

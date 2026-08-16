@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@legion/kilocode",
+  "version": "2.3.0",
+  "type": "module",
+  "license": "MIT",
+  "description": "Kilocode AI provider client",
+  "exports": {
+    ".": "./src/index.ts",
+    "./types": "./src/types.ts"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "typecheck": "tsgo --noEmit",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@opencode-ai/core": "workspace:*",
+    "effect": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@tsconfig/node22": "catalog:",
+    "@types/bun": "catalog:",
+    "typescript": "catalog:",
+    "@typescript/native-preview": "catalog:"
+  },
+  "peerDependencies": {}
+}

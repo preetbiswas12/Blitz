@@ -7,7 +7,7 @@ import { tmpdir } from "../fixture/fixture"
 describe("LegionSessionPrompt.ensurePlanDir", () => {
   test("creates a missing plan directory", async () => {
     await using tmp = await tmpdir({})
-    const dir = path.join(tmp.path, ".kilo", "plans")
+    const dir = path.join(tmp.path, ".kilocodecodecode", "plans")
     await LegionSessionPrompt.ensurePlanDir(dir)
     const stat = await fs.stat(dir)
     expect(stat.isDirectory()).toBe(true)
@@ -15,7 +15,7 @@ describe("LegionSessionPrompt.ensurePlanDir", () => {
 
   test("is idempotent when the directory already exists", async () => {
     await using tmp = await tmpdir({})
-    const dir = path.join(tmp.path, ".kilo", "plans")
+    const dir = path.join(tmp.path, ".kilocodecodecode", "plans")
     await fs.mkdir(dir, { recursive: true })
     await expect(LegionSessionPrompt.ensurePlanDir(dir)).resolves.toBeUndefined()
     const stat = await fs.stat(dir)
@@ -24,7 +24,7 @@ describe("LegionSessionPrompt.ensurePlanDir", () => {
 
   test("creates intermediate parent directories", async () => {
     await using tmp = await tmpdir({})
-    const dir = path.join(tmp.path, "deep", "nested", ".kilo", "plans")
+    const dir = path.join(tmp.path, "deep", "nested", ".kilocodecodecode", "plans")
     await LegionSessionPrompt.ensurePlanDir(dir)
     const stat = await fs.stat(dir)
     expect(stat.isDirectory()).toBe(true)

@@ -157,7 +157,7 @@ it.instance("snapshots the primary kilo config for the session lifetime", () =>
     () =>
       Effect.gen(function* () {
         const test = yield* TestInstance
-        const file = path.join(test.directory, "kilo.json")
+        const file = path.join(test.directory, "legion.json")
         const legacy = path.join(test.directory, "opencode.json")
         const config = yield* Config.Service
         yield* Effect.promise(() =>

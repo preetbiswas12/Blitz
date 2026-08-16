@@ -1,8 +1,5 @@
 // kilocode_change - new file
-type LegionModelsResult = { readonly models: Record<string, unknown>; readonly error?: string }
-async function fetchLegionModels(_options: Record<string, unknown>): Promise<LegionModelsResult> {
-  return { models: {} }
-}
+import { KiloGateway } from "@legion/kilocode" // kilocode_change
 import { Context, Duration, Effect, Layer, Schema } from "effect"
 import { FetchHttpClient, HttpClient, HttpClientRequest, HttpClientResponse } from "effect/unstable/http"
 import { Config } from "../config/config"
@@ -10,15 +7,14 @@ import { Auth } from "../auth"
 import type { Provider } from "@opencode-ai/core/models-dev"
 import * as Log from "@opencode-ai/core/util/log"
 
-type Models = Provider["models"]
-type KiloOptions = NonNullable<Parameters<typeof fetchLegionModels>[0]>
-type Options = { -readonly [K in keyof KiloOptions]?: KiloOptions[K] } & { apiKey?: string }
-type Failure = NonNullable<LegionModelsResult["error"]>
-type Result = { readonly models: Models; readonly error?: Failure }
-type View = { models?: Models; timestamp?: number }
+type LegionModelsResult = { readonly models: Record<string, unknown>; readonly error?: string }
 
 export interface KiloModels {
-  readonly fetch: (options: KiloOptions) => Effect.Effect<LegionModelsResult, unknown>
+  readonly fetch: (options: {
+    token?: string
+    organizationId?: string
+    baseURL?: string
+  }) => Effect.Effect<LegionModelsResult, unknown>
 }
 
 export class LegionModelsService extends Context.Service<LegionModelsService, KiloModels>()(
@@ -27,8 +23,28 @@ export class LegionModelsService extends Context.Service<LegionModelsService, Ki
 
 export const LegionModelsLayer = Layer.succeed(
   LegionModelsService,
-  LegionModelsService.of({ fetch: (options) => Effect.tryPromise(() => fetchLegionModels(options)) }),
+  LegionModelsService.of({
+    fetch: (options) =>
+      Effect.tryPromise({
+        try: () => KiloGateway.fetchModels(options), // kilocode_change
+        catch: () => "network-error",
+      }).pipe(Effect.map((result: { models: Record<string, unknown>; error?: string }) => ({ models: result.models, error: result.error }))),
+  }),
 )
+type Models = Provider["models"]
+type KiloOptions = {
+  readonly token?: string
+  readonly organizationId?: string
+  readonly baseURL?: string
+}
+type Options = { -readonly [K in keyof KiloOptions]?: KiloOptions[K] } & {
+  apiKey?: string
+  kilocodeOrganizationId?: string
+  kilocodeToken?: string
+}
+type Failure = NonNullable<LegionModelsResult["error"]>
+type Result = { readonly models: Models; readonly error?: Failure }
+type View = { models?: Models; timestamp?: number }
 type Cell = {
   readonly providerID: string
   readonly view: View
@@ -53,6 +69,17 @@ const APERTIS_BASE_URL = "https://api.apertis.ai/v1"
 const ApertisItem = Schema.Struct({ id: Schema.String, owned_by: Schema.optional(Schema.String) })
 const ApertisResponse = Schema.Struct({ data: Schema.optional(Schema.Array(ApertisItem)) })
 type ApertisItem = Schema.Schema.Type<typeof ApertisItem>
+const OpenAIModelsResponse = Schema.Struct({
+  data: Schema.optional(
+    Schema.Array(
+      Schema.Struct({
+        id: Schema.String,
+        name: Schema.optional(Schema.String),
+        owned_by: Schema.optional(Schema.String),
+      }),
+    ),
+  ),
+})
 
 export const layer: Layer.Layer<
   Service,
@@ -115,28 +142,101 @@ export const layer: Layer.Layer<
       return Object.fromEntries((json.data ?? []).map((item) => [item.id, aperture(item)]))
     })
 
+    const fetchOpenAICompatibleModels = Effect.fn("ModelCache.fetchOpenAICompatibleModels")(
+      function* (options: Options) {
+        const baseURL = options.baseURL
+        if (!baseURL || !options.apiKey) {
+          log.debug("no baseURL or apiKey for openai-compatible provider, skipping model fetch")
+          return {}
+        }
+
+        const url = `${String(baseURL).replace(/\/+$/, "")}/models`
+        const response = yield* HttpClientRequest.get(url).pipe(
+          HttpClientRequest.acceptJson,
+          HttpClientRequest.bearerToken(options.apiKey),
+          http.execute,
+          Effect.timeout("10 seconds"),
+        )
+        if (response.status < 200 || response.status >= 300) {
+          log.error("openai-compatible model fetch failed", { status: response.status, url })
+          return {}
+        }
+
+        const json = yield* HttpClientResponse.schemaBodyJson(OpenAIModelsResponse)(response)
+        const models: Models = {}
+        const items = json.data ?? []
+        for (const item of items) {
+          if (!item?.id) continue
+          models[item.id] = {
+            id: item.id,
+            name: item.name ?? item.id,
+            family: item.owned_by ?? "",
+            release_date: "",
+            attachment: true,
+            reasoning: false,
+            temperature: true,
+            tool_call: true,
+            cost: { input: 0, output: 0 },
+            limit: { context: 128000, output: 4096 },
+            modalities: { input: ["text"], output: ["text"] },
+          }
+        }
+        return models
+      },
+    )
+
     const authOptions = Effect.fn("ModelCache.authOptions")(function* (providerID: string) {
-      if (providerID !== "legion" && providerID !== "apertis") return {}
+      if (
+        providerID !== "legion" &&
+        providerID !== "kilocode" &&
+        providerID !== "apertis"
+      ) {
+        const isKnownProvider =
+          providerID === "opencode" ||
+          providerID === "anthropic" ||
+          providerID === "openai" ||
+          providerID === "google" ||
+          providerID === "google-vertex" ||
+          providerID === "github-copilot" ||
+          providerID === "amazon-bedrock" ||
+          providerID === "azure" ||
+          providerID === "openrouter" ||
+          providerID === "mistral" ||
+          providerID === "gitlab"
+        if (!isKnownProvider) {
+          const config = yield* cfg.get()
+          const customProvider = config.provider?.[providerID]
+          if (customProvider?.openaiCompatible) {
+            const options: Options = {}
+            if (customProvider.openaiCompatible.apiKey) options.apiKey = customProvider.openaiCompatible.apiKey
+            if (customProvider.openaiCompatible.baseURL) options.baseURL = customProvider.openaiCompatible.baseURL
+            if (customProvider.options?.apiKey) options.apiKey = customProvider.options.apiKey
+            if (customProvider.options?.baseURL) options.baseURL = customProvider.options.baseURL
+            return options
+          }
+        }
+        return {}
+      }
       const config = yield* cfg.get()
       const options: Options = {}
 
-      if (providerID === "legion") {
+      if (providerID === "legion" || providerID === "kilocode") {
         const item = config.provider?.[providerID]
-        if (item?.options?.apiKey) options.kilocodeToken = item.options.apiKey
+        if (item?.options?.apiKey) options.apiKey = item.options.apiKey
         if (item?.options?.kilocodeOrganizationId) options.kilocodeOrganizationId = item.options.kilocodeOrganizationId
 
         const info = yield* auth.get(providerID)
-        if (info?.type === "api") options.kilocodeToken = info.key
+        if (info?.type === "api") options.apiKey = info.key
         if (info?.type === "oauth") {
-          options.kilocodeToken = info.access
+          options.apiKey = info.access
           if (info.accountId) options.kilocodeOrganizationId = info.accountId
         }
 
-        if (process.env.KILO_API_KEY) options.kilocodeToken = process.env.KILO_API_KEY
+        if (process.env.KILO_API_KEY) options.apiKey = process.env.KILO_API_KEY
         if (process.env.KILO_ORG_ID) options.kilocodeOrganizationId = process.env.KILO_ORG_ID
         log.debug("auth options resolved", {
           providerID,
-          hasToken: !!options.kilocodeToken,
+          hasToken: !!options.apiKey,
           hasOrganizationId: !!options.kilocodeOrganizationId,
         })
       }
@@ -160,12 +260,39 @@ export const layer: Layer.Layer<
       return options
     })
 
-    const fetchModels = (providerID: string, options: Options): Effect.Effect<Result, unknown> => {
-      if (providerID === "legion") return kilo.fetch(options) as Effect.Effect<Result, unknown>
-      if (providerID === "apertis") return fetchApertisModels(options).pipe(Effect.map((models) => ({ models })))
+    const fetchModels = Effect.fn("ModelCache.fetchModels")(function* (providerID: string, options: Options) {
+      if (providerID === "legion") return yield* kilo.fetch(options)
+      if (providerID === "kilocode") {
+        return yield* KiloGateway.fetchModels({
+          token: options.apiKey,
+          organizationId: options.kilocodeOrganizationId,
+          baseURL: options.baseURL,
+        }).pipe(Effect.map((models) => ({ models })))
+      }
+      if (providerID === "apertis") return yield* fetchApertisModels(options).pipe(Effect.map((models) => ({ models })))
+
+      const isKnownProvider =
+        providerID === "opencode" ||
+        providerID === "anthropic" ||
+        providerID === "openai" ||
+        providerID === "google" ||
+        providerID === "google-vertex" ||
+        providerID === "github-copilot" ||
+        providerID === "amazon-bedrock" ||
+        providerID === "azure" ||
+        providerID === "openrouter" ||
+        providerID === "mistral" ||
+        providerID === "gitlab"
+      if (!isKnownProvider) {
+        const config = yield* cfg.get()
+        if (config.provider?.[providerID]?.openaiCompatible) {
+          return yield* fetchOpenAICompatibleModels(options).pipe(Effect.map((models) => ({ models })))
+        }
+      }
+
       log.debug("provider not implemented", { providerID })
-      return Effect.succeed({ models: {} })
-    }
+      return { models: {} }
+    })
 
     const load = Effect.fn("ModelCache.load")(function* (providerID: string, options: Options) {
       const resolved = yield* authOptions(providerID).pipe(
@@ -179,16 +306,36 @@ export const layer: Layer.Layer<
       return yield* fetchModels(providerID, { ...resolved, ...options })
     })
 
-    const key = (providerID: string, options?: Options) => {
-      if (providerID === "legion") {
-        return JSON.stringify([providerID, options?.baseURL, options?.kilocodeOrganizationId, options?.kilocodeToken])
+    const key = Effect.fn("ModelCache.key")(function* (providerID: string, options?: Options) {
+      if (providerID === "legion" || providerID === "kilocode") {
+        return JSON.stringify([providerID, options?.baseURL, options?.kilocodeOrganizationId, options?.apiKey])
       }
       if (providerID === "apertis") return JSON.stringify([providerID, options?.baseURL, options?.apiKey])
+
+      const isKnownProvider =
+        providerID === "opencode" ||
+        providerID === "anthropic" ||
+        providerID === "openai" ||
+        providerID === "google" ||
+        providerID === "google-vertex" ||
+        providerID === "github-copilot" ||
+        providerID === "amazon-bedrock" ||
+        providerID === "azure" ||
+        providerID === "openrouter" ||
+        providerID === "mistral" ||
+        providerID === "gitlab"
+      if (!isKnownProvider) {
+        const config = yield* cfg.get()
+        if (config.provider?.[providerID]?.openaiCompatible) {
+          return JSON.stringify([providerID, options?.baseURL, options?.apiKey])
+        }
+      }
+
       return providerID
-    }
+    })
 
     const cell = Effect.fn("ModelCache.cell")(function* (providerID: string, options: Options = {}) {
-      const id = key(providerID, options)
+      const id = yield* key(providerID, options)
       const existing = cells.get(id)
       if (existing) return existing
       const view: View = {}

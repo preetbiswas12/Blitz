@@ -131,7 +131,7 @@ describe("Kilo installation upgrade", () => {
     Effect.gen(function* () {
       const result = yield* Installation.Service.use((svc) => svc.latest("scoop"))
       expect(result).toBe("8.8.8")
-      expect(scoop).toContain("https://raw.githubusercontent.com/ScoopInstaller/Main/master/bucket/kilo.json")
+      expect(scoop).toContain("https://raw.githubusercontent.com/ScoopInstaller/Main/master/bucket/legion.json")
     }),
   )
 

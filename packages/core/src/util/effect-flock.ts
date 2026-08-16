@@ -5,7 +5,7 @@ import { Context, Effect, Function, Layer, Option, Schedule, Schema } from "effe
 import type { FileSystem, Scope } from "effect"
 import type { PlatformError } from "effect/PlatformError"
 import { AppFileSystem } from "../filesystem"
-import { Global } from "../global"
+import * as Global from "../global"
 import { Hash } from "./hash"
 
 export namespace EffectFlock {

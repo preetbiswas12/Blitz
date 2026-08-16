@@ -10,7 +10,7 @@ class TestConfig extends ConfigService.Service<TestConfig>()("@test/ConfigServic
 }) {}
 
 const fromConfig = (input: Record<string, unknown>) =>
-  TestConfig.defaultLayer.pipe(Layer.provide(ConfigProvider.layer(ConfigProvider.fromUnknown(input))))
+  TestConfig.layer.pipe(Layer.provide(ConfigProvider.layer(ConfigProvider.fromUnknown(input))))
 
 const readConfig = TestConfig.useSync((config) => config)
 

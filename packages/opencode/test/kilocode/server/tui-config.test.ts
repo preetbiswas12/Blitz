@@ -18,7 +18,7 @@ describe("TUI config routes", () => {
   test("gets effective project TUI config", async () => {
     await using tmp = await tmpdir({
       init: async (dir) => {
-        const cfg = path.join(dir, ".kilo")
+        const cfg = path.join(dir, ".kilocode")
         await fs.mkdir(cfg, { recursive: true })
         await Bun.write(
           path.join(cfg, "tui.json"),
@@ -43,13 +43,13 @@ describe("TUI config routes", () => {
     expect(body.plugin_origins).toBeUndefined()
   })
 
-  test("loads legacy .kilocode TUI config and ignores .opencode", async () => {
+  test("loads legacy .kilocodecode TUI config and ignores .opencode", async () => {
     await using tmp = await tmpdir({
       init: async (dir) => {
         await fs.mkdir(path.join(dir, ".opencode"), { recursive: true })
-        await fs.mkdir(path.join(dir, ".kilocode"), { recursive: true })
+        await fs.mkdir(path.join(dir, ".kilocodecode"), { recursive: true })
         await Bun.write(path.join(dir, ".opencode", "tui.json"), JSON.stringify({ theme: "dracula" }))
-        await Bun.write(path.join(dir, ".kilocode", "tui.json"), JSON.stringify({ theme: "nord" }))
+        await Bun.write(path.join(dir, ".kilocodecode", "tui.json"), JSON.stringify({ theme: "nord" }))
       },
     })
 
@@ -101,14 +101,14 @@ describe("TUI config routes", () => {
     expect(body.theme).toBe("nord")
     expect(body.title_icon).toBe("emojis")
 
-    const saved = await Bun.file(path.join(tmp.path, ".kilo", "tui.json")).json()
+    const saved = await Bun.file(path.join(tmp.path, ".kilocode", "tui.json")).json()
     expect(saved).toEqual({ theme: "nord", title_icon: "emojis" })
   })
 
   test("patches attention config without dropping advanced notification settings", async () => {
     await using tmp = await tmpdir({
       init: async (dir) => {
-        const cfg = path.join(dir, ".kilo")
+        const cfg = path.join(dir, ".kilocode")
         await fs.mkdir(cfg, { recursive: true })
         await Bun.write(
           path.join(cfg, "tui.json"),
@@ -139,7 +139,7 @@ describe("TUI config routes", () => {
     })
 
     expect(response.status).toBe(200)
-    const saved = await Bun.file(path.join(tmp.path, ".kilo", "tui.json")).json()
+    const saved = await Bun.file(path.join(tmp.path, ".kilocode", "tui.json")).json()
     expect(saved).toEqual({
       attention: {
         enabled: true,

@@ -62,17 +62,17 @@ it.instance(
     const source = `http://127.0.0.1:${server.port}`
     const file = path.join(Global.Path.cache, `models-${Hash.fast(source)}.json`)
     const flags = {
-      source: Flag.KILO_MODELS_URL,
-      path: Flag.KILO_MODELS_PATH,
-      disabled: Flag.KILO_DISABLE_MODELS_FETCH,
+      source: Flag.kilocodecodecode_MODELS_URL,
+      path: Flag.kilocodecodecode_MODELS_PATH,
+      disabled: Flag.kilocodecodecode_DISABLE_MODELS_FETCH,
       key: process.env.ACME_API_KEY,
     }
 
     yield* Effect.acquireUseRelease(
       Effect.promise(async () => {
-        Flag.KILO_MODELS_URL = source
-        Flag.KILO_MODELS_PATH = undefined
-        Flag.KILO_DISABLE_MODELS_FETCH = true
+        Flag.kilocodecodecode_MODELS_URL = source
+        Flag.kilocodecodecode_MODELS_PATH = undefined
+        Flag.kilocodecodecode_DISABLE_MODELS_FETCH = true
         process.env.ACME_API_KEY = "test-key"
         await mkdir(Global.Path.cache, { recursive: true })
         await writeFile(file, JSON.stringify(initial))
@@ -94,9 +94,9 @@ it.instance(
         }).pipe(Effect.provide(Layer.merge(ModelsDev.defaultLayer, Provider.defaultLayer))),
       () =>
         Effect.promise(async () => {
-          Flag.KILO_MODELS_URL = flags.source
-          Flag.KILO_MODELS_PATH = flags.path
-          Flag.KILO_DISABLE_MODELS_FETCH = flags.disabled
+          Flag.kilocodecodecode_MODELS_URL = flags.source
+          Flag.kilocodecodecode_MODELS_PATH = flags.path
+          Flag.kilocodecodecode_DISABLE_MODELS_FETCH = flags.disabled
           if (flags.key === undefined) delete process.env.ACME_API_KEY
           else process.env.ACME_API_KEY = flags.key
           await rm(file, { force: true })
@@ -104,4 +104,5 @@ it.instance(
     )
   }),
   { config: { disabled_providers: ["legion", "apertis"] } },
+  30000,
 )

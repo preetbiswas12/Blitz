@@ -102,7 +102,7 @@ Not every hosted flow launches Cloud Agent. Shared services also route model req
 
 ## Kilo Gateway
 
-Gateway consists of cloud API routes plus `packages/kilo-gateway/` client integration in `Kilo-Org/kilocode`. It handles account-aware and anonymous-free model access. See [Cloud Security](/docs/contributing/architecture/cloud-security#model-request-gateway) for request branches and endpoint families.
+Gateway consists of cloud API routes plus `packages/kilocode/` client integration in `Kilo-Org/kilocode`. It handles account-aware and anonymous-free model access. See [Cloud Security](/docs/contributing/architecture/cloud-security#model-request-gateway) for request branches and endpoint families.
 
 | Responsibility | Description |
 |---|---|

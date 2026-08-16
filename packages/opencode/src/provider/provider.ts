@@ -39,6 +39,7 @@ import {
   patchLegionProviderPrivacy,
   LegionSmallModelPriority,
   buildTimeoutSignal,
+  patchCustomOpenAICompatibleProvider,
 } from "@/kilocode/provider/provider"
 import * as ModelsRefresh from "@/kilocode/provider/models-refresh"
 // kilocode_change end
@@ -867,6 +868,25 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
         options: {},
       }
     }),
+    "kilocode": Effect.fnUntraced(function* (input: Info) {
+      const env = yield* dep.env()
+      const auth = yield* dep.auth(input.id)
+      const token = env["KILO_API_KEY"] || (auth?.type === "api" ? auth.key : undefined) || input.options?.apiKey
+      const organizationId =
+        env["KILO_ORG_ID"] || (auth?.type === "api" ? auth.metadata?.organizationId : undefined) || input.options?.kilocodeOrganizationId
+
+      return {
+        autoload: true,
+        options: {
+          ...(token ? { apiKey: token } : {}),
+          ...(organizationId ? { kilocodeOrganizationId: organizationId } : {}),
+          baseURL: "https://openrouter.kilo.ai/api/v1",
+        },
+        async getModel(sdk: any, modelID: string) {
+          return sdk.openaiCompatible(modelID)
+        },
+      }
+    }),
     cerebras: () =>
       Effect.succeed({
         autoload: false,
@@ -1347,6 +1367,11 @@ export const layer = Layer.effect(
             source: "config",
             models: existing?.models ?? {},
           }
+          // kilocode_change start
+          if (provider.openaiCompatible) {
+            patchCustomOpenAICompatibleProvider(parsed, provider)
+          }
+          // kilocode_change end
 
           for (const [modelID, model] of Object.entries(provider.models ?? {})) {
             if (!model) continue // kilocode_change - null entries are transient delete sentinels

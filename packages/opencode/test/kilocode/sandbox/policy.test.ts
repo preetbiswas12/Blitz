@@ -40,8 +40,8 @@ function fixture() {
       const separate = path.join(root, "separate")
       const separateLocal = path.join(separate, "packages", "app")
       const store = path.join(root, "separate-git")
-      const a = path.join(main, ".kilo", "worktrees", "a")
-      const b = path.join(main, ".kilo", "worktrees", "b")
+      const a = path.join(main, ".kilocodecodecode", "worktrees", "a")
+      const b = path.join(main, ".kilocodecodecode", "worktrees", "b")
       const external = path.join(root, "imported")
       const approved = path.join(root, "approved")
       await Promise.all([
@@ -87,7 +87,7 @@ function roots(ctx: InstanceContext) {
 }
 
 function expected(...directories: string[]) {
-  return new Set([...directories, ...kilo])
+  return new Set([...directories, ...kilocodecodecode])
 }
 
 const posix = process.platform === "win32" ? test.skip : test

@@ -40,7 +40,7 @@ const noopNpm = Layer.mock(Npm.Service)({
 const unexpectedHttp = HttpClient.make((request) =>
   Effect.die(`unexpected http request: ${request.method} ${request.url}`),
 )
-const layer = Config.layer.pipe(
+const layer = Config.defaultLayer.pipe(
   Layer.provide(Git.defaultLayer),
   Layer.provide(EffectFlock.defaultLayer),
   Layer.provide(AppFileSystem.defaultLayer),
@@ -60,7 +60,7 @@ const saveGlobal = (config: Config.Info) =>
 const saveProject = (config: Config.Info) =>
   Effect.runPromise(Config.Service.use((svc) => svc.update(config)).pipe(Effect.scoped, Effect.provide(layer)))
 
-async function writeConfig(dir: string, config: object, name = "kilo.json") {
+async function writeConfig(dir: string, config: object, name = "legion.json") {
   await Filesystem.write(path.join(dir, name), JSON.stringify(config))
 }
 
@@ -208,7 +208,7 @@ describe("kilocode indexing config", () => {
     expect(KiloIndexing.input({ enabled: true }, { enabled: false }).enabled).toBe(true)
   })
 
-  test("creates missing project config as .kilo/kilo.jsonc", async () => {
+  test("creates missing project config as .kilo/legion.jsonc", async () => {
     await using tmp = await tmpdir({ git: true })
 
     await provideTestInstance({
@@ -218,8 +218,8 @@ describe("kilocode indexing config", () => {
       },
     })
 
-    expect(await Bun.file(path.join(tmp.path, ".kilo", "kilo.jsonc")).exists()).toBe(true)
-    expect(await Bun.file(path.join(tmp.path, ".kilo", "kilo.json")).exists()).toBe(false)
+    expect(await Bun.file(path.join(tmp.path, ".kilo", "legion.jsonc")).exists()).toBe(true)
+    expect(await Bun.file(path.join(tmp.path, ".kilo", "legion.json")).exists()).toBe(false)
   })
 
   test("accepts delete sentinels for indexing model overrides", () => {
@@ -245,7 +245,7 @@ describe("kilocode indexing config", () => {
 describe("custom provider model config", () => {
   test("persists and removes reasoning across a global config reload", async () => {
     await using globalTmp = await tmpdir()
-    const file = path.join(globalTmp.path, "kilo.json")
+    const file = path.join(globalTmp.path, "legion.json")
     const prev = Global.Path.config
     ;(Global.Path as { config: string }).config = globalTmp.path
     await clear()
@@ -374,7 +374,7 @@ describe("agent config", () => {
 
   test("removes agent model and variant overrides from global JSONC config", async () => {
     await using globalTmp = await tmpdir()
-    const file = path.join(globalTmp.path, "kilo.jsonc")
+    const file = path.join(globalTmp.path, "legion.jsonc")
     const prev = Global.Path.config
     ;(Global.Path as { config: string }).config = globalTmp.path
     await clear()
@@ -507,18 +507,18 @@ describe("linked worktree config", () => {
   test("uses primary config directories as local fallbacks", async () => {
     await using primary = await tmpdir({ git: true })
     const worktree = path.join(path.dirname(primary.path), `${path.basename(primary.path)}-config-feature`)
-    await Bun.write(path.join(primary.path, "kilo.json"), JSON.stringify({ model: "test/primary" }))
-    await $`git add kilo.json`.cwd(primary.path).quiet()
+    await Bun.write(path.join(primary.path, "legion.json"), JSON.stringify({ model: "test/primary" }))
+    await $`git add legion.json`.cwd(primary.path).quiet()
     await $`git commit -m config`.cwd(primary.path).quiet()
     await $`git worktree add -b config-sibling-worktree ${worktree}`.cwd(primary.path).quiet()
 
     try {
-      await Bun.write(path.join(worktree, "kilo.json"), JSON.stringify({ model: "test/worktree" }))
+      await Bun.write(path.join(worktree, "legion.json"), JSON.stringify({ model: "test/worktree" }))
       await Bun.write(
-        path.join(primary.path, ".kilo", "kilo.jsonc"),
+        path.join(primary.path, ".kilo", "legion.jsonc"),
         JSON.stringify({ username: "primary-dir", indexing: { enabled: true } }),
       )
-      await Bun.write(path.join(worktree, ".kilo", "kilo.jsonc"), JSON.stringify({ username: "worktree-dir" }))
+      await Bun.write(path.join(worktree, ".kilo", "legion.jsonc"), JSON.stringify({ username: "worktree-dir" }))
 
       const config = await provideTestInstance({ directory: worktree, fn: load })
 
@@ -539,15 +539,15 @@ describe("linked worktree config", () => {
     try {
       await Bun.write(path.join(directory, "placeholder"), "")
       await Bun.write(
-        path.join(primary.path, "packages", ".opencode", "kilo.jsonc"),
+        path.join(primary.path, "packages", ".opencode", "legion.jsonc"),
         JSON.stringify({ snapshot: true, autoupdate: false, share: "auto", default_agent: "opencode-only" }),
       )
       await Bun.write(
-        path.join(primary.path, "packages", ".kilocode", "kilo.jsonc"),
+        path.join(primary.path, "packages", ".kilocode", "legion.jsonc"),
         JSON.stringify({ snapshot: true, autoupdate: "notify", share: "disabled" }),
       )
-      await Bun.write(path.join(primary.path, "packages", ".kilo", "kilo.jsonc"), JSON.stringify({ snapshot: false }))
-      await Bun.write(path.join(directory, ".kilo", "kilo.jsonc"), JSON.stringify({ share: "manual" }))
+      await Bun.write(path.join(primary.path, "packages", ".kilo", "legion.jsonc"), JSON.stringify({ snapshot: false }))
+      await Bun.write(path.join(directory, ".kilo", "legion.jsonc"), JSON.stringify({ share: "manual" }))
 
       const config = await provideTestInstance({ directory, fn: load })
 
@@ -565,8 +565,8 @@ describe("linked worktree config", () => {
     await using explicit = await tmpdir()
     const worktree = path.join(path.dirname(primary.path), `${path.basename(primary.path)}-config-explicit`)
     await $`git worktree add -b config-explicit-worktree ${worktree}`.cwd(primary.path).quiet()
-    await Bun.write(path.join(primary.path, ".kilo", "kilo.jsonc"), JSON.stringify({ username: "primary-dir" }))
-    await Bun.write(path.join(explicit.path, "kilo.jsonc"), JSON.stringify({ username: "explicit-dir" }))
+    await Bun.write(path.join(primary.path, ".kilo", "legion.jsonc"), JSON.stringify({ username: "primary-dir" }))
+    await Bun.write(path.join(explicit.path, "legion.jsonc"), JSON.stringify({ username: "explicit-dir" }))
     const previous = process.env["LEGION_CONFIG_DIR"]
     process.env["LEGION_CONFIG_DIR"] = explicit.path
 
@@ -590,7 +590,7 @@ describe("bash permission migration", () => {
 }`
       await using tmp = await tmpdir({
         init: async (dir) => {
-          await Filesystem.write(path.join(dir, "kilo.jsonc"), input)
+          await Filesystem.write(path.join(dir, "legion.jsonc"), input)
         },
       })
 
@@ -602,7 +602,7 @@ describe("bash permission migration", () => {
       try {
         await KilocodeConfig.migrateBashPermission()
 
-        const file = path.join(tmp.path, "kilo.jsonc")
+        const file = path.join(tmp.path, "legion.jsonc")
         const text = await Filesystem.readText(file)
         const parsed = ConfigParse.schema(Config.Info, ConfigParse.jsonc(text, file), file)
         expect(text).toBe(input)
@@ -622,7 +622,7 @@ describe("bash permission migration", () => {
       })
       await using tmp = await tmpdir({
         init: async (dir) => {
-          await Filesystem.write(path.join(dir, "kilo.json"), input)
+          await Filesystem.write(path.join(dir, "legion.json"), input)
         },
       })
 
@@ -634,7 +634,7 @@ describe("bash permission migration", () => {
       try {
         await KilocodeConfig.migrateBashPermission()
 
-        const file = path.join(tmp.path, "kilo.json")
+        const file = path.join(tmp.path, "legion.json")
         const text = await Filesystem.readText(file)
         const parsed = ConfigParse.schema(Config.Info, ConfigParse.jsonc(text, file), file)
         expect(text).toBe(input)
@@ -652,7 +652,7 @@ describe("bash permission migration", () => {
     await using tmp = await tmpdir({
       init: async (dir) => {
         await Filesystem.write(
-          path.join(dir, "kilo.jsonc"),
+          path.join(dir, "legion.jsonc"),
           `{
   "$schema": "https://preetbiswas12.github.io/Blitz/config.json",
   "permission": {
@@ -671,7 +671,7 @@ describe("bash permission migration", () => {
     try {
       await KilocodeConfig.migrateBashPermission()
 
-      const file = path.join(tmp.path, "kilo.jsonc")
+      const file = path.join(tmp.path, "legion.jsonc")
       const text = await Filesystem.readText(file)
       const parsed = ConfigParse.schema(Config.Info, ConfigParse.jsonc(text, file), file)
       expect(parsed.permission?.read).toBe("allow")

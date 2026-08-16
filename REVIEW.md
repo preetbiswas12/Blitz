@@ -56,7 +56,7 @@ When suggesting fixes, ensure the suggestion is valid TypeScript (matched braces
 
 Kilo CLI is a fork of opencode. Minimizing diff against upstream is a top priority.
 
-- If a change modifies a shared opencode file (anything under `packages/opencode/` not in a path containing `kilocode`), ask whether the logic could live in a Kilo-only directory instead (`packages/opencode/src/kilocode/`, `packages/kilo-gateway/`, etc.) or be reduced to a smaller hook.
+- If a change modifies a shared opencode file (anything under `packages/opencode/` not in a path containing `kilocode`), ask whether the logic could live in a Kilo-only directory instead (`packages/opencode/src/kilocode/`, `packages/kilocode/`, etc.) or be reduced to a smaller hook.
 - Refactors or reorganizations of upstream code are a red flag — flag them unless clearly justified.
 - See `.kilo/skills/kilocode-merge-minimizer/SKILL.md` for the decision rules.
 

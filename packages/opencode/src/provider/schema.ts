@@ -10,6 +10,7 @@ export const ProviderID = providerIdSchema.pipe(
   withStatics((schema: typeof providerIdSchema) => ({
     // Well-known providers
     legion: schema.make("legion"), // kilocode_change
+    kiloGateway: schema.make("kilocode"), // kilocode_change
     opencode: schema.make("opencode"),
     anthropic: schema.make("anthropic"),
     openai: schema.make("openai"),

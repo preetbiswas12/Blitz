@@ -19,7 +19,7 @@ import { AccountTest } from "../fake/account"
 import { AuthTest } from "../fake/auth"
 import { NpmTest } from "../fake/npm"
 
-const configLayer = Config.layer.pipe(
+const configLayer = Config.defaultLayer.pipe(
   Layer.provide(Git.defaultLayer), // kilocode_change
   Layer.provide(EffectFlock.defaultLayer),
   Layer.provide(AppFileSystem.defaultLayer),

@@ -54,7 +54,7 @@ it.instance("initializes once per instance through Config.Service", () => {
 })
 
 it.instance("bootstraps session ingest from KILO_API_KEY without stored auth", () => {
-  const original = process.env.KILO_API_KEY
+  const original = process.env.kilocodecode_API_KEY
   const calls: string[] = []
   const fetch: typeof globalThis.fetch = Object.assign(
     async (input: RequestInfo | URL, init?: RequestInit) => {
@@ -73,15 +73,15 @@ it.instance("bootstraps session ingest from KILO_API_KEY without stored auth", (
   )
   const request = spyOn(globalThis, "fetch").mockImplementation(fetch)
 
-  process.env.KILO_API_KEY = "env-token"
+  process.env.kilocodecode_API_KEY = "env-token"
   reset("env-token")
 
   return Effect.promise(() => LegionSessions.bootstrap("session-env")).pipe(
     Effect.andThen(() => Effect.sync(() => expect(calls).toEqual(["Bearer env-token", "Bearer env-token"]))),
     Effect.ensuring(
       Effect.sync(() => {
-        if (original === undefined) delete process.env.KILO_API_KEY
-        else process.env.KILO_API_KEY = original
+        if (original === undefined) delete process.env.kilocodecode_API_KEY
+        else process.env.kilocodecode_API_KEY = original
         reset("env-token")
         request.mockRestore()
       }),
@@ -91,7 +91,7 @@ it.instance("bootstraps session ingest from KILO_API_KEY without stored auth", (
 })
 
 it.instance("prefers stored auth over KILO_API_KEY for session ingest", () => {
-  const original = process.env.KILO_API_KEY
+  const original = process.env.kilocodecode_API_KEY
   const calls: string[] = []
   const fetch: typeof globalThis.fetch = Object.assign(
     async (input: RequestInfo | URL, init?: RequestInit) => {
@@ -110,7 +110,7 @@ it.instance("prefers stored auth over KILO_API_KEY for session ingest", () => {
   )
   const request = spyOn(globalThis, "fetch").mockImplementation(fetch)
 
-  process.env.KILO_API_KEY = "env-token"
+  process.env.kilocodecode_API_KEY = "env-token"
   reset("env-token", "stored-token")
 
   return Effect.gen(function* () {
@@ -123,8 +123,8 @@ it.instance("prefers stored auth over KILO_API_KEY for session ingest", () => {
       Effect.gen(function* () {
         const auth = yield* Auth.Service
         yield* auth.remove("legion").pipe(Effect.orDie)
-        if (original === undefined) delete process.env.KILO_API_KEY
-        else process.env.KILO_API_KEY = original
+        if (original === undefined) delete process.env.kilocodecode_API_KEY
+        else process.env.kilocodecode_API_KEY = original
         reset("env-token", "stored-token")
         request.mockRestore()
       }),

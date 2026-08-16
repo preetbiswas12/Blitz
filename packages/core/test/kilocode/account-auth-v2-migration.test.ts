@@ -4,7 +4,7 @@ import { Effect, Layer } from "effect"
 import { AccountV2 } from "@opencode-ai/core/account"
 import { EventV2 } from "@opencode-ai/core/event"
 import { AppFileSystem } from "@opencode-ai/core/filesystem"
-import { Global } from "@opencode-ai/core/global"
+import * as Global from "@opencode-ai/core/global"
 import { tmpdir } from "../fixture/tmpdir"
 import { it } from "../lib/effect"
 

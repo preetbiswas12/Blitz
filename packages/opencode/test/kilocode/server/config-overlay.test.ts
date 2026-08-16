@@ -62,7 +62,7 @@ async function json<T>(response: Response) {
 }
 
 async function config(dir: string, value: unknown) {
-  await Bun.write(path.join(dir, "kilo.json"), JSON.stringify(value, null, 2))
+  await Bun.write(path.join(dir, "legion.json"), JSON.stringify(value, null, 2))
 }
 
 async function setGlobal(dir: string, value: Config.Info) {
@@ -92,7 +92,7 @@ describe("config overlay routes", () => {
     expect(Object.hasOwn(patched, "prototype")).toBe(false)
   })
 
-  test("prefers .kilo over legacy .kilocode and ignores .opencode in project overlays", async () => {
+  test("prefers .kilocodecodecode over legacy .kilocodecodecodecode and ignores .opencode in project overlays", async () => {
     await using project = await tmpdir()
     const entries = [
       {
@@ -101,12 +101,12 @@ describe("config overlay routes", () => {
         value: { username: "opencode", model: "test/opencode", small_model: "test/opencode" },
       },
       {
-        root: ".kilocode",
+        root: ".kilocodecodecodecode",
         source: "kilocode",
         value: { username: "kilocode", model: "test/kilocode" },
       },
       {
-        root: ".kilo",
+        root: ".kilocodecodecode",
         source: "kilo",
         value: { username: "kilo" },
       },
@@ -114,7 +114,7 @@ describe("config overlay routes", () => {
 
     for (const item of entries) {
       const dir = path.join(project.path, item.root)
-      await Filesystem.write(path.join(dir, "kilo.json"), JSON.stringify(item.value))
+      await Filesystem.write(path.join(dir, "legion.json"), JSON.stringify(item.value))
       await Filesystem.write(
         path.join(dir, "agent", "shared.md"),
         `---\ndescription: ${item.source} agent\nmode: subagent\n---\n${item.source} agent prompt`,
@@ -141,7 +141,7 @@ describe("config overlay routes", () => {
       prompt: "kilo agent prompt",
     })
     expect(body.project.agent?.["opencode-only"]).toBeUndefined()
-    expect(body.targets.project).toBe(path.join(project.path, ".kilo", "kilo.json"))
+    expect(body.targets.project).toBe(path.join(project.path, ".kilocodecodecode", "legion.json"))
   })
 
   test.serial("marks global values inherited in project scope", async () => {
@@ -236,7 +236,7 @@ describe("config overlay routes", () => {
     expect(body.fields["indexing.ollama.baseUrl"].value).toBeUndefined()
   })
 
-  test.serial("writes project indexing overrides to .kilo/kilo.jsonc", async () => {
+  test.serial("writes project indexing overrides to .kilocodecodecode/legion.jsonc", async () => {
     await using global = await tmpdir()
     await using project = await tmpdir()
     await setGlobal(global.path, { indexing: { enabled: true, provider: "openai" } })
@@ -252,11 +252,11 @@ describe("config overlay routes", () => {
       }),
     )
 
-    const file = path.join(project.path, ".kilo", "kilo.jsonc")
+    const file = path.join(project.path, ".kilocodecodecode", "legion.jsonc")
     const saved = (await Bun.file(file).json()) as { indexing: Record<string, unknown> }
     const body = await json<Overlay>(await req(project.path, "/config/overlay?scope=project"))
 
-    expect(await Bun.file(path.join(project.path, ".kilo", "kilo.json")).exists()).toBe(false)
+    expect(await Bun.file(path.join(project.path, ".kilocodecodecode", "legion.json")).exists()).toBe(false)
     expect(saved.indexing).toEqual({
       enabled: false,
       provider: "ollama",
@@ -304,7 +304,7 @@ describe("config overlay routes", () => {
       }),
     )
 
-    const saved = (await Bun.file(path.join(project.path, ".kilo", "kilo.jsonc")).json()) as {
+    const saved = (await Bun.file(path.join(project.path, ".kilocodecodecode", "legion.jsonc")).json()) as {
       mcp: Record<string, unknown>
     }
     expect(Object.keys(saved.mcp)).toEqual(["local"])
@@ -325,7 +325,7 @@ describe("config overlay routes", () => {
       }),
     )
 
-    const saved = (await Bun.file(path.join(project.path, ".kilo", "kilo.jsonc")).json()) as {
+    const saved = (await Bun.file(path.join(project.path, ".kilocodecodecode", "legion.jsonc")).json()) as {
       mcp: Record<string, unknown>
     }
     expect(saved.mcp).toEqual({ shared: { enabled: false } })

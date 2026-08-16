@@ -29,7 +29,8 @@
       "outputs": [".artifacts/unit/junit.xml"],
       "passThroughEnv": ["*"]
     },
-    "@legion/kilo-gateway#test:ci": {
+    "@legion/kilocode#test:ci": {
+      "dependsOn": ["^build"],
       "outputs": [".artifacts/unit/junit.xml"]
     },
     "@legion/kilo-docs#build": {

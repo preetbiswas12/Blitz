@@ -10,7 +10,7 @@ import { DEFAULT_HEADERS } from "@/kilocode/const"
 import { optionalOmitUndefined } from "@opencode-ai/core/schema"
 import { Effect, Schema } from "effect"
 import type { LanguageModelV3 } from "@ai-sdk/provider"
-import { mapValues, omit, pickBy } from "remeda"
+import { mapValues, mergeDeep, omit, pickBy } from "remeda"
 
 /** Default timeout (ms) for provider HTTP requests (connection phase). */
 export const REQUEST_TIMEOUT_MS = 300_000 // 5 minutes
@@ -124,6 +124,21 @@ function useLanguageModel(sdk: any) {
 export function patchLegionProviderPrivacy(provider: { options?: Record<string, any> } | undefined, config: any) {
   if (!provider || config.hide_prompt_training_models !== true) return
   provider.options = { ...provider.options, dataCollection: "deny" }
+}
+
+export function patchCustomOpenAICompatibleProvider(
+  parsed: Record<string, any>,
+  config: Record<string, any>,
+) {
+  if (!config.openaiCompatible) return
+  const options: Record<string, any> = {}
+  if (config.openaiCompatible.baseURL) options.baseURL = config.openaiCompatible.baseURL
+  if (config.openaiCompatible.apiKey) options.apiKey = config.openaiCompatible.apiKey
+  options.npm = "@ai-sdk/openai-compatible"
+  parsed.options = mergeDeep(parsed.options ?? {}, options)
+  if (config.openaiCompatible.name) {
+    parsed.name = config.openaiCompatible.name
+  }
 }
 
 export function LegionCustomLoaders(dep: CustomDep): Record<string, CustomLoader> {

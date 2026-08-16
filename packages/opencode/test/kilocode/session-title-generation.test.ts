@@ -12,7 +12,7 @@ function model(id: string, reasoning = true): Model {
     api: {
       id,
       npm: "@ai-sdk/openai",
-      url: "https://api.kilo.ai/api/openrouter",
+      url: "https://api.kilocode.ai/api/openrouter",
     },
     name: id,
     capabilities: {

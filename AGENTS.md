@@ -47,7 +47,7 @@ Turborepo + Bun workspaces. The packages you'll work with most:
 | `packages/opencode/` | `@legion/cli` | Core CLI -- agents, tools, sessions, server, TUI. This is where most work happens. |
 | `packages/sdk/js/` | `@legion/sdk` | Auto-generated TypeScript SDK (client for the server API). Do not edit `src/gen/` by hand. |
 | `packages/kilo-vscode/` | `Legion-code` | VS Code extension with sidebar chat + Agent Manager. See its own `AGENTS.md` for details. |
-| `packages/kilo-gateway/` | `@legion/kilo-gateway` | Legion auth, provider routing, API integration |
+| `packages/kilocode/` | `@legion/kilocode` | Legion auth, provider routing, API integration |
 | `packages/kilo-telemetry/` | `@legion/kilo-telemetry` | PostHog analytics + OpenTelemetry |
 | `packages/kilo-i18n/` | `@legion/kilo-i18n` | Internationalization / translations |
 | `packages/kilo-ui/` | `@legion/kilo-ui` | SolidJS component library shared by the extension webview and docs screenshot stories |
@@ -159,7 +159,7 @@ We regularly merge upstream changes from opencode. To minimize merge conflicts a
 1. **Prefer `kilocode` directories** - Place Legion-specific code in dedicated directories whenever possible:
    - `packages/opencode/src/kilocode/` - Legion-specific source code
    - `packages/opencode/test/kilocode/` - Legion-specific tests
-   - `packages/kilo-gateway/` - The Legion Gateway package
+    - `packages/kilocode/` - The Legion Gateway package
 
 2. **Minimize changes to shared files** - When you must modify files that exist in upstream opencode, keep changes as small and isolated as possible.
 

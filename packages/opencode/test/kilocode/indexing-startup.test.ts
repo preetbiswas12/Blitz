@@ -138,11 +138,11 @@ describe("indexing model catalog", () => {
       init: async (dir) => {
         const global = path.join(dir, "global")
         const project = path.join(dir, "project")
-        await fs.mkdir(path.join(project, ".kilo"), { recursive: true })
+        await fs.mkdir(path.join(project, ".kilocodecode"), { recursive: true })
         await fs.mkdir(global, { recursive: true })
-        await Bun.write(path.join(global, "kilo.jsonc"), "{}")
+        await Bun.write(path.join(global, "legion.jsonc"), "{}")
         await Bun.write(
-          path.join(project, ".kilo", "kilo.jsonc"),
+          path.join(project, ".kilocodecode", "legion.jsonc"),
           JSON.stringify({ indexing: { kilo: { baseUrl: "http://127.0.0.1:4567" } } }),
         )
         return { global, project }
@@ -566,13 +566,13 @@ describe("indexing startup degradation", () => {
         ),
       )) as unknown as typeof global.fetch
     const init = spyOn(CodeIndexManager.prototype, "initialize").mockResolvedValue({ requiresRestart: false })
-    const key = process.env.KILO_API_KEY
-    const org = process.env.KILO_ORG_ID
+    const key = process.env.kilocodecode_API_KEY
+    const org = process.env.kilocodecode_ORG_ID
 
     await using tmp = await tmpdir({ git: true, config: kilo })
     process.env["LEGION_CONFIG_DIR"] = tmp.path
-    process.env.KILO_API_KEY = "kilo-token"
-    process.env.KILO_ORG_ID = "org_123"
+    process.env.kilocodecode_API_KEY = "kilo-token"
+    process.env.kilocodecode_ORG_ID = "org_123"
 
     try {
       await provideTestInstance({
@@ -591,10 +591,10 @@ describe("indexing startup degradation", () => {
         },
       })
     } finally {
-      if (key === undefined) delete process.env.KILO_API_KEY
-      else process.env.KILO_API_KEY = key
-      if (org === undefined) delete process.env.KILO_ORG_ID
-      else process.env.KILO_ORG_ID = org
+      if (key === undefined) delete process.env.kilocodecode_API_KEY
+      else process.env.kilocodecode_API_KEY = key
+      if (org === undefined) delete process.env.kilocodecode_ORG_ID
+      else process.env.kilocodecode_ORG_ID = org
       init.mockRestore()
     }
   })
@@ -613,11 +613,11 @@ describe("indexing startup degradation", () => {
         ),
       )) as unknown as typeof global.fetch
     const init = spyOn(CodeIndexManager.prototype, "initialize").mockResolvedValue({ requiresRestart: false })
-    const key = process.env.KILO_API_KEY
+    const key = process.env.kilocodecode_API_KEY
 
     await using tmp = await tmpdir({ git: true, config: staleKilo })
     process.env["LEGION_CONFIG_DIR"] = tmp.path
-    process.env.KILO_API_KEY = "kilo-token"
+    process.env.kilocodecode_API_KEY = "kilo-token"
 
     try {
       await provideTestInstance({
@@ -634,8 +634,8 @@ describe("indexing startup degradation", () => {
         },
       })
     } finally {
-      if (key === undefined) delete process.env.KILO_API_KEY
-      else process.env.KILO_API_KEY = key
+      if (key === undefined) delete process.env.kilocodecode_API_KEY
+      else process.env.kilocodecode_API_KEY = key
       init.mockRestore()
     }
   })
@@ -660,7 +660,7 @@ describe("indexing startup degradation", () => {
         ),
       )) as unknown as typeof global.fetch
     const init = spyOn(CodeIndexManager.prototype, "initialize").mockResolvedValue({ requiresRestart: false })
-    const key = process.env.KILO_API_KEY
+    const key = process.env.kilocodecode_API_KEY
     const config: Partial<Config.Info> = {
       ...staleKilo,
       indexing: {
@@ -672,7 +672,7 @@ describe("indexing startup degradation", () => {
 
     await using tmp = await tmpdir({ git: true, config })
     process.env["LEGION_CONFIG_DIR"] = tmp.path
-    process.env.KILO_API_KEY = "kilo-token"
+    process.env.kilocodecode_API_KEY = "kilo-token"
 
     try {
       await provideTestInstance({
@@ -688,8 +688,8 @@ describe("indexing startup degradation", () => {
         },
       })
     } finally {
-      if (key === undefined) delete process.env.KILO_API_KEY
-      else process.env.KILO_API_KEY = key
+      if (key === undefined) delete process.env.kilocodecode_API_KEY
+      else process.env.kilocodecode_API_KEY = key
       init.mockRestore()
     }
   })
@@ -697,11 +697,11 @@ describe("indexing startup degradation", () => {
   test("leaves Kilo model metadata unset when the hosted catalog is unavailable", async () => {
     global.fetch = (() => Promise.resolve(new Response(undefined, { status: 500 }))) as unknown as typeof global.fetch
     const init = spyOn(CodeIndexManager.prototype, "initialize").mockResolvedValue({ requiresRestart: false })
-    const key = process.env.KILO_API_KEY
+    const key = process.env.kilocodecode_API_KEY
 
     await using tmp = await tmpdir({ git: true, config: staleKilo })
     process.env["LEGION_CONFIG_DIR"] = tmp.path
-    process.env.KILO_API_KEY = "kilo-token"
+    process.env.kilocodecode_API_KEY = "kilo-token"
 
     try {
       await provideTestInstance({
@@ -718,19 +718,19 @@ describe("indexing startup degradation", () => {
         },
       })
     } finally {
-      if (key === undefined) delete process.env.KILO_API_KEY
-      else process.env.KILO_API_KEY = key
+      if (key === undefined) delete process.env.kilocodecode_API_KEY
+      else process.env.kilocodecode_API_KEY = key
       init.mockRestore()
     }
   })
 
   test("does not default to Kilo when an existing provider config is present", async () => {
     const init = spyOn(CodeIndexManager.prototype, "initialize").mockResolvedValue({ requiresRestart: false })
-    const key = process.env.KILO_API_KEY
+    const key = process.env.kilocodecode_API_KEY
 
     await using tmp = await tmpdir({ git: true, config: implicitOpenAi })
     process.env["LEGION_CONFIG_DIR"] = tmp.path
-    process.env.KILO_API_KEY = "kilo-token"
+    process.env.kilocodecode_API_KEY = "kilo-token"
 
     try {
       await provideTestInstance({
@@ -745,8 +745,8 @@ describe("indexing startup degradation", () => {
         },
       })
     } finally {
-      if (key === undefined) delete process.env.KILO_API_KEY
-      else process.env.KILO_API_KEY = key
+      if (key === undefined) delete process.env.kilocodecode_API_KEY
+      else process.env.kilocodecode_API_KEY = key
       init.mockRestore()
     }
   })

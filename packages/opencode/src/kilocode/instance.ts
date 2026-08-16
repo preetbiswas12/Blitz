@@ -19,7 +19,7 @@ export const Instance = {
     return current().directory
   },
   get worktree() {
-    return current().worktree
+    return current().worktree ?? current().directory
   },
   get project() {
     return current().project

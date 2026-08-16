@@ -1,12 +1,14 @@
 // kilocode_change - new file
 import { afterEach, describe, expect, test } from "bun:test"
 import path from "path"
+import { Effect, Layer } from "effect"
 import { ConfigValidation } from "../../src/kilocode/config-validation"
 import { provideTestInstance } from "../fixture/fixture"
 import { Config } from "../../src/config/config"
 import { AppRuntime } from "../../src/effect/app-runtime"
 import { Filesystem } from "../../src/util/filesystem"
 import { disposeAllInstances, tmpdir } from "../fixture/fixture"
+import { InstanceRef } from "../../src/effect/instance-ref"
 
 afterEach(async () => {
   await disposeAllInstances()
@@ -22,19 +24,19 @@ describe("ConfigValidation.check", () => {
 
     const result = await provideTestInstance({
       directory: tmp.path,
-      fn: () => check(filepath),
+      fn: (ctx) => check(filepath).then((r) => Effect.runPromise(Effect.succeed(r).pipe(Effect.provideService(InstanceRef, ctx)))),
     })
     expect(result).toBe("")
   })
 
   test("validates valid JSONC config", async () => {
     await using tmp = await tmpdir({ git: true })
-    const filepath = path.join(tmp.path, "kilo.json")
+    const filepath = path.join(tmp.path, "legion.json")
     await Filesystem.write(filepath, JSON.stringify({ model: "anthropic/claude-sonnet-4-20250514" }))
 
     const result = await provideTestInstance({
       directory: tmp.path,
-      fn: () => check(filepath),
+      fn: (ctx) => check(filepath).then((r) => Effect.runPromise(Effect.succeed(r).pipe(Effect.provideService(InstanceRef, ctx)))),
     })
     expect(result).toContain("config_validation")
     expect(result).toContain("validated successfully")
@@ -42,12 +44,12 @@ describe("ConfigValidation.check", () => {
 
   test("reports JSONC syntax errors", async () => {
     await using tmp = await tmpdir({ git: true })
-    const filepath = path.join(tmp.path, "kilo.json")
+    const filepath = path.join(tmp.path, "legion.json")
     await Filesystem.write(filepath, '{ "model": "test/model" "extra": true }')
 
     const result = await provideTestInstance({
       directory: tmp.path,
-      fn: () => check(filepath),
+      fn: (ctx) => check(filepath).then((r) => Effect.runPromise(Effect.succeed(r).pipe(Effect.provideService(InstanceRef, ctx)))),
     })
     expect(result).toContain("config_validation")
     expect(result).toContain("ERROR")
@@ -56,13 +58,12 @@ describe("ConfigValidation.check", () => {
 
   test("reports schema validation errors for unknown fields", async () => {
     await using tmp = await tmpdir({ git: true })
-    const filepath = path.join(tmp.path, "kilo.json")
-    // Config.Info uses .strict() so unknown fields produce errors
+    const filepath = path.join(tmp.path, "legion.json")
     await Filesystem.write(filepath, JSON.stringify({ notAField: true }))
 
     const result = await provideTestInstance({
       directory: tmp.path,
-      fn: () => check(filepath),
+      fn: (ctx) => check(filepath).then((r) => Effect.runPromise(Effect.succeed(r).pipe(Effect.provideService(InstanceRef, ctx)))),
     })
     expect(result).toContain("config_validation")
     expect(result).toContain("WARNING")
@@ -71,7 +72,7 @@ describe("ConfigValidation.check", () => {
 
   test("validates valid markdown command", async () => {
     await using tmp = await tmpdir({ git: true })
-    const filepath = path.join(tmp.path, ".kilo", "command", "test-cmd.md")
+    const filepath = path.join(tmp.path, ".kilocode", "command", "test-cmd.md")
     await Filesystem.write(
       filepath,
       `---
@@ -82,7 +83,7 @@ Do something useful`,
 
     const result = await provideTestInstance({
       directory: tmp.path,
-      fn: () => check(filepath),
+      fn: (ctx) => check(filepath).then((r) => Effect.runPromise(Effect.succeed(r).pipe(Effect.provideService(InstanceRef, ctx)))),
     })
     expect(result).toContain("config_validation")
     expect(result).toContain("validated successfully")
@@ -90,8 +91,7 @@ Do something useful`,
 
   test("reports schema error for command with invalid field types", async () => {
     await using tmp = await tmpdir({ git: true })
-    const filepath = path.join(tmp.path, ".kilo", "command", "bad.md")
-    // agent expects string but gets number — schema validation fails
+    const filepath = path.join(tmp.path, ".kilocode", "command", "bad.md")
     await Filesystem.write(
       filepath,
       `---
@@ -103,7 +103,7 @@ Do something`,
 
     const result = await provideTestInstance({
       directory: tmp.path,
-      fn: () => check(filepath),
+      fn: (ctx) => check(filepath).then((r) => Effect.runPromise(Effect.succeed(r).pipe(Effect.provideService(InstanceRef, ctx)))),
     })
     expect(result).toContain("config_validation")
     expect(result).toContain("WARNING")
@@ -112,7 +112,7 @@ Do something`,
 
   test("validates valid markdown agent", async () => {
     await using tmp = await tmpdir({ git: true })
-    const filepath = path.join(tmp.path, ".kilo", "agent", "helper.md")
+    const filepath = path.join(tmp.path, ".kilocode", "agent", "helper.md")
     await Filesystem.write(
       filepath,
       `---
@@ -124,7 +124,7 @@ You are a helpful agent.`,
 
     const result = await provideTestInstance({
       directory: tmp.path,
-      fn: () => check(filepath),
+      fn: (ctx) => check(filepath).then((r) => Effect.runPromise(Effect.succeed(r).pipe(Effect.provideService(InstanceRef, ctx)))),
     })
     expect(result).toContain("config_validation")
     expect(result).toContain("validated successfully")
@@ -137,19 +137,19 @@ You are a helpful agent.`,
 
     const result = await provideTestInstance({
       directory: tmp.path,
-      fn: () => check(filepath),
+      fn: (ctx) => check(filepath).then((r) => Effect.runPromise(Effect.succeed(r).pipe(Effect.provideService(InstanceRef, ctx)))),
     })
     expect(result).toBe("")
   })
 
   test("skips plan files (excluded subdir)", async () => {
     await using tmp = await tmpdir({ git: true })
-    const filepath = path.join(tmp.path, ".kilo", "plans", "plan.md")
+    const filepath = path.join(tmp.path, ".kilocode", "plans", "plan.md")
     await Filesystem.write(filepath, "# Plan")
 
     const result = await provideTestInstance({
       directory: tmp.path,
-      fn: () => check(filepath),
+      fn: (ctx) => check(filepath).then((r) => Effect.runPromise(Effect.succeed(r).pipe(Effect.provideService(InstanceRef, ctx)))),
     })
     expect(result).toBe("")
   })
@@ -158,9 +158,8 @@ You are a helpful agent.`,
     await using tmp = await tmpdir({
       git: true,
       init: async (dir) => {
-        // Create a broken agent config that produces a warning at session start
         await Filesystem.write(
-          path.join(dir, ".kilo", "agent", "broken.md"),
+          path.join(dir, ".kilocode", "agent", "broken.md"),
           `---
 mode: "banana"
 ---
@@ -169,14 +168,13 @@ Broken agent`,
       },
     })
 
-    const filepath = path.join(tmp.path, "kilo.json")
+    const filepath = path.join(tmp.path, "legion.json")
     await Filesystem.write(filepath, JSON.stringify({ model: "anthropic/claude-sonnet-4-20250514" }))
 
     const result = await provideTestInstance({
       directory: tmp.path,
-      fn: async () => {
-        // Force config load to populate warnings
-        await AppRuntime.runPromise(Config.Service.use((svc) => svc.get()))
+      fn: async (ctx) => {
+        await AppRuntime.runPromise(Config.Service.use((svc) => svc.get()).pipe(Effect.provideService(InstanceRef, ctx)))
         return check(filepath)
       },
     })

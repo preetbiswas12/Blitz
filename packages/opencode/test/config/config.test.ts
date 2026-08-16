@@ -95,7 +95,7 @@ const configLayer = (
     client?: HttpClient.HttpClient
   } = {},
 ) =>
-  Config.layer.pipe(
+  Config.defaultLayer.pipe(
     Layer.provide(Git.defaultLayer), // kilocode_change
     Layer.provide(testFlock),
     Layer.provide(Env.defaultLayer),
@@ -1683,7 +1683,7 @@ test("remote well-known config can use FetchHttpClient layer", async () => {
     ).pipe(
       Effect.scoped,
       Effect.provide(
-        Config.layer.pipe(
+        Config.defaultLayer.pipe(
           Layer.provide(Git.defaultLayer), // kilocode_change
           Layer.provide(testFlock),
           Layer.provide(AppFileSystem.defaultLayer),

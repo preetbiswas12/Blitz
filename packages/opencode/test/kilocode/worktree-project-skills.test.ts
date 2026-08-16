@@ -34,7 +34,7 @@ describe("worktree project skills", () => {
       const dir = path.join(path.dirname(primary), `${path.basename(primary)}-feature`)
       const directory = path.join(dir, "packages", "app")
       const skills = [
-        [".kilo", "kilo"],
+        [".kilocodecode", "kilo"],
         [".agents", "agents"],
         [".claude", "claude"],
       ] as const
@@ -55,7 +55,7 @@ description: Shared primary skill.
           ),
         ),
       )
-      yield* Effect.promise(() => $`git add .kilo .agents .claude`.cwd(primary).quiet())
+      yield* Effect.promise(() => $`git add .kilocodecode .agents .claude`.cwd(primary).quiet())
       yield* Effect.promise(() => $`git commit -m skills`.cwd(primary).quiet())
       yield* Effect.addFinalizer(() =>
         Effect.promise(() => $`git worktree remove --force ${dir}`.cwd(primary).quiet().nothrow()).pipe(Effect.asVoid),

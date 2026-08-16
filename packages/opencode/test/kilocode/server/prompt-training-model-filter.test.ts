@@ -84,15 +84,15 @@ it.live(
       ),
       (tmp) => Effect.promise(() => tmp[Symbol.asyncDispose]()),
     )
-    const key = process.env.KILO_API_KEY
+    const key = process.env.kilocodecodecodecode_API_KEY
     yield* Effect.acquireRelease(
       Effect.sync(() => {
-        process.env.KILO_API_KEY = "test-key"
+        process.env.kilocodecodecodecode_API_KEY = "test-key"
       }),
       () =>
         Effect.sync(() => {
-          if (key === undefined) delete process.env.KILO_API_KEY
-          else process.env.KILO_API_KEY = key
+          if (key === undefined) delete process.env.kilocodecodecodecode_API_KEY
+          else process.env.kilocodecodecodecode_API_KEY = key
         }),
     )
 

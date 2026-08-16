@@ -207,7 +207,7 @@ export const defaultConfig: MergeConfig = {
   kiloDirectories: [
     "packages/opencode/src/kilocode",
     "packages/opencode/test/kilocode",
-    "packages/kilo-gateway",
+    "packages/kilocode",
     "packages/kilo-telemetry",
     "packages/kilo-ui",
     "packages/kilo-docs",

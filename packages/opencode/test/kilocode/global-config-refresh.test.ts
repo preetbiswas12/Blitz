@@ -31,7 +31,7 @@ async function provider(target: ReturnType<typeof app>, directory: string) {
 }
 
 async function config(dir: string, value: object) {
-  await Bun.write(path.join(dir, "kilo.json"), JSON.stringify(value))
+  await Bun.write(path.join(dir, "legion.json"), JSON.stringify(value))
 }
 
 async function edit(target: ReturnType<typeof app>, directory: string) {

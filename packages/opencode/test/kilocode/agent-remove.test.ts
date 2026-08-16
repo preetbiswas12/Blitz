@@ -10,8 +10,8 @@ import { tmpdir } from "../fixture/fixture"
 describe("Legion agent remove", () => {
   test("removes config-backed imported agents", async () => {
     await using tmp = await tmpdir()
-    const dir = path.join(tmp.path, ".kilo")
-    const file = path.join(dir, "kilo.jsonc")
+    const dir = path.join(tmp.path, ".kilocode")
+    const file = path.join(dir, "legion.jsonc")
     await mkdir(dir, { recursive: true })
     await Bun.write(file, `{
   // imported agent

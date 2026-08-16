@@ -12,7 +12,7 @@ describe("npm install artifact behavior", () => {
   test("keeps the CLI wrapper contract", async () => {
     const text = await fs.readFile(wrapper, "utf8")
     expect(text.startsWith("#!/usr/bin/env node")).toBe(true)
-    expect(text).toContain("const envPath = process.env.KILO_BIN_PATH")
+    expect(text).toContain("const envPath = process.env.kilocodecodecode_BIN_PATH")
     expect(text).toContain('const base = "@legioncli-" + platform + "-" + arch')
     expect(text).toContain("function findBinary(startDir)")
   })
@@ -55,7 +55,7 @@ describe("npm install artifact behavior", () => {
 
       const proc = Bun.spawn([node, path.join(pkg, "postinstall.mjs")], { cwd: pkg })
       expect(await proc.exited).toBe(0)
-      expect(await Bun.file(path.join(pkg, "bin", ".kilo")).text()).toBe(binary)
+      expect(await Bun.file(path.join(pkg, "bin", ".kilocodecodecode")).text()).toBe(binary)
       expect(await Bun.file(path.join(pkg, "bin", "kilo-sandbox-mutation-worker.js")).text()).toBe("worker")
       expect(await Bun.file(path.join(pkg, "bin", "tree-sitter", "tree-sitter.wasm")).text()).toBe("wasm")
       expect(await Bun.file(path.join(pkg, "bin", "console", "index.html")).text()).toBe("console")
@@ -105,7 +105,7 @@ describe("npm install artifact behavior", () => {
         expect(stat.isSymbolicLink() || stat.isFile()).toBe(true)
       }
 
-      const hidden = path.join(prefix, "node_modules", ".bin", ".kilo")
+      const hidden = path.join(prefix, "node_modules", ".bin", ".kilocodecodecode")
       const exists = await fs
         .access(hidden)
         .then(() => true)

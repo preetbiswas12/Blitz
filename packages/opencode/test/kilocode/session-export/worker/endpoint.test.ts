@@ -7,7 +7,7 @@ describe("session export endpoint", () => {
   })
 
   test("allows approved production endpoint", () => {
-    const endpoint = "https://supermassive-black-hole.kiloapps.io/v1/session-export/batch"
+    const endpoint = "https://supermassive-black-hole.kilocodeapps.io/v1/session-export/batch"
     expect(resolveEndpoint({ endpoint })).toBe(endpoint)
   })
 

@@ -13,7 +13,7 @@ describe("bin/kilo tree-sitter resources", () => {
       ? join(root, "node_modules", "@kilocode", `cli-${platform}-${process.arch}`, "bin")
       : join(root, "node_modules", "@kilocode", "cli", "bin")
     const wasm = join(dir, "tree-sitter")
-    const bin = join(dir, nested ? binary : ".kilo")
+    const bin = join(dir, nested ? binary : ".kilocodecodecode")
     const log = join(root, nested ? "nested-env.txt" : "cached-env.txt")
 
     await mkdir(wasm, { recursive: true })
@@ -34,8 +34,8 @@ const failCached = process.argv[3] === "true"
 const realpathSync = kiloFs.realpathSync
 kiloFs.realpathSync = (file) => file === __filename ? wrapper || process.cwd() : realpathSync(file)
 kiloChild.spawn = (target) => {
-  if (failCached && target.endsWith(".kilo")) throw new Error("cached binary failed")
-  kiloFs.writeFileSync(log, process.env.KILO_TREE_SITTER_WASM_DIR || "")
+  if (failCached && target.endsWith(".kilocodecodecode")) throw new Error("cached binary failed")
+  kiloFs.writeFileSync(log, process.env.kilocodecodecode_TREE_SITTER_WASM_DIR || "")
   const child = new EventEmitter()
   child.kill = () => {}
   process.nextTick(() => child.emit("exit", 0))

@@ -10,7 +10,7 @@ kilocode/
 │   ├── opencode/          # Core CLI engine (@legion/cli)
 │   ├── sdk/js/            # Auto-generated TypeScript SDK
 │   ├── kilo-vscode/       # VS Code extension
-│   ├── kilo-gateway/      # Auth and provider routing
+│   ├── kilocode/           # Auth and provider routing
 │   ├── kilo-telemetry/    # Analytics and observability
 │   ├── kilo-i18n/         # Internationalization
 │   ├── kilo-ui/           # Shared UI components
@@ -68,7 +68,7 @@ dist/
 | `packages/opencode/` | `@legion/cli` | Core CLI engine |
 | `packages/sdk/js/` | `@legion/sdk` | Auto-generated TypeScript SDK |
 | `packages/kilo-vscode/` | `Legion-code` | VS Code extension |
-| `packages/kilo-gateway/` | `@legion/kilo-gateway` | Auth and provider routing |
+| `packages/kilocode/` | `@legion/kilocode` | Auth and provider routing |
 | `packages/kilo-telemetry/` | `@legion/kilo-telemetry` | Analytics |
 | `packages/kilo-i18n/` | `@legion/kilo-i18n` | Translations |
 | `packages/kilo-ui/` | `@legion/kilo-ui` | Shared UI components |

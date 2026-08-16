@@ -46,7 +46,7 @@ describe("instruction markdown substitutions", () => {
   it.live("applies file and env substitutions to nearby AGENTS.md", () =>
     provideTmpdirInstance((dir) =>
       Effect.gen(function* () {
-        process.env.KILO_INSTRUCTION_TEST = "env content"
+        process.env.kilocodecode_INSTRUCTION_TEST = "env content"
         yield* write(path.join(dir, "subdir", "guide.md"), "file content")
         yield* write(
           path.join(dir, "subdir", "AGENTS.md"),
@@ -62,7 +62,7 @@ describe("instruction markdown substitutions", () => {
         expect(results[0].content).toContain("env content")
         expect(results[0].content).not.toContain("{file:")
         expect(results[0].content).not.toContain("{env:")
-        delete process.env.KILO_INSTRUCTION_TEST
+        delete process.env.kilocodecode_INSTRUCTION_TEST
       }).pipe(Effect.provide(layer(dir))),
     ),
   )

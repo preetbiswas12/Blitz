@@ -14,7 +14,7 @@ import { ModelCache } from "../../src/provider/model-cache"
 import { TestConfig } from "../fixture/config"
 import { testEffect } from "../lib/effect"
 
-type Options = Parameters<ModelCache.KiloModels["fetch"]>[0]
+type Options = Parameters<ModelCache.kilocodecodeModels["fetch"]>[0]
 
 function layer(info: Auth.Info | undefined, captured: Ref.Ref<Options | undefined>) {
   const auth = Layer.mock(Auth.Service)({
@@ -60,7 +60,7 @@ it.live("model fetch uses accountId from OAuth auth as kilocodeOrganizationId", 
     })
     yield* ModelCache.Service.use((cache) => cache.fetch("legion")).pipe(Effect.provide(layer(info, captured)))
     expect(yield* Ref.get(captured)).toMatchObject({
-      kilocodeToken: "test-oauth-token",
+      apiKey: "test-oauth-token",
       kilocodeOrganizationId: "org-enterprise-123",
     })
   }),
@@ -76,8 +76,8 @@ it.live("model fetch without OAuth accountId does not set kilocodeOrganizationId
       expires: Date.now() + 3600000,
     })
     yield* ModelCache.Service.use((cache) => cache.fetch("legion")).pipe(Effect.provide(layer(info, captured)))
-    expect(yield* Ref.get(captured)).toMatchObject({ kilocodeToken: "test-personal-token" })
-    expect((yield* Ref.get(captured))?.kilocodeOrganizationId).toBeUndefined()
+    expect(yield* Ref.get(captured)).toMatchObject({ apiKey: "test-personal-token" })
+    expect((yield* Ref.get(captured))?.kilocodecodecodeOrganizationId).toBeUndefined()
   }),
 )
 

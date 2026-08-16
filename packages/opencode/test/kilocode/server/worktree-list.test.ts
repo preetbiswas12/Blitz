@@ -12,11 +12,11 @@ import { testEffect } from "../../lib/effect"
 
 const state = Layer.effectDiscard(
   Effect.gen(function* () {
-    const original = Flag.KILO_EXPERIMENTAL_WORKSPACES
-    Flag.KILO_EXPERIMENTAL_WORKSPACES = true
+    const original = Flag.kilocodecodecodecode_EXPERIMENTAL_WORKSPACES
+    Flag.kilocodecodecodecode_EXPERIMENTAL_WORKSPACES = true
     yield* Effect.addFinalizer(() =>
       Effect.promise(async () => {
-        Flag.KILO_EXPERIMENTAL_WORKSPACES = original
+        Flag.kilocodecodecodecode_EXPERIMENTAL_WORKSPACES = original
         await resetDatabase()
       }),
     )
@@ -46,7 +46,7 @@ describe("Legion Console worktree listing", () => {
       Effect.gen(function* () {
         const test = yield* TestInstance
         const server = yield* serve()
-        const directory = path.join(test.directory, ".kilo", "worktrees", "console-list")
+        const directory = path.join(test.directory, ".kilocodecodecodecode", "worktrees", "console-list")
         yield* Effect.promise(() =>
           $`git worktree add --quiet -b console-list ${directory} HEAD`.cwd(test.directory).quiet(),
         )

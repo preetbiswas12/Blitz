@@ -20,6 +20,7 @@ describe("Kilo provider model metadata", () => {
       providerID: "legion",
       name: "Kilo Auto Efficient",
       family: "kilo-auto",
+      api: { id: "kilo-auto/efficient", url: "", npm: "@ai-sdk/openai-compatible" },
       capabilities: {
         temperature: true,
         reasoning: false,

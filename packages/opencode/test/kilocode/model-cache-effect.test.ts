@@ -170,24 +170,130 @@ it.live("exposes the most recently refreshed provider value", () =>
   }),
 )
 
-it.live("does not resolve auth or config for unsupported providers", () =>
-  Effect.gen(function* () {
-    const hits = yield* Ref.make<Hit[]>([])
-    const configs = yield* Ref.make(0)
-    const auths = yield* Ref.make(0)
-    const cfg = TestConfig.layer({
-      get: () => Ref.update(configs, (count) => count + 1).pipe(Effect.as({})),
-    })
-    const access = Layer.mock(Auth.Service)({
-      get: () => Ref.update(auths, (count) => count + 1).pipe(Effect.as(undefined)),
-    })
-    const models = yield* ModelCache.Service.use((cache) => cache.fetch("openai")).pipe(
-      Effect.provide(layer(hits, cfg, access)),
-    )
+  it.live("does not resolve auth or config for unsupported providers", () =>
+    Effect.gen(function* () {
+      const hits = yield* Ref.make<Hit[]>([])
+      const configs = yield* Ref.make(0)
+      const auths = yield* Ref.make(0)
+      const cfg = TestConfig.layer({
+        get: () => Ref.update(configs, (count) => count + 1).pipe(Effect.as({})),
+      })
+      const access = Layer.mock(Auth.Service)({
+        get: () => Ref.update(auths, (count) => count + 1).pipe(Effect.as(undefined)),
+      })
+      const models = yield* ModelCache.Service.use((cache) => cache.fetch("openai")).pipe(
+        Effect.provide(layer(hits, cfg, access)),
+      )
 
-    expect(models).toEqual({})
-    expect(yield* Ref.get(configs)).toBe(0)
-    expect(yield* Ref.get(auths)).toBe(0)
-    expect(yield* Ref.get(hits)).toEqual([])
-  }),
-)
+      expect(models).toEqual({})
+      expect(yield* Ref.get(configs)).toBe(0)
+      expect(yield* Ref.get(auths)).toBe(0)
+      expect(yield* Ref.get(hits)).toEqual([])
+    }),
+  )
+
+  it.live("fetches models for custom OpenAI-compatible providers from config", () =>
+    Effect.gen(function* () {
+      const hits = yield* Ref.make<Hit[]>([])
+      const cfg = TestConfig.layer({
+        get: () =>
+          Effect.succeed({
+            provider: {
+              "my-openai": {
+                openaiCompatible: {
+                  name: "My OpenAI Compatible",
+                  baseURL: "https://my-provider.test/v1",
+                  apiKey: "test-custom-key",
+                },
+              },
+            },
+          }),
+      })
+      const http = HttpClient.make((request) =>
+        Effect.gen(function* () {
+          yield* Ref.update(hits, (list) => [...list, { url: request.url }])
+          if (request.url === "https://my-provider.test/v1/models") {
+            return HttpClientResponse.fromWeb(
+              request,
+              Response.json({
+                data: [
+                  { id: "custom-model-1", name: "Custom Model 1", owned_by: "my-provider" },
+                  { id: "custom-model-2", name: "Custom Model 2", owned_by: "my-provider" },
+                ],
+              }),
+            )
+          }
+          return HttpClientResponse.fromWeb(request, Response.json({}))
+        }),
+      )
+
+      const customLayer = Layer.fresh(ModelCache.layer).pipe(
+        Layer.provide(Layer.succeed(HttpClient.HttpClient, http)),
+        Layer.provide(cfg),
+        Layer.provide(auth),
+        Layer.provide(ModelCache.LegionModelsLayer),
+      )
+
+      const models = yield* ModelCache.Service.use((cache) =>
+        cache.fetch("my-openai"),
+      ).pipe(Effect.provide(customLayer))
+
+      expect(Object.keys(models)).toEqual(["custom-model-1", "custom-model-2"])
+      expect(models["custom-model-1"].name).toBe("Custom Model 1")
+      expect(models["custom-model-1"].family).toBe("my-provider")
+      expect((yield* Ref.get(hits)).map((hit) => hit.url)).toEqual([
+        "https://my-provider.test/v1/models",
+      ])
+    }),
+  )
+
+  it.live("reuses cached custom provider models and refresh invalidates them", () =>
+    Effect.gen(function* () {
+      const hits = yield* Ref.make<Hit[]>([])
+      const cfg = TestConfig.layer({
+        get: () =>
+          Effect.succeed({
+            provider: {
+              "my-openai": {
+                openaiCompatible: {
+                  baseURL: "https://my-provider.test/v1",
+                  apiKey: "test-custom-key",
+                },
+              },
+            },
+          }),
+      })
+      const http = HttpClient.make((request) =>
+        Effect.gen(function* () {
+          yield* Ref.update(hits, (list) => [...list, { url: request.url }])
+          const count = (yield* Ref.get(hits)).length
+          return HttpClientResponse.fromWeb(
+            request,
+            Response.json({ data: [{ id: `custom-model-${count}`, owned_by: "my-provider" }] }),
+          )
+        }),
+      )
+
+      const customLayer = Layer.fresh(ModelCache.layer).pipe(
+        Layer.provide(Layer.succeed(HttpClient.HttpClient, http)),
+        Layer.provide(cfg),
+        Layer.provide(auth),
+        Layer.provide(ModelCache.LegionModelsLayer),
+      )
+
+      const run = ModelCache.Service.use((cache) =>
+        Effect.gen(function* () {
+          const first = yield* cache.fetch("my-openai")
+          const cached = yield* cache.fetch("my-openai")
+          const refreshed = yield* cache.refresh("my-openai")
+          return { first, cached, refreshed }
+        }),
+      ).pipe(Effect.provide(customLayer))
+      const out = yield* run
+
+      expect(Object.keys(out.first)).toEqual(["custom-model-1"])
+      expect(Object.keys(out.cached)).toEqual(["custom-model-1"])
+      expect(Object.keys(out.refreshed)).toEqual(["custom-model-2"])
+      expect((yield* Ref.get(hits)).length).toBe(2)
+    }),
+  )

@@ -26,12 +26,12 @@ type Body = {
 }
 
 const env = {
-  KILO_CONFIG: process.env.KILO_CONFIG,
-  KILO_CONFIG_CONTENT: process.env.KILO_CONFIG_CONTENT,
+  KILO_CONFIG: process.env.kilocodecodecode_CONFIG,
+  KILO_CONFIG_CONTENT: process.env.kilocodecodecode_CONFIG_CONTENT,
   LEGION_CONFIG_DIR: process.env.LEGION_CONFIG_DIR,
-  KILO_DISABLE_PROJECT_CONFIG: process.env.KILO_DISABLE_PROJECT_CONFIG,
-  KILO_TEST_MANAGED_CONFIG_DIR: process.env.KILO_TEST_MANAGED_CONFIG_DIR,
-  flagConfig: Flag.KILO_CONFIG,
+  KILO_DISABLE_PROJECT_CONFIG: process.env.kilocodecodecode_DISABLE_PROJECT_CONFIG,
+  KILO_TEST_MANAGED_CONFIG_DIR: process.env.kilocodecodecode_TEST_MANAGED_CONFIG_DIR,
+  flagConfig: Flag.kilocodecodecode_CONFIG,
 }
 
 afterEach(async () => {
@@ -41,12 +41,12 @@ afterEach(async () => {
 })
 
 function restore() {
-  set("KILO_CONFIG", env.KILO_CONFIG)
-  set("KILO_CONFIG_CONTENT", env.KILO_CONFIG_CONTENT)
+  set("KILO_CONFIG", env.kilocodecodecode_CONFIG)
+  set("KILO_CONFIG_CONTENT", env.kilocodecodecode_CONFIG_CONTENT)
   set("LEGION_CONFIG_DIR", env.LEGION_CONFIG_DIR)
-  set("KILO_DISABLE_PROJECT_CONFIG", env.KILO_DISABLE_PROJECT_CONFIG)
-  set("KILO_TEST_MANAGED_CONFIG_DIR", env.KILO_TEST_MANAGED_CONFIG_DIR)
-  Flag.KILO_CONFIG = env.flagConfig
+  set("KILO_DISABLE_PROJECT_CONFIG", env.kilocodecodecode_DISABLE_PROJECT_CONFIG)
+  set("KILO_TEST_MANAGED_CONFIG_DIR", env.kilocodecodecode_TEST_MANAGED_CONFIG_DIR)
+  Flag.kilocodecodecode_CONFIG = env.flagConfig
 }
 
 function set(key: keyof typeof process.env, value: string | undefined) {
@@ -76,12 +76,12 @@ describe("config source routes", () => {
     await using tmp = await tmpdir({
       init: async (dir) => {
         await Bun.write(path.join(dir, "env.json"), "{}")
-        await Bun.write(path.join(dir, "kilo.json"), "{}")
+        await Bun.write(path.join(dir, "legion.json"), "{}")
 
-        for (const root of [".opencode", ".kilocode", ".kilo"]) {
+        for (const root of [".opencode", ".kilocodecodecodecode", ".kilocodecodecode"]) {
           const local = path.join(dir, root)
           await fs.mkdir(local, { recursive: true })
-          await Bun.write(path.join(local, "kilo.jsonc"), "{}")
+          await Bun.write(path.join(local, "legion.jsonc"), "{}")
         }
 
         const extra = path.join(dir, "extra")
@@ -90,23 +90,23 @@ describe("config source routes", () => {
 
         const managed = path.join(dir, "managed")
         await fs.mkdir(managed, { recursive: true })
-        await Bun.write(path.join(managed, "kilo.json"), "{}")
+        await Bun.write(path.join(managed, "legion.json"), "{}")
       },
     })
 
     const envFile = path.join(tmp.path, "env.json")
-    const projectFile = path.join(tmp.path, "kilo.json")
-    const opencodeFile = path.join(tmp.path, ".opencode", "kilo.jsonc")
-    const kilocodeFile = path.join(tmp.path, ".kilocode", "kilo.jsonc")
-    const configFile = path.join(tmp.path, ".kilo", "kilo.jsonc")
+    const projectFile = path.join(tmp.path, "legion.json")
+    const opencodeFile = path.join(tmp.path, ".opencode", "legion.jsonc")
+    const kilocodeFile = path.join(tmp.path, ".kilocodecodecodecode", "legion.jsonc")
+    const configFile = path.join(tmp.path, ".kilocodecodecode", "legion.jsonc")
     const extraFile = path.join(tmp.path, "extra", "opencode.json")
-    const managedFile = path.join(tmp.path, "managed", "kilo.json")
+    const managedFile = path.join(tmp.path, "managed", "legion.json")
 
-    process.env.KILO_CONFIG = envFile
-    Flag.KILO_CONFIG = envFile
-    process.env.KILO_CONFIG_CONTENT = '{"username":"secret-inline-value"}'
+    process.env.kilocodecodecode_CONFIG = envFile
+    Flag.kilocodecodecode_CONFIG = envFile
+    process.env.kilocodecodecode_CONFIG_CONTENT = '{"username":"secret-inline-value"}'
     process.env.LEGION_CONFIG_DIR = path.join(tmp.path, "extra")
-    process.env.KILO_TEST_MANAGED_CONFIG_DIR = path.join(tmp.path, "managed")
+    process.env.kilocodecodecode_TEST_MANAGED_CONFIG_DIR = path.join(tmp.path, "managed")
 
     const body = await sources(tmp.path)
     const inline = body.sources.find((source) => source.source === "KILO_CONFIG_CONTENT")
@@ -137,18 +137,18 @@ describe("config source routes", () => {
   test("shows project config disabled by environment", async () => {
     await using tmp = await tmpdir({
       init: async (dir) => {
-        await Bun.write(path.join(dir, "kilo.json"), "{}")
-        await fs.mkdir(path.join(dir, ".kilo"), { recursive: true })
-        await Bun.write(path.join(dir, ".kilo", "kilo.json"), "{}")
+        await Bun.write(path.join(dir, "legion.json"), "{}")
+        await fs.mkdir(path.join(dir, ".kilocodecodecode"), { recursive: true })
+        await Bun.write(path.join(dir, ".kilocodecodecode", "legion.json"), "{}")
       },
     })
 
-    process.env.KILO_DISABLE_PROJECT_CONFIG = "1"
+    process.env.kilocodecodecode_DISABLE_PROJECT_CONFIG = "1"
 
     const body = await sources(tmp.path)
 
-    expect(body.sources.some((source) => source.path === path.join(tmp.path, "kilo.json"))).toBe(false)
-    expect(body.sources.some((source) => source.path === path.join(tmp.path, ".kilo", "kilo.json"))).toBe(false)
+    expect(body.sources.some((source) => source.path === path.join(tmp.path, "legion.json"))).toBe(false)
+    expect(body.sources.some((source) => source.path === path.join(tmp.path, ".kilocodecodecode", "legion.json"))).toBe(false)
     expect(body.sources.find((source) => source.source === "KILO_DISABLE_PROJECT_CONFIG")).toMatchObject({
       kind: "runtime-env",
       scope: "env",

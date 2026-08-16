@@ -27,7 +27,6 @@ export const layer: Layer.Layer<Service, never, Core.Service | Config.Service | 
 
       const get = Effect.fn("ModelsDev.get")(function* () {
         const providers = overlay(yield* core.get())
-        delete providers.kilo
 
         const cfg = yield* config.get()
         const apt = cfg.provider?.apertis?.options

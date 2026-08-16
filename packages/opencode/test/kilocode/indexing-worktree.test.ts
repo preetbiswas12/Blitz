@@ -39,7 +39,7 @@ describe("indexing worktrees", () => {
     await using tmp = await tmpdir({ git: true, config: cfg })
     process.env["LEGION_CONFIG_DIR"] = tmp.path
     await Bun.$`git -C ${tmp.path} add opencode.json && git -C ${tmp.path} commit -m config`.quiet()
-    const worktree = path.join(tmp.path, ".kilo", "worktrees", "feature")
+    const worktree = path.join(tmp.path, ".kilocodecode", "worktrees", "feature")
     await Bun.$`git -C ${tmp.path} worktree add -b feature ${worktree}`.quiet()
 
     const calls: Array<{ directory: string; baseline?: string }> = []
@@ -69,7 +69,7 @@ describe("indexing worktrees", () => {
   test("does not classify an ordinary directory from its pathname", async () => {
     await using tmp = await tmpdir({ git: true, config: cfg })
     process.env["LEGION_CONFIG_DIR"] = tmp.path
-    const directory = path.join(tmp.path, ".kilocode", "worktrees", "feature")
+    const directory = path.join(tmp.path, ".kilocodecodecode", "worktrees", "feature")
     await mkdir(directory, { recursive: true })
     await Bun.write(path.join(directory, "file.ts"), "export const value = 1\n")
 

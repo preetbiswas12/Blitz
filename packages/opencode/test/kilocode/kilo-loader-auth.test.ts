@@ -30,6 +30,8 @@ const input = {
       name: "Paid Model",
       cost: { input: 1, output: 2 },
       limit: { context: 128000, output: 4096 },
+      isFree: false,
+      mayTrainOnYourPrompts: true,
     },
   },
 }
@@ -40,6 +42,14 @@ const seed: Record<string, ModelsDev.Provider> = {
     name: "Apertis",
     env: ["APERTIS_API_KEY"],
     models: {},
+  },
+  kilo: {
+    id: "legion",
+    name: "Kilo",
+    env: ["KILO_API_KEY"],
+    npm: "@ai-sdk/openai-compatible",
+    api: "https://openrouter.kilo.ai/api/v1",
+    models: input.models,
   },
 }
 

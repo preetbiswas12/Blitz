@@ -21,7 +21,7 @@ describe("model not found errors", () => {
 
     const named = FormatError({ name: "ProviderModelNotFoundError", data })
     expect(named).toContain("No models are currently available.")
-    expect(named).toContain("kilo.json")
+    expect(named).toContain("legion.json")
     expect(named).not.toContain("opencode.json")
     expect(FormatError({ _tag: "ProviderModelNotFoundError", ...data })).toContain("No models are currently available.")
   })

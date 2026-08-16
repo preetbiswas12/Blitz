@@ -39,7 +39,7 @@ const noopNpm = Layer.mock(Npm.Service)({
 const unexpectedHttp = HttpClient.make((request) =>
   Effect.die(`unexpected http request: ${request.method} ${request.url}`),
 )
-const layer = Config.layer.pipe(
+const layer = Config.defaultLayer.pipe(
   Layer.provide(Git.defaultLayer),
   Layer.provide(EffectFlock.defaultLayer),
   Layer.provide(AppFileSystem.defaultLayer),
@@ -80,8 +80,8 @@ describe("kilocode default indexing plugin", () => {
   })
 
   test("does not hard-enable indexing plugin when default plugins are disabled", async () => {
-    const original = Flag.KILO_DISABLE_DEFAULT_PLUGINS
-    Flag.KILO_DISABLE_DEFAULT_PLUGINS = true
+    const original = Flag.kilocodecodecode_DISABLE_DEFAULT_PLUGINS
+    Flag.kilocodecodecode_DISABLE_DEFAULT_PLUGINS = true
 
     try {
       await using tmp = await tmpdir({
@@ -104,7 +104,7 @@ describe("kilocode default indexing plugin", () => {
         },
       })
     } finally {
-      Flag.KILO_DISABLE_DEFAULT_PLUGINS = original
+      Flag.kilocodecodecode_DISABLE_DEFAULT_PLUGINS = original
     }
   })
 })

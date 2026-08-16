@@ -188,7 +188,7 @@ describe("plan_exit detection", () => {
           {
             tool: "plan_exit",
             input: {},
-            output: "Plan is ready at .kilo/plans/plan.md. Ending planning turn.",
+            output: "Plan is ready at .kilocode/plans/plan.md. Ending planning turn.",
           },
         ],
       })

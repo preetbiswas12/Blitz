@@ -95,7 +95,7 @@ const agents = Layer.mock(Agent.Service)({
   get: () => Effect.succeed(agent),
 })
 const sessions = Layer.mock(Session.Service)({
-  get: () => Effect.succeed(session("/workspace/project/.kilo/worktrees/a")),
+  get: () => Effect.succeed(session("/workspace/project/.kilocodecodecode/worktrees/a")),
 })
 const permission = Layer.mock(Permission.Service)({
   ask: (input) =>
@@ -199,8 +199,8 @@ function fixture() {
     const root = yield* tmpdirScoped()
     const main = path.join(root, "main")
     const local = path.join(main, "packages", "app")
-    const a = path.join(main, ".kilo", "worktrees", "a")
-    const b = path.join(main, ".kilo", "worktrees", "b")
+    const a = path.join(main, ".kilocodecodecode", "worktrees", "a")
+    const b = path.join(main, ".kilocodecodecode", "worktrees", "b")
     const approved = path.join(root, "approved")
     yield* Effect.promise(() =>
       Promise.all([path.join(main, ".git"), local, a, b, approved].map((dir) => fs.mkdir(dir, { recursive: true }))),

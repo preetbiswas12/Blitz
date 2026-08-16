@@ -14,6 +14,7 @@ import { LegionConsoleCommand } from "@/kilocode/cli/cmd/console"
 import { RollCallCommand } from "@/kilocode/cli/cmd/roll-call"
 
 import { DaemonCommand } from "@/kilocode/cli/cmd/daemon"
+import { UpdateCommand } from "@/kilocode/cli/cmd/update"
 import { DevSetupCommand, DevAliasCommand } from "@/kilocode/cli/dev-setup"
 import { RemoteCommand } from "@/cli/cmd/remote"
 import { ConfigCommand as ConfigCLICommand } from "@/cli/cmd/config"
@@ -32,6 +33,7 @@ export namespace LegionCli {
       .command(RollCallCommand)
       .command(RemoteCommand)
       .command(DaemonCommand)
+      .command(UpdateCommand)
       .command(ConfigCLICommand)
     if (InstallationBuildKind !== "release") cli.command(DevSetupCommand).command(DevAliasCommand)
     // Safe self-reference: `cli` is a typed parameter and yargs `.command()` returns the same

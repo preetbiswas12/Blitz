@@ -34,9 +34,15 @@ export const UpdateCommand = cmd({
       return
     }
 
-    const latest = await Installation.latest(method).catch(() => {
+    const latest = await Promise.race([
+      Installation.latest(method),
+      new Promise<null>((_, reject) => setTimeout(() => reject(new Error("timeout")), 15000)),
+    ]).catch((err) => {
       spinner.stop("Failed to check for updates", 1)
-      prompts.log.error("Could not reach the version registry. Check your network connection.")
+      const msg = err instanceof Error && err.message === "timeout"
+        ? "Version check timed out. Check your network connection."
+        : "Could not reach the version registry. Check your network connection."
+      prompts.log.error(msg)
       prompts.outro("Done")
       return null
     })
@@ -73,7 +79,11 @@ export const UpdateCommand = cmd({
     }
 
     spinner.start(`Updating to v${latest}...`)
-    const err = await Installation.upgrade(method, latest).catch((err) => err)
+    const timeout = new Promise<null>((_, reject) => setTimeout(() => reject(new Error("upgrade-timeout")), 120000))
+    const err = await Promise.race([
+      Installation.upgrade(method, latest),
+      timeout,
+    ]).catch((err) => err)
     if (err) {
       spinner.stop("Update failed", 1)
       if (err instanceof Installation.UpgradeFailedError) {
@@ -88,3 +98,5 @@ export const UpdateCommand = cmd({
     prompts.outro(`Restart Legion to complete the update.`)
   },
 })
+
+

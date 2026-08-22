@@ -320,6 +320,9 @@ export const layer = Layer.effect(
       return parts
     })
 
+    // kilocode_change start - auto session naming survives a failed first attempt
+    const titlePending = new Set<SessionID>()
+
     const title = Effect.fn("SessionPrompt.ensureTitle")(function* (input: {
       session: Session.Info
       history: MessageV2.WithParts[]
@@ -327,7 +330,9 @@ export const layer = Layer.effect(
       modelID: ModelID
     }) {
       if (input.session.parentID) return
-      if (!Session.isDefaultTitle(input.session.title)) return
+      if (titlePending.has(input.session.id)) return
+      const current = yield* sessions.get(input.session.id).pipe(Effect.orDie)
+      if (!Session.isDefaultTitle(current.title)) return
 
       const real = (m: MessageV2.WithParts) =>
         m.info.role === "user" && !m.parts.every((p) => "synthetic" in p && p.synthetic)
@@ -335,52 +340,58 @@ export const layer = Layer.effect(
       if (idx === -1) return
       if (input.history.filter(real).length !== 1) return
 
-      const context = input.history.slice(0, idx + 1)
-      const firstUser = context[idx]
-      if (!firstUser || firstUser.info.role !== "user") return
-      const firstInfo = firstUser.info
+      yield* Effect.gen(function* () {
+        const context = input.history.slice(0, idx + 1)
+        const firstUser = context[idx]
+        if (!firstUser || firstUser.info.role !== "user") return
+        const firstInfo = firstUser.info
 
-      const subtasks = firstUser.parts.filter((p): p is MessageV2.SubtaskPart => p.type === "subtask")
-      const onlySubtasks = subtasks.length > 0 && firstUser.parts.every((p) => p.type === "subtask")
+        const subtasks = firstUser.parts.filter((p): p is MessageV2.SubtaskPart => p.type === "subtask")
+        const onlySubtasks = subtasks.length > 0 && firstUser.parts.every((p) => p.type === "subtask")
 
-      const ag = yield* agents.get("title")
-      if (!ag) return
-      const mdl = ag.model
-        ? yield* provider.getModel(ag.model.providerID, ag.model.modelID)
-        : ((yield* provider.getSmallModel(input.providerID)) ??
-          (yield* provider.getModel(input.providerID, input.modelID)))
-      const msgs = onlySubtasks
-        ? [{ role: "user" as const, content: subtasks.map((p) => p.prompt).join("\n") }]
-        : yield* MessageV2.toModelMessagesEffect(context, mdl)
-      const text = yield* llm
-        .stream({
-          agent: ag,
-          user: firstInfo,
-          system: [],
-          small: true,
-          tools: {},
-          model: mdl,
-          sessionID: LegionSessionPrompt.titleID(input.session.id), // kilocode_change - isolate title requests from the agent task
-          retries: 2,
-          messages: [{ role: "user", content: "Generate a title for this conversation:\n" }, ...msgs],
-        })
-        .pipe(
-          Stream.filter(LLMEvent.is.textDelta),
-          Stream.map((e) => e.text),
-          Stream.mkString,
-          Effect.orDie,
-        )
-      const cleaned = text
-        .replace(/<think>[\s\S]*?<\/think>\s*/g, "")
-        .split("\n")
-        .map((line) => line.trim())
-        .find((line) => line.length > 0)
-      if (!cleaned) return
-      const t = cleaned.length > 100 ? cleaned.substring(0, 97) + "..." : cleaned
-      yield* sessions
-        .setTitle({ sessionID: input.session.id, title: t })
-        .pipe(Effect.catchCause((cause) => elog.error("failed to generate title", { error: Cause.squash(cause) })))
+        const ag = yield* agents.get("title")
+        if (!ag) return
+        const mdl = ag.model
+          ? yield* provider.getModel(ag.model.providerID, ag.model.modelID)
+          : ((yield* provider.getSmallModel(input.providerID)) ??
+            (yield* provider.getModel(input.providerID, input.modelID)))
+        const msgs = onlySubtasks
+          ? [{ role: "user" as const, content: subtasks.map((p) => p.prompt).join("\n") }]
+          : yield* MessageV2.toModelMessagesEffect(context, mdl)
+        const text = yield* llm
+          .stream({
+            agent: ag,
+            user: firstInfo,
+            system: [],
+            small: true,
+            tools: {},
+            model: mdl,
+            sessionID: LegionSessionPrompt.titleID(input.session.id), // kilocode_change - isolate title requests from the agent task
+            retries: 2,
+            messages: [{ role: "user", content: "Generate a title for this conversation:\n" }, ...msgs],
+          })
+          .pipe(
+            Stream.filter(LLMEvent.is.textDelta),
+            Stream.map((e) => e.text),
+            Stream.mkString,
+            Effect.orDie,
+          )
+        const cleaned = text
+          .replace(/<think>[\s\S]*?<\/think>\s*/g, "")
+          .split("\n")
+          .map((line) => line.trim())
+          .find((line) => line.length > 0)
+        if (!cleaned) return
+        const t = cleaned.length > 100 ? cleaned.substring(0, 97) + "..." : cleaned
+        yield* sessions
+          .setTitle({ sessionID: input.session.id, title: t })
+          .pipe(Effect.catchCause((cause) => elog.error("failed to generate title", { error: Cause.squash(cause) })))
+      }).pipe(
+        Effect.ensuring(Effect.sync(() => titlePending.delete(input.session.id))),
+        Effect.ignore,
+      )
     })
+    // kilocode_change end
 
     const handleSubtask = Effect.fn("SessionPrompt.handleSubtask")(function* (input: {
       task: MessageV2.SubtaskPart
@@ -1521,13 +1532,15 @@ export const layer = Layer.effect(
         }
 
         step++
-        if (step === 1)
+        // kilocode_change start - retry auto naming on the next steps if the first attempt failed
+        if (step <= 3)
           yield* title({
             session,
             modelID: lastUser.model.modelID,
             providerID: lastUser.model.providerID,
             history: msgs,
           }).pipe(Effect.ignore, Effect.forkIn(scope))
+        // kilocode_change end
 
         const model = yield* getModel(lastUser.model.providerID, lastUser.model.modelID, sessionID)
         const task = tasks.pop()

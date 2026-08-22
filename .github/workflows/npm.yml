@@ -1,5 +1,7 @@
 name: npm
-on: push
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
   install-loop:

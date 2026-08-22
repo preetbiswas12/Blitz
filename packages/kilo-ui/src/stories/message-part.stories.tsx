@@ -10,7 +10,7 @@ import { MarkedProvider } from "@opencode-ai/ui/context/marked"
 import { Diff } from "@Legioncode/kilo-ui/diff"
 import { Code } from "@Legioncode/kilo-ui/code"
 import { File } from "@Legioncode/kilo-ui/file"
-import type { UserMessage, AssistantMessage, TextPart, ToolPart, ReasoningPart } from "@Legioncode/sdk/v2"
+import type { UserMessage, AssistantMessage, TextPart, ToolPart, ReasoningPart } from "@legion/sdk/v2"
 
 const SESSION_ID = "session-story-001"
 const USER_MSG_ID = "user-msg-001"

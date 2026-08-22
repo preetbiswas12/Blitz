@@ -6,7 +6,7 @@ import { FileComponentProvider } from "@Legioncode/kilo-ui/context/file"
 import { DialogProvider } from "@opencode-ai/ui/context/dialog"
 import { MarkedProvider } from "@opencode-ai/ui/context/marked"
 import { File } from "@Legioncode/kilo-ui/file"
-import type { UserMessage, AssistantMessage, TextPart, ToolPart } from "@Legioncode/sdk/v2"
+import type { UserMessage, AssistantMessage, TextPart, ToolPart } from "@legion/sdk/v2"
 
 const SESSION_ID = "session-turn-story-001"
 const USER_MSG_ID = "user-turn-msg-001"

@@ -1,4 +1,4 @@
-import type { Message, Session, Part, SnapshotFileDiff, SessionStatus, Provider } from "@Legioncode/sdk/v2"
+import type { Message, Session, Part, SnapshotFileDiff, SessionStatus, Provider } from "@legion/sdk/v2"
 import { createSimpleContext } from "./helper"
 import { PreloadMultiFileDiffResult } from "@pierre/diffs/ssr"
 

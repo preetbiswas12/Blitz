@@ -29,7 +29,7 @@ import {
   Todo,
   QuestionAnswer,
   QuestionInfo,
-} from "@Legioncode/sdk/v2"
+} from "@legion/sdk/v2"
 import { useData } from "../context"
 import { useFileComponent } from "../context/file"
 import { useDialog } from "../context/dialog"

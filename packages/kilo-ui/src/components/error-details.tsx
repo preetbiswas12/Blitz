@@ -1,4 +1,4 @@
-import type { AssistantMessage } from "@Legioncode/sdk/v2/client"
+import type { AssistantMessage } from "@legion/sdk/v2/client"
 
 type ErrorType = NonNullable<AssistantMessage["error"]>
 

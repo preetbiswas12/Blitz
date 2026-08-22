@@ -33,7 +33,7 @@ const stores = [
 ] satisfies SelectOption<Store>[]
 
 const fields: Record<Provider, Field[]> = {
-  Legion: [],
+  legion: [],
   openai: [{ key: "apiKey", label: "API key", placeholder: "sk-...", secret: true }],
   ollama: [{ key: "baseUrl", label: "Base URL", placeholder: "http://localhost:11434" }],
   "openai-compatible": [
@@ -55,6 +55,7 @@ const fields: Record<Provider, Field[]> = {
 }
 
 function options(input: IndexingConfig, provider: Provider) {
+  if (provider === "legion") return {}
   const value = input[provider]
   if (!value || typeof value !== "object") return {}
   return value as Record<string, string | undefined>

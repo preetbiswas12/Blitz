@@ -4,6 +4,7 @@
 // Registered before all discovery phases so user skills with the same name override.
 
 import LEGION_CONFIG from "./kilo-config.md"
+import HUMANIZER from "./humanizer.md"
 import { ELC_SKILLS } from "../elc/skills"
 import { CONTEXT_SKILLS } from "../context/skills"
 
@@ -19,6 +20,12 @@ const LEGION_SKILLS: BuiltinSkill[] = [
     description:
       "Guide for Legion configuration: config paths, legion.json fields, commands, agents, skills, permissions, MCPs, providers, TUI settings, plus Agent Manager worktree setup/run scripts, workflows, and state. Use for Legion config questions, locating loaded config, changing settings, or Agent Manager questions about run/setup scripts, worktree setup/workflows, apply/merge/PR/conflicts, missing sessions/worktrees, and agent-manager.json recovery.",
     content: LEGION_CONFIG,
+  },
+  {
+    name: "humanizer",
+    description:
+      "Rewrite AI-sounding text so it reads naturally without changing what it says. Use when editing or reviewing prose for inflated claims, sales language, vague sources, repetitive structure, stock AI words, passive voice, filler, or chatbot artifacts. Based on Wikipedia's \"Signs of AI writing.\"",
+    content: HUMANIZER,
   },
 ]
 

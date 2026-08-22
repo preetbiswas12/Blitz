@@ -42,6 +42,20 @@ it.instance(
 )
 
 it.instance(
+  "humanizer built-in skill has correct metadata",
+  () =>
+    Effect.gen(function* () {
+      const skill = yield* Skill.Service
+      const item = yield* skill.get("humanizer")
+      expect(item).toBeDefined()
+      expect(item!.name).toBe("humanizer")
+      expect(item!.location).toBe(Skill.BUILTIN_LOCATION)
+      expect(item!.content).toContain("Signs of AI")
+    }),
+  { git: true },
+)
+
+it.instance(
   "kilo-config is protected from removal",
   () =>
     Effect.gen(function* () {

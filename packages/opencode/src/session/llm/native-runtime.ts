@@ -7,7 +7,7 @@ import { asSchema, type ModelMessage, type Tool } from "ai"
 import { Effect } from "effect"
 import * as Stream from "effect/Stream"
 import { FetchHttpClient } from "effect/unstable/http"
-import { tool as nativeTool, ToolFailure, type JsonSchema, type LLMEvent } from "@opencode-ai/llm"
+import { tool as nativeTool, ToolFailure, type JsonSchema, type LLMEvent, type LLMRequest } from "@opencode-ai/llm"
 import type { LLMClientShape } from "@opencode-ai/llm/route"
 import { LLMNative } from "./native-request"
 
@@ -68,18 +68,9 @@ export function stream(input: StreamInput): StreamResult {
   const current = statusWithFetch(input, fetch)
   if (current.type === "unsupported") return current
 
-  // Integration point with @opencode-ai/llm: native-request lowers session data
-  // into an LLMRequest, then LLMClient handles route selection and transport.
-  //
-  // ProviderTransform.providerOptions builds AI-SDK-shaped options for the
-  // selected SDK key (e.g. "openai") and the native LLM SDK reads the same
-  // keys via OpenAIOptions.* (store, reasoningEffort, reasoningSummary,
-  // include, textVerbosity, promptCacheKey). Both sides intentionally use
-  // OpenAI's official wire field names, so this is identity, not translation
-  // — if a field ever needs to differ between the two surfaces, the
-  // translation belongs here, not split across both packages.
-  const stream = input.llmClient.stream({
-    request: LLMNative.request({
+  let request: LLMRequest
+  try {
+    request = LLMNative.request({
       model: input.model,
       apiKey: current.apiKey,
       baseURL: current.baseURL,
@@ -91,7 +82,14 @@ export function stream(input: StreamInput): StreamResult {
       maxOutputTokens: input.maxOutputTokens,
       providerOptions: ProviderTransform.providerOptions(input.model, input.providerOptions ?? {}),
       headers: { ...providerHeaders(input.provider.options.headers), ...input.headers },
-    }),
+    })
+  } catch (err) {
+    const reason = err instanceof Error ? err.message : String(err)
+    return { type: "unsupported", reason }
+  }
+
+  const stream = input.llmClient.stream({
+    request,
     tools: nativeTools(input.tools, input),
   })
 

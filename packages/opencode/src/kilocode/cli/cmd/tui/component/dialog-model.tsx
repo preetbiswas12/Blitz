@@ -1,20 +1,46 @@
+import { createMemo, createSignal, Show } from "solid-js"
 import { useTerminalDimensions } from "@opentui/solid"
-import { createEffect, createMemo, createSignal, For, Show } from "solid-js"
+import { pipe, sortBy, filter, map, entries, flatMap } from "remeda"
+import { DialogSelect } from "@tui/ui/dialog-select"
+import { useDialog } from "@tui/ui/dialog"
 import { useLocal } from "@tui/context/local"
 import { useSync } from "@tui/context/sync"
-import { flatMap, entries, filter, sortBy, pipe, map } from "remeda"
-import { useDialog } from "@tui/ui/dialog"
-import type { Model } from "@legion/sdk/v2"
-import { useConnected } from "@/cli/cmd/tui/component/use-connected"
 import { ModelInfoPanel } from "@/kilocode/components/model-info-panel"
-import { fmtPrice } from "@/kilocode/components/model-info-panel-utils"
 import { FreeModelDisclosure } from "@/kilocode/components/free-model-disclosure"
-import { createStore } from "solid-js/store"
-import { TextAttributes, type KeyEvent } from "@opentui/core"
-import { useTheme } from "@tui/context/theme"
-import { useBindings } from "@tui/keymap"
-import { useTuiConfig } from "@tui/context/tui-config"
+import { useConnected } from "@/cli/cmd/tui/component/use-connected"
+import { DialogProvider } from "@/cli/cmd/tui/component/dialog-provider"
 import { DialogVariant } from "@/cli/cmd/tui/component/dialog-variant"
+import { useTheme } from "@tui/context/theme"
+import type { Model } from "@legion/sdk/v2"
+
+export function sortModelOptions<
+  T extends {
+    footer?: string
+    releaseDate: string
+    title: string
+    value?: { providerID: string; modelID: string }
+  },
+>(
+  options: T[],
+  newestFirst: boolean,
+  rank: ReadonlyMap<string, number> = new Map(),
+) {
+  const recommended = (option: T) =>
+    option.value?.providerID === "kilo" ? (rank.get(option.value.modelID) ?? Infinity) : 0
+  if (newestFirst)
+    return sortBy(
+      options,
+      recommended,
+      [(option) => option.releaseDate, "desc"],
+      (option) => option.title,
+    )
+  return sortBy(
+    options,
+    recommended,
+    (option) => option.footer === undefined,
+    (option) => option.title,
+  )
+}
 
 export function DialogModel(props: { providerID?: string }) {
   const local = useLocal()
@@ -23,13 +49,9 @@ export function DialogModel(props: { providerID?: string }) {
   const { theme } = useTheme()
   const dimensions = useTerminalDimensions()
   const connected = useConnected()
-  const tuiConfig = useTuiConfig()
 
   const wide = createMemo(() => dimensions().width >= 108)
   const [preview, setPreview] = createSignal<{ model: Model; provider: string }>()
-
-  const [expanded, setExpanded] = createStore<Record<string, boolean>>({})
-  const [cursor, setCursor] = createSignal(0)
 
   const lookup = (providerID: string, modelID: string) => {
     const provider = sync.data.provider.find((x) => x.id === providerID)
@@ -38,75 +60,128 @@ export function DialogModel(props: { providerID?: string }) {
     return { model, provider: provider.name }
   }
 
-  const providers = createMemo(() => {
-    return pipe(
+  const kiloRank = createMemo(() => {
+    const provider = sync.data.provider.find((p) => p.id === "kilo")
+    const models = provider?.models ?? {}
+    return new Map(Object.entries(models).map(([id, info]) => [id, info.recommendedIndex ?? Infinity] as const))
+  })
+
+  const showExtra = createMemo(() => connected() && !props.providerID)
+
+  const footer = (providerID: string, model: Model) => {
+    const labels = [
+      providerID === "kilo" && FreeModelDisclosure.hasByok(model) ? FreeModelDisclosure.byok : undefined,
+      providerID === "kilo" && FreeModelDisclosure.collectsData(model) ? FreeModelDisclosure.label : undefined,
+      model.cost?.input === 0 && providerID === "opencode" ? "Free" : undefined,
+    ].filter((label) => label !== undefined)
+    return labels.length > 0 ? labels.join(" · ") : undefined
+  }
+
+  const options = createMemo(() => {
+    const current = local.model.current()
+    const favorites = connected() ? local.model.favorite() : []
+    const recents = local.model.recent()
+
+    function toOptions(items: typeof favorites, category: string) {
+      if (!showExtra()) return []
+      return items.flatMap((item) => {
+        const provider = sync.data.provider.find((x) => x.id === item.providerID)
+        if (!provider) return []
+        const model = provider.models[item.modelID]
+        if (!model) return []
+        return [
+          {
+            key: item,
+            value: { providerID: provider.id, modelID: model.id },
+            title: model.name ?? item.modelID,
+            description: provider.name,
+            category,
+            disabled: provider.id === "opencode" && model.id.includes("-nano"),
+            footer: footer(provider.id, model),
+            onSelect: () => {
+              selectModel(provider.id, model.id)
+            },
+          },
+        ]
+      })
+    }
+
+    const favoriteOptions = toOptions(favorites, "Favorites")
+    const recentOptions = toOptions(
+      recents.filter(
+        (item) => !favorites.some((fav) => fav.providerID === item.providerID && fav.modelID === item.modelID),
+      ),
+      "Recent",
+    )
+
+    const providerOptions = pipe(
       sync.data.provider,
-      filter((p) => p.id !== "opencode" || Object.keys(p.models).length > 0),
-      sortBy((p) => p.name),
-      map((provider) => {
-        const models = pipe(
+      sortBy(
+        (provider) => provider.id !== "opencode",
+        (provider) => provider.name,
+      ),
+      flatMap((provider) =>
+        pipe(
           provider.models,
           entries(),
           filter(([_, info]) => info.status !== "deprecated"),
           filter(([_, info]) => (props.providerID ? info.providerID === props.providerID : true)),
-          map(([modelID, info]) => ({ modelID, info, providerID: provider.id })),
-          (items) => sortBy(items, [(i) => i.info.name ?? i.modelID, "asc"]),
-        )
-        return { ...provider, filteredModels: models }
-      }),
-      filter((p) => p.filteredModels.length > 0),
+          map(([model, info]) => ({
+            value: { providerID: provider.id, modelID: model },
+            title: info.name ?? model,
+            releaseDate: info.release_date,
+            description: favorites.some(
+              (item) => item.providerID === provider.id && item.modelID === model,
+            )
+              ? "(Favorite)"
+              : undefined,
+            category: connected()
+              ? provider.id === "kilo" && info.recommendedIndex !== undefined
+                ? "Recommended"
+                : provider.name
+              : undefined,
+            disabled: provider.id === "opencode" && model.includes("-nano"),
+            footer: footer(provider.id, info),
+            onSelect() {
+              selectModel(provider.id, model)
+            },
+          })),
+          filter((x) => {
+            if (showExtra()) {
+              if (
+                favorites.some(
+                  (item) =>
+                    item.providerID === x.value.providerID && item.modelID === x.value.modelID,
+                )
+              )
+                return false
+              if (
+                recents.some(
+                  (item) =>
+                    item.providerID === x.value.providerID && item.modelID === x.value.modelID,
+                )
+              )
+                return false
+            }
+            return true
+          }),
+          (opts) => sortModelOptions(opts, props.providerID !== undefined, kiloRank()),
+        ),
+      ),
     )
+
+    return [...favoriteOptions, ...recentOptions, ...providerOptions]
   })
 
-  const totalModels = createMemo(() =>
-    providers().reduce((sum, p) => sum + p.filteredModels.length, 0),
+  const provider = createMemo(() =>
+    props.providerID ? sync.data.provider.find((x) => x.id === props.providerID) : null,
   )
 
-  type TreeItem =
-    | { type: "provider"; providerID: string; name: string; modelCount: number }
-    | { type: "model"; providerID: string; modelID: string; model: Model; providerName: string }
-
-  const treeItems = createMemo(() => {
-    const items: TreeItem[] = []
-    for (const provider of providers()) {
-      items.push({
-        type: "provider",
-        providerID: provider.id,
-        name: provider.name,
-        modelCount: provider.filteredModels.length,
-      })
-      const providerExpanded = expanded[`provider:${provider.id}`] !== false
-      if (providerExpanded) {
-        for (const { modelID, info } of provider.filteredModels) {
-          items.push({
-            type: "model",
-            providerID: provider.id,
-            modelID,
-            model: info,
-            providerName: provider.name,
-          })
-        }
-      }
-    }
-    return items
+  const title = createMemo(() => {
+    const value = provider()
+    if (!value) return "Select model"
+    return value.name
   })
-
-  createEffect(() => {
-    dialog.setSize(wide() ? "xlarge" : "large")
-  })
-
-  createEffect(() => {
-    const current = local.model.current()
-    if (!current) return
-    const next = lookup(current.providerID, current.modelID)
-    if (!next) return
-    setPreview(next)
-  })
-
-  function toggleProvider(providerID: string) {
-    const key = `provider:${providerID}`
-    setExpanded(key, (v) => (v === undefined ? false : !v))
-  }
 
   function selectModel(providerID: string, modelID: string) {
     local.model.set({ providerID, modelID }, { recent: true })
@@ -123,218 +198,53 @@ export function DialogModel(props: { providerID?: string }) {
     dialog.clear()
   }
 
-  function move(direction: number) {
-    const len = treeItems().length
-    if (len === 0) return
-    let next = cursor() + direction
-    if (next < 0) next = len - 1
-    if (next >= len) next = 0
-    setCursor(next)
-  }
-
-  function submit() {
-    const item = treeItems()[cursor()]
-    if (!item) return
-    if (item.type === "provider") {
-      toggleProvider(item.providerID)
-    } else {
-      selectModel(item.providerID, item.modelID)
-    }
-  }
-
-  function isCurrent(providerID: string, modelID: string) {
-    const cur = local.model.current()
-    return cur?.providerID === providerID && cur?.modelID === modelID
-  }
-
-  function modelFooter(providerID: string, model: Model) {
-    const labels = [
-      providerID === "kilo" && FreeModelDisclosure.hasByok(model) ? FreeModelDisclosure.byok : undefined,
-      providerID === "kilo" && FreeModelDisclosure.collectsData(model) ? FreeModelDisclosure.label : undefined,
-      model.cost?.input === 0 && providerID === "opencode" ? "Free" : undefined,
-    ].filter((l) => l !== undefined)
-    return labels.length > 0 ? labels.join(" · ") : undefined
-  }
-
-  useBindings(() => ({
-    commands: [
-      {
-        name: "dialog.select.prev",
-        title: "Previous item",
-        category: "Dialog",
-        run() {
-          move(-1)
-        },
-      },
-      {
-        name: "dialog.select.next",
-        title: "Next item",
-        category: "Dialog",
-        run() {
-          move(1)
-        },
-      },
-      {
-        name: "dialog.select.submit",
-        title: "Select item",
-        category: "Dialog",
-        run: submit,
-      },
-    ],
-    bindings: tuiConfig.keybinds.gather("dialog.select", [
-      "dialog.select.prev",
-      "dialog.select.next",
-      "dialog.select.submit",
-    ]),
-  }))
-
   return (
     <box flexDirection="row">
       <box flexGrow={1} flexShrink={1}>
-        <box gap={1} paddingBottom={1} flexGrow={1}>
-          <box paddingLeft={4} paddingRight={4}>
-            <box flexDirection="row" justifyContent="space-between">
-              <text fg={theme.text} attributes={TextAttributes.BOLD}>
-                Models ({totalModels()})
-              </text>
-              <text fg={theme.textMuted} onMouseUp={() => dialog.clear()}>
-                esc
-              </text>
-            </box>
-          </box>
-          <box flexGrow={1} flexShrink={1}>
-            <scrollbox
-              paddingLeft={1}
-              paddingRight={1}
-              scrollbarOptions={{ visible: false }}
-              maxHeight={Math.floor(dimensions().height / 2) - 6}
-            >
-              <For each={treeItems()}>
-                {(item, index) => {
-                  const isActive = createMemo(() => cursor() === index())
-                  if (item.type === "provider") {
-                    return (
-                      <ProviderRow
-                        name={item.name}
-                        modelCount={item.modelCount}
-                        expanded={expanded[`provider:${item.providerID}`] !== false}
-                        active={isActive()}
-                        onClick={() => {
-                          setCursor(index())
-                          toggleProvider(item.providerID)
-                        }}
-                      />
-                    )
-                  }
-                  return (
-                    <ModelRow
-                      model={item.model}
-                      providerID={item.providerID}
-                      providerName={item.providerName}
-                      active={isActive()}
-                      current={isCurrent(item.providerID, item.modelID)}
-                      footer={modelFooter(item.providerID, item.model)}
-                      onClick={() => {
-                        setCursor(index())
-                        selectModel(item.providerID, item.modelID)
-                      }}
-                    />
-                  )
-                }}
-              </For>
-            </scrollbox>
-          </box>
-        </box>
+        <DialogSelect<ReturnType<typeof options>[number]["value"]>
+          title={`${title()} (${options().length})`}
+          placeholder="Search models..."
+          options={options()}
+          flat={!!props.providerID}
+          current={local.model.current()}
+          actions={[
+            {
+              command: "model.dialog.provider",
+              title: connected() ? "Connect provider" : "View all providers",
+              onTrigger: () => {
+                dialog.replace(() => <DialogProvider />)
+              },
+            },
+            {
+              command: "model.dialog.favorite",
+              title: "Favorite",
+              disabled: !connected(),
+              onTrigger: (option) => {
+                local.model.toggleFavorite(option.value as { providerID: string; modelID: string })
+              },
+            },
+          ]}
+          onMove={(option) => {
+            if (typeof option.value === "string") {
+              setPreview(undefined)
+              return
+            }
+            const next = lookup(option.value.providerID, option.value.modelID)
+            if (!next) return
+            setPreview(next)
+          }}
+          onSelect={(option) => {
+            if (typeof option.value !== "string") {
+              selectModel(option.value.providerID, option.value.modelID)
+            }
+          }}
+        />
       </box>
       <Show when={wide() && preview()}>
-        {(item) => <ModelInfoPanel model={item().model} provider={item().provider} />}
+        {(p) => (
+          <ModelInfoPanel model={p().model} provider={p().provider} />
+        )}
       </Show>
     </box>
   )
 }
-
-function ProviderRow(props: {
-  name: string
-  modelCount: number
-  expanded: boolean
-  active: boolean
-  onClick: () => void
-}) {
-  const { theme } = useTheme()
-  const glyph = props.expanded ? "▼" : "▶"
-  return (
-    <box
-      paddingLeft={2}
-      paddingRight={3}
-      backgroundColor={props.active ? theme.primary : undefined}
-      onMouseUp={props.onClick}
-    >
-      <text fg={props.active ? theme.text : theme.text} attributes={TextAttributes.BOLD}>
-        {glyph} {props.name} ({props.modelCount})
-      </text>
-    </box>
-  )
-}
-
-function ModelRow(props: {
-  model: Model
-  providerID: string
-  providerName: string
-  active: boolean
-  current: boolean
-  footer?: string
-  onClick: () => void
-}) {
-  const { theme } = useTheme()
-  const cost = props.model.cost
-  const hasReasoning = props.model.capabilities.reasoning
-  const hasCache = cost.cache.read > 0 || cost.cache.write > 0
-  const isExpanded = props.active
-
-  return (
-    <box flexDirection="column">
-      <box
-        paddingLeft={4}
-        paddingRight={3}
-        backgroundColor={props.active ? theme.primary : undefined}
-        onMouseUp={props.onClick}
-      >
-        <text fg={props.active ? theme.text : props.current ? theme.primary : theme.text}>
-          {isExpanded ? "▼" : "▶"} {props.model.name ?? props.model.id}
-        </text>
-        <Show when={props.footer}>
-          <text fg={props.active ? theme.text : theme.textMuted}> {props.footer}</text>
-        </Show>
-      </box>
-      <Show when={isExpanded}>
-        <box flexDirection="column" paddingLeft={6}>
-          <PricingRow label="Input" value={fmtPrice(cost.input)} active={props.active} />
-          <PricingRow label="Output" value={fmtPrice(cost.output)} active={props.active} />
-          <Show when={hasReasoning}>
-            <PricingRow label="Reasoning" value={fmtPrice(cost.output)} active={props.active} />
-          </Show>
-          <Show when={hasCache}>
-            <PricingRow label="Cache read" value={fmtPrice(cost.cache.read)} active={props.active} />
-            <PricingRow label="Cache write" value={fmtPrice(cost.cache.write)} active={props.active} />
-          </Show>
-        </box>
-      </Show>
-    </box>
-  )
-}
-
-function PricingRow(props: { label: string; value: string; active: boolean }) {
-  const { theme } = useTheme()
-  return (
-    <box flexDirection="row" justifyContent="space-between" paddingRight={3}>
-      <text fg={props.active ? theme.text : theme.textMuted}>{props.label}</text>
-      <text fg={props.active ? theme.text : theme.text}>{props.value}</text>
-    </box>
-  )
-}
-
-
-
-
-
-

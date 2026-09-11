@@ -53,6 +53,7 @@ export class Service extends ConfigService.Service<Service>()("@opencode/Runtime
   outputTokenMax: positiveInteger("KILO_EXPERIMENTAL_OUTPUT_TOKEN_MAX"),
   bashDefaultTimeoutMs: positiveInteger("KILO_EXPERIMENTAL_BASH_DEFAULT_TIMEOUT_MS"),
   experimentalNativeLlm: bool("KILO_EXPERIMENTAL_NATIVE_LLM"),
+  disableTsCheck: bool("KILO_DISABLE_TS_CHECK"),
   experimentalWebSockets: bool("KILO_EXPERIMENTAL_WEBSOCKETS"),
   client: Config.string("LEGION_CLIENT").pipe(Config.withDefault("cli")),
 }) {}

@@ -265,6 +265,10 @@ export const layer = Layer.effect(
           if (!root) continue
           if (s.broken.has(root + server.id)) continue
 
+          // kilocode_change start - skip TypeScript LSP entirely when disabled
+          if (server.id === "typescript" && flags.disableTsCheck) continue
+          // kilocode_change end
+
           // kilocode_change start - use lightweight tsgo-based client when persistent LSP is not enabled
           if (server.id === "typescript" && !flags.experimentalLspTool) {
             const existing = s.clients.find((x) => x.root === root && x.serverID === server.id)

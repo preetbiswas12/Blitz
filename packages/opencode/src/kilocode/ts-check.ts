@@ -128,6 +128,8 @@ export namespace TsCheck {
   // optional dependencies like @typescript/native-preview-darwin-arm64 that
   // contain the actual native binary at lib/tsgo.
   // Exported for use by the LSP server spawn (tsgo --lsp --stdio).
+  const EXE = process.platform === "win32" ? "tsgo.exe" : "tsgo"
+
   export async function native_tsgo(root: string): Promise<string | undefined> {
     const pkg = `@typescript/native-preview-${process.platform}-${process.arch}`
 
@@ -135,7 +137,7 @@ export namespace TsCheck {
     let dir = root
     while (true) {
       // Standard node_modules layout
-      const standard = path.join(dir, "node_modules", pkg, "lib", "tsgo")
+      const standard = path.join(dir, "node_modules", pkg, "lib", EXE)
       if (await exists(standard)) return standard
 
       // Bun hoisted layout: node_modules/.bun/<pkg>@<version>/node_modules/<pkg>/lib/tsgo
@@ -159,7 +161,7 @@ export namespace TsCheck {
     const entries = await fs.readdir(dir).catch(() => [] as string[])
     for (const entry of entries) {
       if (!entry.startsWith(prefix + "@")) continue
-      const bin = path.join(dir, entry, "node_modules", pkg, "lib", "tsgo")
+      const bin = path.join(dir, entry, "node_modules", pkg, "lib", EXE)
       if (await exists(bin)) return bin
     }
     return undefined

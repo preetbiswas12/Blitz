@@ -6,8 +6,7 @@
 // This module exports patch functions and data that the upstream provider.ts
 // calls at well-defined injection points (each marked with kilocode_change).
 
-import { DEFAULT_HEADERS } from "@/kilocode/const"
-import { InstallationChannel, InstallationVersion } from "@opencode-ai/core/installation/version"
+import { DEFAULT_HEADERS, OPENCODE_USER_AGENT } from "@/kilocode/const"
 import { optionalOmitUndefined } from "@opencode-ai/core/schema"
 import { Account } from "@/account/account" // kilocode_change - use the v2 account token for OpenCode
 import { Effect, Option, Schema } from "effect"
@@ -187,7 +186,9 @@ export function LegionCustomLoaders(dep: CustomDep): Record<string, CustomLoader
       }
     }),
 
-    // OpenCode Zen: authenticate with the v2 account token and identify as the opencode CLI
+    // OpenCode Zen. Two differences from the upstream loader:
+    //  - account auth comes from the v2 account service instead of a pasted key
+    //  - requests must identify as the opencode CLI to reach the free tier
     opencode: Effect.fnUntraced(function* (input: any) {
       const env = yield* dep.env()
       const hasKey = iife(() => {
@@ -196,7 +197,11 @@ export function LegionCustomLoaders(dep: CustomDep): Record<string, CustomLoader
       })
       const stored = yield* dep.auth(input.id)
       const configured = Boolean((yield* dep.config()).provider?.["opencode"]?.options?.apiKey)
-      const ok = hasKey || Boolean(stored) || configured
+      // The entry written by /connect device login is only a "connected" marker.
+      // Its token goes stale as soon as the account service refreshes it, so it
+      // never counts as an explicit credential.
+      const managed = stored?.type === "api" && stored.metadata?.source === "opencode-account"
+      const explicit = hasKey || configured || (stored !== undefined && !managed)
 
       const accountToken = yield* Effect.gen(function* () {
         const account = yield* Effect.serviceOption(Account.Service)
@@ -209,34 +214,20 @@ export function LegionCustomLoaders(dep: CustomDep): Record<string, CustomLoader
         return Option.isSome(token) ? String(token.value) : undefined
       }).pipe(Effect.catchCause(() => Effect.succeed(undefined)))
 
-      if (!ok && !accountToken) {
+      if (!explicit && !accountToken) {
         for (const [key, value] of Object.entries(input.models)) {
           if ((value as any).cost?.input === 0) continue
           delete input.models[key]
         }
       }
 
-      // Wrap fetch so the wire request carries the opencode User-Agent. The AI SDK
-      // builds its own User-Agent from the package version and ignores our headers option.
-      const opencodeUA = `opencode/${InstallationChannel}/${InstallationVersion}/cli`
-      const opencodeFetch = (resource: RequestInfo | URL, init?: RequestInit) => {
-        const headers = new Headers(init?.headers)
-        headers.set("user-agent", opencodeUA)
-        return globalThis.fetch(resource, { ...init, headers })
-      }
-
-      const managed = stored?.type === "api" && stored.metadata?.source === "opencode-account"
-      const useAccount = Boolean(accountToken) && !hasKey && !configured && (!stored || managed)
-
       return {
         autoload: Object.keys(input.models).length > 0,
         options: {
-          // explicit credentials win, then the account token, then anonymous public access
-          ...(useAccount ? { apiKey: accountToken } : ok ? {} : { apiKey: "public" }),
-          headers: {
-            "User-Agent": opencodeUA,
-          },
-          fetch: opencodeFetch,
+          // Upstream resolves env/auth/config credentials itself, so only supply
+          // a key when we have to: the account token first, public access last.
+          ...(explicit ? {} : accountToken ? { apiKey: accountToken } : { apiKey: "public" }),
+          headers: { "User-Agent": OPENCODE_USER_AGENT },
         },
       }
     }),

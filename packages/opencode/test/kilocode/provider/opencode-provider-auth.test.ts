@@ -42,7 +42,8 @@ const account = Layer.mock(Account.Service, {
 
 function layer(directory: string) {
   return ProviderAuth.layer.pipe(
-    Layer.provide(Auth.defaultLayer),
+    // merged so the test can assert on the stored credential
+    Layer.provideMerge(Auth.defaultLayer),
     Layer.provide(ModelCache.defaultLayer),
     Layer.provide(account),
     Layer.provide(
@@ -70,14 +71,25 @@ describe("opencode provider auth", () => {
           const service = yield* ProviderAuth.Service
           const methods = yield* service.methods()
           const method = methods[ProviderID.make("opencode")]
-          expect(method).toHaveLength(1)
-          expect(method?.[0]).toMatchObject({ type: "oauth", label: "Login with OpenCode" })
+          // device login first, classic api key second
+          expect(method).toMatchObject([
+            { type: "oauth", label: "Login with OpenCode" },
+            { type: "api", label: "API key" },
+          ])
 
           const providerID = ProviderID.make("opencode")
           const authorization = yield* service.authorize({ providerID, method: 0 })
           expect(authorization).toMatchObject({ method: "auto", url: login.url })
 
           yield* service.callback({ providerID, method: 0 })
+
+          // the marker the provider loader looks for to know it should use the live account token
+          const auth = yield* Auth.Service
+          expect(yield* auth.get("opencode")).toMatchObject({
+            type: "api",
+            key: "access-token",
+            metadata: { source: "opencode-account" },
+          })
         }).pipe(Effect.provide(layer(tmp.directory)), provideInstance(tmp.directory))
         return result
       }),

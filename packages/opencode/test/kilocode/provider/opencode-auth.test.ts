@@ -1,7 +1,17 @@
 import { describe, expect } from "bun:test"
 import { Duration, Effect, Layer, Option } from "effect"
 import { Account } from "@/account/account"
-import { AccessToken, AccountID, DeviceCode, Login, OrgID, PollPending, PollSuccess, UserCode } from "@/account/schema"
+import {
+  AccessToken,
+  AccountID,
+  DeviceCode,
+  Login,
+  OrgID,
+  PollDenied,
+  PollPending,
+  PollSuccess,
+  UserCode,
+} from "@/account/schema"
 import { opencodeAuth } from "@/kilocode/provider/opencode-auth"
 import { testEffect } from "../../lib/effect"
 
@@ -59,6 +69,36 @@ describe("opencode account auth", () => {
         metadata: { source: "opencode-account" },
       })
       expect(polls.count).toBe(2)
+    }),
+  )
+
+  it.effect("also offers the classic api key method", () =>
+    Effect.gen(function* () {
+      const hook = opencodeAuth(yield* Account.Service)
+      expect(hook.methods[1]).toMatchObject({ type: "api", label: "API key" })
+    }),
+  )
+})
+
+const denied = testEffect(
+  Layer.mock(Account.Service, {
+    login: () => Effect.succeed(login),
+    poll: () => Effect.succeed(new PollDenied()),
+    active: () => Effect.succeed(Option.some(info)),
+    token: () => Effect.succeed(Option.some(AccessToken.make("access-token"))),
+  }),
+)
+
+describe("opencode account auth failures", () => {
+  denied.effect("reports a denied device login as failed so the dialog can retry", () =>
+    Effect.gen(function* () {
+      const method = opencodeAuth(yield* Account.Service).methods[0]
+      if (method.type !== "oauth") return
+
+      const authorization = yield* Effect.promise(() => method.authorize())
+      if (authorization.method !== "auto") return
+
+      expect(yield* Effect.promise(() => authorization.callback())).toEqual({ type: "failed" })
     }),
   )
 })

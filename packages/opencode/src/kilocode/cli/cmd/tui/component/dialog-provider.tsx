@@ -8,8 +8,11 @@
 import type { JSX } from "solid-js"
 import type { RGBA } from "@opentui/core"
 import type { ProviderAuthAuthorization } from "@legion/sdk/v2"
+import { Log } from "@opencode-ai/core/util/log"
 import open from "open"
 export { selectProvider } from "@/kilocode/anaconda-desktop/tui/setup"
+
+const log = Log.create({ service: "tui.dialog-provider" })
 
 // ---------------------------------------------------------------------------
 // Failed-state gutter/description helpers
@@ -95,9 +98,15 @@ export function renderAutoMethod(_opts: {
   return undefined
 }
 
+/**
+ * Opens the device authorization page for OpenCode Zen. The dialog always shows
+ * the URL, so a failure here is not fatal — log it and let the user copy it.
+ */
 export function openAuthorization(providerID: string, url: string | undefined) {
   if (providerID !== "opencode" || !url) return
-  void open(url).catch(() => undefined)
+  void open(url).catch((err) => {
+    log.warn("failed to open opencode device authorization page", { error: err })
+  })
 }
 
 // ---------------------------------------------------------------------------

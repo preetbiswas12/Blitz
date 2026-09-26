@@ -1,8 +1,8 @@
 import { describe, expect } from "bun:test"
-import { InstallationChannel, InstallationVersion } from "@opencode-ai/core/installation/version"
 import { Effect, Layer, Option } from "effect"
 import { Account } from "@/account/account"
 import { AccessToken, AccountID, OrgID } from "@/account/schema"
+import { OPENCODE_USER_AGENT } from "@/kilocode/const"
 import { LegionCustomLoaders } from "@/kilocode/provider/provider"
 import { testEffect } from "../../lib/effect"
 
@@ -40,8 +40,6 @@ const dep = (input: {
   get: () => Effect.succeed(undefined),
 })
 
-const ua = `opencode/${InstallationChannel}/${InstallationVersion}/cli`
-
 describe("opencode provider loader", () => {
   it.effect("uses the account token and keeps every model", () =>
     Effect.gen(function* () {
@@ -49,7 +47,9 @@ describe("opencode provider loader", () => {
       const result = yield* LegionCustomLoaders(dep({})).opencode(model).pipe(Effect.provide(account))
       expect(result.options?.apiKey).toBe("account-token")
       expect(Object.keys(model.models)).toEqual(["free", "paid"])
-      expect(result.options?.headers).toMatchObject({ "User-Agent": ua })
+      // the opencode backend only serves the free tier to the opencode CLI
+      expect(result.options?.headers).toEqual({ "User-Agent": OPENCODE_USER_AGENT })
+      expect(OPENCODE_USER_AGENT).toMatch(/^opencode\//)
       expect(result.autoload).toBe(true)
     }),
   )
@@ -65,6 +65,16 @@ describe("opencode provider loader", () => {
     }),
   )
 
+  it.effect("keeps a manually entered api key", () =>
+    Effect.gen(function* () {
+      const result = yield* LegionCustomLoaders(dep({ auth: { type: "api", key: "manual-key" } }))
+        .opencode(input())
+        .pipe(Effect.provide(account))
+      // no apiKey option: the stored credential is used as-is
+      expect(result.options?.apiKey).toBeUndefined()
+    }),
+  )
+
   it.effect("prefers an explicit env or config credential over the account token", () =>
     Effect.gen(function* () {
       const fromEnv = yield* LegionCustomLoaders(dep({ env: { OPENCODE_API_KEY: "env-key" } }))
@@ -76,6 +86,25 @@ describe("opencode provider loader", () => {
         .opencode(input())
         .pipe(Effect.provide(account))
       expect(fromConfig.options?.apiKey).toBeUndefined()
+    }),
+  )
+
+  it.effect("never wraps fetch, which would strip the AI SDK user agent suffix", () =>
+    Effect.gen(function* () {
+      const result = yield* LegionCustomLoaders(dep({})).opencode(input())
+      expect(result.options?.fetch).toBeUndefined()
+    }),
+  )
+
+  it.effect("falls back to public access when a stored account credential is unusable", () =>
+    Effect.gen(function* () {
+      const model = input()
+      // account managed marker but no live token (e.g. the account was removed)
+      const result = yield* LegionCustomLoaders(
+        dep({ auth: { type: "api", key: "stale", metadata: { source: "opencode-account" } } }),
+      ).opencode(model)
+      expect(result.options?.apiKey).toBe("public")
+      expect(Object.keys(model.models)).toEqual(["free"])
     }),
   )
 

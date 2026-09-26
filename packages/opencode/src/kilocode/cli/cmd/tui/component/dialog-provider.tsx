@@ -8,6 +8,7 @@
 import type { JSX } from "solid-js"
 import type { RGBA } from "@opentui/core"
 import type { ProviderAuthAuthorization } from "@legion/sdk/v2"
+import open from "open"
 export { selectProvider } from "@/kilocode/anaconda-desktop/tui/setup"
 
 // ---------------------------------------------------------------------------
@@ -45,7 +46,8 @@ export const PROVIDER_PRIORITY: Record<string, number> = {
   "github-copilot": 1,
   openai: 2,
   google: 3,
-  "anaconda-desktop": 4,
+  opencode: 4,
+  "anaconda-desktop": 5,
 }
 
 // ---------------------------------------------------------------------------
@@ -55,11 +57,13 @@ export const PROVIDER_PRIORITY: Record<string, number> = {
 export const PROVIDER_DESCRIPTIONS: Record<string, string> = {
   anthropic: "(Claude Max or API key)",
   openai: "(ChatGPT login or API key)",
+  opencode: "(Free models with an OpenCode account)",
   "anaconda-desktop": "(Local models)",
 }
 
 export const PROVIDER_TITLES: Record<string, string> = {
   openai: "OpenAI / Codex",
+  opencode: "OpenCode Zen",
 }
 
 /** Local OpenAI-compatible providers where API key is optional (localhost). */
@@ -89,6 +93,11 @@ export function renderAutoMethod(_opts: {
   DialogModel: any
 }): (() => JSX.Element) | undefined {
   return undefined
+}
+
+export function openAuthorization(providerID: string, url: string | undefined) {
+  if (providerID !== "opencode" || !url) return
+  void open(url).catch(() => undefined)
 }
 
 // ---------------------------------------------------------------------------

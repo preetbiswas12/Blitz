@@ -28,6 +28,7 @@ import * as ProviderTransform from "./transform"
 import { ModelID, ProviderID } from "./schema"
 import { ModelStatus } from "./model-status"
 import { RuntimeFlags } from "@/effect/runtime-flags"
+import { Account } from "@/account/account" // kilocode_change - provide v2 account auth to the OpenCode loader
 // kilocode_change start
 import {
   LEGION_BUNDLED_PROVIDERS,
@@ -1983,6 +1984,7 @@ export const defaultLayer = Layer.suspend(() =>
     Layer.provide(Plugin.defaultLayer),
     Layer.provide(ModelsDev.defaultLayer),
     Layer.provide(RuntimeFlags.defaultLayer),
+    Layer.provide(Account.defaultLayer), // kilocode_change - make v2 account auth available to the OpenCode loader
   ),
 )
 

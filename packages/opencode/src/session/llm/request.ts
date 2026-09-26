@@ -8,13 +8,14 @@ import type { Provider } from "@/provider/provider"
 import { ProviderTransform } from "@/provider/transform"
 import { SystemPrompt } from "../system"
 import { USER_AGENT } from "@/installation" // kilocode_change
+import { InstallationChannel, InstallationVersion } from "@opencode-ai/core/installation/version" // kilocode_change
 import { Effect, Record } from "effect"
 import { jsonSchema, tool as aiTool, type ModelMessage, type Tool } from "ai"
 import type { Plugin } from "@/plugin"
 import { mergeDeep } from "remeda"
 import { DEFAULT_HEADERS } from "@/kilocode/const" // kilocode_change
 // kilocode_change start
-import { LegionSession} from "@/kilocode/session"
+import { LegionSession } from "@/kilocode/session"
 import { stripInternalOptions } from "@/kilocode/agent/options"
 import { formatMemoryContext } from "@/kilocode/memory"
 import { detectEmotions, formatEmotionContext } from "@/kilocode/emotion"
@@ -129,13 +130,13 @@ export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: Pre
   const agentOptions = stripInternalOptions(input.agent.options)
   let options = mergeOptions(mergeOptions(mergeOptions(base, input.model.options), agentOptions), variant)
   // kilocode_change end
-  
+
   // kilocode_change start - enable Nemotron thinking output to prevent 504 timeouts
   if (NemotronThinking.isNemotron(input.model)) {
     options = NemotronThinking.injectThinkingOptions(options)
   }
   // kilocode_change end
-  
+
   if (isOpenaiOauth) {
     // kilocode_change start - prepend soul + brain to instructions
     options.instructions = SystemPrompt.soul() + "\n" + SystemPrompt.brain() + "\n" + system.join("\n")
@@ -241,8 +242,14 @@ export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: Pre
         : {
             "x-session-affinity": input.sessionID,
             ...(input.parentSessionID ? { "x-parent-session-id": input.parentSessionID } : {}),
-            "User-Agent": USER_AGENT,
-            ...(input.model.providerID !== "anthropic" ? DEFAULT_HEADERS : undefined), // kilocode_change
+            // kilocode_change - use opencode User-Agent for opencode provider so free tier works
+            "User-Agent":
+              input.model.providerID === "opencode"
+                ? `opencode/${InstallationChannel}/${InstallationVersion}/cli`
+                : USER_AGENT,
+            ...(input.model.providerID !== "anthropic" && input.model.providerID !== "opencode"
+              ? DEFAULT_HEADERS
+              : undefined),
           }),
       ...input.model.headers,
       ...headers,

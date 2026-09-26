@@ -7,10 +7,13 @@
 // calls at well-defined injection points (each marked with kilocode_change).
 
 import { DEFAULT_HEADERS } from "@/kilocode/const"
+import { InstallationChannel, InstallationVersion } from "@opencode-ai/core/installation/version"
 import { optionalOmitUndefined } from "@opencode-ai/core/schema"
-import { Effect, Schema } from "effect"
+import { Account } from "@/account/account" // kilocode_change - use the v2 account token for OpenCode
+import { Effect, Option, Schema } from "effect"
 import type { LanguageModelV3 } from "@ai-sdk/provider"
 import { mapValues, mergeDeep, omit, pickBy } from "remeda"
+import { iife } from "@/util/iife"
 
 /** Default timeout (ms) for provider HTTP requests (connection phase). */
 export const REQUEST_TIMEOUT_MS = 300_000 // 5 minutes
@@ -126,10 +129,7 @@ export function patchLegionProviderPrivacy(provider: { options?: Record<string, 
   provider.options = { ...provider.options, dataCollection: "deny" }
 }
 
-export function patchCustomOpenAICompatibleProvider(
-  parsed: Record<string, any>,
-  config: Record<string, any>,
-) {
+export function patchCustomOpenAICompatibleProvider(parsed: Record<string, any>, config: Record<string, any>) {
   if (!config.openaiCompatible) return
   const options: Record<string, any> = {}
   if (config.openaiCompatible.baseURL) options.baseURL = config.openaiCompatible.baseURL
@@ -187,12 +187,59 @@ export function LegionCustomLoaders(dep: CustomDep): Record<string, CustomLoader
       }
     }),
 
-    // Override opencode to prevent auto-connecting without credentials
-    opencode: () =>
-      Effect.succeed({
-        autoload: false,
-        options: { headers: DEFAULT_HEADERS },
-      }),
+    // OpenCode Zen: authenticate with the v2 account token and identify as the opencode CLI
+    opencode: Effect.fnUntraced(function* (input: any) {
+      const env = yield* dep.env()
+      const hasKey = iife(() => {
+        if (input.env.some((item: string) => env[item])) return true
+        return false
+      })
+      const stored = yield* dep.auth(input.id)
+      const configured = Boolean((yield* dep.config()).provider?.["opencode"]?.options?.apiKey)
+      const ok = hasKey || Boolean(stored) || configured
+
+      const accountToken = yield* Effect.gen(function* () {
+        const account = yield* Effect.serviceOption(Account.Service)
+        if (Option.isNone(account)) return undefined
+
+        const active = yield* account.value.active()
+        if (Option.isNone(active)) return undefined
+
+        const token = yield* account.value.token(active.value.id)
+        return Option.isSome(token) ? String(token.value) : undefined
+      }).pipe(Effect.catchCause(() => Effect.succeed(undefined)))
+
+      if (!ok && !accountToken) {
+        for (const [key, value] of Object.entries(input.models)) {
+          if ((value as any).cost?.input === 0) continue
+          delete input.models[key]
+        }
+      }
+
+      // Wrap fetch so the wire request carries the opencode User-Agent. The AI SDK
+      // builds its own User-Agent from the package version and ignores our headers option.
+      const opencodeUA = `opencode/${InstallationChannel}/${InstallationVersion}/cli`
+      const opencodeFetch = (resource: RequestInfo | URL, init?: RequestInit) => {
+        const headers = new Headers(init?.headers)
+        headers.set("user-agent", opencodeUA)
+        return globalThis.fetch(resource, { ...init, headers })
+      }
+
+      const managed = stored?.type === "api" && stored.metadata?.source === "opencode-account"
+      const useAccount = Boolean(accountToken) && !hasKey && !configured && (!stored || managed)
+
+      return {
+        autoload: Object.keys(input.models).length > 0,
+        options: {
+          // explicit credentials win, then the account token, then anonymous public access
+          ...(useAccount ? { apiKey: accountToken } : ok ? {} : { apiKey: "public" }),
+          headers: {
+            "User-Agent": opencodeUA,
+          },
+          fetch: opencodeFetch,
+        },
+      }
+    }),
   }
 }
 

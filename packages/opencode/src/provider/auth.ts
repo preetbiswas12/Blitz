@@ -6,6 +6,9 @@ import { optionalOmitUndefined } from "@opencode-ai/core/schema"
 import { Plugin } from "../plugin"
 import { ProviderID } from "./schema"
 import { Array as Arr, Effect, Layer, Record, Result, Context, Schema } from "effect"
+import { Option } from "effect" // kilocode_change - register the OpenCode account auth hook
+import { Account } from "@/account/account" // kilocode_change - expose OpenCode account login through /connect
+import { opencodeAuth } from "@/kilocode/provider/opencode-auth" // kilocode_change
 
 // kilocode_change start
 import { Telemetry } from "@legion/kilo-telemetry"
@@ -117,20 +120,26 @@ export const layer: Layer.Layer<Service, never, Auth.Service | Plugin.Service | 
     const auth = yield* Auth.Service
     const plugin = yield* Plugin.Service
     const cache = yield* ModelCache.Service
+    const account = yield* Effect.serviceOption(Account.Service) // kilocode_change
     // kilocode_change end
     const state = yield* InstanceState.make<State>(
       Effect.fn("ProviderAuth.state")(function* () {
+        // kilocode_change start - expose v2 account device login as the OpenCode provider method
         const plugins = yield* plugin.list()
-        return {
-          hooks: Record.fromEntries(
-            Arr.filterMap(plugins, (x) =>
-              x.auth?.provider !== undefined
-                ? Result.succeed([ProviderID.make(x.auth.provider), x.auth] as const)
-                : Result.failVoid,
-            ),
+        const hooks = Record.fromEntries(
+          Arr.filterMap(plugins, (x) =>
+            x.auth?.provider !== undefined
+              ? Result.succeed([ProviderID.make(x.auth.provider), x.auth] as const)
+              : Result.failVoid,
           ),
+        )
+        const opencode = ProviderID.make("opencode")
+        return {
+          hooks:
+            Option.isSome(account) && !hooks[opencode] ? { ...hooks, [opencode]: opencodeAuth(account.value) } : hooks,
           pending: new Map<ProviderID, AuthOAuthResult>(),
         }
+        // kilocode_change end
       }),
     )
 
@@ -248,6 +257,7 @@ export const defaultLayer = Layer.suspend(() =>
     Layer.provide(Auth.defaultLayer),
     Layer.provide(Plugin.defaultLayer),
     Layer.provide(ModelCache.defaultLayer),
+    Layer.provide(Account.defaultLayer), // kilocode_change - make v2 account login available to /connect
   ),
 )
 // kilocode_change end

@@ -187,6 +187,7 @@ export function createDialogProviderOptions() {
                 dialog.clear()
                 return
               }
+              KiloProvider.openAuthorization(providerID, result.data?.url) // kilocode_change - open OpenCode device login in the browser
               if (result.data?.method === "code") {
                 dialog.replace(() => (
                   <CodeMethod providerID={providerID} title={method.label} index={index} authorization={result.data!} />

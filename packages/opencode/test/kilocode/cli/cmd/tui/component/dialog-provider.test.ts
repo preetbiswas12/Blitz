@@ -7,9 +7,9 @@ import {
 } from "@/kilocode/cli/cmd/tui/component/dialog-provider"
 
 describe("opencode zen provider entry", () => {
-  test("is listed in the connect dialog with a free-model description", () => {
+  test("is listed in the connect dialog with a sign-in hint", () => {
     expect(PROVIDER_TITLES.opencode).toBe("OpenCode Zen")
-    expect(PROVIDER_DESCRIPTIONS.opencode).toBe("(Free models with an OpenCode account)")
+    expect(PROVIDER_DESCRIPTIONS.opencode).toBe("(Free tier, sign in for more models)")
   })
 
   test("sorts after the major providers and before local models", () => {

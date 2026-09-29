@@ -20,6 +20,22 @@ const account = Layer.mock(Account.Service, {
   token: () => Effect.succeed(Option.some(AccessToken.make("account-token"))),
 })
 
+// the account service is shared with the Legion console, whose token OpenCode rejects
+const legion = Layer.mock(Account.Service, {
+  active: () =>
+    Effect.succeed(
+      Option.some(
+        new Account.Info({
+          id: AccountID.make("legion-1"),
+          email: "user@legion.ai",
+          url: "https://app.kilocode.ai",
+          active_org_id: OrgID.make("org-2"),
+        }),
+      ),
+    ),
+  token: () => Effect.succeed(Option.some(AccessToken.make("legion-token"))),
+})
+
 const input = () => ({
   id: "opencode",
   env: ["OPENCODE_API_KEY"],
@@ -103,6 +119,19 @@ describe("opencode provider loader", () => {
       const result = yield* LegionCustomLoaders(
         dep({ auth: { type: "api", key: "stale", metadata: { source: "opencode-account" } } }),
       ).opencode(model)
+      expect(result.options?.apiKey).toBe("public")
+      expect(Object.keys(model.models)).toEqual(["free"])
+    }),
+  )
+
+  it.effect("ignores the token of a console account that is not OpenCode", () =>
+    Effect.gen(function* () {
+      const model = input()
+      const result = yield* LegionCustomLoaders(
+        dep({ auth: { type: "api", key: "stale", metadata: { source: "opencode-account" } } }),
+      )
+        .opencode(model)
+        .pipe(Effect.provide(legion))
       expect(result.options?.apiKey).toBe("public")
       expect(Object.keys(model.models)).toEqual(["free"])
     }),

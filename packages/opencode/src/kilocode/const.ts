@@ -15,3 +15,6 @@ export const DEFAULT_HEADERS = {
  * Legion user agent. Mirrors the user agent core sends to models.dev.
  */
 export const OPENCODE_USER_AGENT = `opencode/${InstallationChannel}/${InstallationVersion}/${Flag.LEGION_CLIENT}`
+
+/** OpenCode Zen console: the device login endpoint, and the only account whose token is valid there. */
+export const OPENCODE_SERVER = "https://console.opencode.ai"

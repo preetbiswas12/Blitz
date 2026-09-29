@@ -6,8 +6,9 @@
 // This module exports patch functions and data that the upstream provider.ts
 // calls at well-defined injection points (each marked with kilocode_change).
 
-import { DEFAULT_HEADERS, OPENCODE_USER_AGENT } from "@/kilocode/const"
+import { DEFAULT_HEADERS, OPENCODE_SERVER, OPENCODE_USER_AGENT } from "@/kilocode/const"
 import { optionalOmitUndefined } from "@opencode-ai/core/schema"
+import { normalizeServerUrl } from "@/account/url" // kilocode_change - use the v2 account token for OpenCode
 import { Account } from "@/account/account" // kilocode_change - use the v2 account token for OpenCode
 import { Effect, Option, Schema } from "effect"
 import type { LanguageModelV3 } from "@ai-sdk/provider"
@@ -209,6 +210,12 @@ export function LegionCustomLoaders(dep: CustomDep): Record<string, CustomLoader
 
         const active = yield* account.value.active()
         if (Option.isNone(active)) return undefined
+
+        // The account service is shared with the Legion console, and its token is
+        // only valid for the console it came from. A Legion console account active
+        // here would be rejected by the OpenCode API, so it must not count as
+        // authenticated (that would also unhide the paid models).
+        if (normalizeServerUrl(active.value.url) !== OPENCODE_SERVER) return undefined
 
         const token = yield* account.value.token(active.value.id)
         return Option.isSome(token) ? String(token.value) : undefined

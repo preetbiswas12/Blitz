@@ -21,8 +21,7 @@
 import { Account } from "@/account/account"
 import type { Hooks } from "@legion/plugin"
 import { Duration, Effect, Option } from "effect"
-
-const server = "https://console.opencode.ai"
+import { OPENCODE_SERVER } from "@/kilocode/const"
 
 /**
  * Device-code poll loop. Backs off by 5s whenever the server asks us to slow
@@ -50,7 +49,7 @@ export function opencodeAuth(account: Account.Interface): NonNullable<Hooks["aut
         type: "oauth",
         label: "Login with OpenCode",
         authorize: async () => {
-          const login = await Effect.runPromise(account.login(server))
+          const login = await Effect.runPromise(account.login(OPENCODE_SERVER))
           return {
             url: login.url,
             instructions: `Enter code: ${login.user}`,

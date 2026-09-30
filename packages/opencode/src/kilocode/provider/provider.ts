@@ -6,7 +6,7 @@
 // This module exports patch functions and data that the upstream provider.ts
 // calls at well-defined injection points (each marked with kilocode_change).
 
-import { DEFAULT_HEADERS, OPENCODE_SERVER, OPENCODE_USER_AGENT } from "@/kilocode/const"
+import { DEFAULT_HEADERS, OPENCODE_SERVER } from "@/kilocode/const"
 import { optionalOmitUndefined } from "@opencode-ai/core/schema"
 import { normalizeServerUrl } from "@/account/url" // kilocode_change - use the v2 account token for OpenCode
 import { Account } from "@/account/account" // kilocode_change - use the v2 account token for OpenCode
@@ -187,9 +187,10 @@ export function LegionCustomLoaders(dep: CustomDep): Record<string, CustomLoader
       }
     }),
 
-    // OpenCode Zen. Two differences from the upstream loader:
-    //  - account auth comes from the v2 account service instead of a pasted key
-    //  - requests must identify as the opencode CLI to reach the free tier
+    // OpenCode Zen. One difference from the upstream loader: account auth comes
+    // from the v2 account service instead of a pasted key. OpenCode's free tier
+    // is reserved for their own clients and is rejected here with a FreeTierError,
+    // so signing in only unlocks the paid models.
     opencode: Effect.fnUntraced(function* (input: any) {
       const env = yield* dep.env()
       const hasKey = iife(() => {
@@ -234,7 +235,6 @@ export function LegionCustomLoaders(dep: CustomDep): Record<string, CustomLoader
           // Upstream resolves env/auth/config credentials itself, so only supply
           // a key when we have to: the account token first, public access last.
           ...(explicit ? {} : accountToken ? { apiKey: accountToken } : { apiKey: "public" }),
-          headers: { "User-Agent": OPENCODE_USER_AGENT },
         },
       }
     }),

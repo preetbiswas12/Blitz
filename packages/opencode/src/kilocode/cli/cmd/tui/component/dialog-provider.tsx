@@ -60,7 +60,9 @@ export const PROVIDER_PRIORITY: Record<string, number> = {
 export const PROVIDER_DESCRIPTIONS: Record<string, string> = {
   anthropic: "(Claude Max or API key)",
   openai: "(ChatGPT login or API key)",
-  opencode: "(Free tier, sign in for more models)",
+  // OpenCode's own free tier is reserved for their clients and is rejected here
+  // with a FreeTierError, so don't advertise it — a Zen account unlocks paid models.
+  opencode: "(OpenCode account or API key)",
   "anaconda-desktop": "(Local models)",
 }
 

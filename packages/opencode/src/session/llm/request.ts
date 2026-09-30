@@ -12,7 +12,7 @@ import { Effect, Record } from "effect"
 import { jsonSchema, tool as aiTool, type ModelMessage, type Tool } from "ai"
 import type { Plugin } from "@/plugin"
 import { mergeDeep } from "remeda"
-import { DEFAULT_HEADERS, OPENCODE_USER_AGENT } from "@/kilocode/const" // kilocode_change
+import { DEFAULT_HEADERS } from "@/kilocode/const" // kilocode_change
 // kilocode_change start
 import { LegionSession } from "@/kilocode/session"
 import { stripInternalOptions } from "@/kilocode/agent/options"
@@ -241,12 +241,8 @@ export const prepare = Effect.fn("LLMRequestPrep.prepare")(function* (input: Pre
         : {
             "x-session-affinity": input.sessionID,
             ...(input.parentSessionID ? { "x-parent-session-id": input.parentSessionID } : {}),
-            // kilocode_change - the opencode provider only serves its free tier to
-            // clients that identify as the opencode CLI, and must not carry Legion identity
-            "User-Agent": input.model.providerID === "opencode" ? OPENCODE_USER_AGENT : USER_AGENT,
-            ...(input.model.providerID !== "anthropic" && input.model.providerID !== "opencode"
-              ? DEFAULT_HEADERS
-              : undefined),
+            "User-Agent": USER_AGENT,
+            ...(input.model.providerID !== "anthropic" ? DEFAULT_HEADERS : undefined),
           }),
       ...input.model.headers,
       ...headers,

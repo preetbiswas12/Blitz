@@ -9,7 +9,7 @@ import {
 describe("opencode zen provider entry", () => {
   test("is listed in the connect dialog with a sign-in hint", () => {
     expect(PROVIDER_TITLES.opencode).toBe("OpenCode Zen")
-    expect(PROVIDER_DESCRIPTIONS.opencode).toBe("(Free tier, sign in for more models)")
+    expect(PROVIDER_DESCRIPTIONS.opencode).toBe("(OpenCode account or API key)")
   })
 
   test("sorts after the major providers and before local models", () => {

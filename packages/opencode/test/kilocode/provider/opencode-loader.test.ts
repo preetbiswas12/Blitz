@@ -2,7 +2,6 @@ import { describe, expect } from "bun:test"
 import { Effect, Layer, Option } from "effect"
 import { Account } from "@/account/account"
 import { AccessToken, AccountID, OrgID } from "@/account/schema"
-import { OPENCODE_USER_AGENT } from "@/kilocode/const"
 import { LegionCustomLoaders } from "@/kilocode/provider/provider"
 import { testEffect } from "../../lib/effect"
 
@@ -63,9 +62,6 @@ describe("opencode provider loader", () => {
       const result = yield* LegionCustomLoaders(dep({})).opencode(model).pipe(Effect.provide(account))
       expect(result.options?.apiKey).toBe("account-token")
       expect(Object.keys(model.models)).toEqual(["free", "paid"])
-      // the opencode backend only serves the free tier to the opencode CLI
-      expect(result.options?.headers).toEqual({ "User-Agent": OPENCODE_USER_AGENT })
-      expect(OPENCODE_USER_AGENT).toMatch(/^opencode\//)
       expect(result.autoload).toBe(true)
     }),
   )

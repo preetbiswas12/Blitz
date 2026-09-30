@@ -27,7 +27,7 @@ const info = new Account.Info({
 const login = new Login({
   code: DeviceCode.make("device-1"),
   user: UserCode.make("ABCD-EFGH"),
-  url: "https://console.opencode.ai/device?user_code=ABCD-EFGH",
+  url: "https://console.opencode.ai/console/device?user_code=ABCD-EFGH",
   server: "https://console.opencode.ai",
   expiry: Duration.seconds(10),
   interval: Duration.zero,
@@ -79,7 +79,10 @@ describe("opencode provider auth", () => {
 
           const providerID = ProviderID.make("opencode")
           const authorization = yield* service.authorize({ providerID, method: 0 })
-          expect(authorization).toMatchObject({ method: "auto", url: login.url })
+          expect(authorization).toMatchObject({
+            method: "auto",
+            url: "https://opencode.ai/console/device?user_code=ABCD-EFGH",
+          })
 
           yield* service.callback({ providerID, method: 0 })
 

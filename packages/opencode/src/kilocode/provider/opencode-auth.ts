@@ -21,7 +21,20 @@
 import { Account } from "@/account/account"
 import type { Hooks } from "@legion/plugin"
 import { Duration, Effect, Option } from "effect"
-import { OPENCODE_SERVER } from "@/kilocode/const"
+import { OPENCODE_CONSOLE, OPENCODE_SERVER } from "@/kilocode/const"
+
+/**
+ * Rewrites the device page URL onto the origin that serves the console UI.
+ *
+ * `Account.login` joins `verification_uri_complete` onto the API host, but the
+ * device endpoint returns a path relative to {@link OPENCODE_CONSOLE}. Left
+ * alone the browser is sent to `console.opencode.ai/console/device`, which
+ * redirects to the doubled `opencode.ai/console/console/device` and renders the
+ * console's 404 route. See {@link OPENCODE_CONSOLE}.
+ */
+function consoleUrl(url: string) {
+  return new URL(url.replace(OPENCODE_SERVER, OPENCODE_CONSOLE), OPENCODE_CONSOLE).toString()
+}
 
 /**
  * Device-code poll loop. Backs off by 5s whenever the server asks us to slow
@@ -51,7 +64,7 @@ export function opencodeAuth(account: Account.Interface): NonNullable<Hooks["aut
         authorize: async () => {
           const login = await Effect.runPromise(account.login(OPENCODE_SERVER))
           return {
-            url: login.url,
+            url: consoleUrl(login.url),
             instructions: `Enter code: ${login.user}`,
             method: "auto" as const,
             callback: async () => {

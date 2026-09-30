@@ -25,7 +25,9 @@ const info = new Account.Info({
 const login = new Login({
   code: DeviceCode.make("device-1"),
   user: UserCode.make("ABCD-EFGH"),
-  url: "https://console.opencode.ai/device?user_code=ABCD-EFGH",
+  // the real shape `Account.login` builds: API host + the server's
+  // `verification_uri_complete`, which already carries the `/console` prefix
+  url: "https://console.opencode.ai/console/device?user_code=ABCD-EFGH",
   server: "https://console.opencode.ai",
   expiry: Duration.seconds(10),
   interval: Duration.zero,
@@ -55,11 +57,9 @@ describe("opencode account auth", () => {
       if (method.type !== "oauth") return
 
       const authorization = yield* Effect.promise(() => method.authorize())
-      expect(authorization).toMatchObject({
-        url: login.url,
-        instructions: `Enter code: ${login.user}`,
-        method: "auto",
-      })
+      expect(authorization.url).toBe("https://opencode.ai/console/device?user_code=ABCD-EFGH")
+      expect(authorization.instructions).toBe(`Enter code: ${login.user}`)
+      expect(authorization.method).toBe("auto")
       if (authorization.method !== "auto") return
 
       const result = yield* Effect.promise(() => authorization.callback())
@@ -76,6 +76,23 @@ describe("opencode account auth", () => {
     Effect.gen(function* () {
       const hook = opencodeAuth(yield* Account.Service)
       expect(hook.methods[1]).toMatchObject({ type: "api", label: "API key" })
+    }),
+  )
+
+  it.effect("sends the browser to a console page that exists", () =>
+    Effect.gen(function* () {
+      const method = opencodeAuth(yield* Account.Service).methods[0]
+      if (method.type !== "oauth") return
+
+      const { url } = yield* Effect.promise(() => method.authorize())
+      const { pathname } = new URL(url)
+
+      // `console.opencode.ai/<path>` 302s to `opencode.ai/console/<path>`, so a
+      // URL that already carries the `/console` prefix would land on the
+      // doubled `/console/console/device`, which the console answers with its
+      // 404 route instead of the device verification form.
+      expect(pathname).toBe("/console/device")
+      expect(pathname).not.toContain("/console/console/")
     }),
   )
 })

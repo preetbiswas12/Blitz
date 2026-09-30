@@ -71,6 +71,32 @@ export const PROVIDER_TITLES: Record<string, string> = {
   opencode: "OpenCode Zen",
 }
 
+// ---------------------------------------------------------------------------
+// Console-managed providers
+// ---------------------------------------------------------------------------
+
+/**
+ * Explains why selecting a console-managed provider does nothing.
+ *
+ * The dialog deliberately refuses to open the credential flow for a provider
+ * the console owns, because the console already supplies its credential (see
+ * `onSelect` in the shared dialog). When the account reports no org name the
+ * row also renders no footer, so pressing enter looks like a dead keypress.
+ */
+export function consoleManagedMessage(input: { title: string; orgName?: string }) {
+  const org = input.orgName ? ` your ${input.orgName} console org` : " your console account"
+  return `${input.title} is managed by${org} — pick one of its models to start a session.`
+}
+
+/**
+ * Footer for a console-managed row. The server omits `activeOrgName` when the
+ * account has no org name, which would otherwise leave the row with no hint at
+ * all that it is not interactive.
+ */
+export function consoleManagedFooter(orgName?: string) {
+  return orgName ?? "Managed by console"
+}
+
 /** Local OpenAI-compatible providers where API key is optional (localhost). */
 export const LOCAL_OPTIONAL_API_KEY = new Set(["atomic-chat", "lmstudio"])
 

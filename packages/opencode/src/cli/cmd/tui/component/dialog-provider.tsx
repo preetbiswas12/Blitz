@@ -130,11 +130,22 @@ export function createDialogProviderOptions() {
           title: KiloProvider.PROVIDER_TITLES[providerID] ?? provider.title, // kilocode_change
           value: provider.value,
           description: failedDesc ?? baseDesc ?? provider.description, // kilocode_change
-          footer: consoleManaged ? sync.data.console_state.activeOrgName : undefined,
+          footer: consoleManaged ? KiloProvider.consoleManagedFooter(sync.data.console_state.activeOrgName) : undefined, // kilocode_change
           category: provider.category,
           gutter: failedGutter ?? (connected && onboarded() ? () => <text fg={theme.success}>✓</text> : undefined), // kilocode_change
           async onSelect() {
-            if (consoleManaged) return
+            // kilocode_change start - console-managed is a deliberate no-op, so explain it
+            if (consoleManaged) {
+              toast.show({
+                variant: "info",
+                message: KiloProvider.consoleManagedMessage({
+                  title: KiloProvider.PROVIDER_TITLES[providerID] ?? provider.title,
+                  orgName: sync.data.console_state.activeOrgName,
+                }),
+              })
+              return
+            }
+            // kilocode_change end
             if (KiloProvider.selectProvider({ providerID, replace: dialog.replace, model: DialogModel })) return // kilocode_change
 
             const methods = sync.data.provider_auth[providerID] ?? [
